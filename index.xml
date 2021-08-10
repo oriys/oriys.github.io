@@ -5,7 +5,184 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>Y.CH.Y</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Thu, 05 Aug 2021 08:41:54 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Wed, 11 Aug 2021 03:52:05 +0800</lastBuildDate>
+    <item>
+      <title>Kafka::基础</title>
+      <link>/post/kafka_basic/</link>
+      <pubDate>Wed, 11 Aug 2021 03:52:05 +0800</pubDate>
+      <guid>/post/kafka_basic/</guid>
+      <description>&lt;h2 id=&#34;入门&#34;&gt;入门&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;定义
+&lt;ul&gt;
+&lt;li&gt;Apache Kafka 是一款开源的消息引擎系统。根据维基百科的定义，消息引擎系统是一组规范。企业利用这组规范在不同系统之间传递语义准确的消息，实现松耦合的异步式数据传递。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;特点
+&lt;ul&gt;
+&lt;li&gt;消息引擎传输的对象是消息&lt;/li&gt;
+&lt;li&gt;传输消息属于消息引擎设计机制的一部分&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;消息编码格式
+&lt;ul&gt;
+&lt;li&gt;CSV&lt;/li&gt;
+&lt;li&gt;XML&lt;/li&gt;
+&lt;li&gt;JSON&lt;/li&gt;
+&lt;li&gt;Google 的 Protocol Buffer&lt;/li&gt;
+&lt;li&gt;Facebook 的 Thrift&lt;/li&gt;
+&lt;li&gt;结构化的二进制字节序列&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;消息传输协议
+&lt;ul&gt;
+&lt;li&gt;点对点模型&lt;/li&gt;
+&lt;li&gt;发布/订阅模型&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;功能
+&lt;ul&gt;
+&lt;li&gt;削峰填谷：缓冲上下游瞬时突发流量，使其更平滑过度给下游&lt;/li&gt;
+&lt;li&gt;发送方和接收方的松耦合：简化应用开发，减少了系统不必要的交互&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;术语
+&lt;ul&gt;
+&lt;li&gt;消息：Record。Kafka 是消息引擎嘛，这里的消息就是指 Kafka 处理的主要对象。&lt;/li&gt;
+&lt;li&gt;主题：Topic。主题是承载消息的逻辑容器，在实际使用中多用来区分具体的业务。&lt;/li&gt;
+&lt;li&gt;分区：Partition。一个有序不变的消息序列。每个主题下可以有多个分区。&lt;/li&gt;
+&lt;li&gt;消息位移：Offset。表示分区中每条消息的位置信息，是一个单调递增且不变的值。&lt;/li&gt;
+&lt;li&gt;副本：Replica。Kafka 中同一条消息能够被拷贝到多个地方以提供数据冗余，这些地方就是所谓的副本。副本还分为领导者副本和追随者副本，各自有不同的角色划分。副本是在分区层级下的，即每个分区可配置多个副本实现高可用。&lt;/li&gt;
+&lt;li&gt;生产者：Producer。向主题发布新消息的应用程序。&lt;/li&gt;
+&lt;li&gt;消费者：Consumer。从主题订阅新消息的应用程序。&lt;/li&gt;
+&lt;li&gt;消费者位移：Consumer Offset。表征消费者消费进度，每个消费者都有自己的消费者位移。&lt;/li&gt;
+&lt;li&gt;消费者组：Consumer Group。多个消费者实例共同组成的一个组，同时消费多个分区以实现高吞吐。&lt;/li&gt;
+&lt;li&gt;重平衡：Rebalance。消费者组内某个消费者实例挂掉后，其他消费者实例自动重新分配订阅主题分区的过程。Rebalance 是 Kafka 消费者端实现高可用的重要手段。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;分布式流处理平台
+&lt;ul&gt;
+&lt;li&gt;研发背景
+&lt;ul&gt;
+&lt;li&gt;数据正确性不足，Polling 导致数据偏差&lt;/li&gt;
+&lt;li&gt;系统高度定制化，维护成本高&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;特性
+&lt;ul&gt;
+&lt;li&gt;提供一套 API 实现生产者和消费者&lt;/li&gt;
+&lt;li&gt;降低网络传输和磁盘存储开销&lt;/li&gt;
+&lt;li&gt;实现高伸缩性架构&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;优势
+&lt;ul&gt;
+&lt;li&gt;更容易实现端到端的正确性，Kafka 可以实现端到端的精确一次处理语义&lt;/li&gt;
+&lt;li&gt;更开放的流式计算定位，Kafka Streams 是一个用于搭建实时流处理的客户端库而非是一个完整的功能系统&lt;/li&gt;
+&lt;li&gt;用作分布式存储&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;版本选择
+&lt;ul&gt;
+&lt;li&gt;Apache Kafka，也称社区版 Kafka。优势在于迭代速度快，社区响应度高，使用它可以让你有更高的把控度；缺陷在于仅提供基础核心组件，缺失一些高级的特性。&lt;/li&gt;
+&lt;li&gt;Confluent Kafka，Confluent 公司提供的 Kafka。优势在于集成了很多高级特性且由 Kafka 原班人马打造，质量上有保证；缺陷在于相关文档资料不全，普及率较低，没有太多可供参考的范例。&lt;/li&gt;
+&lt;li&gt;CDH/HDP Kafka，大数据云公司提供的 Kafka，内嵌 Apache Kafka。优势在于操作简单，节省运维成本；缺陷在于把控度低，演进速度较慢。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;基本使用&#34;&gt;基本使用&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;部署环境
+&lt;ul&gt;
+&lt;li&gt;操作系统
+&lt;ul&gt;
+&lt;li&gt;Linux：高效的 I/O 性能、Linux 实现了零拷贝的数据传输、Kafka 更重视 Linux 社区&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;磁盘
+&lt;ul&gt;
+&lt;li&gt;追求性价比的公司可以不搭建 RAID，使用普通磁盘组成存储空间即可&lt;/li&gt;
+&lt;li&gt;使用机械磁盘完全能够胜任 Kafka 线上环境&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;磁盘容量
+&lt;ul&gt;
+&lt;li&gt;新增消息数&lt;/li&gt;
+&lt;li&gt;消息留存时间&lt;/li&gt;
+&lt;li&gt;平均消息大小&lt;/li&gt;
+&lt;li&gt;备份数&lt;/li&gt;
+&lt;li&gt;是否启用压缩&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;带宽
+&lt;ul&gt;
+&lt;li&gt;预留三分一空闲带宽&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;重要的配置
+&lt;ul&gt;
+&lt;li&gt;Broker 端参数
+&lt;ul&gt;
+&lt;li&gt;log.dirs: Broker 需要使用的若干个文件目录路径，逗号分隔的多个路径&lt;/li&gt;
+&lt;li&gt;log.dir: 表示单个路径，它是补充上一个参数用的&lt;/li&gt;
+&lt;li&gt;zookeeper.connect: 负责协调管理并保存 Kafka 集群的所有元数据信息，逗号分隔，chroot 只写一次，添加到最后&lt;/li&gt;
+&lt;li&gt;listeners：学名叫监听器，其实就是告诉外部连接者要通过什么协议访问指定主机名和端口开放的 Kafka 服务。&lt;/li&gt;
+&lt;li&gt;advertised.listeners：和 listeners 相比多了个 advertised。Advertised 的含义表示宣称的、公布的，就是说这组监听器是 Broker 用于对外发布的。&lt;/li&gt;
+&lt;li&gt;listener.security.protocol.map：自定义协议声明&lt;/li&gt;
+&lt;li&gt;auto.create.topics.enable：是否允许自动创建 Topic。&lt;/li&gt;
+&lt;li&gt;unclean.leader.election.enable：是否允许 Unclean Leader 选举。&lt;/li&gt;
+&lt;li&gt;auto.leader.rebalance.enable：是否允许定期进行 Leader 选举。&lt;/li&gt;
+&lt;li&gt;log.retention.{hour|minutes|ms}：控制一条消息数据被保存多长时间。从优先级上来说 ms 设置最高、minutes 次之、hour 最低。&lt;/li&gt;
+&lt;li&gt;log.retention.bytes：这是指定 Broker 为消息保存的总磁盘容量大小，-1 表示不限制。&lt;/li&gt;
+&lt;li&gt;message.max.bytes：控制 Broker 能够接收的最大消息大小。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Topic 端参数
+&lt;ul&gt;
+&lt;li&gt;retention.ms：规定了该 Topic 消息被保存的时长&lt;/li&gt;
+&lt;li&gt;retention.bytes：规定了要为该 Topic 预留多大的磁盘空间&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;JVM 参数
+&lt;ul&gt;
+&lt;li&gt;-XX:+UseParallelGC：启用 CMS 收集器&lt;/li&gt;
+&lt;li&gt;KAFKA_HEAP_OPTS：指定堆大小。&lt;/li&gt;
+&lt;li&gt;KAFKA_JVM_PERFORMANCE_OPTS：指定 GC 参数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;操作系统参数
+&lt;ul&gt;
+&lt;li&gt;文件描述符限制：ulimit -n，每次连接会打开一个文件，可以设置大一点&lt;/li&gt;
+&lt;li&gt;文件系统选择：XFS 性能强于 ext3、ext4&lt;/li&gt;
+&lt;li&gt;SWAP：预留一些以免耗尽内存触发系统 OOM killer&lt;/li&gt;
+&lt;li&gt;调整 Flush 落盘时间：已经有了副本冗余，可以延长一点，换取性能&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;实践与原理&#34;&gt;实践与原理&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;生产者消息分区原理
+&lt;ul&gt;
+&lt;li&gt;主题下的每条消息只会保存在某一个分区中，而不会在多个分区中被保存多份。&lt;/li&gt;
+&lt;li&gt;分区的作用就是提供负载均衡的能力，实现系统的高伸缩性&lt;/li&gt;
+&lt;li&gt;分区策略
+&lt;ul&gt;
+&lt;li&gt;轮询策略：轮询策略有非常优秀的负载均衡表现，它总是能保证消息最大限度地被平均分配到所有分区上，故默认情况下它是最合理的分区策略&lt;/li&gt;
+&lt;li&gt;随机策略：从实际表现来看，它要逊于轮询策略，所以如果追求数据的均匀分布，还是使用轮询策略比较好&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
     <item>
       <title>CMU::15-445/645::Tree Indexes 笔记</title>
       <link>/post/cmu_15_445_06_note/</link>
