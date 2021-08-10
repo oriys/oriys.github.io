@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> 现代操作系统::引论 | Y.CH.Y</title>
+  <link rel = 'canonical' href = '/post/modern_operating_systems_introduction/'>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="现代操作系统::引论" />
+<meta property="og:description" content="引论  什么是操作系统  操作系统是一种运行在内核态的软件 为应用程序提供一个资源集的清晰抽象，并管理这些硬件资源，而不仅仅是一堆硬件 作为扩展机器的操作系统，创建好的抽象，并实现和管理它所创建的抽象对象。 作为资源管理者的操作系统，在相互竞争的程序之间有序地控制对处理器、存储器以及其他 I/O 接口设备的分配。   操作系统的历史  第一代 (1945 ~ 1955) : 真空管和穿孔卡片 第二代 (1955 ~ 1965) : 晶体管和批处理系统 第三代 (1965 ~ 1980) : 集成电路和多道程序设计 第四代 (1980 ~ ) :个人计算机 第五代 (1990 ~ ): 移动计算机   计算机硬件简介  处理器  专门的指令集 寄存器  程序计数器  保存了将要取出的下一条指令的内存地址   堆栈指针  指向内存中当前栈的顶端   程序状态字  这个寄存器包含了条件码位、CPU 优先级、模式(用户态或内核态)，以及各种其他控制位   通用寄存器   流水线  个 CPU 可以有单独的取指单元、解码单元和执行单元，于是当它执行指令 n 时，还可以对指令 n &#43; 1 解码，井且读取指令 n &#43; 2   超标量 CPU  两个或更多的指令被同时取出、解码并装入暂存缓冲区中，直至它们执行完毕." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/modern_operating_systems_introduction/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-07-14T09:39:03+08:00" />
+<meta property="article:modified_time" content="2021-07-14T09:39:03+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="现代操作系统::引论"/>
+<meta name="twitter:description" content="引论  什么是操作系统  操作系统是一种运行在内核态的软件 为应用程序提供一个资源集的清晰抽象，并管理这些硬件资源，而不仅仅是一堆硬件 作为扩展机器的操作系统，创建好的抽象，并实现和管理它所创建的抽象对象。 作为资源管理者的操作系统，在相互竞争的程序之间有序地控制对处理器、存储器以及其他 I/O 接口设备的分配。   操作系统的历史  第一代 (1945 ~ 1955) : 真空管和穿孔卡片 第二代 (1955 ~ 1965) : 晶体管和批处理系统 第三代 (1965 ~ 1980) : 集成电路和多道程序设计 第四代 (1980 ~ ) :个人计算机 第五代 (1990 ~ ): 移动计算机   计算机硬件简介  处理器  专门的指令集 寄存器  程序计数器  保存了将要取出的下一条指令的内存地址   堆栈指针  指向内存中当前栈的顶端   程序状态字  这个寄存器包含了条件码位、CPU 优先级、模式(用户态或内核态)，以及各种其他控制位   通用寄存器   流水线  个 CPU 可以有单独的取指单元、解码单元和执行单元，于是当它执行指令 n 时，还可以对指令 n &#43; 1 解码，井且读取指令 n &#43; 2   超标量 CPU  两个或更多的指令被同时取出、解码并装入暂存缓冲区中，直至它们执行完毕."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="/css/styles.a1d8fc2f132c452937740993f66c1b7a35d39b0774f74823f917c8b66b7795716119b0af416457217bed8e35420077308b167d77d283c319f347c34500e4ca46.css" integrity="sha512-odj8LxMsRSk3dAmT9mwbejXTmwd090gj&#43;RfItmt3lXFhGbCvQWRXIXvtjjVCAHcwixZ9d9KDwxnzR8NFAOTKRg=="> 
+
+  
+  
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="/images/favicon.ico" />
+
+  
+  
+  
+  
+  
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-X1L70M4MM0', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+  
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="/">
+  
+    <div id="logo" style="background-image: url(/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Y.CH.Y</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
+      </li>
+      
+        <li><a href="/">Home</a></li>
+      
+    </ul>
+  </div>
+</header>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X1L70M4MM0"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-X1L70M4MM0', { 'anonymize_ip': false });
+}
+</script>
+
+
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h2 id="引论">引论</h2>
+<ul>
+<li>什么是操作系统
+<ul>
+<li>操作系统是一种运行在内核态的软件</li>
+<li>为应用程序提供一个资源集的清晰抽象，并管理这些硬件资源，而不仅仅是一堆硬件</li>
+<li>作为扩展机器的操作系统，创建好的抽象，并实现和管理它所创建的抽象对象。</li>
+<li>作为资源管理者的操作系统，在相互竞争的程序之间有序地控制对处理器、存储器以及其他 I/O 接口设备的分配。</li>
+</ul>
+</li>
+<li>操作系统的历史
+<ul>
+<li>第一代 (1945 ~ 1955) : 真空管和穿孔卡片</li>
+<li>第二代 (1955 ~ 1965) : 晶体管和批处理系统</li>
+<li>第三代 (1965 ~ 1980) : 集成电路和多道程序设计</li>
+<li>第四代 (1980 ~ ) :个人计算机</li>
+<li>第五代 (1990 ~ ): 移动计算机</li>
+</ul>
+</li>
+<li>计算机硬件简介
+<ul>
+<li>处理器
+<ul>
+<li>专门的指令集</li>
+<li>寄存器
+<ul>
+<li>程序计数器
+<ul>
+<li>保存了将要取出的下一条指令的内存地址</li>
+</ul>
+</li>
+<li>堆栈指针
+<ul>
+<li>指向内存中当前栈的顶端</li>
+</ul>
+</li>
+<li>程序状态字
+<ul>
+<li>这个寄存器包含了条件码位、CPU 优先级、模式(用户态或内核态)，以及各种其他控制位</li>
+</ul>
+</li>
+<li>通用寄存器</li>
+</ul>
+</li>
+<li>流水线
+<ul>
+<li>个 CPU 可以有单独的取指单元、解码单元和执行单元，于是当它执行指令 n 时，还可以对指令 n + 1 解码，井且读取指令 n + 2</li>
+</ul>
+</li>
+<li>超标量 CPU
+<ul>
+<li>两个或更多的指令被同时取出、解码并装入暂存缓冲区中，直至它们执行完毕.只要有一个执行单元空闲.就检查保持缓冲区中是否还有可处理的指令，如果有，就把指令从缓冲区中移出并执行之.</li>
+</ul>
+</li>
+<li>两种模式
+<ul>
+<li>内核态</li>
+<li>用户态</li>
+</ul>
+</li>
+<li>系统调用
+<ul>
+<li>为了从操作系统中获得服务，用户程序必须使用系统调用(system call)以陷入内核井调用操作系统。TRAP 指令把用户态切换成内核态，并启用操作系统。</li>
+</ul>
+</li>
+<li>多线程和多核芯片
+<ul>
+<li>多线程允许 CPU 保持两个不同的线程状态，然后在纳秒级的时间尺度内来回切换。</li>
+<li>多线程不提供其正的并行处理。在一个时刻只有一个进程在运行，但是线程的切换时间则减少到纳秒数量级。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>存储器
+<ul>
+<li>寄存器，纳秒数量级时间</li>
+<li>高速缓存
+<ul>
+<li>个位数纳秒数量级时间</li>
+<li>高速缓存命中</li>
+<li>多级缓存</li>
+<li>不同的缓存位置的影响</li>
+</ul>
+</li>
+<li>主存
+<ul>
+<li>易失性与非易失性存储介质</li>
+<li>十位数纳秒数量级时间</li>
+<li>闪存</li>
+<li>电可擦除可编程内存</li>
+<li>CMOS 存储器</li>
+</ul>
+</li>
+<li>磁盘
+<ul>
+<li>毫秒数量级时间</li>
+<li>磁道</li>
+<li>柱面</li>
+<li>固态硬盘</li>
+<li>虚拟内存机制
+<ul>
+<li>MMU</li>
+<li>上下文切换</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>I/O 设备
+<ul>
+<li>设备控制器
+<ul>
+<li>插在电路板上的一块芯片或一组芯片</li>
+<li>这块电路板物理地控制设备。它从操作系统接收命令</li>
+<li>控制器的任务是为操作系统提供一个简单的接口</li>
+<li>读写过程很复杂，控制器中经常安装一个小的嵌入式计箕机，该嵌入式计算机运行为执行这些工作而专门编好的程序。</li>
+</ul>
+</li>
+<li>设备本身
+<ul>
+<li>本身有个相对简单的标准化接口</li>
+<li>SATA 串行高级技术附件(Serial Advanced Technology Attachment)</li>
+<li>由于实际的设备接口隐藏在控制器中，所以，操作系统看到的是对控制器的接口</li>
+<li>设备驱动程序
+<ul>
+<li>将内核与设备驱动程序重新链接，然后重启动系统。</li>
+<li>在一个操作系统文件中设置一个入口，并通知该文件需要一个设备驱动程序，然后重新启动系统。在系统启动时，操作系统去找寻所需的设备驱动程序井装载之。</li>
+<li>操作系统能够在运行时接受新的设备驱动程序并且立即将其安装好，无须重启动系统。</li>
+<li>每个设备控制器都有少址用千通信的寄存器
+<ul>
+<li>一个最小的磁盘控制器也会有用干指定磁盘地址、内存地址、扇区计数和方向(读或写)的寄存器。</li>
+<li>要激活控制器，设备驱动程序从操作系统获得一条命令，然后翻译成对应的值，并写进设备寄存器中。所有设备寄存器的集合构成了 I/O 端口空间，</li>
+</ul>
+</li>
+<li>通信方式
+<ul>
+<li>在有些计算机中，设备寄存器被映射到操作系统的地址空间，不需要专门的 I/O 指令，用户程序可以被硬件阻挡在外，防止其接触这些存储器地址</li>
+<li>另一些机器中，设备寄存器被放入一个专门的 I/O 端口空间中，每个寄存器都有一个端口地址。在这些机器中，提供在内核态中可使用的专门 IN 和 OUT 指令，供设备驱动程序读写这些寄存器用。</li>
+</ul>
+</li>
+<li>实现输入输出的方式
+<ul>
+<li>用户程序发出一个系统调用，内核将其翻译成一个对应设备驱动程序的过程调用。然后设备驱动程序启动 I/O 并在一个连续不断的循环中检查该设备，看该设备是否完成了工作(一般有一些二进制位用来指示设备仍在忙碌中)。当 I/O 结束后，设备驱动程序把数据送到指定的地方(若有此需要)，井返回。然后操作系统将控制返回给调用者。这种方式称为忙等待(busywaiting), 其缺点是要占据 CPU, CPU 一直轮询设备直到对应的 I/O 操作完成。</li>
+<li>设备驱动程序启动设备并且让该设备在操作完成时发出一个中断。设备驱动程序在这个时刻返回。操作系统接若在需要时阻塞调用者井安排其他工作进行。当设备驱动程序检查到该设备的操作完毕时，它发出一个中断通知操作完成。</li>
+<li>为 I/O 使用一种特殊的直接存储器访问 (Direct Memory Access, DMA) 芯片，它可以控制在内存和某些控制器之间的位流，而无须持续的 CPU 干预。 CPU 对 DMA 芯片进行设置，说明需要传送的字节数、有关的设备和内存地址以及操作方向，接着启动 DMA。当 DMA 芯片完成时，它引发一个中断，其处理方式如前所述。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>总线
+<ul>
+<li>主板上有很多不同作用的总线</li>
+<li>PCIe 总线是 PCI 总线的继承者，PCI 总线是为了取代原来的 ISA 总线，速度快</li>
+<li>USB，将所有慢速 I/O 设备与计算机连接，是一种集中式总线</li>
+<li>SCSI，是一种高速总线，用在高速硬盘、扫描仪和其他需要较大带宽的设备上。</li>
+</ul>
+</li>
+<li>启动计算机
+<ul>
+<li>主板上有一块称为 BIOS 的程序，存储在非易失性存储介质中</li>
+<li>主板加电，BIOS 开始运行，检查设备</li>
+<li>根据 CMOS 存储的设备清单启动设备，从启动分区读入操作系统，启动它</li>
+<li>操作系统访问 BIOS，获取设备信息，加载设备驱动程序，初始化相关程序。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>操作系统大观园
+<ul>
+<li>大型机操作系统
+<ul>
+<li>用于大型机的操作系统主要面向多个作业的同时处理，多数这样的作业需要巨大的 I/O 能力。系统主要提供三类服务:批处理、事务处理和分时。</li>
+</ul>
+</li>
+<li>服务器操作系统
+<ul>
+<li>它们在服务器上运行，服务器可以是大型的个人计算机、工作站，甚至是大型机。它们通过网络同时为若干个用户服务，并且允许用户共享硬件和软件资源。</li>
+</ul>
+</li>
+<li>多处理器操作系统
+<ul>
+<li>获得大量联合计算能力的常用方式是将多个 CPU 连接成单个的系统。依据连接和共享方式的不同，这些系统称为并行计算机、多计算机或多处理器。它们需要专门的操作系统，不过通常采用的操作系统是配有通信、连接和一致性等专门功能的服务器操作系统的变体。</li>
+</ul>
+</li>
+<li>个人计算机操作系统
+<ul>
+<li>现代个人计箕机操作系统都支持多道程序处理，在启动时，通常有几十个程序开始运行 。它们的功能是为单个用户提供良好的支持。</li>
+</ul>
+</li>
+<li>掌上计算机操作系统
+<ul>
+<li>大多数设备基于的是多核 CPU、GPS、摄像头及其他的传感器、大量内存和精密的操作系统。</li>
+</ul>
+</li>
+<li>嵌入式操作系统
+<ul>
+<li>嵌入式系统在用来控制设备的计算机中运行，这种设备不是一般意义上的计算机，井且不允许用户安装软件 。</li>
+</ul>
+</li>
+<li>传感器节点操作系统
+<ul>
+<li>每个传感器节点是一个配有 CPU、RAM、ROM 以及一个或多个环境传感器的实实在在的计算机。节点上运行一个小型但是真实的操作系统，通常这个操作系统是事件驱动的，可以响应外部事件，或者基于内部时钟进行周期性的测量。</li>
+</ul>
+</li>
+<li>实时操作系统
+<ul>
+<li>这些系统的特征是将时间作为关键参数。工控系统，民航，军事用途。硬实时操作系统。</li>
+<li>多媒体，数字音频，软实时操作系统，允许一定延迟。</li>
+</ul>
+</li>
+<li>智能卡操作系统
+<ul>
+<li>智能卡是一种包含一块 CPU 芯片的信用卡。它有非常严格的运行能耗和存储空间的限制。其中，有些智能卡只具有单项功能，如电子支付，但是其他的智能卡则拥有多项功能.它们有专用的操作系统.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>操作系统概念
+<ul>
+<li>进程
+<ul>
+<li>进程本质上是正在执行的一个程序</li>
+<li>每个进程拥有自己的地址空间</li>
+<li>进程表</li>
+<li>进程间通信</li>
+<li>每个进程都归属于某个用户</li>
+</ul>
+</li>
+<li>地址空间
+<ul>
+<li>通常，每个进程有一些可以使用的地址集合，典型值从 0 开始直到某个最大值。</li>
+<li>虚拟内存，操作系统可以把部分地址空间装入主存，部分留在磁盘上，并且在需要时来回交换它们。在本质上，操作系统创建了一个地址空间的抽象，作为进程可以引用地址的集合。该地址空间与机器的物理内存解耦，可能大于也可能小干该物理空间。对地址空间和物理空间的管理组成了操作系统功能的一个重要部分。</li>
+</ul>
+</li>
+<li>文件
+<ul>
+<li>为磁盘和其他 I/O 设备提供一个良好的抽象文件模型。</li>
+<li>目录和文件产生的层次结构，文件系统。</li>
+<li>每个进程都有一个工作目录</li>
+<li>每个打开的文件都有一个文件描述符。</li>
+<li>挂载磁盘文件系统到根文件系统上</li>
+<li>特殊文件，提供特殊文件是为了使 I/O 设备看起来像文件一般，块特殊文件，磁盘，字符特殊文件，字符流设备</li>
+<li>管道，虚文件，它可以连接两个进程</li>
+</ul>
+</li>
+<li>输入输出
+<ul>
+<li>操作系统有各种类型的输人和输出设备，包括键盘、显示器、打印机等。对这些设备的管理全然依靠操作系统。</li>
+<li>每个操作系统都有管理其 I/O 设备的 I/O 子系统。</li>
+</ul>
+</li>
+<li>保护
+<ul>
+<li>rwx 文件权限</li>
+<li>管理员，用户组，普通用户管理</li>
+</ul>
+</li>
+<li>shell
+<ul>
+<li>命令解释器</li>
+<li>并不是操作系统的一部分，提供了终端用户于操作系统之间的接口</li>
+</ul>
+</li>
+<li>个体重复系统发育
+<ul>
+<li>技术的变化会导致某些思想过时并迅速消失，这种情形经常发生。但是，技术的另一种变化还可能使某些思想再次复活.在技术的变化影响了某个系统不同部分之间的相对性能时，情况就是这样。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>系统调用
+<ul>
+<li>操作系统具有两种功能:为用户程序提供抽象和管理计算机资源。</li>
+<li>进行系统调用就像进行一个特殊的过程调用，但是只有系统调用可以进人内核，而过程调用则不能。</li>
+<li>read 系统调用过程
+<ul>
+<li>调用程序首先把参数压进堆栈</li>
+<li>对库过程的实际调用</li>
+<li>把系统调用的编号放到寄存器中</li>
+<li>执行 TRAP 指令，将用户态切换到内核态，并在内核中的一个固定地址开始执行</li>
+<li>TRAP 指令后的内核代码开始检查系统调用编号，然后分派给正确的系统调用处理器，这通常是通过一张由系统调用编号所引用的、指向系统调用处理器的指针表来完成</li>
+<li>系统调用处理器运行</li>
+<li>一且系统调用处理器完成其工作，控制可能会在跟随 TRAP 指令后面的指令中返回给用户空间库过程</li>
+<li>接着以通常的过程调用返回的方式，返回到用户程序</li>
+<li>清除堆栈</li>
+</ul>
+</li>
+<li>常用系统调用
+<ul>
+<li>进程管理: fork waitpid execve exit</li>
+<li>文件管理: open close read write lseek stat</li>
+<li>目录和文件系统管理: mkdir rmdir link unlink mount umount</li>
+<li>各种系统调用: chdir chmod kill time</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>操作系统结构
+<ul>
+<li>单体系统
+<ul>
+<li>整个操作系统以过程集合的方式编写，链接成一个大型可执行二进制程序</li>
+<li>每个过程都可以自由调用其他过程</li>
+<li>容错性差</li>
+<li>系统笨拙难以理解</li>
+</ul>
+</li>
+<li>层次式系统
+<ul>
+<li>层次式结构的操作系统，它的上层软件都是在下一层软件的基础之上构建的</li>
+<li>该系统的各个部分最终仍然被链接成了完整的单个目标程序</li>
+</ul>
+</li>
+<li>微内核
+<ul>
+<li>为了实现高可靠性，将操作系统划分成小的、良好定义的模块，只有其中一个模块一一微内核一运行在内核态，其余的模块由于功能相对弱些，则作为普通用户进程运行。</li>
+</ul>
+</li>
+<li>客户端一服务器模式
+<ul>
+<li>一般来说，客户端和服务器之间的通信是消息传递。为了获得一个服务，客户端进程构造一段消息，说明所需要的服务，井将其发给合适的服务器。该服务器完成工作，发送回应。</li>
+<li>客户端和服务器运行在不同的计算机上，它们通过局域网或广域网连接</li>
+</ul>
+</li>
+<li>虚拟机
+<ul>
+<li>虚拟机监控程序</li>
+<li>共享托管</li>
+<li>第一类虚拟机管理程序</li>
+<li>模拟器</li>
+<li>虚拟化</li>
+<li>二进制翻译</li>
+<li>Java 虚拟机</li>
+</ul>
+</li>
+<li>外核
+<ul>
+<li>对机器进行分区</li>
+<li>为虚拟机分配资源，井检查使用这些资源的企图，以确保没有机器会使用他人的资源</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>依靠 C 的世界
+<ul>
+<li>指针</li>
+<li>头文件</li>
+<li>目标文件</li>
+<li>C 预处理器</li>
+<li>链接</li>
+<li>运行模型</li>
+</ul>
+</li>
+<li>有关操作系统的研究
+<ul>
+<li>错误调试</li>
+<li>故障恢复</li>
+<li>文件和存储系统</li>
+<li>等等等</li>
+</ul>
+</li>
+</ul>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+  <div class="footer-left">
+    Copyright  &copy; 2021  Y.CH.Y 
+    <span id="busuanzi_container_page_pv">Page PV : <span id="busuanzi_value_page_pv"></span></span>
+    <span id="busuanzi_container_site_uv">Site UV : <span id="busuanzi_value_site_uv"></span></span>
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>

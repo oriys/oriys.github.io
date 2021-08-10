@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> 深入理解Java虚拟机::后端编译与优化 | Y.CH.Y</title>
+  <link rel = 'canonical' href = '/post/understand_the_jvm_11/'>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="深入理解Java虚拟机::后端编译与优化" />
+<meta property="og:description" content="后端编译与优化   Java 世界里，虽然提前编译(Ahead Of Time，AOT)早已有所应用，但相对而言，即时编译(Just In Time，JIT)才是占绝对主流的编译形式
+  解释器与编译器
+ 主流的商用 Java 虚拟机，内部都同时包含解释器与编译器 解释器与编译器两者各有优势  当程序需要迅速启动和执行的时候，解释器可以首先发挥作用，省去编译的时间，立即运行 当程序启动后，随着时间的推移，编译器逐渐发挥作用，把越来越多的代码编译成本地代码，这样可以减少解释器的中间损耗，获得更高的执行效率   解释器还可以作为编译器激进优化时后备的“逃生门”,当激进优化的假设不成立，如加载了新类以后，类型继承结构出现变化、出现“罕见陷阱”(Uncommon Trap)时可以通过逆优化(Deoptimization)退回到解释状态继续执行 内置即时编译器  客户端编译器 服务端编辑器 实验性 Graal 编译器   解释器与编译器搭配使用的方式在虚拟机中被称为“混合模式”(Mixed Mode) 分层编译  第 0 层。程序纯解释执行，并且解释器不开启性能监控功能(Profiling)。 第 1 层。使用客户端编译器将字节码编译为本地代码来运行，进行简单可靠的稳定优化，不开启性能监控功能。 第 2 层。仍然使用客户端编译器执行，仅开启方法及回边次数统计等有限的性能监控功能。 第 3 层。仍然使用客户端编译器执行，开启全部性能监控，除了第 2 层的统计信息外，还会收集如分支跳转、虚方法调用版本等全部的统计信息。 第 4 层。使用服务端编译器将字节码编译为本地代码，相比起客户端编译器，服务端编译器会启用更多编译耗时更长的优化，还会根据性能监控信息进行一些不可靠的激进优化。   热点代码  被多次调用的方法。 被多次执行的循环体。   编译器依然必须以整个方法作为编译对象 热点探测  周期性地检查各个线程的调用栈顶，如果发现某个(或某些)方法经常出现在栈顶，那这个方法就是“热点方法” 基于计数器的热点探测(Counter Based Hot Spot Code Detection)。采用这种方法的虚拟机会为每个方法(甚至是代码块)建立计数器，统计方法的执行次数，如果执行次数超过一定的阈值就认为它是“热点方法”。   回边计数器  统计一个方法中循环体代码执行的次数 当解释器遇到一条回边指令时，会先查找将要执行的代码片段是否有已经编译好的版本，如果有的话，它将会优先执行已编译的代码，否则就把回边计数器的值加一，然后判断方法调用计数器与回边计数器值之和是否超过回边计数器的阈值。当超过阈值的时候，将会提交一个栈上替换编译请求，并且把回边计数器的值稍微降低一些，以便继续在解释器中执行循环，等待编译器输出编译结果   编译过程  在第一个阶段，一个平台独立的前端将字节码构造成一种高级中间代码表 在第二个阶段，一个平台相关的后端从 HIR 中产生低级中间代码表示 最后的阶段是在平台相关的后端使用线性扫描算法在 LIR 上分配寄存器，并在 LIR 上做窥孔优化，然后产生机器代码   经典优化手段  无用代码消除(Dead Code Elimination) 循环展开 (Loop Unrolling) 循环表达式外提(Loop Expression Hoisting) 消除公共子表达式(Common Subexpression Elimination) 常量传播(Constant Propagation) 基本块重排序(Basic Block Reordering) 范围检查消除(Range Check Elimination) 空值检查消除(Null Check Elimination) 如守护内联(Guarded Inlining) 分支频率预测 (Branch Frequency Prediction)      提前编译器" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/understand_the_jvm_11/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-04-10T22:10:56+08:00" />
+<meta property="article:modified_time" content="2021-04-10T22:10:56+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="深入理解Java虚拟机::后端编译与优化"/>
+<meta name="twitter:description" content="后端编译与优化   Java 世界里，虽然提前编译(Ahead Of Time，AOT)早已有所应用，但相对而言，即时编译(Just In Time，JIT)才是占绝对主流的编译形式
+  解释器与编译器
+ 主流的商用 Java 虚拟机，内部都同时包含解释器与编译器 解释器与编译器两者各有优势  当程序需要迅速启动和执行的时候，解释器可以首先发挥作用，省去编译的时间，立即运行 当程序启动后，随着时间的推移，编译器逐渐发挥作用，把越来越多的代码编译成本地代码，这样可以减少解释器的中间损耗，获得更高的执行效率   解释器还可以作为编译器激进优化时后备的“逃生门”,当激进优化的假设不成立，如加载了新类以后，类型继承结构出现变化、出现“罕见陷阱”(Uncommon Trap)时可以通过逆优化(Deoptimization)退回到解释状态继续执行 内置即时编译器  客户端编译器 服务端编辑器 实验性 Graal 编译器   解释器与编译器搭配使用的方式在虚拟机中被称为“混合模式”(Mixed Mode) 分层编译  第 0 层。程序纯解释执行，并且解释器不开启性能监控功能(Profiling)。 第 1 层。使用客户端编译器将字节码编译为本地代码来运行，进行简单可靠的稳定优化，不开启性能监控功能。 第 2 层。仍然使用客户端编译器执行，仅开启方法及回边次数统计等有限的性能监控功能。 第 3 层。仍然使用客户端编译器执行，开启全部性能监控，除了第 2 层的统计信息外，还会收集如分支跳转、虚方法调用版本等全部的统计信息。 第 4 层。使用服务端编译器将字节码编译为本地代码，相比起客户端编译器，服务端编译器会启用更多编译耗时更长的优化，还会根据性能监控信息进行一些不可靠的激进优化。   热点代码  被多次调用的方法。 被多次执行的循环体。   编译器依然必须以整个方法作为编译对象 热点探测  周期性地检查各个线程的调用栈顶，如果发现某个(或某些)方法经常出现在栈顶，那这个方法就是“热点方法” 基于计数器的热点探测(Counter Based Hot Spot Code Detection)。采用这种方法的虚拟机会为每个方法(甚至是代码块)建立计数器，统计方法的执行次数，如果执行次数超过一定的阈值就认为它是“热点方法”。   回边计数器  统计一个方法中循环体代码执行的次数 当解释器遇到一条回边指令时，会先查找将要执行的代码片段是否有已经编译好的版本，如果有的话，它将会优先执行已编译的代码，否则就把回边计数器的值加一，然后判断方法调用计数器与回边计数器值之和是否超过回边计数器的阈值。当超过阈值的时候，将会提交一个栈上替换编译请求，并且把回边计数器的值稍微降低一些，以便继续在解释器中执行循环，等待编译器输出编译结果   编译过程  在第一个阶段，一个平台独立的前端将字节码构造成一种高级中间代码表 在第二个阶段，一个平台相关的后端从 HIR 中产生低级中间代码表示 最后的阶段是在平台相关的后端使用线性扫描算法在 LIR 上分配寄存器，并在 LIR 上做窥孔优化，然后产生机器代码   经典优化手段  无用代码消除(Dead Code Elimination) 循环展开 (Loop Unrolling) 循环表达式外提(Loop Expression Hoisting) 消除公共子表达式(Common Subexpression Elimination) 常量传播(Constant Propagation) 基本块重排序(Basic Block Reordering) 范围检查消除(Range Check Elimination) 空值检查消除(Null Check Elimination) 如守护内联(Guarded Inlining) 分支频率预测 (Branch Frequency Prediction)      提前编译器"/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="/css/styles.a1d8fc2f132c452937740993f66c1b7a35d39b0774f74823f917c8b66b7795716119b0af416457217bed8e35420077308b167d77d283c319f347c34500e4ca46.css" integrity="sha512-odj8LxMsRSk3dAmT9mwbejXTmwd090gj&#43;RfItmt3lXFhGbCvQWRXIXvtjjVCAHcwixZ9d9KDwxnzR8NFAOTKRg=="> 
+
+  
+  
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="/images/favicon.ico" />
+
+  
+  
+  
+  
+  
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-X1L70M4MM0', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+  
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="/">
+  
+    <div id="logo" style="background-image: url(/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Y.CH.Y</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
+      </li>
+      
+        <li><a href="/">Home</a></li>
+      
+    </ul>
+  </div>
+</header>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X1L70M4MM0"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-X1L70M4MM0', { 'anonymize_ip': false });
+}
+</script>
+
+
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h2 id="后端编译与优化">后端编译与优化</h2>
+<ul>
+<li>
+<p>Java 世界里，虽然提前编译(Ahead Of Time，AOT)早已有所应用，但相对而言，即时编译(Just In Time，JIT)才是占绝对主流的编译形式</p>
+</li>
+<li>
+<p>解释器与编译器</p>
+<ul>
+<li>主流的商用 Java 虚拟机，内部都同时包含解释器与编译器</li>
+<li>解释器与编译器两者各有优势
+<ul>
+<li>当程序需要迅速启动和执行的时候，解释器可以首先发挥作用，省去编译的时间，立即运行</li>
+<li>当程序启动后，随着时间的推移，编译器逐渐发挥作用，把越来越多的代码编译成本地代码，这样可以减少解释器的中间损耗，获得更高的执行效率</li>
+</ul>
+</li>
+<li>解释器还可以作为编译器激进优化时后备的“逃生门”,当激进优化的假设不成立，如加载了新类以后，类型继承结构出现变化、出现“罕见陷阱”(Uncommon Trap)时可以通过逆优化(Deoptimization)退回到解释状态继续执行</li>
+<li>内置即时编译器
+<ul>
+<li>客户端编译器</li>
+<li>服务端编辑器</li>
+<li>实验性 Graal 编译器</li>
+</ul>
+</li>
+<li>解释器与编译器搭配使用的方式在虚拟机中被称为“混合模式”(Mixed Mode)</li>
+<li>分层编译
+<ul>
+<li>第 0 层。程序纯解释执行，并且解释器不开启性能监控功能(Profiling)。</li>
+<li>第 1 层。使用客户端编译器将字节码编译为本地代码来运行，进行简单可靠的稳定优化，不开启性能监控功能。</li>
+<li>第 2 层。仍然使用客户端编译器执行，仅开启方法及回边次数统计等有限的性能监控功能。</li>
+<li>第 3 层。仍然使用客户端编译器执行，开启全部性能监控，除了第 2 层的统计信息外，还会收集如分支跳转、虚方法调用版本等全部的统计信息。</li>
+<li>第 4 层。使用服务端编译器将字节码编译为本地代码，相比起客户端编译器，服务端编译器会启用更多编译耗时更长的优化，还会根据性能监控信息进行一些不可靠的激进优化。</li>
+</ul>
+</li>
+<li>热点代码
+<ul>
+<li>被多次调用的方法。</li>
+<li>被多次执行的循环体。</li>
+</ul>
+</li>
+<li>编译器依然必须以整个方法作为编译对象</li>
+<li>热点探测
+<ul>
+<li>周期性地检查各个线程的调用栈顶，如果发现某个(或某些)方法经常出现在栈顶，那这个方法就是“热点方法”</li>
+<li>基于计数器的热点探测(Counter Based Hot Spot Code Detection)。采用这种方法的虚拟机会为每个方法(甚至是代码块)建立计数器，统计方法的执行次数，如果执行次数超过一定的阈值就认为它是“热点方法”。</li>
+</ul>
+</li>
+<li>回边计数器
+<ul>
+<li>统计一个方法中循环体代码执行的次数</li>
+<li>当解释器遇到一条回边指令时，会先查找将要执行的代码片段是否有已经编译好的版本，如果有的话，它将会优先执行已编译的代码，否则就把回边计数器的值加一，然后判断方法调用计数器与回边计数器值之和是否超过回边计数器的阈值。当超过阈值的时候，将会提交一个栈上替换编译请求，并且把回边计数器的值稍微降低一些，以便继续在解释器中执行循环，等待编译器输出编译结果</li>
+</ul>
+</li>
+<li>编译过程
+<ul>
+<li>在第一个阶段，一个平台独立的前端将字节码构造成一种高级中间代码表</li>
+<li>在第二个阶段，一个平台相关的后端从 HIR 中产生低级中间代码表示</li>
+<li>最后的阶段是在平台相关的后端使用线性扫描算法在 LIR 上分配寄存器，并在 LIR 上做窥孔优化，然后产生机器代码</li>
+</ul>
+</li>
+<li>经典优化手段
+<ul>
+<li>无用代码消除(Dead Code Elimination)</li>
+<li>循环展开 (Loop Unrolling)</li>
+<li>循环表达式外提(Loop Expression Hoisting)</li>
+<li>消除公共子表达式(Common Subexpression Elimination)</li>
+<li>常量传播(Constant Propagation)</li>
+<li>基本块重排序(Basic Block Reordering)</li>
+<li>范围检查消除(Range Check Elimination)</li>
+<li>空值检查消除(Null Check Elimination)</li>
+<li>如守护内联(Guarded Inlining)</li>
+<li>分支频率预测 (Branch Frequency Prediction)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>提前编译器</p>
+<ul>
+<li>提前编译的优劣得失
+<ul>
+<li>现在提前编译产品和对其的研究有着两条明显的分支，一条分支是做与传统 C、C++编译器类似的，在程序运行之前把程序代码编译成机器码的静态翻译工作;另外一条分支是把原本即时编译器在运行时要做的编译工作提前做好并保存下来，下次运行到这些代码(譬如公共库代码在被同一台机器其他 Java 进程使用)时直接把它加载进来使用。</li>
+</ul>
+</li>
+<li>天然优势
+<ul>
+<li>首先，是性能分析制导优化</li>
+<li>其次，是激进预测性优化</li>
+<li>最后，是链接时优化</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>编译器优化技术</p>
+<ul>
+<li>方法内联
+<ul>
+<li>消除方法调用的成本</li>
+<li>为其他优化手段建立良好的基础</li>
+</ul>
+</li>
+<li>逃逸分析
+<ul>
+<li>分析对象动态作用域，当一个对象在方法里面被定义后，它可能被外部方法所引用，例如作为调用参数传递到其他方法中，这种称为方法逃逸;甚至还有可能被外部线程访问到，譬如赋值给可以在其他线程中访问的实例变量，这种称为线程逃逸;从不逃逸、方法逃逸到线程逃逸，称为对象由低到高的不同逃逸程度。</li>
+<li>栈上分配
+<ul>
+<li>在一般应用中，完全不会逃逸的局部对象和不会逃逸出线程的对象所占的比例是很大的，如果能使用栈上分配，那大量的对象就会随着方法的结束而自动销毁了，垃圾收集子系统的压力将会下降很多。栈上分配可以支持方法逃逸，但不能支持线程逃逸。</li>
+</ul>
+</li>
+<li>标量替换:若一个数据已经无法再分解成更小的数据来表示了，Java 虚拟机中的原始数据类型都不能再进一步分解了，那么这些数据就可以被称为标量 。</li>
+<li>同步消除:线程同步本身是一个相对耗时的过程，如果逃逸分析能够确定一个变量不会逃逸出线程，无法被其他线程访问，那么这个变量的读写肯定就不会有竞争，对这个变量实施的同步措施也就可以安全地消除掉。</li>
+</ul>
+</li>
+<li>公共子表达式消除
+<ul>
+<li>如果一个表达式 E 之前已经被计算过了，并且从先前的计算到现在 E 中所有变量的值都没有发生变化，那么 E 的这次出现就称为公共子表达式。对于这种表达式，没有必要花时间再对它重新进行计算，只需要直接用前面计算过的表达式结果代替 E。如果这种优化仅限于程序基本块内，便可称为局部公共子表达式消除，如果这种优化的范围涵盖了多个基本块，那就称为全局公共子表达式消除。</li>
+</ul>
+</li>
+<li>数组边界检查消除
+<ul>
+<li>每次数组元素的读写都带有一次隐含的条件判定操作，对于拥有大量数组访问的程序代码，这必定是一种性能负担。</li>
+<li>数组访问发生在循环之中，并且使用循环变量来进行数组的访问。如果编译器只要通过数据流分析就可以判定循环变量的取值范围永远在区间[0，foo.length)之内，那么在循环中就可以把整个数组的上下界检查消除掉，这可以节省很多次的条件判断操作。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+  <div class="footer-left">
+    Copyright  &copy; 2021  Y.CH.Y 
+    <span id="busuanzi_container_page_pv">Page PV : <span id="busuanzi_value_page_pv"></span></span>
+    <span id="busuanzi_container_site_uv">Site UV : <span id="busuanzi_value_site_uv"></span></span>
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>

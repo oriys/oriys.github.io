@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> 计算机网络自顶向下方法::计算机网络和因特网 | Y.CH.Y</title>
+  <link rel = 'canonical' href = '/post/computer_network_a_topdown_approach_01/'>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="计算机网络自顶向下方法::计算机网络和因特网" />
+<meta property="og:description" content="计算机网络和因特网  什么是因特网  具体构成描述  因特网是一个世界范围的计算机网络，即它是一个互联了遍及全世界数十亿计算设备的网络。 传统 PC、Linux 工作站、服务器、智能手机、平板电脑、电视机、游戏机、家用电器、手表正在与互联网相连，这些设备称为主机或者端系统。 端系统通过通信链路 (communication link) 和分组交换机 (packet switch) 连接到一起 不同的链路能够以不同的速率传输数据，链路的传输速率 (transmission rate) 以比特/秒 (bills, 或 bps) 度量 。 当一台端系统要向另一台端系统发送数据时，发送端系统将数据分段，并为每段加上首部字节。由此形成的信息包用计算机网络的术语来说称为分组(packet)。这些分组通过网络发送到目的端系统，在那里被装配成初始数据。 分组交换器  从它的一条入通信链路接收到达的分组，并从它的一条出通信链路转发该分组 在当今的因特网中，两种最著名的类型是路由器(router)和链路层交换机(link-layer switch) 链路层交换机通常用于接入网中，而路由器通常用于网络核心中。 从发送端系统到接收端系统，一个分组所经历的一系列通信链路和分组交换机称为通过该网络的路径(route 或 path)   ISP  端系统通过因特网服务提供商 (Internet Service Provider, ISP) 接入因特网 每个 ISP 自身就是一个由多台分组交换机和多段通信链路组成的网络。   协议  端系统、分组交换机和其他因特网部件都要运行一系列协议 (protocol), 这些协议控制因特网中信息的接收和发送。 TCP、IP、HTTP、SMTP 协议标准由因特网工程任务组研发，IETF 的标准文档称为请求评论(Request For Comment, RFC)     服务描述  为应用程序提供服务的基础设施 因特网相连的端系统提供了一个套接字接口(socket interface), 该接口规定了运行在一个端系统上的程序请求因特网基础设施向运行在另一个端系统上的特定目的地程序交付数据的方式。   什么是协议  定义了在两个或多个通信实体之间交换的报文的格式和顺序，以及报文发送和/或接收一条报文或其他事件所采取的动作。 因特网中协议无处不在快，不同的协议用于完成不同的通信任务。     网络边缘  与因特网相连的计算机和其他设备称为端系统，它们位于因特网的边缘，因特网的端系统包括了桌面计算机、服务器和移动计算机和非传统联网设备。 端系统被称为主机  运行应用程序，提供服务 主机有时又被进一步划分为两类 :客户(client)和服务器(server)   接入网  将端系统物理连接到其边缘路由器(edge router)的网络。边缘路由器是端系统到任何其他远程端系统的路径上的第一台路由器。 家庭接入: DSL、电缆、 FTTH、拨号和卫星 企业(和家庭)接人: 以太网和 WiFi 广域无线接入: 3/4/5G 和 LTE   物理媒介  双绞铜线 同轴电缆 光线 陆地无线电信道 卫星无线电信号     网络核心  分组交换  在各种网络应用中, 端系统彼此交换报文(message), 报文能够包含协议设计者需要的任何东西,报文可以执行一种控制功能，也可以包含数据， 为了从源端系统向目的端系统发送一个报文, 源将长报文划分为较小的数据块，称之为分组(packet)。 在源和目的地之间，每个分组都通过通信链路和分组交换机(packet switch)传送。 如果某源端系统或分组交换机经过一条链路发送一个 L 比特的分组，链路的传输速率为 R 比特/秒，则传输该分组的时间为 L/R 秒 。   存储转发传输  存储转发传输是指在交换机能够开始向输出链路传输该分组的第一个比特之前，必须接收到整个分组。   排队时延和分组丢失  如果到达的分组需要传输到某条链路，但发现该链路正忙于传输其他分组，该到达分组必须在输出缓存中等待。因此，除了存储转发时延以外，分组还要承受输出缓存的排队时延。 因为缓存空间的大小是有限的，一个到达的分组可能发现该缓存巳被其他等待传输的分组完全充满了。在此情况下，将出现分组丢失(丢包)(packet loss), 到达的分组或已经排队的分组之一将被丢弃 。   转发表和路由选择协议  每台路由器具有一个转发表(forwarding table),用于将目的地址(或目的地址的一部分)映射成为输出链路。当某分组到达一台路由器时，路由器检查该地址，并用这个目的地址搜索其转发表，以发现适当的出链路。路由器则将分组导向该出链路 。 因特网具有一些特殊的路由选择协议，(routing protocol) ,用于自动地设置这些转发表。   电路交换  在电路交换网络中，在端系统间通信会话期间，预留了端系统间沿路径通信所需要的资源(缓存，链路传输速率) 在分组交换网络中." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/computer_network_a_topdown_approach_01/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-06-15T20:26:06+08:00" />
+<meta property="article:modified_time" content="2021-06-15T20:26:06+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="计算机网络自顶向下方法::计算机网络和因特网"/>
+<meta name="twitter:description" content="计算机网络和因特网  什么是因特网  具体构成描述  因特网是一个世界范围的计算机网络，即它是一个互联了遍及全世界数十亿计算设备的网络。 传统 PC、Linux 工作站、服务器、智能手机、平板电脑、电视机、游戏机、家用电器、手表正在与互联网相连，这些设备称为主机或者端系统。 端系统通过通信链路 (communication link) 和分组交换机 (packet switch) 连接到一起 不同的链路能够以不同的速率传输数据，链路的传输速率 (transmission rate) 以比特/秒 (bills, 或 bps) 度量 。 当一台端系统要向另一台端系统发送数据时，发送端系统将数据分段，并为每段加上首部字节。由此形成的信息包用计算机网络的术语来说称为分组(packet)。这些分组通过网络发送到目的端系统，在那里被装配成初始数据。 分组交换器  从它的一条入通信链路接收到达的分组，并从它的一条出通信链路转发该分组 在当今的因特网中，两种最著名的类型是路由器(router)和链路层交换机(link-layer switch) 链路层交换机通常用于接入网中，而路由器通常用于网络核心中。 从发送端系统到接收端系统，一个分组所经历的一系列通信链路和分组交换机称为通过该网络的路径(route 或 path)   ISP  端系统通过因特网服务提供商 (Internet Service Provider, ISP) 接入因特网 每个 ISP 自身就是一个由多台分组交换机和多段通信链路组成的网络。   协议  端系统、分组交换机和其他因特网部件都要运行一系列协议 (protocol), 这些协议控制因特网中信息的接收和发送。 TCP、IP、HTTP、SMTP 协议标准由因特网工程任务组研发，IETF 的标准文档称为请求评论(Request For Comment, RFC)     服务描述  为应用程序提供服务的基础设施 因特网相连的端系统提供了一个套接字接口(socket interface), 该接口规定了运行在一个端系统上的程序请求因特网基础设施向运行在另一个端系统上的特定目的地程序交付数据的方式。   什么是协议  定义了在两个或多个通信实体之间交换的报文的格式和顺序，以及报文发送和/或接收一条报文或其他事件所采取的动作。 因特网中协议无处不在快，不同的协议用于完成不同的通信任务。     网络边缘  与因特网相连的计算机和其他设备称为端系统，它们位于因特网的边缘，因特网的端系统包括了桌面计算机、服务器和移动计算机和非传统联网设备。 端系统被称为主机  运行应用程序，提供服务 主机有时又被进一步划分为两类 :客户(client)和服务器(server)   接入网  将端系统物理连接到其边缘路由器(edge router)的网络。边缘路由器是端系统到任何其他远程端系统的路径上的第一台路由器。 家庭接入: DSL、电缆、 FTTH、拨号和卫星 企业(和家庭)接人: 以太网和 WiFi 广域无线接入: 3/4/5G 和 LTE   物理媒介  双绞铜线 同轴电缆 光线 陆地无线电信道 卫星无线电信号     网络核心  分组交换  在各种网络应用中, 端系统彼此交换报文(message), 报文能够包含协议设计者需要的任何东西,报文可以执行一种控制功能，也可以包含数据， 为了从源端系统向目的端系统发送一个报文, 源将长报文划分为较小的数据块，称之为分组(packet)。 在源和目的地之间，每个分组都通过通信链路和分组交换机(packet switch)传送。 如果某源端系统或分组交换机经过一条链路发送一个 L 比特的分组，链路的传输速率为 R 比特/秒，则传输该分组的时间为 L/R 秒 。   存储转发传输  存储转发传输是指在交换机能够开始向输出链路传输该分组的第一个比特之前，必须接收到整个分组。   排队时延和分组丢失  如果到达的分组需要传输到某条链路，但发现该链路正忙于传输其他分组，该到达分组必须在输出缓存中等待。因此，除了存储转发时延以外，分组还要承受输出缓存的排队时延。 因为缓存空间的大小是有限的，一个到达的分组可能发现该缓存巳被其他等待传输的分组完全充满了。在此情况下，将出现分组丢失(丢包)(packet loss), 到达的分组或已经排队的分组之一将被丢弃 。   转发表和路由选择协议  每台路由器具有一个转发表(forwarding table),用于将目的地址(或目的地址的一部分)映射成为输出链路。当某分组到达一台路由器时，路由器检查该地址，并用这个目的地址搜索其转发表，以发现适当的出链路。路由器则将分组导向该出链路 。 因特网具有一些特殊的路由选择协议，(routing protocol) ,用于自动地设置这些转发表。   电路交换  在电路交换网络中，在端系统间通信会话期间，预留了端系统间沿路径通信所需要的资源(缓存，链路传输速率) 在分组交换网络中."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="/css/styles.a1d8fc2f132c452937740993f66c1b7a35d39b0774f74823f917c8b66b7795716119b0af416457217bed8e35420077308b167d77d283c319f347c34500e4ca46.css" integrity="sha512-odj8LxMsRSk3dAmT9mwbejXTmwd090gj&#43;RfItmt3lXFhGbCvQWRXIXvtjjVCAHcwixZ9d9KDwxnzR8NFAOTKRg=="> 
+
+  
+  
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="/images/favicon.ico" />
+
+  
+  
+  
+  
+  
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-X1L70M4MM0', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+  
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="/">
+  
+    <div id="logo" style="background-image: url(/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Y.CH.Y</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
+      </li>
+      
+        <li><a href="/">Home</a></li>
+      
+    </ul>
+  </div>
+</header>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X1L70M4MM0"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-X1L70M4MM0', { 'anonymize_ip': false });
+}
+</script>
+
+
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h2 id="计算机网络和因特网">计算机网络和因特网</h2>
+<ul>
+<li>什么是因特网
+<ul>
+<li>具体构成描述
+<ul>
+<li>因特网是一个世界范围的计算机网络，即它是一个互联了遍及全世界数十亿计算设备的网络。</li>
+<li>传统 PC、Linux 工作站、服务器、智能手机、平板电脑、电视机、游戏机、家用电器、手表正在与互联网相连，这些设备称为主机或者端系统。</li>
+<li>端系统通过通信链路 (communication link) 和分组交换机 (packet switch) 连接到一起</li>
+<li>不同的链路能够以不同的速率传输数据，链路的传输速率 (transmission rate) 以比特/秒 (bills, 或 bps) 度量 。</li>
+<li>当一台端系统要向另一台端系统发送数据时，发送端系统将数据分段，并为每段加上首部字节。由此形成的信息包用计算机网络的术语来说称为分组(packet)。这些分组通过网络发送到目的端系统，在那里被装配成初始数据。</li>
+<li>分组交换器
+<ul>
+<li>从它的一条入通信链路接收到达的分组，并从它的一条出通信链路转发该分组</li>
+<li>在当今的因特网中，两种最著名的类型是路由器(router)和链路层交换机(link-layer switch)</li>
+<li>链路层交换机通常用于接入网中，而路由器通常用于网络核心中。</li>
+<li>从发送端系统到接收端系统，一个分组所经历的一系列通信链路和分组交换机称为通过该网络的路径(route 或 path)</li>
+</ul>
+</li>
+<li>ISP
+<ul>
+<li>端系统通过因特网服务提供商 (Internet Service Provider, ISP) 接入因特网</li>
+<li>每个 ISP 自身就是一个由多台分组交换机和多段通信链路组成的网络。</li>
+</ul>
+</li>
+<li>协议
+<ul>
+<li>端系统、分组交换机和其他因特网部件都要运行一系列协议 (protocol), 这些协议控制因特网中信息的接收和发送。</li>
+<li>TCP、IP、HTTP、SMTP</li>
+<li>协议标准由因特网工程任务组研发，IETF 的标准文档称为请求评论(Request For Comment, RFC)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>服务描述
+<ul>
+<li>为应用程序提供服务的基础设施</li>
+<li>因特网相连的端系统提供了一个套接字接口(socket interface), 该接口规定了运行在一个端系统上的程序请求因特网基础设施向运行在另一个端系统上的特定目的地程序交付数据的方式。</li>
+</ul>
+</li>
+<li>什么是协议
+<ul>
+<li>定义了在两个或多个通信实体之间交换的报文的格式和顺序，以及报文发送和/或接收一条报文或其他事件所采取的动作。</li>
+<li>因特网中协议无处不在快，不同的协议用于完成不同的通信任务。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>网络边缘
+<ul>
+<li>与因特网相连的计算机和其他设备称为端系统，它们位于因特网的边缘，因特网的端系统包括了桌面计算机、服务器和移动计算机和非传统联网设备。</li>
+<li>端系统被称为主机
+<ul>
+<li>运行应用程序，提供服务</li>
+<li>主机有时又被进一步划分为两类 :客户(client)和服务器(server)</li>
+</ul>
+</li>
+<li>接入网
+<ul>
+<li>将端系统物理连接到其边缘路由器(edge router)的网络。边缘路由器是端系统到任何其他远程端系统的路径上的第一台路由器。</li>
+<li>家庭接入: DSL、电缆、 FTTH、拨号和卫星</li>
+<li>企业(和家庭)接人: 以太网和 WiFi</li>
+<li>广域无线接入: 3/4/5G 和 LTE</li>
+</ul>
+</li>
+<li>物理媒介
+<ul>
+<li>双绞铜线</li>
+<li>同轴电缆</li>
+<li>光线</li>
+<li>陆地无线电信道</li>
+<li>卫星无线电信号</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>网络核心
+<ul>
+<li>分组交换
+<ul>
+<li>在各种网络应用中, 端系统彼此交换报文(message), 报文能够包含协议设计者需要的任何东西,报文可以执行一种控制功能，也可以包含数据，</li>
+<li>为了从源端系统向目的端系统发送一个报文, 源将长报文划分为较小的数据块，称之为分组(packet)。</li>
+<li>在源和目的地之间，每个分组都通过通信链路和分组交换机(packet switch)传送。</li>
+<li>如果某源端系统或分组交换机经过一条链路发送一个 L 比特的分组，链路的传输速率为 R 比特/秒，则传输该分组的时间为 L/R 秒 。</li>
+</ul>
+</li>
+<li>存储转发传输
+<ul>
+<li>存储转发传输是指在交换机能够开始向输出链路传输该分组的第一个比特之前，必须接收到整个分组。</li>
+</ul>
+</li>
+<li>排队时延和分组丢失
+<ul>
+<li>如果到达的分组需要传输到某条链路，但发现该链路正忙于传输其他分组，该到达分组必须在输出缓存中等待。因此，除了存储转发时延以外，分组还要承受输出缓存的排队时延。</li>
+<li>因为缓存空间的大小是有限的，一个到达的分组可能发现该缓存巳被其他等待传输的分组完全充满了。在此情况下，将出现分组丢失(丢包)(packet loss), 到达的分组或已经排队的分组之一将被丢弃 。</li>
+</ul>
+</li>
+<li>转发表和路由选择协议
+<ul>
+<li>每台路由器具有一个转发表(forwarding table),用于将目的地址(或目的地址的一部分)映射成为输出链路。当某分组到达一台路由器时，路由器检查该地址，并用这个目的地址搜索其转发表，以发现适当的出链路。路由器则将分组导向该出链路 。</li>
+<li>因特网具有一些特殊的路由选择协议，(routing protocol) ,用于自动地设置这些转发表。</li>
+</ul>
+</li>
+<li>电路交换
+<ul>
+<li>在电路交换网络中，在端系统间通信会话期间，预留了端系统间沿路径通信所需要的资源(缓存，链路传输速率)</li>
+<li>在分组交换网络中.这些资源则不是预留的;会话的报文按需使用这些资源，其后果可能是不得不等待(即排队)接入通信线路 。</li>
+<li>传统的电话网络是电路交换的例子。</li>
+<li>电路交换网络中的复用
+<ul>
+<li>频分复用，链路的频谱由跨越链路创建的所有连接共享，不够经济。</li>
+<li>时分复用，时间被划分为固定期间的帧，并且每个帧又被划分为固定数量的时隙。当网络跨越一条链路创建一条连接时，网络在每个帧中为该连接指定一个时隙，这些时隙专门由该连接单独使用，一个时隙(在每个帧内)可用于传输该连接的数据。</li>
+</ul>
+</li>
+<li>分组交换于电路交换的对比
+<ul>
+<li>电路交换不考虑需求，而预先分配了传输链路的使用，这使得巳分配而并不需要的链路时间未被利用，另一方面，分组交换按需分配链路使用。链路传输能力将在所有需要在链路上传输分组的用户之间逐分组地被共享。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>网络的网络
+<ul>
+<li>今天的因特网是一个网络的网络，其结构复杂，由十多个第一层 ISP 和数十万个较低层 ISP 组成。ISP 覆盖的区域多种多样，有些跨越多个大洲和大洋，有些限于狭窄的地理区域。较低层的 ISP 与较高层的 ISP 相连，较高层 ISP 彼此互联。用户和内容提供商是较低层 ISP 的客户，较低层 ISP 是较高层 ISP 的客户。近年来，主要的内容提供商也已经创建自己的网络，直接在可能的地方与较低层 ISP 互联。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>分组交换网中的时延、丢包和吞吐量
+<ul>
+<li>分组交换网中的时延概述
+<ul>
+<li>时延的类型
+<ul>
+<li>处理时延：检查分组首部，决定分组路由，检查比特级别差错，微秒或更低的数量级别。</li>
+<li>排队时延：一个特定分组的排队时延长度将取决于先期到达的正在排队等待向链路传输的分组数量，实际的排队时延可以是毫秒到微秒量级。</li>
+<li>传输时延：将所有分组的比特推向链路(即传输，或者说发射)所需要的时间。实际的传输时延通常在毫秒到微秒量级。</li>
+<li>传播时延：从该链路的起点到路由器传播所需要的时间是传播时延，在广域网中，传播时延为毫秒级别。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>排队时延和丢包
+<ul>
+<li>排队时延对不同的分组可能是不同的。</li>
+<li>传输的第一个分组没有排队时延，而传输的最后一个分组将经受相对大的排队时延</li>
+<li>当表征排队时延时，人们通常使用统计量来度量，如平均排队时延排队时延的方差和排队时延超过某些特定值的概率</li>
+<li>如果分组以突发形式到达而不是周期性到达，则可能会有很大的平均排队时延 。</li>
+<li>随着流量强度接近于 1，平均排队时延迅速增加。该强度的少量增加将导致时延大比例增加 。</li>
+<li>当分组到达路由器，路由器没有地方存储这个分组，就会丢弃 (drop) 该分组，即该分组将会丢失 (lost)。丢失的分组可能基于端到端的原则重传，以确保所有的数据最终从源传送到了目的地。</li>
+</ul>
+</li>
+<li>端到端时延
+<ul>
+<li>端到端的时延是之间每一跳的时延总和</li>
+<li>Traceout 可用来跟踪中间每一跳的时延</li>
+<li>端系统、应用程序和其他时延：协议有意的时延，VoIP 分组时延。</li>
+</ul>
+</li>
+<li>计算机网络中的吞吐量
+<ul>
+<li>在任何时间瞬间的瞬时吞吐量(instantaneous throughput) 是主机接收到该文件的速率</li>
+<li>如果该文件由 F 比特组成，主机 B 接收到所有 F 比特用去 T 秒，则文件传送的平均吞吐量 (average throughput) 是 F/Tbps</li>
+<li>当没有其他干扰流最时，其吞吐量能够近似为沿着源和目的地之间路径的最小传输速率 。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>协议层次及其服务模型
+<ul>
+<li>分层的体系结构
+<ul>
+<li>一个协议层能够用软件、硬件或两者的结合来实现</li>
+<li>各层的所有协议被称为协议栈。因特网的协议栈由 5 个层次组成:物理层、链路层 、网络层、运输层和应用层。</li>
+<li>应用层：应用层是网络应用程序及它们的应用层协议存留的地方，包括了 HTTP，SMTP 和 FTP。应用层协议分布在多个端系统上，而一个端系统中的应用程序使用协议与另一个端系统中的应用程序交换信息分组。我们把这种位于应用层的信息分组称为报文 (message)。</li>
+<li>传输层：因特网的运输层在应用程序端点之间传送应用层报文。 在因特网中，有两种运输协议，即 TCP 和 UDP, 利用其中的任一个都能运输应用层报文 。 TCP 向它的应用程序提供了面向连接的服务。这种服务包括了应用层报文向目的地的确保传递和流量控制。 UDP 协议向它的应用程序提供无连接服务。这是一种不提供不必要服务的服务，没有可靠性，没有流量控制，也没有拥塞控制。</li>
+<li>网络层：因特网的网络层负责将称为数据报 (datagram) 的网络层分组从一台主机移动到另一台主机。</li>
+<li>链路层：因特网的网络层通过源和目的地之间的一系列路由器路由数据报。网络层将数据报下传给链路层，链路层沿着路径将数据报传递给下一个节点。在该下一个节点，链路层将数据报上传给网络层。我们把链路层分组称为帧。</li>
+<li>物理层：物理层的任务是将帧中的一个个比特从一个节点移动到下一个节点。</li>
+</ul>
+</li>
+<li>OSI 模型
+<ul>
+<li>应用层、表示层、会话层、运输层、网络层、数据链路层和物理层。</li>
+<li>表示层的作用是使通信的应用程序能够解释交换数据的含义。这些服务包括数据压缩和数据加密(它们是自解释的)以及数据描述(这使得应用程序不必担心在各台计算机中表示/存储的内部格式不同的问题)。</li>
+<li>会话层提供了数据交换的定界和同步功能，包括了建立检查点和恢复方案的方法 。</li>
+</ul>
+</li>
+<li>封装
+<ul>
+<li>在发送主机端，一个应用层报文 (application-layer message) 被传送给运输层。</li>
+<li>运输层收取到报文并附上附加信息(所谓运输层首部信息)该首部将被接收端的运输层使用。应用层报文和运输层首部信息一道构成了运输层报文段(transport­ layer segment)。运输层报文段因此封装了应用层报文。附加的信息也许包括了下列信息:允许接收端运输层向上向适当的应用程序交付报文的信息;差错检测位信息，该信息让接收方能够判断报文中的比特是否在途中已被改变。</li>
+<li>运输层则向网络层传递该报文段，网络层增加了如源和目的端系统地址等网络层首部信息,生成了网络层数据报 (network-layer datagram) 。</li>
+<li>该数据报接下来被传递给链路层，链路层增加它自己的链路层首部信息并生成链路层帧(link-layer frame) 。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>面对网络攻击
+<ul>
+<li>恶意软件，僵尸网络，自我复制，病毒，蠕虫</li>
+<li>DoS 攻击
+<ul>
+<li>弱点攻击。这涉及向一台目标主机上运行的易受攻击的应用程序或操作系统发送制作精细的报文。</li>
+<li>带宽洪泛。攻击者向目标主机发送大量的分组，分组数量之多使得目标的接入链路变得拥塞，使得合法的分组无法到达服务器 。</li>
+<li>连接洪泛。攻击者在目标主机中创建大量的半开或全开 TCP 连接。该主机因这些伪造的连接而陷入困境，并停止接受合法的连接 。</li>
+</ul>
+</li>
+<li>嗅探分组
+<ul>
+<li>在无线传输设备的附近放置一台被动的接收机，该接收机就能得到传输的每个分组的副本!这些分组包含了各种敏感信息，包括口令、社会保险号、商业秘密和隐秘的个人信息。记录每个流经的分组副本的被动接收机被称为分组嗅探器。</li>
+<li>嗅探器也能够部署在有线环境中。</li>
+</ul>
+</li>
+<li>IP 哄骗
+<ul>
+<li>将具有虚假源地址的分组注入因特网的。生成具有任意源地址、分组内容和目的地址的分组，然后将这个人工制作的分组传输 到因特网中，因特网将忠实地将该分组转发到目的地。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>计算机网络和因特网的历史
+<ul>
+<li>分组交换的发展: 1961 ~ 1972</li>
+<li>专用网络和网络互联: 1972 ~ 1980</li>
+<li>网络的激增: 1980 ~ 1990</li>
+<li>因特网爆炸: 20 世纪 90 年代到现在</li>
+</ul>
+</li>
+</ul>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+  <div class="footer-left">
+    Copyright  &copy; 2021  Y.CH.Y 
+    <span id="busuanzi_container_page_pv">Page PV : <span id="busuanzi_value_page_pv"></span></span>
+    <span id="busuanzi_container_site_uv">Site UV : <span id="busuanzi_value_site_uv"></span></span>
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>
