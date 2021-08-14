@@ -1,113 +1,54 @@
-<!DOCTYPE html>
-<html lang="en-us">
+<!doctype html><html lang=en-us>
 <head>
-  <link rel="preload" href="/lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="/lib/font-awesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="/lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title> Kafka::基础 | Y.CH.Y</title>
-  <link rel = 'canonical' href = '/post/kafka_basic/'>
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="all,follow">
-  <meta name="googlebot" content="index,follow,snippet,archive">
-  <meta property="og:title" content="Kafka::基础" />
-<meta property="og:description" content="入门  定义  Apache Kafka 是一款开源的消息引擎系统。根据维基百科的定义，消息引擎系统是一组规范。企业利用这组规范在不同系统之间传递语义准确的消息，实现松耦合的异步式数据传递。   特点  消息引擎传输的对象是消息 传输消息属于消息引擎设计机制的一部分   消息编码格式  CSV XML JSON Google 的 Protocol Buffer Facebook 的 Thrift 结构化的二进制字节序列   消息传输协议  点对点模型 发布/订阅模型   功能  削峰填谷：缓冲上下游瞬时突发流量，使其更平滑过度给下游 发送方和接收方的松耦合：简化应用开发，减少了系统不必要的交互   术语  消息：Record。Kafka 是消息引擎嘛，这里的消息就是指 Kafka 处理的主要对象。 主题：Topic。主题是承载消息的逻辑容器，在实际使用中多用来区分具体的业务。 分区：Partition。一个有序不变的消息序列。每个主题下可以有多个分区。 消息位移：Offset。表示分区中每条消息的位置信息，是一个单调递增且不变的值。 副本：Replica。Kafka 中同一条消息能够被拷贝到多个地方以提供数据冗余，这些地方就是所谓的副本。副本还分为领导者副本和追随者副本，各自有不同的角色划分。副本是在分区层级下的，即每个分区可配置多个副本实现高可用。 生产者：Producer。向主题发布新消息的应用程序。 消费者：Consumer。从主题订阅新消息的应用程序。 消费者位移：Consumer Offset。表征消费者消费进度，每个消费者都有自己的消费者位移。 消费者组：Consumer Group。多个消费者实例共同组成的一个组，同时消费多个分区以实现高吞吐。 重平衡：Rebalance。消费者组内某个消费者实例挂掉后，其他消费者实例自动重新分配订阅主题分区的过程。Rebalance 是 Kafka 消费者端实现高可用的重要手段。   分布式流处理平台  研发背景  数据正确性不足，Polling 导致数据偏差 系统高度定制化，维护成本高   特性  提供一套 API 实现生产者和消费者 降低网络传输和磁盘存储开销 实现高伸缩性架构   优势  更容易实现端到端的正确性，Kafka 可以实现端到端的精确一次处理语义 更开放的流式计算定位，Kafka Streams 是一个用于搭建实时流处理的客户端库而非是一个完整的功能系统 用作分布式存储     版本选择  Apache Kafka，也称社区版 Kafka。优势在于迭代速度快，社区响应度高，使用它可以让你有更高的把控度；缺陷在于仅提供基础核心组件，缺失一些高级的特性。 Confluent Kafka，Confluent 公司提供的 Kafka。优势在于集成了很多高级特性且由 Kafka 原班人马打造，质量上有保证；缺陷在于相关文档资料不全，普及率较低，没有太多可供参考的范例。 CDH/HDP Kafka，大数据云公司提供的 Kafka，内嵌 Apache Kafka。优势在于操作简单，节省运维成本；缺陷在于把控度低，演进速度较慢。    基本使用  部署环境  操作系统  Linux：高效的 I/O 性能、Linux 实现了零拷贝的数据传输、Kafka 更重视 Linux 社区   磁盘  追求性价比的公司可以不搭建 RAID，使用普通磁盘组成存储空间即可 使用机械磁盘完全能够胜任 Kafka 线上环境   磁盘容量  新增消息数 消息留存时间 平均消息大小 备份数 是否启用压缩   带宽  预留三分一空闲带宽     重要的配置  Broker 端参数  log." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="/post/kafka_basic/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2021-08-11T03:52:05+08:00" />
-<meta property="article:modified_time" content="2021-08-11T03:52:05+08:00" />
-
-
-  <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Kafka::基础"/>
-<meta name="twitter:description" content="入门  定义  Apache Kafka 是一款开源的消息引擎系统。根据维基百科的定义，消息引擎系统是一组规范。企业利用这组规范在不同系统之间传递语义准确的消息，实现松耦合的异步式数据传递。   特点  消息引擎传输的对象是消息 传输消息属于消息引擎设计机制的一部分   消息编码格式  CSV XML JSON Google 的 Protocol Buffer Facebook 的 Thrift 结构化的二进制字节序列   消息传输协议  点对点模型 发布/订阅模型   功能  削峰填谷：缓冲上下游瞬时突发流量，使其更平滑过度给下游 发送方和接收方的松耦合：简化应用开发，减少了系统不必要的交互   术语  消息：Record。Kafka 是消息引擎嘛，这里的消息就是指 Kafka 处理的主要对象。 主题：Topic。主题是承载消息的逻辑容器，在实际使用中多用来区分具体的业务。 分区：Partition。一个有序不变的消息序列。每个主题下可以有多个分区。 消息位移：Offset。表示分区中每条消息的位置信息，是一个单调递增且不变的值。 副本：Replica。Kafka 中同一条消息能够被拷贝到多个地方以提供数据冗余，这些地方就是所谓的副本。副本还分为领导者副本和追随者副本，各自有不同的角色划分。副本是在分区层级下的，即每个分区可配置多个副本实现高可用。 生产者：Producer。向主题发布新消息的应用程序。 消费者：Consumer。从主题订阅新消息的应用程序。 消费者位移：Consumer Offset。表征消费者消费进度，每个消费者都有自己的消费者位移。 消费者组：Consumer Group。多个消费者实例共同组成的一个组，同时消费多个分区以实现高吞吐。 重平衡：Rebalance。消费者组内某个消费者实例挂掉后，其他消费者实例自动重新分配订阅主题分区的过程。Rebalance 是 Kafka 消费者端实现高可用的重要手段。   分布式流处理平台  研发背景  数据正确性不足，Polling 导致数据偏差 系统高度定制化，维护成本高   特性  提供一套 API 实现生产者和消费者 降低网络传输和磁盘存储开销 实现高伸缩性架构   优势  更容易实现端到端的正确性，Kafka 可以实现端到端的精确一次处理语义 更开放的流式计算定位，Kafka Streams 是一个用于搭建实时流处理的客户端库而非是一个完整的功能系统 用作分布式存储     版本选择  Apache Kafka，也称社区版 Kafka。优势在于迭代速度快，社区响应度高，使用它可以让你有更高的把控度；缺陷在于仅提供基础核心组件，缺失一些高级的特性。 Confluent Kafka，Confluent 公司提供的 Kafka。优势在于集成了很多高级特性且由 Kafka 原班人马打造，质量上有保证；缺陷在于相关文档资料不全，普及率较低，没有太多可供参考的范例。 CDH/HDP Kafka，大数据云公司提供的 Kafka，内嵌 Apache Kafka。优势在于操作简单，节省运维成本；缺陷在于把控度低，演进速度较慢。    基本使用  部署环境  操作系统  Linux：高效的 I/O 性能、Linux 实现了零拷贝的数据传输、Kafka 更重视 Linux 社区   磁盘  追求性价比的公司可以不搭建 RAID，使用普通磁盘组成存储空间即可 使用机械磁盘完全能够胜任 Kafka 线上环境   磁盘容量  新增消息数 消息留存时间 平均消息大小 备份数 是否启用压缩   带宽  预留三分一空闲带宽     重要的配置  Broker 端参数  log."/>
-
-  
-  
-    
-  
-  
-  <link rel="stylesheet" href="/css/styles.a1d8fc2f132c452937740993f66c1b7a35d39b0774f74823f917c8b66b7795716119b0af416457217bed8e35420077308b167d77d283c319f347c34500e4ca46.css" integrity="sha512-odj8LxMsRSk3dAmT9mwbejXTmwd090gj&#43;RfItmt3lXFhGbCvQWRXIXvtjjVCAHcwixZ9d9KDwxnzR8NFAOTKRg=="> 
-
-  
-  
-  
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  
-
-  
-<link rel="icon" type="image/png" href="/images/favicon.ico" />
-
-  
-  
-  
-  
-  
-    
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'G-X1L70M4MM0', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-  
-  
+<link rel=preload href=/lib/font-awesome/webfonts/fa-brands-400.woff2 as=font type=font/woff2 crossorigin=anonymous>
+<link rel=preload href=/lib/font-awesome/webfonts/fa-regular-400.woff2 as=font type=font/woff2 crossorigin=anonymous>
+<link rel=preload href=/lib/font-awesome/webfonts/fa-solid-900.woff2 as=font type=font/woff2 crossorigin=anonymous>
+<link rel=preload href=/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2 as=font type=font/woff2 crossorigin=anonymous>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<title> Kafka::基础 | Y.CH.Y</title>
+<link rel=canonical href=/post/kafka_basic/>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="all,follow">
+<meta name=googlebot content="index,follow,snippet,archive">
+<meta property="og:title" content="Kafka::基础">
+<meta property="og:description" content="入门  定义  Apache Kafka 是一款开源的消息引擎系统。根据维基百科的定义，消息引擎系统是一组规范。企业利用这组规范在不同系统之间传递语义准确的消息，实现松耦合的异步式数据传递。   特点  消息引擎传输的对象是消息 传输消息属于消息引擎设计机制的一部分   消息编码格式  CSV XML JSON Google 的 Protocol Buffer Facebook 的 Thrift 结构化的二进制字节序列   消息传输协议  点对点模型 发布/订阅模型   功能  削峰填谷：缓冲上下游瞬时突发流量，使其更平滑过度给下游 发送方和接收方的松耦合：简化应用开发，减少了系统不必要的交互   术语  消息：Record。Kafka 是消息引擎嘛，这里的消息就是指 Kafka 处理的主要对象。 主题：Topic。主题是承载消息的逻辑容器，在实际使用中多用来区分具体的业务。 分区：Partition。一个有序不变的消息序列。每个主题下可以有多个分区。 消息位移：Offset。表示分区中每条消息的位置信息，是一个单调递增且不变的值。 副本：Replica。Kafka 中同一条消息能够被拷贝到多个地方以提供数据冗余，这些地方就是所谓的副本。副本还分为领导者副本和追随者副本，各自有不同的角色划分。副本是在分区层级下的，即每个分区可配置多个副本实现高可用。 生产者：Producer。向主题发布新消息的应用程序。 消费者：Consumer。从主题订阅新消息的应用程序。 消费者位移：Consumer Offset。表征消费者消费进度，每个消费者都有自己的消费者位移。 消费者组：Consumer Group。多个消费者实例共同组成的一个组，同时消费多个分区以实现高吞吐。 重平衡：Rebalance。消费者组内某个消费者实例挂掉后，其他消费者实例自动重新分配订阅主题分区的过程。Rebalance 是 Kafka 消费者端实现高可用的重要手段。   分布式流处理平台  研发背景  数据正确性不足，Polling 导致数据偏差 系统高度定制化，维护成本高   特性  提供一套 API 实现生产者和消费者 降低网络传输和磁盘存储开销 实现高伸缩性架构   优势  更容易实现端到端的正确性，Kafka 可以实现端到端的精确一次处理语义 更开放的流式计算定位，Kafka Streams 是一个用于搭建实时流处理的客户端库而非是一个完整的功能系统 用作分布式存储     版本选择  Apache Kafka，也称社区版 Kafka。优势在于迭代速度快，社区响应度高，使用它可以让你有更高的把控度；缺陷在于仅提供基础核心组件，缺失一些高级的特性。 Confluent Kafka，Confluent 公司提供的 Kafka。优势在于集成了很多高级特性且由 Kafka 原班人马打造，质量上有保证；缺陷在于相关文档资料不全，普及率较低，没有太多可供参考的范例。 CDH/HDP Kafka，大数据云公司提供的 Kafka，内嵌 Apache Kafka。优势在于操作简单，节省运维成本；缺陷在于把控度低，演进速度较慢。    基本使用  部署环境  操作系统  Linux：高效的 I/O 性能、Linux 实现了零拷贝的数据传输、Kafka 更重视 Linux 社区   磁盘  追求性价比的公司可以不搭建 RAID，使用普通磁盘组成存储空间即可 使用机械磁盘完全能够胜任 Kafka 线上环境   磁盘容量  新增消息数 消息留存时间 平均消息大小 备份数 是否启用压缩   带宽  预留三分一空闲带宽     重要的配置  Broker 端参数  log.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/post/kafka_basic/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2021-08-11T03:52:05+08:00">
+<meta property="article:modified_time" content="2021-08-11T03:52:05+08:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Kafka::基础">
+<meta name=twitter:description content="入门  定义  Apache Kafka 是一款开源的消息引擎系统。根据维基百科的定义，消息引擎系统是一组规范。企业利用这组规范在不同系统之间传递语义准确的消息，实现松耦合的异步式数据传递。   特点  消息引擎传输的对象是消息 传输消息属于消息引擎设计机制的一部分   消息编码格式  CSV XML JSON Google 的 Protocol Buffer Facebook 的 Thrift 结构化的二进制字节序列   消息传输协议  点对点模型 发布/订阅模型   功能  削峰填谷：缓冲上下游瞬时突发流量，使其更平滑过度给下游 发送方和接收方的松耦合：简化应用开发，减少了系统不必要的交互   术语  消息：Record。Kafka 是消息引擎嘛，这里的消息就是指 Kafka 处理的主要对象。 主题：Topic。主题是承载消息的逻辑容器，在实际使用中多用来区分具体的业务。 分区：Partition。一个有序不变的消息序列。每个主题下可以有多个分区。 消息位移：Offset。表示分区中每条消息的位置信息，是一个单调递增且不变的值。 副本：Replica。Kafka 中同一条消息能够被拷贝到多个地方以提供数据冗余，这些地方就是所谓的副本。副本还分为领导者副本和追随者副本，各自有不同的角色划分。副本是在分区层级下的，即每个分区可配置多个副本实现高可用。 生产者：Producer。向主题发布新消息的应用程序。 消费者：Consumer。从主题订阅新消息的应用程序。 消费者位移：Consumer Offset。表征消费者消费进度，每个消费者都有自己的消费者位移。 消费者组：Consumer Group。多个消费者实例共同组成的一个组，同时消费多个分区以实现高吞吐。 重平衡：Rebalance。消费者组内某个消费者实例挂掉后，其他消费者实例自动重新分配订阅主题分区的过程。Rebalance 是 Kafka 消费者端实现高可用的重要手段。   分布式流处理平台  研发背景  数据正确性不足，Polling 导致数据偏差 系统高度定制化，维护成本高   特性  提供一套 API 实现生产者和消费者 降低网络传输和磁盘存储开销 实现高伸缩性架构   优势  更容易实现端到端的正确性，Kafka 可以实现端到端的精确一次处理语义 更开放的流式计算定位，Kafka Streams 是一个用于搭建实时流处理的客户端库而非是一个完整的功能系统 用作分布式存储     版本选择  Apache Kafka，也称社区版 Kafka。优势在于迭代速度快，社区响应度高，使用它可以让你有更高的把控度；缺陷在于仅提供基础核心组件，缺失一些高级的特性。 Confluent Kafka，Confluent 公司提供的 Kafka。优势在于集成了很多高级特性且由 Kafka 原班人马打造，质量上有保证；缺陷在于相关文档资料不全，普及率较低，没有太多可供参考的范例。 CDH/HDP Kafka，大数据云公司提供的 Kafka，内嵌 Apache Kafka。优势在于操作简单，节省运维成本；缺陷在于把控度低，演进速度较慢。    基本使用  部署环境  操作系统  Linux：高效的 I/O 性能、Linux 实现了零拷贝的数据传输、Kafka 更重视 Linux 社区   磁盘  追求性价比的公司可以不搭建 RAID，使用普通磁盘组成存储空间即可 使用机械磁盘完全能够胜任 Kafka 线上环境   磁盘容量  新增消息数 消息留存时间 平均消息大小 备份数 是否启用压缩   带宽  预留三分一空闲带宽     重要的配置  Broker 端参数  log.">
+<link rel=stylesheet href=/css/styles.a1d8fc2f132c452937740993f66c1b7a35d39b0774f74823f917c8b66b7795716119b0af416457217bed8e35420077308b167d77d283c319f347c34500e4ca46.css integrity="sha512-odj8LxMsRSk3dAmT9mwbejXTmwd090gj+RfItmt3lXFhGbCvQWRXIXvtjjVCAHcwixZ9d9KDwxnzR8NFAOTKRg=="><!--[if lt IE 9]><script src=https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js></script>
+<script src=https://oss.maxcdn.com/respond/1.4.2/respond.min.js></script><![endif]-->
+<link rel=icon type=image/png href=/images/favicon.ico>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-X1L70M4MM0','auto'),ga('send','pageview'))</script>
+<script async src=https://www.google-analytics.com/analytics.js></script>
 </head>
-
 <body class="max-width mx-auto px3 ltr">
-  <div class="content index py4">
-
-    <header id="header">
-  <a href="/">
-  
-    <div id="logo" style="background-image: url(/images/logo.png)"></div>
-  
-  <div id="title">
-    <h1>Y.CH.Y</h1>
-  </div>
-  </a>
-  <div id="nav">
-    <ul>
-      <li class="icon">
-        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
-      </li>
-      
-        <li><a href="/">Home</a></li>
-      
-    </ul>
-  </div>
+<div class="content index py4">
+<header id=header>
+<a href=/>
+<div id=logo style=background-image:url(/images/logo.png)></div>
+<div id=title>
+<h1>Y.CH.Y</h1>
+</div>
+</a>
+<div id=nav>
+<ul>
+<li class=icon>
+<a href=# aria-label=Menu><i class="fas fa-bars fa-2x" aria-hidden=true></i></a>
+</li>
+<li><a href=/>Home</a></li>
+</ul>
+</div>
 </header>
-
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1L70M4MM0"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-X1L70M4MM0', { 'anonymize_ip': false });
-}
-</script>
-
-
-
-    
-<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-
-  <div class="content" itemprop="articleBody">
-  
-    <h2 id="入门">入门</h2>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-X1L70M4MM0',{anonymize_ip:!1})}</script>
+<article class=post itemscope itemtype=http://schema.org/BlogPosting>
+<div class=content itemprop=articleBody>
+<h2 id=入门>入门</h2>
 <ul>
 <li>定义
 <ul>
@@ -188,7 +129,7 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h2 id="基本使用">基本使用</h2>
+<h2 id=基本使用>基本使用</h2>
 <ul>
 <li>部署环境
 <ul>
@@ -261,7 +202,7 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h2 id="实践与原理">实践与原理</h2>
+<h2 id=实践与原理>实践与原理</h2>
 <ul>
 <li>生产者消息分区原理
 <ul>
@@ -324,11 +265,11 @@ if (!doNotTrack) {
 <ul>
 <li>不要使用 producer.send(msg)，而要使用 producer.send(msg, callback)。记住，一定要使用带有回调通知的 send 方法。</li>
 <li>设置 acks = all。acks 是 Producer 的一个参数，代表了你对“已提交”消息的定义。如果设置成 all，则表明所有副本 Broker 都要接收到消息，该消息才算是“已提交”。这是最高等级的“已提交”定义。</li>
-<li>设置 retries 为一个较大的值。这里的 retries 同样是 Producer 的参数，对应前面提到的 Producer 自动重试。当出现网络的瞬时抖动时，消息发送可能会失败，此时配置了 retries &gt; 0 的 Producer 能够自动重试消息发送，避免消息丢失。</li>
+<li>设置 retries 为一个较大的值。这里的 retries 同样是 Producer 的参数，对应前面提到的 Producer 自动重试。当出现网络的瞬时抖动时，消息发送可能会失败，此时配置了 retries > 0 的 Producer 能够自动重试消息发送，避免消息丢失。</li>
 <li>设置 unclean.leader.election.enable = false。这是 Broker 端的参数，它控制的是哪些 Broker 有资格竞选分区的 Leader。如果一个 Broker 落后原先的 Leader 太多，那么它一旦成为新的 Leader，必然会造成消息的丢失。故一般都要将该参数设置成 false，即不允许这种情况的发生。</li>
-<li>设置 replication.factor &gt;= 3。这也是 Broker 端的参数。其实这里想表述的是，最好将消息多保存几份，毕竟目前防止消息丢失的主要机制就是冗余。</li>
-<li>设置 min.insync.replicas &gt; 1。这依然是 Broker 端参数，控制的是消息至少要被写入到多少个副本才算是“已提交”。设置成大于 1 可以提升消息持久性。在实际环境中千万不要使用默认值 1。</li>
-<li>确保 replication.factor &gt; min.insync.replicas。如果两者相等，那么只要有一个副本挂机，整个分区就无法正常工作了。我们不仅要改善消息的持久性，防止数据丢失，还要在不降低可用性的基础上完成。推荐设置成 replication.factor = min.insync.replicas + 1。</li>
+<li>设置 replication.factor >= 3。这也是 Broker 端的参数。其实这里想表述的是，最好将消息多保存几份，毕竟目前防止消息丢失的主要机制就是冗余。</li>
+<li>设置 min.insync.replicas > 1。这依然是 Broker 端参数，控制的是消息至少要被写入到多少个副本才算是“已提交”。设置成大于 1 可以提升消息持久性。在实际环境中千万不要使用默认值 1。</li>
+<li>确保 replication.factor > min.insync.replicas。如果两者相等，那么只要有一个副本挂机，整个分区就无法正常工作了。我们不仅要改善消息的持久性，防止数据丢失，还要在不降低可用性的基础上完成。推荐设置成 replication.factor = min.insync.replicas + 1。</li>
 <li>确保消息消费完成再提交。Consumer 端有个参数 enable.auto.commit，最好把它设置成 false，并采用手动提交位移的方式。就像前面说的，这对于单 Consumer 多线程处理的场景而言是至关重要的。</li>
 </ul>
 </li>
@@ -394,7 +335,7 @@ if (!doNotTrack) {
 <ul>
 <li>新版本 Consumer 的位移管理机制将 Consumer 的位移数据作为一条条普通的 Kafka 消息，提交到 __consumer_offsets 中。可以这么说，__consumer_offsets 的主要作用是保存 Kafka 消费者的位移信息。</li>
 <li>位移主题的消息格式却是 Kafka 自己定义的</li>
-<li>位移主题的 Key 中应该保存 3 部分内容：&lt;Group ID，主题名，分区号&gt;</li>
+<li>位移主题的 Key 中应该保存 3 部分内容：&lt;Group ID，主题名，分区号></li>
 <li>当 Kafka 集群中的第一个 Consumer 程序启动时，Kafka 会自动创建位移主题。</li>
 <li>如果位移主题是 Kafka 自动创建的，那么该主题的分区数是 50，副本数是 3。</li>
 <li>Consumer 提交位移的方式有两种：自动提交位移和手动提交位移。</li>
@@ -483,7 +424,7 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h2 id="kafka-内核">Kafka 内核</h2>
+<h2 id=kafka-内核>Kafka 内核</h2>
 <ul>
 <li>副本机制
 <ul>
@@ -547,36 +488,27 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-
-  
-  </div>
+</div>
 </article>
-
-
-    <footer id="footer">
-  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
-  <div class="footer-left">
-    Copyright  &copy; 2021  Y.CH.Y 
-    <span id="busuanzi_container_page_pv">Page PV : <span id="busuanzi_value_page_pv"></span></span>
-    <span id="busuanzi_container_site_uv">Site UV : <span id="busuanzi_value_site_uv"></span></span>
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-         
-        <li><a href="/">Home</a></li>
-        
-      </ul>
-    </nav>
-  </div>
+<footer id=footer>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<div class=footer-left>
+Copyright &copy; 2021 Y.CH.Y
+<span id=busuanzi_container_page_pv>Page PV : <span id=busuanzi_value_page_pv></span></span>
+<span id=busuanzi_container_site_uv>Site UV : <span id=busuanzi_value_site_uv></span></span>
+</div>
+<div class=footer-right>
+<nav>
+<ul>
+<li><a href=/>Home</a></li>
+</ul>
+</nav>
+</div>
 </footer>
-
-
-  </div>
+</div>
 </body>
-
-<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<link rel=stylesheet href=/lib/font-awesome/css/all.min.css>
 <script src=/lib/jquery/jquery.min.js></script>
 <script src=/js/main.js></script>
 </html>
