@@ -584,7 +584,7 @@ Subject: Searching for the meaning of life.
 <li>用户访问位于 NetCinema 的 Web 网页。</li>
 <li>当用户点击链接 video.netcinema.com/6Y7B23V 时，该用户主机发送了一个对于 video.netcinema.com 的 DNS 请求。</li>
 <li>用户的本地 DNS 服务器 (LDNS) 将该 DNS 请求中继到一台用于 NetCinema 的权威 DNS 服务器，该服务器观察到主机名 video.netcinema.com 中的字符串 &lsquo;video&rsquo;。 为了将 该 DNS 请求移交给 KingCDN, NetCinema 权威 DNS 服务器并不返回一个 IP 地址，而是向 DNS 返回 一个 KingCDN 域的主机名,如 a1105.kingcdn.com。</li>
-<li>从这时起，DNS 请求进入了 KingCON 专用 DNS 基础设施。用户的 LDNS 则发送第二个请求，此时是对 a1105.kingcdn. com 的 DNS 请求，KingCDN 的 DNS 系统最终向 LDNS 返回 KingCDN 内容服务器的 IP 地址。所以正是在这里，在 KingCDN 的 DNS 系统中，指定了 CDN 服务器、客户将能够从这台服务器接收到它的内容。</li>
+<li>从这时起，DNS 请求进入了 KingCDN 专用 DNS 基础设施。用户的 LDNS 则发送第二个请求，此时是对 a1105.kingcdn. com 的 DNS 请求，KingCDN 的 DNS 系统最终向 LDNS 返回 KingCDN 内容服务器的 IP 地址。所以正是在这里，在 KingCDN 的 DNS 系统中，指定了 CDN 服务器、客户将能够从这台服务器接收到它的内容。</li>
 <li>LONS 向用户主机转发内容服务 CDN 节点的 IP 地址 。</li>
 <li>一旦客户收到 KingCDN 内容服务器的 IP 地址. 它与具有该 IP 地址的服务器创建了一条直接的 TCP 连接，并且发出对该视频的 HTTP GET 请求。如果使用了 DASH, 服务器将首先向客户发送具有 URL 列表的告示文件，每个 URL 对应视频的每个版本，并且客户将动态地选择来自不同版本的块。</li>
 </ul>
