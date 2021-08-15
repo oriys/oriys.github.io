@@ -5,7 +5,87 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>Y.CH.Y</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Wed, 11 Aug 2021 03:52:05 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Sun, 15 Aug 2021 06:48:14 +0800</lastBuildDate>
+    <item>
+      <title>Redis::基础::字符串</title>
+      <link>/post/redis_basic/</link>
+      <pubDate>Sun, 15 Aug 2021 06:48:14 +0800</pubDate>
+      <guid>/post/redis_basic/</guid>
+      <description>&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;
+&lt;p&gt;Redis 字符串类型是你能与 Redis key 关联的最简单的 value 类型。它是 Memcached 中唯一的数据类型，所以对于新人来说，在 Redis 中使用它也是非常自然的。&lt;/p&gt;
+&lt;p&gt;由于 Redis 的 key 是字符串，当我们把字符串类型也作为一个 value 时，我们是把一个字符串映射到另一个字符串。字符串数据类型对很多用例都很有用，比如缓存 HTML 片段或页面。&lt;/p&gt;
+&lt;h2 id=&#34;相关命令&#34;&gt;相关命令&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;APPEND key value&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;将一个 value 附加到一个 key 上&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;DECR key&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;将一个 key 的整数 value 递减 1&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;DECRBY key decrement&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;将一个 key 的整数 value 按给定的数字递减。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;GET key&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;获取一个 key 的 value&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;GETDEL key&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;获取一个 key 的 value 并删除该 key&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;GETEX key [EX seconds|PX milliseconds|EXAT timestamp|PXAT milliseconds-timestamp|PERSIST]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;获取一个 key 的 value ，并可选择设置其过期时间&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;选项
+&lt;ul&gt;
+&lt;li&gt;EX seconds &amp;ndash; 设置指定的过期时间，单位是秒。&lt;/li&gt;
+&lt;li&gt;PX milliseconds &amp;ndash; 设置指定的过期时间，单位是毫秒。&lt;/li&gt;
+&lt;li&gt;EXAT timestamp-seconds &amp;ndash; 设置指定的 Unix 时间，以秒为单位，密钥将在该时间失效。&lt;/li&gt;
+&lt;li&gt;PXAT timestamp-milliseconds &amp;ndash; 设置指定的 Unix 时间，密钥将在该时间过期，单位是毫秒。&lt;/li&gt;
+&lt;li&gt;PERSIST &amp;ndash; 删除与密钥相关的生存时间。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;GETRANGE key start end&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;获取存储在一个 key 上的字符串的子串&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;GETSET key value&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;设置一个 key 的字符串 value 并返回其旧 value&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;INCR key&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;将一个 key 的整数 value 递增 1&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;INCRBY key increment&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;将一个 key 的整数 value 按给定的数额递增&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;INCRBYFLOAT key increment&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;将一个 key 的浮动 value 按给定的量增加。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;MGET key [key ...]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;获取所有给定 key 的 value&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;MSET key value [key value ...]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;将多个 key 设置为多个 value&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;MSETNX key value [key value ...]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;将多个 key 设置为多个 value ，只有在 key 都不存在的情况下才会这样做&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;PSETEX key milliseconds value&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;设置一个 key 的 value 和过期时间，单位为毫秒&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;SET key value [EX seconds|PX milliseconds|EXAT timestamp|PXAT milliseconds-timestamp|KEEPTTL] [NX|XX] [GET]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;设置一个 key 的字符串 value&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;选项
+&lt;ul&gt;
+&lt;li&gt;EX seconds &amp;ndash; 设置指定的过期时间，单位是秒。&lt;/li&gt;
+&lt;li&gt;PX milliseconds &amp;ndash; 设置指定的过期时间，单位是毫秒。&lt;/li&gt;
+&lt;li&gt;EXAT timestamp-seconds &amp;ndash; 设置指定的 Unix 时间，以秒为单位，密钥将在该时间失效。&lt;/li&gt;
+&lt;li&gt;PXAT timestamp-milliseconds &amp;ndash; 设置指定的 Unix 时间，密钥将在该时间过期，单位是毫秒。&lt;/li&gt;
+&lt;li&gt;NX &amp;ndash; 只有在密钥不存在的情况下才会设置它。&lt;/li&gt;
+&lt;li&gt;XX &amp;ndash; 只设置已经存在的密钥。&lt;/li&gt;
+&lt;li&gt;KEEPTTL &amp;ndash; 保留与钥匙相关的生存时间。&lt;/li&gt;
+&lt;li&gt;GET &amp;ndash; 返回存储在 key 的旧字符串，如果 key 不存在，则返回 nil。如果存储在键上的值不是字符串，将返回一个错误，并中止 SET。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;SETEX key seconds value&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;设置一个 key 的 value 和过期时间&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;SETNX key value&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;设置一个 key 的 value ，只在该 key 不存在的情况下使用&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;SETRANGE key 的偏移 value&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;从指定的偏移量开始，覆盖 key 上的部分字符串&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;STRALGO LCS algo-specific-argument [algo-specific-argument ...]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;针对字符串运行算法（目前是 LCS）。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;STRLEN key&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;获取存储在 key 中的 value 的长度&lt;/p&gt;
+&lt;h2 id=&#34;数据结构&#34;&gt;数据结构&lt;/h2&gt;
+</description>
+    </item>
+    
     <item>
       <title>Kafka::基础</title>
       <link>/post/kafka_basic/</link>
