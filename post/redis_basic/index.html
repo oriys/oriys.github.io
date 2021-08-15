@@ -300,8 +300,8 @@ if (!doNotTrack) {
             <span style="color:#00a8c8">break</span><span style="color:#111">;</span>
         <span style="color:#111">}</span>
     <span style="color:#111">}</span>
-    <span style="color:#960050;background-color:#1e0010">将</span> <span style="color:#111">init</span> <span style="color:#960050;background-color:#1e0010">的内容复制到</span> <span style="color:#111">s</span> <span style="color:#960050;background-color:#1e0010">上</span>
-    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">initlen</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#111">init</span><span style="color:#111">)</span>
+    <span style="color:#75715e">// 将 init 的内容复制到 s 上
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">initlen</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#111">init</span><span style="color:#111">)</span>
         <span style="color:#111">memcpy</span><span style="color:#111">(</span><span style="color:#111">s</span><span style="color:#111">,</span> <span style="color:#111">init</span><span style="color:#111">,</span> <span style="color:#111">initlen</span><span style="color:#111">);</span>
     <span style="color:#75715e">// 末尾置为0，表示结束
 </span><span style="color:#75715e"></span>    <span style="color:#111">s</span><span style="color:#111">[</span><span style="color:#111">initlen</span><span style="color:#111">]</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;\0&#39;</span><span style="color:#111">;</span>
