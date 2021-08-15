@@ -194,7 +194,120 @@ if (!doNotTrack) {
 <p><code>STRLEN key</code></p>
 <p>获取存储在 key 中的 value 的长度</p>
 <h2 id="数据结构">数据结构</h2>
+<p>sds 的定义在 <code>src/sds.h</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#00a8c8">typedef</span> <span style="color:#00a8c8">char</span> <span style="color:#f92672">*</span><span style="color:#111">sds</span><span style="color:#111">;</span>
+</code></pre></div><p>从定义上看 sds 等价于字符数组，实际上还有一部分头信息在 s[0]地址的前面。因此完整的 sds 定义由 sdshdr 头信息和一个字符数组 buf 前后两部分组成，其中 sds 的地址就是 buf 的地址。</p>
+<p>根据字符长长度不同，Redis 提供了五种头信息，以节省内存。头信息定义如下，里面包含了数组长度，已使用长度和一个标记位，其中的 <code>__attribute__ ((__packed__))</code> 是告诉编译器取消结构在编译过程中的优化对齐，按照实际占用字节数进行对齐，是 GCC 提供的语法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* Note: sdshdr5 is never used, we just access the flags byte directly.
+</span><span style="color:#75715e"> * However is here to document the layout of type 5 SDS strings. */</span>
+<span style="color:#00a8c8">struct</span> <span style="color:#75af00">__attribute__</span> <span style="color:#111">((</span><span style="color:#111">__packed__</span><span style="color:#111">))</span> <span style="color:#111">sdshdr5</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">unsigned</span> <span style="color:#00a8c8">char</span> <span style="color:#111">flags</span><span style="color:#111">;</span> <span style="color:#75715e">/* 3 lsb of type, and 5 msb of string length */</span>
+    <span style="color:#00a8c8">char</span> <span style="color:#111">buf</span><span style="color:#111">[];</span>
+<span style="color:#111">};</span>
+<span style="color:#00a8c8">struct</span> <span style="color:#75af00">__attribute__</span> <span style="color:#111">((</span><span style="color:#111">__packed__</span><span style="color:#111">))</span> <span style="color:#111">sdshdr8</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">uint8_t</span> <span style="color:#111">len</span><span style="color:#111">;</span> <span style="color:#75715e">/* used */</span>
+    <span style="color:#00a8c8">uint8_t</span> <span style="color:#111">alloc</span><span style="color:#111">;</span> <span style="color:#75715e">/* excluding the header and null terminator */</span>
+    <span style="color:#00a8c8">unsigned</span> <span style="color:#00a8c8">char</span> <span style="color:#111">flags</span><span style="color:#111">;</span> <span style="color:#75715e">/* 3 lsb of type, 5 unused bits */</span>
+    <span style="color:#00a8c8">char</span> <span style="color:#111">buf</span><span style="color:#111">[];</span>
+<span style="color:#111">};</span>
+<span style="color:#00a8c8">struct</span> <span style="color:#75af00">__attribute__</span> <span style="color:#111">((</span><span style="color:#111">__packed__</span><span style="color:#111">))</span> <span style="color:#111">sdshdr16</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">uint16_t</span> <span style="color:#111">len</span><span style="color:#111">;</span> <span style="color:#75715e">/* used */</span>
+    <span style="color:#00a8c8">uint16_t</span> <span style="color:#111">alloc</span><span style="color:#111">;</span> <span style="color:#75715e">/* excluding the header and null terminator */</span>
+    <span style="color:#00a8c8">unsigned</span> <span style="color:#00a8c8">char</span> <span style="color:#111">flags</span><span style="color:#111">;</span> <span style="color:#75715e">/* 3 lsb of type, 5 unused bits */</span>
+    <span style="color:#00a8c8">char</span> <span style="color:#111">buf</span><span style="color:#111">[];</span>
+<span style="color:#111">};</span>
+<span style="color:#00a8c8">struct</span> <span style="color:#75af00">__attribute__</span> <span style="color:#111">((</span><span style="color:#111">__packed__</span><span style="color:#111">))</span> <span style="color:#111">sdshdr32</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">uint32_t</span> <span style="color:#111">len</span><span style="color:#111">;</span> <span style="color:#75715e">/* used */</span>
+    <span style="color:#00a8c8">uint32_t</span> <span style="color:#111">alloc</span><span style="color:#111">;</span> <span style="color:#75715e">/* excluding the header and null terminator */</span>
+    <span style="color:#00a8c8">unsigned</span> <span style="color:#00a8c8">char</span> <span style="color:#111">flags</span><span style="color:#111">;</span> <span style="color:#75715e">/* 3 lsb of type, 5 unused bits */</span>
+    <span style="color:#00a8c8">char</span> <span style="color:#111">buf</span><span style="color:#111">[];</span>
+<span style="color:#111">};</span>
+<span style="color:#00a8c8">struct</span> <span style="color:#75af00">__attribute__</span> <span style="color:#111">((</span><span style="color:#111">__packed__</span><span style="color:#111">))</span> <span style="color:#111">sdshdr64</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">uint64_t</span> <span style="color:#111">len</span><span style="color:#111">;</span> <span style="color:#75715e">/* used */</span>
+    <span style="color:#00a8c8">uint64_t</span> <span style="color:#111">alloc</span><span style="color:#111">;</span> <span style="color:#75715e">/* excluding the header and null terminator */</span>
+    <span style="color:#00a8c8">unsigned</span> <span style="color:#00a8c8">char</span> <span style="color:#111">flags</span><span style="color:#111">;</span> <span style="color:#75715e">/* 3 lsb of type, 5 unused bits */</span>
+    <span style="color:#00a8c8">char</span> <span style="color:#111">buf</span><span style="color:#111">[];</span>
+<span style="color:#111">};</span>
 
+</code></pre></div><h2 id="关键函数">关键函数</h2>
+<p>创建字符串</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#111">sds</span> <span style="color:#75af00">_sdsnewlen</span><span style="color:#111">(</span><span style="color:#00a8c8">const</span> <span style="color:#00a8c8">void</span> <span style="color:#f92672">*</span><span style="color:#111">init</span><span style="color:#111">,</span> <span style="color:#111">size_t</span> <span style="color:#111">initlen</span><span style="color:#111">,</span> <span style="color:#00a8c8">int</span> <span style="color:#111">trymalloc</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#75715e">// 声明 sdshdr
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">void</span> <span style="color:#f92672">*</span><span style="color:#111">sh</span><span style="color:#111">;</span>
+    <span style="color:#75715e">// 声明 sds
+</span><span style="color:#75715e"></span>    <span style="color:#111">sds</span> <span style="color:#111">s</span><span style="color:#111">;</span>
+    <span style="color:#75715e">// 根据字符数组长度判断头类型
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">char</span> <span style="color:#111">type</span> <span style="color:#f92672">=</span> <span style="color:#111">sdsReqType</span><span style="color:#111">(</span><span style="color:#111">initlen</span><span style="color:#111">);</span>
+    <span style="color:#75715e">// 空字符串通常会在创建后追加，使用 sdshdr8 是更好的选择，sdshdr5 已经弃用
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">type</span> <span style="color:#f92672">==</span> <span style="color:#111">SDS_TYPE_5</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#111">initlen</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span><span style="color:#111">)</span> <span style="color:#111">type</span> <span style="color:#f92672">=</span> <span style="color:#111">SDS_TYPE_8</span><span style="color:#111">;</span>
+    <span style="color:#75715e">// 获取 sdshdr 的内存占用大小
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">hdrlen</span> <span style="color:#f92672">=</span> <span style="color:#111">sdsHdrSize</span><span style="color:#111">(</span><span style="color:#111">type</span><span style="color:#111">);</span>
+    <span style="color:#75715e">// 声明 flags 指针
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">unsigned</span> <span style="color:#00a8c8">char</span> <span style="color:#f92672">*</span><span style="color:#111">fp</span><span style="color:#111">;</span> <span style="color:#75715e">/* flags pointer. */</span>
+    <span style="color:#75715e">// 未使用量
+</span><span style="color:#75715e"></span>    <span style="color:#111">size_t</span> <span style="color:#111">usable</span><span style="color:#111">;</span>
+    <span style="color:#75715e">// 断言信息头的大小至少大于等于 0
+</span><span style="color:#75715e"></span>    <span style="color:#111">assert</span><span style="color:#111">(</span><span style="color:#111">initlen</span> <span style="color:#f92672">+</span> <span style="color:#111">hdrlen</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&gt;</span> <span style="color:#111">initlen</span><span style="color:#111">);</span> <span style="color:#75715e">/* Catch size_t overflow */</span>
+    <span style="color:#75715e">// 根据参数尝试决定是否分配内容
+</span><span style="color:#75715e"></span>    <span style="color:#111">sh</span> <span style="color:#f92672">=</span> <span style="color:#111">trymalloc</span> <span style="color:#f92672">?</span>
+         <span style="color:#111">s_trymalloc_usable</span><span style="color:#111">(</span><span style="color:#111">hdrlen</span> <span style="color:#f92672">+</span> <span style="color:#111">initlen</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#f92672">&amp;</span><span style="color:#111">usable</span><span style="color:#111">)</span> <span style="color:#f92672">:</span>
+         <span style="color:#111">s_malloc_usable</span><span style="color:#111">(</span><span style="color:#111">hdrlen</span> <span style="color:#f92672">+</span> <span style="color:#111">initlen</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#f92672">&amp;</span><span style="color:#111">usable</span><span style="color:#111">);</span>
+    <span style="color:#75715e">// 分配失败返回 NULL
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">sh</span> <span style="color:#f92672">==</span> <span style="color:#111">NULL</span><span style="color:#111">)</span> <span style="color:#00a8c8">return</span> <span style="color:#111">NULL</span><span style="color:#111">;</span>
+    <span style="color:#75715e">// 如果没有分配过，整个 sds 包括头全部初始化成 0
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">init</span> <span style="color:#f92672">==</span> <span style="color:#111">SDS_NOINIT</span><span style="color:#111">)</span>
+        <span style="color:#111">init</span> <span style="color:#f92672">=</span> <span style="color:#111">NULL</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">else</span> <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#f92672">!</span><span style="color:#111">init</span><span style="color:#111">)</span>
+        <span style="color:#111">memset</span><span style="color:#111">(</span><span style="color:#111">sh</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#111">hdrlen</span> <span style="color:#f92672">+</span> <span style="color:#111">initlen</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span><span style="color:#111">);</span>
+    <span style="color:#75715e">// flags 指针在 s 起始地址的前一位
+</span><span style="color:#75715e"></span>    <span style="color:#111">fp</span> <span style="color:#f92672">=</span> <span style="color:#111">((</span><span style="color:#00a8c8">unsigned</span> <span style="color:#00a8c8">char</span> <span style="color:#f92672">*</span><span style="color:#111">)</span> <span style="color:#111">s</span><span style="color:#111">)</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span><span style="color:#111">;</span>
+    <span style="color:#75715e">// 计算使用量
+</span><span style="color:#75715e"></span>    <span style="color:#111">usable</span> <span style="color:#f92672">=</span> <span style="color:#111">usable</span> <span style="color:#f92672">-</span> <span style="color:#111">hdrlen</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">usable</span> <span style="color:#f92672">&gt;</span> <span style="color:#111">sdsTypeMaxSize</span><span style="color:#111">(</span><span style="color:#111">type</span><span style="color:#111">))</span>
+        <span style="color:#111">usable</span> <span style="color:#f92672">=</span> <span style="color:#111">sdsTypeMaxSize</span><span style="color:#111">(</span><span style="color:#111">type</span><span style="color:#111">);</span>
+    <span style="color:#75715e">// 根据，初始化 sdshdr 结构体
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">switch</span> <span style="color:#111">(</span><span style="color:#111">type</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">case</span> <span style="color:#111">SDS_TYPE_5</span><span style="color:#111">:</span> <span style="color:#111">{</span>
+            <span style="color:#f92672">*</span><span style="color:#111">fp</span> <span style="color:#f92672">=</span> <span style="color:#111">type</span> <span style="color:#f92672">|</span> <span style="color:#111">(</span><span style="color:#111">initlen</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#111">SDS_TYPE_BITS</span><span style="color:#111">);</span>
+            <span style="color:#00a8c8">break</span><span style="color:#111">;</span>
+        <span style="color:#111">}</span>
+        <span style="color:#00a8c8">case</span> <span style="color:#111">SDS_TYPE_8</span><span style="color:#111">:</span> <span style="color:#111">{</span>
+            <span style="color:#111">SDS_HDR_VAR</span><span style="color:#111">(</span><span style="color:#ae81ff">8</span><span style="color:#111">,</span> <span style="color:#111">s</span><span style="color:#111">);</span>
+            <span style="color:#111">sh</span><span style="color:#f92672">-&gt;</span><span style="color:#111">len</span> <span style="color:#f92672">=</span> <span style="color:#111">initlen</span><span style="color:#111">;</span>
+            <span style="color:#111">sh</span><span style="color:#f92672">-&gt;</span><span style="color:#111">alloc</span> <span style="color:#f92672">=</span> <span style="color:#111">usable</span><span style="color:#111">;</span>
+            <span style="color:#f92672">*</span><span style="color:#111">fp</span> <span style="color:#f92672">=</span> <span style="color:#111">type</span><span style="color:#111">;</span>
+            <span style="color:#00a8c8">break</span><span style="color:#111">;</span>
+        <span style="color:#111">}</span>
+        <span style="color:#00a8c8">case</span> <span style="color:#111">SDS_TYPE_16</span><span style="color:#111">:</span> <span style="color:#111">{</span>
+            <span style="color:#111">SDS_HDR_VAR</span><span style="color:#111">(</span><span style="color:#ae81ff">16</span><span style="color:#111">,</span> <span style="color:#111">s</span><span style="color:#111">);</span>
+            <span style="color:#111">sh</span><span style="color:#f92672">-&gt;</span><span style="color:#111">len</span> <span style="color:#f92672">=</span> <span style="color:#111">initlen</span><span style="color:#111">;</span>
+            <span style="color:#111">sh</span><span style="color:#f92672">-&gt;</span><span style="color:#111">alloc</span> <span style="color:#f92672">=</span> <span style="color:#111">usable</span><span style="color:#111">;</span>
+            <span style="color:#f92672">*</span><span style="color:#111">fp</span> <span style="color:#f92672">=</span> <span style="color:#111">type</span><span style="color:#111">;</span>
+            <span style="color:#00a8c8">break</span><span style="color:#111">;</span>
+        <span style="color:#111">}</span>
+        <span style="color:#00a8c8">case</span> <span style="color:#111">SDS_TYPE_32</span><span style="color:#111">:</span> <span style="color:#111">{</span>
+            <span style="color:#111">SDS_HDR_VAR</span><span style="color:#111">(</span><span style="color:#ae81ff">32</span><span style="color:#111">,</span> <span style="color:#111">s</span><span style="color:#111">);</span>
+            <span style="color:#111">sh</span><span style="color:#f92672">-&gt;</span><span style="color:#111">len</span> <span style="color:#f92672">=</span> <span style="color:#111">initlen</span><span style="color:#111">;</span>
+            <span style="color:#111">sh</span><span style="color:#f92672">-&gt;</span><span style="color:#111">alloc</span> <span style="color:#f92672">=</span> <span style="color:#111">usable</span><span style="color:#111">;</span>
+            <span style="color:#f92672">*</span><span style="color:#111">fp</span> <span style="color:#f92672">=</span> <span style="color:#111">type</span><span style="color:#111">;</span>
+            <span style="color:#00a8c8">break</span><span style="color:#111">;</span>
+        <span style="color:#111">}</span>
+        <span style="color:#00a8c8">case</span> <span style="color:#111">SDS_TYPE_64</span><span style="color:#111">:</span> <span style="color:#111">{</span>
+            <span style="color:#111">SDS_HDR_VAR</span><span style="color:#111">(</span><span style="color:#ae81ff">64</span><span style="color:#111">,</span> <span style="color:#111">s</span><span style="color:#111">);</span>
+            <span style="color:#111">sh</span><span style="color:#f92672">-&gt;</span><span style="color:#111">len</span> <span style="color:#f92672">=</span> <span style="color:#111">initlen</span><span style="color:#111">;</span>
+            <span style="color:#111">sh</span><span style="color:#f92672">-&gt;</span><span style="color:#111">alloc</span> <span style="color:#f92672">=</span> <span style="color:#111">usable</span><span style="color:#111">;</span>
+            <span style="color:#f92672">*</span><span style="color:#111">fp</span> <span style="color:#f92672">=</span> <span style="color:#111">type</span><span style="color:#111">;</span>
+            <span style="color:#00a8c8">break</span><span style="color:#111">;</span>
+        <span style="color:#111">}</span>
+    <span style="color:#111">}</span>
+    <span style="color:#960050;background-color:#1e0010">将</span> <span style="color:#111">init</span> <span style="color:#960050;background-color:#1e0010">的内容复制到</span> <span style="color:#111">s</span> <span style="color:#960050;background-color:#1e0010">上</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">initlen</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#111">init</span><span style="color:#111">)</span>
+        <span style="color:#111">memcpy</span><span style="color:#111">(</span><span style="color:#111">s</span><span style="color:#111">,</span> <span style="color:#111">init</span><span style="color:#111">,</span> <span style="color:#111">initlen</span><span style="color:#111">);</span>
+    <span style="color:#75715e">// 末尾置为0，表示结束
+</span><span style="color:#75715e"></span>    <span style="color:#111">s</span><span style="color:#111">[</span><span style="color:#111">initlen</span><span style="color:#111">]</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;\0&#39;</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">s</span><span style="color:#111">;</span>
+<span style="color:#111">}</span>
+</code></pre></div>
   
   </div>
 </article>
