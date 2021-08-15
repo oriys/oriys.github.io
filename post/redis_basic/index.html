@@ -230,7 +230,7 @@ if (!doNotTrack) {
 <span style="color:#111">};</span>
 
 </code></pre></div><h2 id="关键函数">关键函数</h2>
-<p>创建字符串</p>
+<h3 id="创建字符串">创建字符串</h3>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#111">sds</span> <span style="color:#75af00">_sdsnewlen</span><span style="color:#111">(</span><span style="color:#00a8c8">const</span> <span style="color:#00a8c8">void</span> <span style="color:#f92672">*</span><span style="color:#111">init</span><span style="color:#111">,</span> <span style="color:#111">size_t</span> <span style="color:#111">initlen</span><span style="color:#111">,</span> <span style="color:#00a8c8">int</span> <span style="color:#111">trymalloc</span><span style="color:#111">)</span> <span style="color:#111">{</span>
     <span style="color:#75715e">// 声明 sdshdr
 </span><span style="color:#75715e"></span>    <span style="color:#00a8c8">void</span> <span style="color:#f92672">*</span><span style="color:#111">sh</span><span style="color:#111">;</span>
