@@ -8,9 +8,9 @@
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Sun, 15 Aug 2021 06:48:14 +0800</lastBuildDate>
     <item>
       <title>Redis::基础::字符串</title>
-      <link>/post/redis_basic/</link>
+      <link>/post/redis_basic_strings/</link>
       <pubDate>Sun, 15 Aug 2021 06:48:14 +0800</pubDate>
-      <guid>/post/redis_basic/</guid>
+      <guid>/post/redis_basic_strings/</guid>
       <description>&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;
 &lt;p&gt;Redis 字符串类型是你能与 Redis key 关联的最简单的 value 类型。它是 Memcached 中唯一的数据类型，所以对于新人来说，在 Redis 中使用它也是非常自然的。&lt;/p&gt;
 &lt;p&gt;由于 Redis 的 key 是字符串，当我们把字符串类型也作为一个 value 时，我们是把一个字符串映射到另一个字符串。字符串数据类型对很多用例都很有用，比如缓存 HTML 片段或页面。&lt;/p&gt;
