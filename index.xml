@@ -1697,14 +1697,6 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     </item>
     
     <item>
-      <title>现代操作系统::案例学习</title>
-      <link>/post/modern_operating_systems_case_study_unix/</link>
-      <pubDate>Sat, 24 Jul 2021 02:11:01 +0800</pubDate>
-      <guid>/post/modern_operating_systems_case_study_unix/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>现代操作系统::操作系统设计</title>
       <link>/post/modern_operating_systems_operating_system_design/</link>
       <pubDate>Fri, 23 Jul 2021 02:11:01 +0800</pubDate>
