@@ -14,7 +14,8 @@
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
   <meta property="og:title" content="多线程::按需打印" />
-<meta property="og:description" content="synchronized &#43; wait/notify class Foo { final Object lock = new Object(); volatile int count = 1; public Foo() { } public void first(Runnable printFirst) throws InterruptedException { // printFirst.run() outputs &#34;first&#34;. Do not change or remove this line.  synchronized (lock) { while (count != 1) { lock.wait(); } printFirst.run(); count = 2; lock.notifyAll(); } } public void second(Runnable printSecond) throws InterruptedException { // printSecond.run() outputs &#34;second&#34;. Do not change or remove this line." />
+<meta property="og:description" content="链接 1114. 按序打印 - 力扣（LeetCode）
+解法一：synchronized &#43; wait/notifyAll class Foo { final Object lock = new Object(); volatile int count = 1; public Foo() { } public void first(Runnable printFirst) throws InterruptedException { // printFirst.run() outputs &#34;first&#34;. Do not change or remove this line.  synchronized (lock) { while (count != 1) { lock.wait(); } printFirst.run(); count = 2; lock.notifyAll(); } } public void second(Runnable printSecond) throws InterruptedException { // printSecond." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/leetcode/1114/" /><meta property="article:section" content="leetcode" />
 <meta property="article:published_time" content="2021-08-20T22:48:32+08:00" />
@@ -23,7 +24,8 @@
 
   <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="多线程::按需打印"/>
-<meta name="twitter:description" content="synchronized &#43; wait/notify class Foo { final Object lock = new Object(); volatile int count = 1; public Foo() { } public void first(Runnable printFirst) throws InterruptedException { // printFirst.run() outputs &#34;first&#34;. Do not change or remove this line.  synchronized (lock) { while (count != 1) { lock.wait(); } printFirst.run(); count = 2; lock.notifyAll(); } } public void second(Runnable printSecond) throws InterruptedException { // printSecond.run() outputs &#34;second&#34;. Do not change or remove this line."/>
+<meta name="twitter:description" content="链接 1114. 按序打印 - 力扣（LeetCode）
+解法一：synchronized &#43; wait/notifyAll class Foo { final Object lock = new Object(); volatile int count = 1; public Foo() { } public void first(Runnable printFirst) throws InterruptedException { // printFirst.run() outputs &#34;first&#34;. Do not change or remove this line.  synchronized (lock) { while (count != 1) { lock.wait(); } printFirst.run(); count = 2; lock.notifyAll(); } } public void second(Runnable printSecond) throws InterruptedException { // printSecond."/>
 
   
   
@@ -100,7 +102,9 @@ if (!doNotTrack) {
 
   <div class="content" itemprop="articleBody">
   
-    <h2 id="synchronized--waitnotify">synchronized + wait/notify</h2>
+    <h2 id="链接">链接</h2>
+<p><a href="https://leetcode-cn.com/problems/print-in-order/">1114. 按序打印 - 力扣（LeetCode）</a></p>
+<h2 id="解法一synchronized--waitnotifyall">解法一：synchronized + wait/notifyAll</h2>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Foo</span> <span style="color:#f92672">{</span>
 
     <span style="color:#00a8c8">final</span> <span style="color:#111">Object</span> <span style="color:#111">lock</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Object</span><span style="color:#f92672">();</span>
@@ -149,6 +153,44 @@ if (!doNotTrack) {
         <span style="color:#f92672">}</span>
     <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
+</code></pre></div><h2 id="解法二semaphore">解法二：Semaphore</h2>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Foo</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#111">Semaphore</span> <span style="color:#111">first</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Semaphore</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">);</span>
+
+    <span style="color:#111">Semaphore</span> <span style="color:#111">second</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Semaphore</span><span style="color:#f92672">(</span><span style="color:#111">0</span><span style="color:#f92672">);</span>
+
+    <span style="color:#111">Semaphore</span> <span style="color:#111">third</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Semaphore</span><span style="color:#f92672">(</span><span style="color:#111">0</span><span style="color:#f92672">);</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">Foo</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">first</span><span style="color:#f92672">(</span><span style="color:#111">Runnable</span> <span style="color:#111">printFirst</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+
+        <span style="color:#75715e">// printFirst.run() outputs &#34;first&#34;. Do not change or remove this line.
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">//
+</span><span style="color:#75715e"></span>        <span style="color:#111">first</span><span style="color:#f92672">.</span><span style="color:#75af00">acquire</span><span style="color:#f92672">();</span>
+        <span style="color:#111">printFirst</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+        <span style="color:#111">second</span><span style="color:#f92672">.</span><span style="color:#75af00">release</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">second</span><span style="color:#f92672">(</span><span style="color:#111">Runnable</span> <span style="color:#111">printSecond</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+
+        <span style="color:#75715e">// printSecond.run() outputs &#34;second&#34;. Do not change or remove this line.
+</span><span style="color:#75715e"></span>        <span style="color:#111">second</span><span style="color:#f92672">.</span><span style="color:#75af00">acquire</span><span style="color:#f92672">();</span>
+        <span style="color:#111">printSecond</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+        <span style="color:#111">third</span><span style="color:#f92672">.</span><span style="color:#75af00">release</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">third</span><span style="color:#f92672">(</span><span style="color:#111">Runnable</span> <span style="color:#111">printThird</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+
+        <span style="color:#75715e">// printThird.run() outputs &#34;third&#34;. Do not change or remove this line.
+</span><span style="color:#75715e"></span>        <span style="color:#111">third</span><span style="color:#f92672">.</span><span style="color:#75af00">acquire</span><span style="color:#f92672">();</span>
+        <span style="color:#111">printThird</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+        <span style="color:#111">first</span><span style="color:#f92672">.</span><span style="color:#75af00">release</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
 </code></pre></div>
   
   </div>
