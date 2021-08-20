@@ -156,8 +156,6 @@ if (!doNotTrack) {
 </code></pre></div><h2 id="解法二semaphore">解法二：Semaphore</h2>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Foo</span> <span style="color:#f92672">{</span>
 
-    <span style="color:#111">Semaphore</span> <span style="color:#111">first</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Semaphore</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">);</span>
-
     <span style="color:#111">Semaphore</span> <span style="color:#111">second</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Semaphore</span><span style="color:#f92672">(</span><span style="color:#111">0</span><span style="color:#f92672">);</span>
 
     <span style="color:#111">Semaphore</span> <span style="color:#111">third</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Semaphore</span><span style="color:#f92672">(</span><span style="color:#111">0</span><span style="color:#f92672">);</span>
@@ -169,8 +167,7 @@ if (!doNotTrack) {
 
         <span style="color:#75715e">// printFirst.run() outputs &#34;first&#34;. Do not change or remove this line.
 </span><span style="color:#75715e"></span>        <span style="color:#75715e">//
-</span><span style="color:#75715e"></span>        <span style="color:#111">first</span><span style="color:#f92672">.</span><span style="color:#75af00">acquire</span><span style="color:#f92672">();</span>
-        <span style="color:#111">printFirst</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+</span><span style="color:#75715e"></span>        <span style="color:#111">printFirst</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
         <span style="color:#111">second</span><span style="color:#f92672">.</span><span style="color:#75af00">release</span><span style="color:#f92672">();</span>
     <span style="color:#f92672">}</span>
 
@@ -187,14 +184,13 @@ if (!doNotTrack) {
         <span style="color:#75715e">// printThird.run() outputs &#34;third&#34;. Do not change or remove this line.
 </span><span style="color:#75715e"></span>        <span style="color:#111">third</span><span style="color:#f92672">.</span><span style="color:#75af00">acquire</span><span style="color:#f92672">();</span>
         <span style="color:#111">printThird</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
-        <span style="color:#111">first</span><span style="color:#f92672">.</span><span style="color:#75af00">release</span><span style="color:#f92672">();</span>
     <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
 
 </code></pre></div><h2 id="解法三spin-lock">解法三：Spin Lock</h2>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Foo</span> <span style="color:#f92672">{</span>
 
-    <span style="color:#00a8c8">int</span> <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">1</span><span style="color:#f92672">;</span>
+    <span style="color:#00a8c8">volatile</span> <span style="color:#00a8c8">int</span> <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">1</span><span style="color:#f92672">;</span>
 
     <span style="color:#00a8c8">public</span> <span style="color:#75af00">Foo</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
     <span style="color:#f92672">}</span>
@@ -222,6 +218,95 @@ if (!doNotTrack) {
 </span><span style="color:#75715e"></span>        <span style="color:#00a8c8">while</span> <span style="color:#f92672">(</span><span style="color:#111">count</span> <span style="color:#f92672">!=</span> <span style="color:#111">3</span><span style="color:#f92672">)</span> <span style="color:#f92672">{}</span>
         <span style="color:#111">printThird</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
         <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">1</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="解法四countdownlatch">解法四：CountDownLatch</h3>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Foo</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#111">CountDownLatch</span> <span style="color:#111">second</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">CountDownLatch</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">);</span>
+
+    <span style="color:#111">CountDownLatch</span> <span style="color:#111">third</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">CountDownLatch</span><span style="color:#f92672">(</span><span style="color:#111">1</span><span style="color:#f92672">);</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">Foo</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">first</span><span style="color:#f92672">(</span><span style="color:#111">Runnable</span> <span style="color:#111">printFirst</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+
+        <span style="color:#75715e">// printFirst.run() outputs &#34;first&#34;. Do not change or remove this line.
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">//
+</span><span style="color:#75715e"></span>        <span style="color:#111">printFirst</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+        <span style="color:#111">second</span><span style="color:#f92672">.</span><span style="color:#75af00">countDown</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">second</span><span style="color:#f92672">(</span><span style="color:#111">Runnable</span> <span style="color:#111">printSecond</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+
+        <span style="color:#75715e">// printSecond.run() outputs &#34;second&#34;. Do not change or remove this line.
+</span><span style="color:#75715e"></span>        <span style="color:#111">second</span><span style="color:#f92672">.</span><span style="color:#75af00">await</span><span style="color:#f92672">();</span>
+        <span style="color:#111">printSecond</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+        <span style="color:#111">third</span><span style="color:#f92672">.</span><span style="color:#75af00">countDown</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">third</span><span style="color:#f92672">(</span><span style="color:#111">Runnable</span> <span style="color:#111">printThird</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+
+        <span style="color:#75715e">// printThird.run() outputs &#34;third&#34;. Do not change or remove this line.
+</span><span style="color:#75715e"></span>        <span style="color:#111">third</span><span style="color:#f92672">.</span><span style="color:#75af00">await</span><span style="color:#f92672">();</span>
+        <span style="color:#111">printThird</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="解法五lock--conditon">解法五：Lock + Conditon</h2>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Foo</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#111">ReentrantLock</span> <span style="color:#111">lock</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ReentrantLock</span><span style="color:#f92672">();</span>
+
+    <span style="color:#111">Condition</span> <span style="color:#111">first</span> <span style="color:#f92672">=</span> <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">newCondition</span><span style="color:#f92672">();</span>
+
+    <span style="color:#111">Condition</span> <span style="color:#111">second</span> <span style="color:#f92672">=</span> <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">newCondition</span><span style="color:#f92672">();</span>
+
+    <span style="color:#111">Condition</span> <span style="color:#111">third</span> <span style="color:#f92672">=</span> <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">newCondition</span><span style="color:#f92672">();</span>
+
+    <span style="color:#00a8c8">volatile</span> <span style="color:#00a8c8">int</span> <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">1</span><span style="color:#f92672">;</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">Foo</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">first</span><span style="color:#f92672">(</span><span style="color:#111">Runnable</span> <span style="color:#111">printFirst</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+
+        <span style="color:#75715e">// printFirst.run() outputs &#34;first&#34;. Do not change or remove this line.
+</span><span style="color:#75715e"></span>        <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">lock</span><span style="color:#f92672">();</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">count</span> <span style="color:#f92672">!=</span> <span style="color:#111">1</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#111">first</span><span style="color:#f92672">.</span><span style="color:#75af00">await</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">2</span><span style="color:#f92672">;</span>
+        <span style="color:#111">printFirst</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+        <span style="color:#111">second</span><span style="color:#f92672">.</span><span style="color:#75af00">signal</span><span style="color:#f92672">();</span>
+        <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">unlock</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">second</span><span style="color:#f92672">(</span><span style="color:#111">Runnable</span> <span style="color:#111">printSecond</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+
+        <span style="color:#75715e">// printSecond.run() outputs &#34;second&#34;. Do not change or remove this line.
+</span><span style="color:#75715e"></span>        <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">lock</span><span style="color:#f92672">();</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">count</span> <span style="color:#f92672">!=</span> <span style="color:#111">2</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#111">second</span><span style="color:#f92672">.</span><span style="color:#75af00">await</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">3</span><span style="color:#f92672">;</span>
+        <span style="color:#111">printSecond</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+        <span style="color:#111">third</span><span style="color:#f92672">.</span><span style="color:#75af00">signal</span><span style="color:#f92672">();</span>
+        <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">unlock</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">third</span><span style="color:#f92672">(</span><span style="color:#111">Runnable</span> <span style="color:#111">printThird</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+
+        <span style="color:#75715e">// printThird.run() outputs &#34;third&#34;. Do not change or remove this line.
+</span><span style="color:#75715e"></span>        <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">lock</span><span style="color:#f92672">();</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">count</span> <span style="color:#f92672">!=</span> <span style="color:#111">3</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#111">third</span><span style="color:#f92672">.</span><span style="color:#75af00">await</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">1</span><span style="color:#f92672">;</span>
+        <span style="color:#111">printThird</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+        <span style="color:#111">first</span><span style="color:#f92672">.</span><span style="color:#75af00">signal</span><span style="color:#f92672">();</span>
+        <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">unlock</span><span style="color:#f92672">();</span>
     <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
 </code></pre></div>
