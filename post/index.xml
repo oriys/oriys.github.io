@@ -5,7 +5,15 @@
     <link>/post/</link>
       <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     <description>Posts</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Sun, 15 Aug 2021 06:48:14 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Wed, 18 Aug 2021 21:09:19 +0800</lastBuildDate>
+    <item>
+      <title>TLPI::select</title>
+      <link>/post/tlpi_select/</link>
+      <pubDate>Wed, 18 Aug 2021 21:09:19 +0800</pubDate>
+      <guid>/post/tlpi_select/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Redis::基础::字符串</title>
       <link>/post/redis_basic_strings/</link>
@@ -1701,7 +1709,109 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
       <link>/post/modern_operating_systems_operating_system_design/</link>
       <pubDate>Fri, 23 Jul 2021 02:11:01 +0800</pubDate>
       <guid>/post/modern_operating_systems_operating_system_design/</guid>
-      <description></description>
+      <description>&lt;h2 id=&#34;操作系统设计&#34;&gt;操作系统设计&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;设计问题的本质
+&lt;ul&gt;
+&lt;li&gt;目标
+&lt;ul&gt;
+&lt;li&gt;定义抽象概念
+&lt;ul&gt;
+&lt;li&gt;进程、文件、线程、信号量&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;提供基本操作
+&lt;ul&gt;
+&lt;li&gt;每一个抽象概念可以通过具体数据结构的形式来实例化。用户可以创建进程、文件、信号量等。基本操作则处理这些数据结构。例如，用户可以读写文件。基本操作以系统调用的形式实现。从用户的观点来看，操作系统的核心是由抽象概念与其上的基本操作所构成的，而基本操作则可通过系统调用加以利用。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;确保隔离
+&lt;ul&gt;
+&lt;li&gt;用户之间的隔离&lt;/li&gt;
+&lt;li&gt;虚拟机之间的隔离&lt;/li&gt;
+&lt;li&gt;进程之间的隔离&lt;/li&gt;
+&lt;li&gt;故障隔离&lt;/li&gt;
+&lt;li&gt;资源共享&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;管理硬件
+&lt;ul&gt;
+&lt;li&gt;提供一个框架，统一管理不同型号的硬件资源&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;难点
+&lt;ul&gt;
+&lt;li&gt;已经发展成了极其复杂的程序&lt;/li&gt;
+&lt;li&gt;必须处理并发和并发导致竞争条件、死锁等问题。&lt;/li&gt;
+&lt;li&gt;必须处理可能有敌意的用户&lt;/li&gt;
+&lt;li&gt;需要提供在不同用户之间共享资源的能力&lt;/li&gt;
+&lt;li&gt;设计人员需要思考未来的操作系统设计方向&lt;/li&gt;
+&lt;li&gt;需要提供想当程度的通用性&lt;/li&gt;
+&lt;li&gt;可移植性&lt;/li&gt;
+&lt;li&gt;需要保持向后兼容&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;接口设计
+&lt;ul&gt;
+&lt;li&gt;指导原则
+&lt;ul&gt;
+&lt;li&gt;简单：一个简单的接口更加易于理解并且更加易于以无差错的方式实现&lt;/li&gt;
+&lt;li&gt;完备：接口必须能够做用户需要做的一切事情，也就是说，它必须是完备的&lt;/li&gt;
+&lt;li&gt;效率：如果一个功能特性或者系统调用不能够有效地实现，或许就不值得包含它。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;范型
+&lt;ul&gt;
+&lt;li&gt;用户界面范型：不管选择什么范型，重要的是所有应用程序都要使用它。因此，系统设计者需要提供库和工具包给应用程序开发人员，使他们能够访问产生一致的外观与感觉的程序。没有工具，应用开发者做出来的东西可能完全不同。&lt;/li&gt;
+&lt;li&gt;执行范型：
+&lt;ul&gt;
+&lt;li&gt;算法范型：启动一个程序是为了执行某个功能，而该功能是事先知道的或者是从其参数获知的。&lt;/li&gt;
+&lt;li&gt;事件驱动范型：在这里程序执行某种初始化（例如通过显示某个屏幕），然后等待操作系统告诉它第一个事件。事件经常是键盘敲击或鼠标移动。这一设计对干高度交互式的程序是十分有益的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;数据范型：
+&lt;ul&gt;
+&lt;li&gt;一切皆磁带：在早期的 FORTRAN 批处理系统中，所有一切都是作为连续的磁带来建立模型。用于读入的卡片组被看作输入磁带，用于穿孔的卡片组被看作输出磁带，井且打印机给出被看作输出磁带。磁盘文件也被看作磁带&lt;/li&gt;
+&lt;li&gt;一切皆文件：UNIX 用”所有一切都是文件”的模型一步发展了这一思想。使用这一范型，所有 I/O 设备都被看作文件，井且可以像普通文件一样打开和操作。&lt;/li&gt;
+&lt;li&gt;一切皆对象：Windows 试图使所有一切看起来像是一个对象。一旦一个进程获得了一个指向文件、进程、信号量、 邮箱或者其他内核对象的有效句柄，它就可以在其上执行操作。这一范型甚至比 UNIX 更加一般化，井且比 FORTRAN 要一般化得多。&lt;/li&gt;
+&lt;li&gt;一切皆文档：Web 背后的范型是充满了文档的超空间，每一个文档具有一个 URL。通过键人一个 URL 或者点击被 URL 所支持的条目，你就可以得到该文档。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;系统调用接口
+&lt;ul&gt;
+&lt;li&gt;操作系统应该提供恰好够用的系统调用，井且每个系统调用都应该尽可能简单&lt;/li&gt;
+&lt;li&gt;在某些情况下，系统调用可能需要若干变体，但是通常比较好的实现是具有处理一般情况的一个系统调用，而由不同的库过程向程序员隐藏这一事实。&lt;/li&gt;
+&lt;li&gt;添加更多的代码就是添加更多的程序错误&lt;/li&gt;
+&lt;li&gt;不要隐藏能力，如果硬件具有极其高效的方法做某事，它就应该以简单的方法展露给程序员&lt;/li&gt;
+&lt;li&gt;任何面向连接的机制与无连接的机制之间的权衡在于建立连接的机制（例如打开文件）要求的额外开销，&lt;/li&gt;
+&lt;li&gt;与系统调用接口有关的另一个问题是接口的可见性。 POSIX 强制的系统调用列表很容易找到。Microsoft 从未将 Windows 系统调用列表公开。作为替代，Win API 和其他 API 被公开了，但是这些 API 包含大量的库调用（超过 10000 个），只有很少数是其正的系统调用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;实现
+&lt;ul&gt;
+&lt;li&gt;系统结构
+&lt;ul&gt;
+&lt;li&gt;分层系统：对于一个新系统，选择走这一路线的设计人员应该首先非常仔细地选择各个层次，井且定义每个层次的功能。底层应该总是试图隐藏硬件最糟糕的特异性&lt;/li&gt;
+&lt;li&gt;外内核：他们的观点基干端到端问题，某件事情必须由用户程序本身去完成，在一个较低的层次做同样的事情就是浪费。端到端问题可以扩展到几乎所有操作系统。它主张不要让操作系统做用户程序本身可以做的任何事情。&lt;/li&gt;
+&lt;li&gt;在让操作系统做每件事情和让操作系统什么也不做之间的折衷是让操作系统做一点事情。这一设计导致微内核的出现，它让操作系统的大部分作为用户级的服务器进程而运行，在所有设计中这是最模块化和最灵活的。在灵活性上的极限是让每个设备驱动程序也作为一个用户进程而运行，从而完全保护内核和其他驱动程序，但是让设备驱动程序运行在内核会增加模块化程度。&lt;/li&gt;
+&lt;li&gt;可扩展的系统：将更多的模块放到内核中，但是以一种“受保护的”方式。可扩展的系统自身井不是构造一个操作系统的方法。然而，通过以一个只是包含保护机制的 朵小系统为开端，然后每次将受保护的模块添加到内核中，直到达到期望的功能，对千手边的应用而言一个最小的系统就建立起来了 。&lt;/li&gt;
+&lt;li&gt;内核线程：无论选择哪种结构模型，允许存在与任何用户进程相隔离的内核线程是很方便的。这些线程可以在后台运行，将脏页面写入磁盘，在内存和磁盘之间交换进程，如此等等。实际上，内核本身可以完全由这样的线程构成，所以当一个用户发出系统调用时，用户的线程并不是在内核模式中运行，而是阻塞井且将控制传给一个内核线程，该内核线程接管控制以完成工作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
     </item>
     
     <item>
