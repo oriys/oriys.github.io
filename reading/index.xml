@@ -5,12 +5,36 @@
     <link>/reading/</link>
       <atom:link href="/reading/index.xml" rel="self" type="application/rss+xml" />
     <description>Readings</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Sun, 11 Jul 2021 17:14:37 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Sat, 21 Aug 2021 17:14:37 +0800</lastBuildDate>
+    <item>
+      <title>推理::字母表谜案</title>
+      <link>/reading/douban_35390390/</link>
+      <pubDate>Sat, 21 Aug 2021 17:14:37 +0800</pubDate>
+      <guid>/reading/douban_35390390/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>推理::嫌疑人X的献身</title>
+      <link>/reading/douban_3211779/</link>
+      <pubDate>Thu, 15 Jul 2021 17:15:37 +0800</pubDate>
+      <guid>/reading/douban_3211779/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>推理::金色麦田</title>
       <link>/reading/douban_33404959/</link>
       <pubDate>Sun, 11 Jul 2021 17:14:37 +0800</pubDate>
       <guid>/reading/douban_33404959/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>推理::恶意</title>
+      <link>/reading/douban_26877752/</link>
+      <pubDate>Sat, 03 Jul 2021 17:15:37 +0800</pubDate>
+      <guid>/reading/douban_26877752/</guid>
       <description></description>
     </item>
     

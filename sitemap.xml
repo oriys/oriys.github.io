@@ -2,10 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/leetcode/</loc>
-    <lastmod>2021-08-21T09:59:43+08:00</lastmod>
+    <loc>/reading/</loc>
+    <lastmod>2021-08-21T17:14:37+08:00</lastmod>
   </url><url>
     <loc>/</loc>
+    <lastmod>2021-08-21T17:14:37+08:00</lastmod>
+  </url><url>
+    <loc>/reading/douban_35390390/</loc>
+    <lastmod>2021-08-21T17:14:37+08:00</lastmod>
+  </url><url>
+    <loc>/leetcode/</loc>
     <lastmod>2021-08-21T09:59:43+08:00</lastmod>
   </url><url>
     <loc>/leetcode/278/</loc>
@@ -74,17 +80,20 @@
     <loc>/notes/modern_operating_systems_memory_manage/</loc>
     <lastmod>2021-07-16T09:39:03+08:00</lastmod>
   </url><url>
+    <loc>/reading/douban_3211779/</loc>
+    <lastmod>2021-07-15T17:15:37+08:00</lastmod>
+  </url><url>
     <loc>/notes/modern_operating_systems_process_and_thread/</loc>
     <lastmod>2021-07-15T09:39:03+08:00</lastmod>
   </url><url>
     <loc>/notes/modern_operating_systems_introduction/</loc>
     <lastmod>2021-07-14T09:39:03+08:00</lastmod>
   </url><url>
-    <loc>/reading/</loc>
-    <lastmod>2021-07-11T17:14:37+08:00</lastmod>
-  </url><url>
     <loc>/reading/douban_33404959/</loc>
     <lastmod>2021-07-11T17:14:37+08:00</lastmod>
+  </url><url>
+    <loc>/reading/douban_26877752/</loc>
+    <lastmod>2021-07-03T17:15:37+08:00</lastmod>
   </url><url>
     <loc>/reading/douban_35296788/</loc>
     <lastmod>2021-07-03T17:14:37+08:00</lastmod>
