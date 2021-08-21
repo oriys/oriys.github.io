@@ -7,21 +7,23 @@
   <link rel="preload" href="/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Y.CH.Y</title>
-  <link rel = 'canonical' href = '/tags/'>
+  <title> 深入理解Java虚拟机::虚拟机性能监控、故障处理工具 | Y.CH.Y</title>
+  <link rel = 'canonical' href = '/notes/understand_the_jvm_04/'>
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
-  <meta property="og:title" content="Tags" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="/tags/" />
+  <meta property="og:title" content="深入理解Java虚拟机::虚拟机性能监控、故障处理工具" />
+<meta property="og:description" content="虚拟机性能监控、故障处理工具  jps  虚拟机进程状况工具 可以列出正在运行的虚拟机进程，并显示虚拟机执行主类(Main Class，main()函数所在的类)名称以及这些进程的本地虚拟机唯一 ID(LVMID，Local Virtual Machine Identifier)   jstat  虚拟机统计信息监视工具 显示本地或者远程虚拟机进程中的类加载、内存、垃圾收集、即时编译等运行时数据   jinfo  是实时查看和调整虚拟机各项参数 System.getProperties()   jmap  生成堆转储快照 查询 finalize 执行队列 Java 堆和方法区的详细信息 如空间使用率 当前用的是哪种收集器   jhat  与 jmap 搭配使用，来分析 jmap 生成的堆转储快照   jstack  用于生成虚拟机当前时刻的线程快照    " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/notes/understand_the_jvm_04/" /><meta property="article:section" content="notes" />
+<meta property="article:published_time" content="2021-04-03T22:10:56+08:00" />
+<meta property="article:modified_time" content="2021-04-03T22:10:56+08:00" />
 
 
   <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Tags"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:title" content="深入理解Java虚拟机::虚拟机性能监控、故障处理工具"/>
+<meta name="twitter:description" content="虚拟机性能监控、故障处理工具  jps  虚拟机进程状况工具 可以列出正在运行的虚拟机进程，并显示虚拟机执行主类(Main Class，main()函数所在的类)名称以及这些进程的本地虚拟机唯一 ID(LVMID，Local Virtual Machine Identifier)   jstat  虚拟机统计信息监视工具 显示本地或者远程虚拟机进程中的类加载、内存、垃圾收集、即时编译等运行时数据   jinfo  是实时查看和调整虚拟机各项参数 System.getProperties()   jmap  生成堆转储快照 查询 finalize 执行队列 Java 堆和方法区的详细信息 如空间使用率 当前用的是哪种收集器   jhat  与 jmap 搭配使用，来分析 jmap 生成的堆转储快照   jstack  用于生成虚拟机当前时刻的线程快照    "/>
 
   
   
@@ -43,8 +45,6 @@
 <link rel="icon" type="image/png" href="/images/favicon.ico" />
 
   
-  
-    <link href="/tags/index.xml" rel="alternate" type="application/rss+xml" title="Y.CH.Y" />
   
   
   
@@ -99,20 +99,51 @@ if (!doNotTrack) {
 
     
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
   <div class="content" itemprop="articleBody">
-    
-    <div id="tag-cloud">
-      
-      <div class="tag-cloud-title">
-        No tags
-      </div>
-      
-      <div class="tag-cloud-tags">
-        
-        
-      </div>
-    </div>
-    
+  
+    <h2 id="虚拟机性能监控故障处理工具">虚拟机性能监控、故障处理工具</h2>
+<ul>
+<li>jps
+<ul>
+<li>虚拟机进程状况工具</li>
+<li>可以列出正在运行的虚拟机进程，并显示虚拟机执行主类(Main Class，main()函数所在的类)名称以及这些进程的本地虚拟机唯一 ID(LVMID，Local Virtual Machine Identifier)</li>
+</ul>
+</li>
+<li>jstat
+<ul>
+<li>虚拟机统计信息监视工具</li>
+<li>显示本地或者远程虚拟机进程中的类加载、内存、垃圾收集、即时编译等运行时数据</li>
+</ul>
+</li>
+<li>jinfo
+<ul>
+<li>是实时查看和调整虚拟机各项参数</li>
+<li>System.getProperties()</li>
+</ul>
+</li>
+<li>jmap
+<ul>
+<li>生成堆转储快照</li>
+<li>查询 finalize 执行队列</li>
+<li>Java 堆和方法区的详细信息</li>
+<li>如空间使用率</li>
+<li>当前用的是哪种收集器</li>
+</ul>
+</li>
+<li>jhat
+<ul>
+<li>与 jmap 搭配使用，来分析 jmap 生成的堆转储快照</li>
+</ul>
+</li>
+<li>jstack
+<ul>
+<li>用于生成虚拟机当前时刻的线程快照</li>
+</ul>
+</li>
+</ul>
+
+  
   </div>
 </article>
 
