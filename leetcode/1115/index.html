@@ -343,10 +343,7 @@ if (!doNotTrack) {
         <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">n</span><span style="color:#f92672">;</span> <span style="color:#111">i</span><span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
 
             <span style="color:#75715e">// printBar.run() outputs &#34;bar&#34;. Do not change or remove this line.
-</span><span style="color:#75715e"></span>            <span style="color:#00a8c8">while</span> <span style="color:#f92672">(!</span><span style="color:#111">flag</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-                <span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">yield</span><span style="color:#f92672">();</span>
-            <span style="color:#f92672">}</span>
-            <span style="color:#00a8c8">try</span> <span style="color:#f92672">{</span>
+</span><span style="color:#75715e"></span>            <span style="color:#00a8c8">try</span> <span style="color:#f92672">{</span>
                 <span style="color:#111">barrier</span><span style="color:#f92672">.</span><span style="color:#75af00">await</span><span style="color:#f92672">();</span>
             <span style="color:#f92672">}</span> <span style="color:#00a8c8">catch</span> <span style="color:#f92672">(</span><span style="color:#111">BrokenBarrierException</span> <span style="color:#111">e</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
                 <span style="color:#111">e</span><span style="color:#f92672">.</span><span style="color:#75af00">printStackTrace</span><span style="color:#f92672">();</span>
