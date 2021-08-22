@@ -174,6 +174,188 @@ if (!doNotTrack) {
         <span style="color:#f92672">}</span>
     <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
+</code></pre></div><h2 id="解法三lock--conditon">解法三：Lock + Conditon</h2>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">class</span> <span style="color:#75af00">FooBar</span> <span style="color:#f92672">{</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">int</span> <span style="color:#111">n</span><span style="color:#f92672">;</span>
+
+    <span style="color:#111">ReentrantLock</span> <span style="color:#111">lock</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ReentrantLock</span><span style="color:#f92672">();</span>
+
+    <span style="color:#111">Condition</span> <span style="color:#111">foo</span> <span style="color:#f92672">=</span> <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">newCondition</span><span style="color:#f92672">();</span>
+
+    <span style="color:#111">Condition</span> <span style="color:#111">bar</span> <span style="color:#f92672">=</span> <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">newCondition</span><span style="color:#f92672">();</span>
+
+    <span style="color:#00a8c8">volatile</span> <span style="color:#00a8c8">boolean</span> <span style="color:#111">flag</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">false</span><span style="color:#f92672">;</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">FooBar</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">n</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">n</span> <span style="color:#f92672">=</span> <span style="color:#111">n</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">(</span><span style="color:#111">Runnable</span> <span style="color:#111">printFoo</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+
+        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">n</span><span style="color:#f92672">;</span> <span style="color:#111">i</span><span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+
+            <span style="color:#75715e">// printFoo.run() outputs &#34;foo&#34;. Do not change or remove this line.
+</span><span style="color:#75715e"></span>            <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">lock</span><span style="color:#f92672">();</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">flag</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#111">foo</span><span style="color:#f92672">.</span><span style="color:#75af00">await</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#111">printFoo</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+            <span style="color:#111">flag</span> <span style="color:#f92672">=</span> <span style="color:#f92672">!</span><span style="color:#111">flag</span><span style="color:#f92672">;</span>
+            <span style="color:#111">bar</span><span style="color:#f92672">.</span><span style="color:#75af00">signal</span><span style="color:#f92672">();</span>
+            <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">unlock</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">bar</span><span style="color:#f92672">(</span><span style="color:#111">Runnable</span> <span style="color:#111">printBar</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+
+        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">n</span><span style="color:#f92672">;</span> <span style="color:#111">i</span><span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+
+            <span style="color:#75715e">// printBar.run() outputs &#34;bar&#34;. Do not change or remove this line.
+</span><span style="color:#75715e"></span>            <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">lock</span><span style="color:#f92672">();</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#f92672">(!</span><span style="color:#111">flag</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#111">bar</span><span style="color:#f92672">.</span><span style="color:#75af00">await</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#111">printBar</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+            <span style="color:#111">flag</span> <span style="color:#f92672">=</span> <span style="color:#f92672">!</span><span style="color:#111">flag</span><span style="color:#f92672">;</span>
+            <span style="color:#111">foo</span><span style="color:#f92672">.</span><span style="color:#75af00">signal</span><span style="color:#f92672">();</span>
+            <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">unlock</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="解法四locksupport">解法四：LockSupport</h2>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">class</span> <span style="color:#75af00">FooBar</span> <span style="color:#f92672">{</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">int</span> <span style="color:#111">n</span><span style="color:#f92672">;</span>
+
+    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">boolean</span> <span style="color:#111">flag</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">true</span><span style="color:#f92672">;</span>
+
+    <span style="color:#111">Thread</span> <span style="color:#111">foo</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">null</span><span style="color:#f92672">;</span>
+
+    <span style="color:#111">Thread</span> <span style="color:#111">bar</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">null</span><span style="color:#f92672">;</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">FooBar</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">n</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">n</span> <span style="color:#f92672">=</span> <span style="color:#111">n</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">(</span><span style="color:#111">Runnable</span> <span style="color:#111">printFoo</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+
+        <span style="color:#111">foo</span> <span style="color:#f92672">=</span> <span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">currentThread</span><span style="color:#f92672">();</span>
+        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">n</span><span style="color:#f92672">;</span> <span style="color:#111">i</span><span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#f92672">(!</span><span style="color:#111">flag</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#111">LockSupport</span><span style="color:#f92672">.</span><span style="color:#75af00">park</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#75715e">// printFoo.run() outputs &#34;foo&#34;. Do not change or remove this line.
+</span><span style="color:#75715e"></span>            <span style="color:#111">printFoo</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+            <span style="color:#111">flag</span> <span style="color:#f92672">=</span> <span style="color:#f92672">!</span><span style="color:#111">flag</span><span style="color:#f92672">;</span>
+            <span style="color:#111">LockSupport</span><span style="color:#f92672">.</span><span style="color:#75af00">unpark</span><span style="color:#f92672">(</span><span style="color:#111">bar</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">bar</span><span style="color:#f92672">(</span><span style="color:#111">Runnable</span> <span style="color:#111">printBar</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+
+        <span style="color:#111">bar</span> <span style="color:#f92672">=</span> <span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">currentThread</span><span style="color:#f92672">();</span>
+        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">n</span><span style="color:#f92672">;</span> <span style="color:#111">i</span><span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+
+            <span style="color:#75715e">// printBar.run() outputs &#34;bar&#34;. Do not change or remove this line.
+</span><span style="color:#75715e"></span>            <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">flag</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#111">LockSupport</span><span style="color:#f92672">.</span><span style="color:#75af00">park</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#111">printBar</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+            <span style="color:#111">flag</span> <span style="color:#f92672">=</span> <span style="color:#f92672">!</span><span style="color:#111">flag</span><span style="color:#f92672">;</span>
+            <span style="color:#111">LockSupport</span><span style="color:#f92672">.</span><span style="color:#75af00">unpark</span><span style="color:#f92672">(</span><span style="color:#111">foo</span><span style="color:#f92672">);</span>
+            <span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="解法五synchronized--waitnotifyall">解法五：Synchronized + wait/notifyAll</h2>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">class</span> <span style="color:#75af00">FooBar</span> <span style="color:#f92672">{</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">int</span> <span style="color:#111">n</span><span style="color:#f92672">;</span>
+
+    <span style="color:#111">Object</span> <span style="color:#111">lock</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Object</span><span style="color:#f92672">();</span>
+
+    <span style="color:#00a8c8">volatile</span> <span style="color:#00a8c8">boolean</span> <span style="color:#111">flag</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">false</span><span style="color:#f92672">;</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">FooBar</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">n</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">n</span> <span style="color:#f92672">=</span> <span style="color:#111">n</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">(</span><span style="color:#111">Runnable</span> <span style="color:#111">printFoo</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+
+        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">n</span><span style="color:#f92672">;</span> <span style="color:#111">i</span><span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">// printFoo.run() outputs &#34;foo&#34;. Do not change or remove this line.
+</span><span style="color:#75715e"></span>            <span style="color:#00a8c8">synchronized</span> <span style="color:#f92672">(</span><span style="color:#111">lock</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">flag</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">wait</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span>
+                <span style="color:#111">printFoo</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+                <span style="color:#111">flag</span> <span style="color:#f92672">=</span> <span style="color:#f92672">!</span><span style="color:#111">flag</span><span style="color:#f92672">;</span>
+                <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">notifyAll</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">bar</span><span style="color:#f92672">(</span><span style="color:#111">Runnable</span> <span style="color:#111">printBar</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+
+        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">n</span><span style="color:#f92672">;</span> <span style="color:#111">i</span><span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+
+            <span style="color:#75715e">// printBar.run() outputs &#34;bar&#34;. Do not change or remove this line.
+</span><span style="color:#75715e"></span>            <span style="color:#00a8c8">synchronized</span> <span style="color:#f92672">(</span><span style="color:#111">lock</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#00a8c8">if</span> <span style="color:#f92672">(!</span><span style="color:#111">flag</span><span style="color:#f92672">){</span>
+                    <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">wait</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span>
+                <span style="color:#111">printBar</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+                <span style="color:#111">flag</span><span style="color:#f92672">=!</span><span style="color:#111">flag</span><span style="color:#f92672">;</span>
+                <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">notifyAll</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="解法六cyclicbarrier">解法六：CyclicBarrier</h2>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">class</span> <span style="color:#75af00">FooBar</span> <span style="color:#f92672">{</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">int</span> <span style="color:#111">n</span><span style="color:#f92672">;</span>
+
+    <span style="color:#111">CyclicBarrier</span> <span style="color:#111">barrier</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">CyclicBarrier</span><span style="color:#f92672">(</span><span style="color:#111">2</span><span style="color:#f92672">);</span>
+
+    <span style="color:#00a8c8">volatile</span> <span style="color:#00a8c8">boolean</span> <span style="color:#111">flag</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">false</span><span style="color:#f92672">;</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">FooBar</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">n</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">n</span> <span style="color:#f92672">=</span> <span style="color:#111">n</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">foo</span><span style="color:#f92672">(</span><span style="color:#111">Runnable</span> <span style="color:#111">printFoo</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+
+        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">n</span><span style="color:#f92672">;</span> <span style="color:#111">i</span><span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">// printFoo.run() outputs &#34;foo&#34;. Do not change or remove this line.
+</span><span style="color:#75715e"></span>            <span style="color:#00a8c8">while</span> <span style="color:#f92672">(</span><span style="color:#111">flag</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">yield</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#111">printFoo</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+            <span style="color:#111">flag</span> <span style="color:#f92672">=</span> <span style="color:#f92672">!</span><span style="color:#111">flag</span><span style="color:#f92672">;</span>
+            <span style="color:#00a8c8">try</span> <span style="color:#f92672">{</span>
+                <span style="color:#111">barrier</span><span style="color:#f92672">.</span><span style="color:#75af00">await</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#00a8c8">catch</span> <span style="color:#f92672">(</span><span style="color:#111">BrokenBarrierException</span> <span style="color:#111">e</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#111">e</span><span style="color:#f92672">.</span><span style="color:#75af00">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">bar</span><span style="color:#f92672">(</span><span style="color:#111">Runnable</span> <span style="color:#111">printBar</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+
+        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">n</span><span style="color:#f92672">;</span> <span style="color:#111">i</span><span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+
+            <span style="color:#75715e">// printBar.run() outputs &#34;bar&#34;. Do not change or remove this line.
+</span><span style="color:#75715e"></span>            <span style="color:#00a8c8">while</span> <span style="color:#f92672">(!</span><span style="color:#111">flag</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">yield</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#00a8c8">try</span> <span style="color:#f92672">{</span>
+                <span style="color:#111">barrier</span><span style="color:#f92672">.</span><span style="color:#75af00">await</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#00a8c8">catch</span> <span style="color:#f92672">(</span><span style="color:#111">BrokenBarrierException</span> <span style="color:#111">e</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#111">e</span><span style="color:#f92672">.</span><span style="color:#75af00">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#111">printBar</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+            <span style="color:#111">flag</span> <span style="color:#f92672">=</span> <span style="color:#f92672">!</span><span style="color:#111">flag</span><span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
 </code></pre></div>
   
   </div>
