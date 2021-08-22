@@ -300,6 +300,122 @@ if (!doNotTrack) {
         <span style="color:#f92672">}</span>
     <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
+</code></pre></div><h2 id="解法五synchroinzed--waitnotifyall">解法五：Synchroinzed + wait/notifyAll</h2>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">class</span> <span style="color:#75af00">ZeroEvenOdd</span> <span style="color:#f92672">{</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">int</span> <span style="color:#111">n</span><span style="color:#f92672">;</span>
+
+    <span style="color:#00a8c8">volatile</span> <span style="color:#00a8c8">int</span> <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span>
+
+    <span style="color:#00a8c8">final</span> <span style="color:#111">Object</span> <span style="color:#111">lock</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Object</span><span style="color:#f92672">();</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">ZeroEvenOdd</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">n</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">n</span> <span style="color:#f92672">=</span> <span style="color:#111">n</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">// printNumber.accept(x) outputs &#34;x&#34;, where x is an integer.
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">zero</span><span style="color:#f92672">(</span><span style="color:#111">IntConsumer</span> <span style="color:#111">printNumber</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">n</span><span style="color:#f92672">;</span> <span style="color:#111">i</span><span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            <span style="color:#00a8c8">synchronized</span> <span style="color:#f92672">(</span><span style="color:#111">lock</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#00a8c8">while</span> <span style="color:#f92672">(</span><span style="color:#111">count</span> <span style="color:#f92672">!=</span> <span style="color:#111">0</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">wait</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span>
+                <span style="color:#111">printNumber</span><span style="color:#f92672">.</span><span style="color:#75af00">accept</span><span style="color:#f92672">(</span><span style="color:#111">0</span><span style="color:#f92672">);</span>
+                <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">i</span> <span style="color:#f92672">%</span> <span style="color:#111">2</span> <span style="color:#f92672">+</span> <span style="color:#111">1</span><span style="color:#f92672">;</span>
+                <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">notifyAll</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">even</span><span style="color:#f92672">(</span><span style="color:#111">IntConsumer</span> <span style="color:#111">printNumber</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">2</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#111">n</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">+=</span> <span style="color:#111">2</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#00a8c8">synchronized</span> <span style="color:#f92672">(</span><span style="color:#111">lock</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#00a8c8">while</span> <span style="color:#f92672">(</span><span style="color:#111">count</span> <span style="color:#f92672">!=</span> <span style="color:#111">2</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">wait</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span>
+                <span style="color:#111">printNumber</span><span style="color:#f92672">.</span><span style="color:#75af00">accept</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+                <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span>
+                <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">notifyAll</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">odd</span><span style="color:#f92672">(</span><span style="color:#111">IntConsumer</span> <span style="color:#111">printNumber</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">1</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#111">n</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">+=</span> <span style="color:#111">2</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#00a8c8">synchronized</span> <span style="color:#f92672">(</span><span style="color:#111">lock</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#00a8c8">while</span> <span style="color:#f92672">(</span><span style="color:#111">count</span> <span style="color:#f92672">!=</span> <span style="color:#111">1</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">wait</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span>
+                <span style="color:#111">printNumber</span><span style="color:#f92672">.</span><span style="color:#75af00">accept</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+                <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span>
+                <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">notifyAll</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="解法六lock--condition">解法六：Lock + Condition</h3>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">class</span> <span style="color:#75af00">ZeroEvenOdd</span> <span style="color:#f92672">{</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">int</span> <span style="color:#111">n</span><span style="color:#f92672">;</span>
+
+    <span style="color:#111">ReentrantLock</span> <span style="color:#111">lock</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ReentrantLock</span><span style="color:#f92672">();</span>
+
+    <span style="color:#111">Condition</span> <span style="color:#111">zero</span> <span style="color:#f92672">=</span> <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">newCondition</span><span style="color:#f92672">();</span>
+
+    <span style="color:#111">Condition</span> <span style="color:#111">odd</span> <span style="color:#f92672">=</span> <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">newCondition</span><span style="color:#f92672">();</span>
+
+    <span style="color:#111">Condition</span> <span style="color:#111">even</span> <span style="color:#f92672">=</span> <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">newCondition</span><span style="color:#f92672">();</span>
+
+    <span style="color:#00a8c8">volatile</span> <span style="color:#00a8c8">int</span> <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">ZeroEvenOdd</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">n</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">n</span> <span style="color:#f92672">=</span> <span style="color:#111">n</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">// printNumber.accept(x) outputs &#34;x&#34;, where x is an integer.
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">zero</span><span style="color:#f92672">(</span><span style="color:#111">IntConsumer</span> <span style="color:#111">printNumber</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">n</span><span style="color:#f92672">;</span> <span style="color:#111">i</span><span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">lock</span><span style="color:#f92672">();</span>
+            <span style="color:#00a8c8">while</span> <span style="color:#f92672">(</span><span style="color:#111">count</span> <span style="color:#f92672">!=</span> <span style="color:#111">0</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#111">zero</span><span style="color:#f92672">.</span><span style="color:#75af00">await</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#111">printNumber</span><span style="color:#f92672">.</span><span style="color:#75af00">accept</span><span style="color:#f92672">(</span><span style="color:#111">0</span><span style="color:#f92672">);</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">i</span> <span style="color:#f92672">%</span> <span style="color:#111">2</span> <span style="color:#f92672">==</span> <span style="color:#111">0</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">1</span><span style="color:#f92672">;</span>
+                <span style="color:#111">odd</span><span style="color:#f92672">.</span><span style="color:#75af00">signal</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#00a8c8">else</span> <span style="color:#f92672">{</span>
+                <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">2</span><span style="color:#f92672">;</span>
+                <span style="color:#111">even</span><span style="color:#f92672">.</span><span style="color:#75af00">signal</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">unlock</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">even</span><span style="color:#f92672">(</span><span style="color:#111">IntConsumer</span> <span style="color:#111">printNumber</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">2</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#111">n</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">+=</span> <span style="color:#111">2</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">lock</span><span style="color:#f92672">();</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">count</span> <span style="color:#f92672">!=</span> <span style="color:#111">2</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#111">even</span><span style="color:#f92672">.</span><span style="color:#75af00">await</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#111">printNumber</span><span style="color:#f92672">.</span><span style="color:#75af00">accept</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+            <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span>
+            <span style="color:#111">zero</span><span style="color:#f92672">.</span><span style="color:#75af00">signal</span><span style="color:#f92672">();</span>
+            <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">unlock</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">odd</span><span style="color:#f92672">(</span><span style="color:#111">IntConsumer</span> <span style="color:#111">printNumber</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">1</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#111">n</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">+=</span> <span style="color:#111">2</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">lock</span><span style="color:#f92672">();</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">count</span> <span style="color:#f92672">!=</span> <span style="color:#111">1</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#111">odd</span><span style="color:#f92672">.</span><span style="color:#75af00">await</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#111">printNumber</span><span style="color:#f92672">.</span><span style="color:#75af00">accept</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+            <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span>
+            <span style="color:#111">zero</span><span style="color:#f92672">.</span><span style="color:#75af00">signal</span><span style="color:#f92672">();</span>
+            <span style="color:#111">lock</span><span style="color:#f92672">.</span><span style="color:#75af00">unlock</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
 </code></pre></div>
   
   </div>
