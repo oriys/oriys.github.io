@@ -262,7 +262,7 @@
     </item>
     
     <item>
-      <title>算法::简单::第一个错误的版本</title>
+      <title>算法::二分查找::第一个错误的版本</title>
       <link>/leetcode/278/</link>
       <pubDate>Sat, 21 Aug 2021 09:59:43 +0800</pubDate>
       <guid>/leetcode/278/</guid>
@@ -287,7 +287,7 @@
     </item>
     
     <item>
-      <title>算法::简单::二分查找</title>
+      <title>算法::二分查找::二分查找</title>
       <link>/leetcode/704/</link>
       <pubDate>Sat, 21 Aug 2021 09:39:35 +0800</pubDate>
       <guid>/leetcode/704/</guid>
@@ -312,7 +312,7 @@
     </item>
     
     <item>
-      <title>算法::简单::搜索插入位置</title>
+      <title>算法::二分查找::搜索插入位置</title>
       <link>/leetcode/35/</link>
       <pubDate>Sat, 21 Aug 2021 09:39:35 +0800</pubDate>
       <guid>/leetcode/35/</guid>
