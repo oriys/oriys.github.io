@@ -1285,9 +1285,9 @@
     
     <item>
       <title>CMU::15-445/645::Tree Indexes 笔记</title>
-      <link>/notes/cmu_15_445_06_note/</link>
+      <link>/courses/cmu_15_445_06_note/</link>
       <pubDate>Thu, 05 Aug 2021 08:41:54 +0800</pubDate>
-      <guid>/notes/cmu_15_445_06_note/</guid>
+      <guid>/courses/cmu_15_445_06_note/</guid>
       <description>&lt;h2 id=&#34;树形索引第一部分&#34;&gt;树形索引第一部分&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/RK21nhh.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;表索引&#34;&gt;表索引&lt;/h3&gt;
@@ -1355,9 +1355,9 @@
     
     <item>
       <title>CMU::15-445/645::Hash Tables 笔记</title>
-      <link>/notes/cmu_15_445_05_note/</link>
+      <link>/courses/cmu_15_445_05_note/</link>
       <pubDate>Wed, 04 Aug 2021 16:20:16 +0800</pubDate>
-      <guid>/notes/cmu_15_445_05_note/</guid>
+      <guid>/courses/cmu_15_445_05_note/</guid>
       <description>&lt;h2 id=&#34;散列表&#34;&gt;散列表&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/4jDQyjR.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;数据结构&#34;&gt;数据结构&lt;/h3&gt;
@@ -1464,9 +1464,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>CMU::15-445/645::Buffer Pools 笔记</title>
-      <link>/notes/cmu_15_445_04_note/</link>
+      <link>/courses/cmu_15_445_04_note/</link>
       <pubDate>Tue, 03 Aug 2021 23:17:58 +0800</pubDate>
-      <guid>/notes/cmu_15_445_04_note/</guid>
+      <guid>/courses/cmu_15_445_04_note/</guid>
       <description>&lt;h2 id=&#34;缓冲池和内存管理&#34;&gt;缓冲池和内存管理&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/whxG5l3.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
@@ -1539,9 +1539,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>CMU::15-445/645::Database Storage 笔记</title>
-      <link>/notes/cmu_15_445_03_note/</link>
+      <link>/courses/cmu_15_445_03_note/</link>
       <pubDate>Mon, 02 Aug 2021 09:07:42 +0800</pubDate>
-      <guid>/notes/cmu_15_445_03_note/</guid>
+      <guid>/courses/cmu_15_445_03_note/</guid>
       <description>&lt;h2 id=&#34;数据库存储第一部分&#34;&gt;数据库存储第一部分&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/qhTvXK1.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;存储&#34;&gt;存储&lt;/h3&gt;
@@ -1806,9 +1806,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>CMU::15-445/645::Advanced SQL 笔记</title>
-      <link>/notes/cmu_15_445_02_note/</link>
+      <link>/courses/cmu_15_445_02_note/</link>
       <pubDate>Sun, 01 Aug 2021 09:07:42 +0800</pubDate>
-      <guid>/notes/cmu_15_445_02_note/</guid>
+      <guid>/courses/cmu_15_445_02_note/</guid>
       <description>&lt;h2 id=&#34;高级-sql&#34;&gt;高级 SQL&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/flXoQVk.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;关系语言&#34;&gt;关系语言&lt;/h3&gt;
@@ -2042,9 +2042,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>CMU::15-445/645::Relational Model 笔记</title>
-      <link>/notes/cmu_15_445_01_note/</link>
+      <link>/courses/cmu_15_445_01_note/</link>
       <pubDate>Sat, 31 Jul 2021 01:51:13 +0800</pubDate>
-      <guid>/notes/cmu_15_445_01_note/</guid>
+      <guid>/courses/cmu_15_445_01_note/</guid>
       <description>&lt;h2 id=&#34;关系模型和关系代数&#34;&gt;关系模型和关系代数&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/0W1wSYn.png&#34; alt=&#34;0W1wSYn&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;数据库&#34;&gt;数据库&lt;/h3&gt;

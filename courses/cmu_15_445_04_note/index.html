@@ -8,7 +8,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title> CMU::15-445/645::Buffer Pools 笔记 | Y.CH.Y</title>
-  <link rel = 'canonical' href = '/notes/cmu_15_445_04_note/'>
+  <link rel = 'canonical' href = '/courses/cmu_15_445_04_note/'>
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="all,follow">
@@ -37,7 +37,7 @@ Latches: Latches 是一种底层的保护元语，DBMS 将其用于内部数据�
 预取 DBMS 也可以通过基于查询计划的预取页面来进行优化。然后，当第一组页面被处理时，第二组可以被预取到缓冲池中。这种方法是 DBMS 在连续访问许多页面时常用的。
 扫描共享 查询游标可以重复使用从存储或操作计算中获取的数据。这允许多个查询附加到一个扫描表的游标上。如果一个查询开始扫描，如果已经有一个在做这个，那么 DBMS 会跟踪第二个查询与第一个查询的连接位置，这样它就可以在到达数据结构的末端时完成扫描。第二个查询还可以复用第一个查询的结果或者中间结果。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/notes/cmu_15_445_04_note/" /><meta property="article:section" content="notes" />
+<meta property="og:url" content="/courses/cmu_15_445_04_note/" /><meta property="article:section" content="courses" />
 <meta property="article:published_time" content="2021-08-03T23:17:58+08:00" />
 <meta property="article:modified_time" content="2021-08-03T23:17:58+08:00" />
 
@@ -132,6 +132,8 @@ if (!doNotTrack) {
         <li><a href="/leetcode">Leetcode</a></li>
       
         <li><a href="/reading">Reading</a></li>
+      
+        <li><a href="/courses">Courses</a></li>
       
     </ul>
   </div>
@@ -236,6 +238,8 @@ if (!doNotTrack) {
         <li><a href="/leetcode">Leetcode</a></li>
          
         <li><a href="/reading">Reading</a></li>
+         
+        <li><a href="/courses">Courses</a></li>
         
       </ul>
     </nav>
