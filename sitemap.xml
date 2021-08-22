@@ -2,10 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/leetcode/</loc>
-    <lastmod>2021-08-22T17:13:46+08:00</lastmod>
+    <loc>/reading/</loc>
+    <lastmod>2021-08-22T21:58:06+08:00</lastmod>
   </url><url>
     <loc>/</loc>
+    <lastmod>2021-08-22T21:58:06+08:00</lastmod>
+  </url><url>
+    <loc>/reading/tao_of_programming/</loc>
+    <lastmod>2021-08-22T21:58:06+08:00</lastmod>
+  </url><url>
+    <loc>/leetcode/</loc>
     <lastmod>2021-08-22T17:13:46+08:00</lastmod>
   </url><url>
     <loc>/leetcode/1116/</loc>
@@ -13,9 +19,6 @@
   </url><url>
     <loc>/leetcode/1115/</loc>
     <lastmod>2021-08-22T13:40:26+08:00</lastmod>
-  </url><url>
-    <loc>/reading/</loc>
-    <lastmod>2021-08-21T17:14:37+08:00</lastmod>
   </url><url>
     <loc>/reading/douban_35390390/</loc>
     <lastmod>2021-08-21T17:14:37+08:00</lastmod>
