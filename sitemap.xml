@@ -2,10 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/leetcode/</loc>
-    <lastmod>2021-08-23T02:23:00+08:00</lastmod>
+    <loc>/notes/java_concurrency_in_practice/</loc>
+    <lastmod>2021-08-23T15:55:20+08:00</lastmod>
+  </url><url>
+    <loc>/notes/</loc>
+    <lastmod>2021-08-23T15:55:20+08:00</lastmod>
   </url><url>
     <loc>/</loc>
+    <lastmod>2021-08-23T15:55:20+08:00</lastmod>
+  </url><url>
+    <loc>/leetcode/</loc>
     <lastmod>2021-08-23T02:23:00+08:00</lastmod>
   </url><url>
     <loc>/leetcode/1117/</loc>
@@ -40,9 +46,6 @@
   </url><url>
     <loc>/leetcode/1114/</loc>
     <lastmod>2021-08-20T22:48:32+08:00</lastmod>
-  </url><url>
-    <loc>/notes/</loc>
-    <lastmod>2021-08-19T21:51:33+08:00</lastmod>
   </url><url>
     <loc>/notes/interview_questions_java/</loc>
     <lastmod>2021-08-19T21:51:33+08:00</lastmod>

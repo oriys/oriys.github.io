@@ -5,7 +5,37 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>Y.CH.Y</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Mon, 23 Aug 2021 02:23:00 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Mon, 23 Aug 2021 15:55:20 +0800</lastBuildDate>
+    <item>
+      <title>Java::Java并发编程实战::基础知识</title>
+      <link>/notes/java_concurrency_in_practice/</link>
+      <pubDate>Mon, 23 Aug 2021 15:55:20 +0800</pubDate>
+      <guid>/notes/java_concurrency_in_practice/</guid>
+      <description>&lt;h2 id=&#34;线程安全性&#34;&gt;线程安全性&lt;/h2&gt;
+&lt;p&gt;线程安全性的定义：当多个线程访问某个类时，这个类始终都能表现出正确的行为，那么就称这个类时线程安全的。在线程安全性的定义中，最核心的概念就是正确性。&lt;/p&gt;
+&lt;h3 id=&#34;原子性&#34;&gt;原子性&lt;/h3&gt;
+&lt;p&gt;在并发编程中，这种由于不恰当的执行时序而出现不正确的结果是一种非常重要的情况，它有一个正式的名字：竞态条件(Race Condition).&lt;/p&gt;
+&lt;p&gt;数据争用，线程分析器可检测多线程进程执行期间发生的数据争用。满足以下所有条件时，就会发生数据争用：一个进程内的两个或多个线程同时访问同一内存位置 ，至少其中一个访问是用于写入 ，线程未使用任何互斥锁来控制它们对该内存的访问&lt;/p&gt;
+&lt;h3 id=&#34;加锁机制&#34;&gt;加锁机制&lt;/h3&gt;
+&lt;h4 id=&#34;内置锁&#34;&gt;内置锁&lt;/h4&gt;
+&lt;p&gt;Java 提供了一种内置的锁机制来支持原子性：同步代码块 (Synchronized Block)。同步代码块包括两部分： 一个作为锁的对象引用， 一个作为由这个锁保护的代码块。以关键字 synchronized 来修饰的方法就是一种横跨整个方法体的同步代码块，其中该同步代码块的锁就是方法调用所在的对象。静态的 synchronized 方法以 Class 对象作为锁。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;synchronized&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;lock&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;){&lt;/span&gt;
+ &lt;span style=&#34;color:#75715e&#34;&gt;// 访问或修改由锁保护的共享状态
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;每个 Java 对象都可以用做一个实现同步的锁，这些锁被称为内置锁 (Intrinsic Lock) 或监视器锁 (Monitor Lock)。线程在进人同步代码块之前会自动获得锁，并且在退出同步代码块时自动释放锁，而无论是通过正常的控制路径退出，还是通过从代码块中抛出昇常退出。获得内置锁的唯一途径就是进人由这个锁保护的同步代码块或方法。&lt;/p&gt;
+&lt;p&gt;Java 的内置锁相当于一种互斥体（或互斥锁），这意味着最多只有一个线程能持有这种锁。当线程 A 尝试获取一个由线程 B 持有的锁时，线程 A 必须等待或者阻塞，直到线程 B 释放这个锁。如果 B 永远不释放锁，那么 A 也将永远地等下去。&lt;/p&gt;
+&lt;p&gt;由于每次只能有一个线程执行内置锁保护的代码块，因此，由这个锁保护的同步代码块会以原子方式执行，多个线程在执行该代码块时也不会相互干扰。并发环境中的原子性与事务应用程序中的原子性有着相同的含义，一组语句作为一个不可分割的单元被执行。任何一个执行同步代码块的线程，都不可能看到有其他线程正在执行由同一个锁保护的同步代码块。&lt;/p&gt;
+&lt;h4 id=&#34;可重入&#34;&gt;可重入&lt;/h4&gt;
+&lt;p&gt;当某个线程请求一个由其他线程持有的锁时，发出请求的线程就会阻塞。然而，由于内置锁是可重入的，因此如果某个线程试图获得一个已经由它自己持有的锁，那么这个请求就会成功。 “重入”意味着获取锁的操作的粒度是“线程”，而不是“调用”。重入的一种实现方法是，为每个锁关联一个获取计数值和一个所有者线程。当计数值为口时，这个锁就被认为是没有被任何线程持有。当线程请求一个木被持有的锁时，JVM 将记下锁的持有者，并且将获取计数值置为 1。如果同一个线程再次获取这个锁，计数值将递增，而当线程退出同步代码块时，计数器会相应地递减。当计数值为 0 时，这个锁将被释放。&lt;/p&gt;
+&lt;h3 id=&#34;用锁来保护状态&#34;&gt;用锁来保护状态&lt;/h3&gt;
+&lt;p&gt;访问共享状态的复合操作，例如命中计数器的递增操作（读取一修改一写人）或者延迟初始化（先检查后执行），都必须是原子操作以避免产生竞态条件。如果在复合操作的执行过程中持有一个锁，那么会使复合操作成为原子操作。然而，仅仅将复合操作封装到一个同步代码块中是不够的。如果用同步来协调对某个变量的访问，那么在访问这个变量的所有位置上都需要使用同步。而且，当使用锁来协调对某个变量的访问时，在访问变量的所有位置上都要使用同一个锁&lt;/p&gt;
+&lt;p&gt;对于可能被多个线程同时访问的可交状态变量，在访问它时都需要特看同一个锁，在这种情况下；我们称状态变量是由这个锁保护的&lt;/p&gt;
+&lt;p&gt;虽然 synchronized 方法可以确保单个操作的原子性，但如果要把多个操作合并为一个复合操作，还是需要额外的加锁机制&lt;/p&gt;
+&lt;h3 id=&#34;活跃性与性能&#34;&gt;活跃性与性能&lt;/h3&gt;
+&lt;p&gt;当使用锁时，你应该请楚代码块中实现的功能，以及在执行该代码块时是否需要很长的时间。无论是执行计算密集的操作，还是在执行某个可能阻塞的操作，如果持有锁的时间过长，那么都会带来活跃性或性能问题&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>多线程::H2O 生成</title>
       <link>/leetcode/1117/</link>
