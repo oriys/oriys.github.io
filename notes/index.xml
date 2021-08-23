@@ -85,6 +85,7 @@
 &lt;li&gt;事实不可变对象必须通过安全方式来发布&lt;/li&gt;
 &lt;li&gt;可变对象必须通过安全方式来发布，而且必须是线程安全的或者由某个锁保护起来。&lt;/li&gt;
 &lt;/ul&gt;
+&lt;!-- raw HTML omitted --&gt;
 </description>
     </item>
     
@@ -155,9 +156,26 @@
 &lt;h3 id=&#34;常见的-gc-回收算法有哪些&#34;&gt;常见的 GC 回收算法有哪些？&lt;/h3&gt;
 &lt;h3 id=&#34;java-中如何进行-gc-调优&#34;&gt;Java 中如何进行 GC 调优？&lt;/h3&gt;
 &lt;h3 id=&#34;java-中接口和抽象类的区别&#34;&gt;Java 中接口和抽象类的区别&lt;/h3&gt;
+&lt;p&gt;抽象类：如果一个类含有抽象方法，则称这个类为抽象类，抽象类必须在类前用 abstract 关键字修饰。因为抽象类中含有无具体实现的方法，所以不能用抽象类创建对象。抽象方法是一种特殊的方法：它只有声明，而没有具体的实现。因为抽象类中含有无具体实现的方法，所以不能用抽象类创建对象。如果一个类继承抽象类，那么就必须为基类中的抽象方法提供定义。如果不这么做，那导出类也为抽象类。&lt;/p&gt;
+&lt;p&gt;抽象类和普通类的主要有三点区别：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;抽象方法必须为 public 或者 protected（因为如果为 private，则不能被子类继承，子类便无法实现该方法），缺省情况下默认为 public。&lt;/li&gt;
+&lt;li&gt;抽象类不能用来创建对象；&lt;/li&gt;
+&lt;li&gt;如果一个类继承于一个抽象类，则子类必须实现父类的抽象方法。如果子类没有实现父类的抽象方法，则必须将子类也定义为 abstract 类。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;接口：可以含有变量和方法。但是要注意，接口中的变量会被隐式地指定为 public static final 变量（并且只能是 public static final 变量，用 private 修饰会报编译错误），而方法会被隐式地指定为 public abstract 方法且只能是 public abstract 方法（用其他关键字，比如 private、protected、static、final 等修饰会报编译错误），并且接口中所有的方法不能有具体的实现，也就是说，接口中的方法必须都是抽象方法。从这里可以隐约看出接口和抽象类的区别，接口是一种极度抽象的类型，它比抽象类更加“抽象”，并且一般情况下不在接口中定义变量。&lt;/p&gt;
+&lt;p&gt;抽象类与接口区别&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;abstract class 在 Java 语言中表示的是一种继承关系，一个类只能使用一次继承关系。但是，一个类却可以实现多个 interface。&lt;/li&gt;
+&lt;li&gt;在 abstract class 中可以有自己的数据成员，也可以有非 abstract 的成员方法，而在 interface 中，只能够有静态的不能被修改的数据成员（也就是必须是 static final 的，不过在 interface 中一般不定义数据成员），所以的成员方法都是 abstract 的。&lt;/li&gt;
+&lt;li&gt;实现抽象类和接口的类必须实现其中的所有方法，如果子类没有实现抽象类的所有抽象方法，那么子类也必须是抽象类；但是子类实现接口，则必须把接口的所有抽象方法实现。接口也可以继承接口，此时不需要实现父类接口。抽象类中可以有非抽象方法。接口中则不能有实现方法。&lt;/li&gt;
+&lt;li&gt;接口中定义的变量默认都是 public static final 型，且必须给其初值，所以实现类中不能重新定义，也不能改变其值。&lt;/li&gt;
+&lt;li&gt;接口中的方法默认都是 public abstract 类型的，也只能是这个类型不能是 static 方法。static 方法是类方法，它是不允许子类覆写（override）的。但是抽象类允许有 static 方法。&lt;/li&gt;
+&lt;/ol&gt;
 &lt;h3 id=&#34;java-中的原子操作有哪些注意事项&#34;&gt;Java 中的原子操作有哪些注意事项？&lt;/h3&gt;
 &lt;h3 id=&#34;java-多线程有几种实现方式&#34;&gt;Java 多线程有几种实现方式&lt;/h3&gt;
 &lt;h3 id=&#34;java-如何高效进行数组拷贝&#34;&gt;Java 如何高效进行数组拷贝&lt;/h3&gt;
+&lt;p&gt;Arrays.copyOf 或 System.arraycopy，System.arraycopy 是系统的 native 方法，Arrays.copyOf 底层调用 System.arraycopy 方法&lt;/p&gt;
 &lt;h3 id=&#34;java-常见锁有哪些reetrantlock-是怎么实现的&#34;&gt;Java 常见锁有哪些？ReetrantLock 是怎么实现的？&lt;/h3&gt;
 &lt;h3 id=&#34;java-异常有哪些类型&#34;&gt;Java 异常有哪些类型？&lt;/h3&gt;
 &lt;h3 id=&#34;java-怎么防止内存溢出&#34;&gt;Java 怎么防止内存溢出&lt;/h3&gt;

@@ -15,7 +15,7 @@
   <meta name="googlebot" content="index,follow,snippet,archive">
   <meta property="og:title" content="多线程::交替打印字符串" />
 <meta property="og:description" content="链接 1195. 交替打印字符串 - 力扣（LeetCode）
-解法一：Spin Lock " />
+解法一：Spin Lock class FizzBuzz { private int n; volatile int count = 1; public FizzBuzz(int n) { this.n = n; } // printFizz.run() outputs &#34;fizz&#34;.  public void fizz(Runnable printFizz) throws InterruptedException { for (int i = 1; i &lt;= n; i&#43;&#43;) { while (count % 3 != 0 || count % 5 == 0) { if (count &gt; n) { return; } Thread.yield(); } if (i % 3 !" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/leetcode/1195/" /><meta property="article:section" content="leetcode" />
 <meta property="article:published_time" content="2021-08-23T02:23:00+08:00" />
@@ -25,7 +25,7 @@
   <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="多线程::交替打印字符串"/>
 <meta name="twitter:description" content="链接 1195. 交替打印字符串 - 力扣（LeetCode）
-解法一：Spin Lock "/>
+解法一：Spin Lock class FizzBuzz { private int n; volatile int count = 1; public FizzBuzz(int n) { this.n = n; } // printFizz.run() outputs &#34;fizz&#34;.  public void fizz(Runnable printFizz) throws InterruptedException { for (int i = 1; i &lt;= n; i&#43;&#43;) { while (count % 3 != 0 || count % 5 == 0) { if (count &gt; n) { return; } Thread.yield(); } if (i % 3 !"/>
 
   
   
@@ -107,7 +107,83 @@ if (!doNotTrack) {
     <h2 id="链接">链接</h2>
 <p><a href="https://leetcode-cn.com/problems/fizz-buzz-multithreaded/">1195. 交替打印字符串 - 力扣（LeetCode）</a></p>
 <h2 id="解法一spin-lock">解法一：Spin Lock</h2>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">class</span> <span style="color:#75af00">FizzBuzz</span> <span style="color:#f92672">{</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">int</span> <span style="color:#111">n</span><span style="color:#f92672">;</span>
+
+    <span style="color:#00a8c8">volatile</span> <span style="color:#00a8c8">int</span> <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">1</span><span style="color:#f92672">;</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">FizzBuzz</span><span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">n</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">this</span><span style="color:#f92672">.</span><span style="color:#75af00">n</span> <span style="color:#f92672">=</span> <span style="color:#111">n</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">// printFizz.run() outputs &#34;fizz&#34;.
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">fizz</span><span style="color:#f92672">(</span><span style="color:#111">Runnable</span> <span style="color:#111">printFizz</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">1</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#111">n</span><span style="color:#f92672">;</span> <span style="color:#111">i</span><span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            <span style="color:#00a8c8">while</span> <span style="color:#f92672">(</span><span style="color:#111">count</span> <span style="color:#f92672">%</span> <span style="color:#111">3</span> <span style="color:#f92672">!=</span> <span style="color:#111">0</span> <span style="color:#f92672">||</span> <span style="color:#111">count</span> <span style="color:#f92672">%</span> <span style="color:#111">5</span> <span style="color:#f92672">==</span> <span style="color:#111">0</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">count</span> <span style="color:#f92672">&gt;</span> <span style="color:#111">n</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#00a8c8">return</span><span style="color:#f92672">;</span>
+                <span style="color:#f92672">}</span>
+                <span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">yield</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">i</span> <span style="color:#f92672">%</span> <span style="color:#111">3</span> <span style="color:#f92672">!=</span> <span style="color:#111">0</span> <span style="color:#f92672">||</span> <span style="color:#111">i</span> <span style="color:#f92672">%</span> <span style="color:#111">5</span> <span style="color:#f92672">==</span> <span style="color:#111">0</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#00a8c8">continue</span><span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#111">printFizz</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+            <span style="color:#111">count</span><span style="color:#f92672">++;</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">// printBuzz.run() outputs &#34;buzz&#34;.
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">buzz</span><span style="color:#f92672">(</span><span style="color:#111">Runnable</span> <span style="color:#111">printBuzz</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">1</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#111">n</span><span style="color:#f92672">;</span> <span style="color:#111">i</span><span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            <span style="color:#00a8c8">while</span> <span style="color:#f92672">(</span><span style="color:#111">count</span> <span style="color:#f92672">%</span> <span style="color:#111">5</span> <span style="color:#f92672">!=</span> <span style="color:#111">0</span> <span style="color:#f92672">||</span> <span style="color:#111">count</span> <span style="color:#f92672">%</span> <span style="color:#111">3</span> <span style="color:#f92672">==</span> <span style="color:#111">0</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">count</span> <span style="color:#f92672">&gt;</span> <span style="color:#111">n</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#00a8c8">return</span><span style="color:#f92672">;</span>
+                <span style="color:#f92672">}</span>
+                <span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">yield</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">i</span> <span style="color:#f92672">%</span> <span style="color:#111">5</span> <span style="color:#f92672">!=</span> <span style="color:#111">0</span> <span style="color:#f92672">||</span> <span style="color:#111">i</span> <span style="color:#f92672">%</span> <span style="color:#111">3</span> <span style="color:#f92672">==</span> <span style="color:#111">0</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#00a8c8">continue</span><span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#111">printBuzz</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+            <span style="color:#111">count</span><span style="color:#f92672">++;</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">// printFizzBuzz.run() outputs &#34;fizzbuzz&#34;.
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">fizzbuzz</span><span style="color:#f92672">(</span><span style="color:#111">Runnable</span> <span style="color:#111">printFizzBuzz</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">1</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#111">n</span><span style="color:#f92672">;</span> <span style="color:#111">i</span><span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            <span style="color:#00a8c8">while</span> <span style="color:#f92672">(</span><span style="color:#111">count</span> <span style="color:#f92672">%</span> <span style="color:#111">15</span> <span style="color:#f92672">!=</span> <span style="color:#111">0</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">count</span> <span style="color:#f92672">&gt;</span> <span style="color:#111">n</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#00a8c8">return</span><span style="color:#f92672">;</span>
+                <span style="color:#f92672">}</span>
+                <span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">yield</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">i</span> <span style="color:#f92672">%</span> <span style="color:#111">15</span> <span style="color:#f92672">!=</span> <span style="color:#111">0</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#00a8c8">continue</span><span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#111">printFizzBuzz</span><span style="color:#f92672">.</span><span style="color:#75af00">run</span><span style="color:#f92672">();</span>
+            <span style="color:#111">count</span><span style="color:#f92672">++;</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">// printNumber.accept(x) outputs &#34;x&#34;, where x is an integer.
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">number</span><span style="color:#f92672">(</span><span style="color:#111">IntConsumer</span> <span style="color:#111">printNumber</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">1</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#111">n</span><span style="color:#f92672">;</span> <span style="color:#111">i</span><span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            <span style="color:#00a8c8">while</span> <span style="color:#f92672">(</span><span style="color:#111">count</span> <span style="color:#f92672">%</span> <span style="color:#111">3</span> <span style="color:#f92672">==</span> <span style="color:#111">0</span> <span style="color:#f92672">||</span> <span style="color:#111">count</span> <span style="color:#f92672">%</span> <span style="color:#111">5</span> <span style="color:#f92672">==</span> <span style="color:#111">0</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">count</span> <span style="color:#f92672">&gt;</span> <span style="color:#111">n</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#00a8c8">return</span><span style="color:#f92672">;</span>
+                <span style="color:#f92672">}</span>
+                <span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">yield</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">i</span> <span style="color:#f92672">%</span> <span style="color:#111">3</span> <span style="color:#f92672">==</span> <span style="color:#111">0</span> <span style="color:#f92672">||</span> <span style="color:#111">i</span> <span style="color:#f92672">%</span> <span style="color:#111">5</span> <span style="color:#f92672">==</span> <span style="color:#111">0</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#00a8c8">continue</span><span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#111">printNumber</span><span style="color:#f92672">.</span><span style="color:#75af00">accept</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+            <span style="color:#111">count</span><span style="color:#f92672">++;</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
 </code></pre></div>
   
   </div>
