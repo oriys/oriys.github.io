@@ -3584,6 +3584,24 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     </item>
     
     <item>
+      <title>编程::现代操作系统</title>
+      <link>/reading/modern_operating_systems/</link>
+      <pubDate>Sat, 24 Jul 2021 19:12:26 +0800</pubDate>
+      <guid>/reading/modern_operating_systems/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;../../notes/modern_operating_systems_introduction&#34;&gt;现代操作系统::引论&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/modern_operating_systems_process_and_thread&#34;&gt;现代操作系统::进程与线程&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/modern_operating_systems_memory_manage&#34;&gt;现代操作系统::内存管理&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/modern_operating_systems_file_system&#34;&gt;现代操作系统::文件系统&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/modern_operating_systems_input_output&#34;&gt;现代操作系统::输入/输出&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/modern_operating_systems_deadlock&#34;&gt;现代操作系统::死锁&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/modern_operating_systems_virtualization_and_the_cloud&#34;&gt;现代操作系统::虚拟化与云&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/modern_operating_systems_multiple_processor_systems&#34;&gt;现代操作系统::多处理器系统&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/modern_operating_systems_security&#34;&gt;现代操作系统::系统安全&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/modern_operating_systems_operating_system_design&#34;&gt;现代操作系统::操作系统设计&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>现代操作系统::操作系统设计</title>
       <link>/notes/modern_operating_systems_operating_system_design/</link>
       <pubDate>Fri, 23 Jul 2021 02:11:01 +0800</pubDate>
@@ -7537,6 +7555,27 @@ Subject: Searching for the meaning of life.
     </item>
     
     <item>
+      <title>编程::深入理解Java虚拟机</title>
+      <link>/reading/understand_the_jvm/</link>
+      <pubDate>Sat, 24 Apr 2021 19:12:26 +0800</pubDate>
+      <guid>/reading/understand_the_jvm/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_01/&#34;&gt;深入理解 Java 虚拟机::走进 Java&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_02/&#34;&gt;深入理解 Java 虚拟机::自动内存管理&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_03/&#34;&gt;深入理解 Java 虚拟机::垃圾收集器与内存分配策略&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_04/&#34;&gt;深入理解 Java 虚拟机::虚拟机性能监控、故障处理工具&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_05/&#34;&gt;深入理解 Java 虚拟机::调优案例分析与实战&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_06/&#34;&gt;深入理解 Java 虚拟机::类文件结构&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_07/&#34;&gt;深入理解 Java 虚拟机::虚拟机类加载机制&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_08/&#34;&gt;深入理解 Java 虚拟机::虚拟机字节码执行引擎&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_09/&#34;&gt;深入理解 Java 虚拟机::类加载及执行子系统的案例与实战&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_10/&#34;&gt;深入理解 Java 虚拟机::前段编译与优化&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_11/&#34;&gt;深入理解 Java 虚拟机::后端编译与优化&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_12/&#34;&gt;深入理解 Java 虚拟机::Java 内存模型与线程&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_13/&#34;&gt;深入理解 Java 虚拟机::线程安全和锁优化&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>深入理解计算机系统::计算机系统漫游</title>
       <link>/notes/csapp_01/</link>
       <pubDate>Thu, 15 Apr 2021 00:17:05 +0800</pubDate>
@@ -10035,6 +10074,17 @@ Subject: Searching for the meaning of life.
 &lt;p&gt;是的。人生很简单，并不是什么深刻的事情。如果认真过好了每一个刹那，就没有什么必要令其过于深刻。&lt;/p&gt;
 &lt;p&gt;人生中最大的谎言就是不活在“此时此刻”。纠结过去、关注未来，把微弱而模糊的光打向人生整体，自认为看到了些什么。你之前就一直忽略“此时此刻”，只关注根本不在的过去和未来。对自己的人生和无可替代的刹那撒了一个大大的谎言。&lt;/p&gt;
 &lt;p&gt;无论你过着怎样的刹那，即使有人讨厌你，只要没有迷失“他者贡献”这颗引导之星，那么你就不会迷失，而且做什么都可以。即使被讨厌自己的人讨厌着也可以自由地生活。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>编程::数据密集型应用系统设计</title>
+      <link>/reading/ddia/</link>
+      <pubDate>Wed, 24 Mar 2021 19:27:56 +0800</pubDate>
+      <guid>/reading/ddia/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;../../notes/designing_data_intensive_application_foundations_of_data_systems&#34;&gt;数据密集型应用系统设计::数据系统基础&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/designing_data_intensive_application_distributed_data&#34;&gt;数据密集型应用系统设计::分布式数据系统&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/designing_data_intensive_application_derived_data&#34;&gt;数据密集型应用系统设计::派生数据&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
