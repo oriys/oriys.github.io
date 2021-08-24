@@ -258,6 +258,17 @@
     </item>
     
     <item>
+      <title>编程::计算机网络自顶向下方法</title>
+      <link>/reading/computer_network_a_topdown_approach/</link>
+      <pubDate>Thu, 24 Jun 2021 19:27:56 +0800</pubDate>
+      <guid>/reading/computer_network_a_topdown_approach/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;../../notes/computer_network_a_topdown_approach_01&#34;&gt;计算机网络自顶向下方法::计算机网络和因特网&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/computer_network_a_topdown_approach_02&#34;&gt;计算机网络自顶向下方法::应用层&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/computer_network_a_topdown_approach_03&#34;&gt;计算机网络自顶向下方法::运输层&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>推理::诡计博物馆</title>
       <link>/reading/douban_35016085/</link>
       <pubDate>Tue, 11 May 2021 17:14:37 +0800</pubDate>
@@ -447,17 +458,6 @@
       <description>&lt;p&gt;&lt;a href=&#34;../../notes/designing_data_intensive_application_foundations_of_data_systems&#34;&gt;数据密集型应用系统设计::数据系统基础&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;../../notes/designing_data_intensive_application_distributed_data&#34;&gt;数据密集型应用系统设计::分布式数据系统&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;../../notes/designing_data_intensive_application_derived_data&#34;&gt;数据密集型应用系统设计::派生数据&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>编程::计算机网络自顶向下方法</title>
-      <link>/reading/computer_network_a_topdown_approach/</link>
-      <pubDate>Wed, 24 Mar 2021 19:27:56 +0800</pubDate>
-      <guid>/reading/computer_network_a_topdown_approach/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;../../notes/computer_network_a_topdown_approach_01&#34;&gt;计算机网络自顶向下方法::计算机网络和因特网&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/computer_network_a_topdown_approach_02&#34;&gt;计算机网络自顶向下方法::应用层&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/computer_network_a_topdown_approach_03&#34;&gt;计算机网络自顶向下方法::运输层&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
