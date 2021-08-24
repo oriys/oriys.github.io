@@ -5,7 +5,41 @@
     <link>/leetcode/</link>
       <atom:link href="/leetcode/index.xml" rel="self" type="application/rss+xml" />
     <description>Leetcodes</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Mon, 23 Aug 2021 02:23:00 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Tue, 24 Aug 2021 19:36:59 +0800</lastBuildDate>
+    <item>
+      <title>多线程::哲学家就餐</title>
+      <link>/leetcode/1226/</link>
+      <pubDate>Tue, 24 Aug 2021 19:36:59 +0800</pubDate>
+      <guid>/leetcode/1226/</guid>
+      <description>&lt;h2 id=&#34;解法一semaphore&#34;&gt;解法一：Semaphore&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;DiningPhilosophers&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#111&#34;&gt;Semaphore&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;semaphore&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Semaphore&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;DiningPhilosophers&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;// call the run() method of any runnable to execute its code
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;wantsToEat&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;philosopher&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+            &lt;span style=&#34;color:#111&#34;&gt;Runnable&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;pickLeftFork&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+            &lt;span style=&#34;color:#111&#34;&gt;Runnable&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;pickRightFork&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+            &lt;span style=&#34;color:#111&#34;&gt;Runnable&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;eat&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+            &lt;span style=&#34;color:#111&#34;&gt;Runnable&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;putLeftFork&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+            &lt;span style=&#34;color:#111&#34;&gt;Runnable&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;putRightFork&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;throws&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;InterruptedException&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;semaphore&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;acquire&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;pickLeftFork&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;run&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;pickRightFork&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;run&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;eat&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;run&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;putLeftFork&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;run&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;putRightFork&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;run&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;semaphore&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;release&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+
+    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
     <item>
       <title>多线程::H2O 生成</title>
       <link>/leetcode/1117/</link>
