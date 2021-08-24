@@ -8,7 +8,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title> Java::Java并发编程实战::基础知识 | Y.CH.Y</title>
-  <link rel = 'canonical' href = '/notes/java_concurrency_in_practice/'>
+  <link rel = 'canonical' href = '/notes/java_concurrency_in_practice_basic/'>
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="all,follow">
@@ -28,7 +28,7 @@ Java 的内置锁相当于一种互斥体（或互斥锁），这意味着最多
 活跃性与性能 当使用锁时，你应该请楚代码块中实现的功能，以及在执行该代码块时是否需要很长的时间。无论是执行计算密集的操作，还是在执行某个可能阻塞的操作，如果持有锁的时间过长，那么都会带来活跃性或性能问题
 对象的共享 我们已经知道了同步代码块和同步方法可以确保以原子的方式执行操作，但一种常见的误解是，认为关键字 synchronized 只能用于实现原子性或者确定“临界区 (Ctitical Section)”。同步还有另一个重要的方面：内存可见性 (Memory Visibility)。我们不仅希望防止某个线程正在使用对象状态而另一个线程在同时修改该状态，而且希望确保当一个线程修改了对象状态后其他线程能够看到发生的状态变化。如果没有同步，那么这种情况就无法实现。你可以通过显式的同步或者类库中内置的同步来保证对象被安全地发布。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/notes/java_concurrency_in_practice/" /><meta property="article:section" content="notes" />
+<meta property="og:url" content="/notes/java_concurrency_in_practice_basic/" /><meta property="article:section" content="notes" />
 <meta property="article:published_time" content="2021-08-23T15:55:20+08:00" />
 <meta property="article:modified_time" content="2021-08-23T15:55:20+08:00" />
 
@@ -198,7 +198,96 @@ if (!doNotTrack) {
 <li>事实不可变对象必须通过安全方式来发布</li>
 <li>可变对象必须通过安全方式来发布，而且必须是线程安全的或者由某个锁保护起来。</li>
 </ul>
-<!-- raw HTML omitted -->
+<h3 id="对象的组合">对象的组合</h3>
+<p>通过使用封装技术，可以使得在不对整个程序进行分析的情况下就可以判断一个类是否是线程安全的。</p>
+<p>在设计线程安全类的过程中，需要包含一下三个基本要素：</p>
+<ul>
+<li>找出构成对象状态的所有变量</li>
+<li>找出约束状态变量的不可变条件</li>
+<li>建立对象状态的并发访问管理策略</li>
+</ul>
+<h4 id="收集同步需求">收集同步需求</h4>
+<p>要确保类的线程安全性，就需要确保它的不变性条件不会在并发访问的情况下被破坏，这就需要对其状态进行推断。</p>
+<p>同步策略(Synchronization Policy）定义了如何在不违背对象不变条件或后验条件的情况下对其状态的访问操作进行协同。同步策略规定了如何将不可变性、线程封闭与加锁机制等结合起来以维护线程的安全性，并且还规定了哪些变量由哪些锁来保护。</p>
+<p>类的不变性条件与后验条件约束了在对象上有哪些状态和状态转换是有效的。在某些对象的方法中还包含一些基于状态的先验条件</p>
+<p>在单线程程序中，如果某个操作无法满足先验条件，那么就只能失败。但在并发程序中先验条件可能会由于其他线程执行的操作而变成真。在并发程序中要一直等到先验条件为真，然后再执行该操作．</p>
+<p>要想实现某个等待先验条件为真时才执行的操作，一种更简单的方法是通过现有库中的类实现依赖状态的行为，例如阻塞队列或者信号量。</p>
+<p>如果以某个对象为根节点构造一张对象图，那么该对象的状态将是对象图中所有对象包含的域的一个子集。</p>
+<p>为了防止多个线程在并发访问同一个对象时产生的相互干扰，这些对象应该要么是线程安全的对象，要么是事实不可变的对象，或者由锁来保护的对象。</p>
+<h4 id="实例封闭">实例封闭</h4>
+<p>如果某对象不是线程安全的，那么可以通过多种技术使其在多线程程序中安全地使用. 你可以确保该对象只能由单个线程访问（线程封闭），或者通过一个锁来保护对该对象的所有访问。</p>
+<p>将数据封装在对象内部，可以将数据的访问限制在对象的方法上，从而更容易确保线程在 访问数据时总能持有正确的锁。</p>
+<p>封闭机制更易于构造线程安全的类，因为当封闭类的状态时，在分析类的线程安全时就无需检查整个程序。</p>
+<p>从线程封闭原则及其逻辑推论可以得出 Java 监视器模式。遵循 Java 监视器模式的对象会把对象的所有可变状态都封装起来，并由对象自己的内置锁来保护。</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">PrivateLock</span> <span style="color:#f92672">{</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">final</span> <span style="color:#111">Object</span> <span style="color:#111">lock</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Object</span><span style="color:#f92672">():</span>
+
+    <span style="color:#75af00">@GuardedBy</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;myLock&#34;</span><span style="color:#f92672">)</span> <span style="color:#111">Widget</span> <span style="color:#111">widget</span><span style="color:#f92672">;</span>
+
+    <span style="color:#00a8c8">void</span> <span style="color:#75af00">someMethod</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">synchronized</span> <span style="color:#f92672">(</span><span style="color:#111">lock</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">// 修改或者访问widget的状态
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="线程安全性的委托">线程安全性的委托</h4>
+<p>将线程安全委托给 ConcurrentMap</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75af00">@ThreadSafe</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">DelegatingVehicleTracker</span> <span style="color:#f92672">{</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">final</span> <span style="color:#111">ConcurrentMap</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Point</span><span style="color:#f92672">&gt;</span> <span style="color:#111">locations</span><span style="color:#f92672">;</span>
+
+    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">final</span> <span style="color:#111">Map</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Point</span><span style="color:#f92672">&gt;</span> <span style="color:#111">unmodifiableMap</span><span style="color:#f92672">;</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">DelegatingVehicleTracker</span><span style="color:#f92672">(</span><span style="color:#111">Map</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Point</span><span style="color:#f92672">&gt;</span> <span style="color:#111">points</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#111">locations</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ConcurrentHashMap</span><span style="color:#f92672">&lt;&gt;(</span><span style="color:#111">points</span><span style="color:#f92672">);</span>
+        <span style="color:#111">unmodifiableMap</span> <span style="color:#f92672">=</span> <span style="color:#111">Collections</span><span style="color:#f92672">.</span><span style="color:#75af00">unmodifiableMap</span><span style="color:#f92672">(</span><span style="color:#111">locations</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#111">Map</span><span style="color:#f92672">&lt;</span><span style="color:#111">String</span><span style="color:#f92672">,</span> <span style="color:#111">Point</span><span style="color:#f92672">&gt;</span> <span style="color:#75af00">getLocations</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">unmodifiableMap</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#111">Point</span> <span style="color:#75af00">getLocation</span><span style="color:#f92672">(</span><span style="color:#111">String</span> <span style="color:#111">id</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">locations</span><span style="color:#f92672">.</span><span style="color:#75af00">get</span><span style="color:#f92672">(</span><span style="color:#111">id</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">setLocation</span><span style="color:#f92672">(</span><span style="color:#111">String</span> <span style="color:#111">id</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">int</span> <span style="color:#111">x</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">int</span> <span style="color:#111">y</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">locations</span><span style="color:#f92672">.</span><span style="color:#75af00">replace</span><span style="color:#f92672">(</span><span style="color:#111">id</span><span style="color:#f92672">,</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Point</span><span style="color:#f92672">(</span><span style="color:#111">x</span><span style="color:#f92672">,</span> <span style="color:#111">y</span><span style="color:#f92672">))</span> <span style="color:#f92672">==</span> <span style="color:#00a8c8">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#00a8c8">throw</span> <span style="color:#00a8c8">new</span> <span style="color:#111">IllegalArgumentException</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;invalid vehicle name: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#111">id</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>独立的状态变量</p>
+<p>将线程安全性委托给名个状态变量</p>
+<p>在鼠标事件监听器与键盘事件监听器之间不存在任何关联二者是彼此独立的，因此 VisualComponent 可以将其线程安全性委托给这两个线程安全的监听器列表</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">class</span> <span style="color:#75af00">VisualComponent</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">final</span> <span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">KeyListener</span><span style="color:#f92672">&gt;</span> <span style="color:#111">keyListeners</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">CopyOnWriteArrayList</span><span style="color:#f92672">&lt;</span><span style="color:#111">KeyListener</span><span style="color:#f92672">&gt;();</span>
+
+    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">final</span> <span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">MouseListener</span><span style="color:#f92672">&gt;</span> <span style="color:#111">mouseListeners</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">CopyOnWriteArrayList</span><span style="color:#f92672">&lt;&gt;();</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">addKeyListener</span><span style="color:#f92672">(</span><span style="color:#111">KeyListener</span> <span style="color:#111">listener</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#111">keyListeners</span><span style="color:#f92672">.</span><span style="color:#75af00">add</span><span style="color:#f92672">(</span><span style="color:#111">listener</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">addMouseListener</span><span style="color:#f92672">(</span><span style="color:#111">MouseListener</span> <span style="color:#111">listener</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#111">mouseListeners</span><span style="color:#f92672">.</span><span style="color:#75af00">add</span><span style="color:#f92672">(</span><span style="color:#111">listener</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">removeKeyListener</span><span style="color:#f92672">(</span><span style="color:#111">KeyListener</span> <span style="color:#111">keyListener</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#111">keyListeners</span><span style="color:#f92672">.</span><span style="color:#75af00">remove</span><span style="color:#f92672">(</span><span style="color:#111">keyListener</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">removeMouseListener</span><span style="color:#f92672">(</span><span style="color:#111">MouseListener</span> <span style="color:#111">listener</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#111">mouseListeners</span><span style="color:#f92672">.</span><span style="color:#75af00">remove</span><span style="color:#f92672">(</span><span style="color:#111">listener</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>当委托失效时</p>
+<p>如果一个类是由多个独立且线程安全的状态变量组成，养且在所有的操作中都不包含无效状态转换，那么可以将线程安全性麥托给底层的状态变量。</p>
+<p>发布底层的状态变量</p>
+<p>如果一个状态变量是线程安全的，并且没有任何不变性条件来约束它的值，在变量的操作上也不存在任何不允许的状态转换，那么就可以安全地发布这个变量。</p>
+<h4 id="在现有的线程安全类中添加功能">在现有的线程安全类中添加功能</h4>
+<h4 id="将同步策略文档化">将同步策略文档化</h4>
 
   
   </div>
