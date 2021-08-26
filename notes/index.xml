@@ -5,7 +5,16 @@
     <link>/notes/</link>
       <atom:link href="/notes/index.xml" rel="self" type="application/rss+xml" />
     <description>Notes</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Thu, 26 Aug 2021 21:28:22 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Fri, 27 Aug 2021 00:11:05 +0800</lastBuildDate>
+    <item>
+      <title>YCHY::README</title>
+      <link>/notes/readme/</link>
+      <pubDate>Fri, 27 Aug 2021 00:11:05 +0800</pubDate>
+      <guid>/notes/readme/</guid>
+      <description>&lt;p&gt;文章的日期并不是它真是的创建日期，而是为了让相关的内容连续展示修改的&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>Java并发编程实战::结构化并发应用程序</title>
       <link>/notes/java_concurrency_in_practice_structuring_concurrent_applicatoins/</link>
@@ -86,7 +95,15 @@
 &lt;/ul&gt;
 &lt;p&gt;线程池&lt;/p&gt;
 &lt;p&gt;指管理一组同构工作线程的资源池。线程池是与工作队列（Work Oueue）密切相关的，其中在工作队列中保存了所有等待执行的任务。工作者线程（Worker Thread）的任务很简单：从工作队列中获取一个任务，执行任务，然后返回线程池并等待下一个任务。&lt;/p&gt;
-&lt;p&gt;“在线程池中执行任务”比“为每个任务分配一个线程”优势更多。通过重用现有的线程而不是创建新线程，可以在处理多个请求时分摊在线程创建和销毁过程中产生的巨大开销。另一个额外的好处是，当请求到达时，工作线程通常已经存在，因此不会由于等待创建线程而延。&lt;/p&gt;
+&lt;p&gt;“在线程池中执行任务”比“为每个任务分配一个线程”优势更多。通过重用现有的线程而不是创建新线程，可以在处理多个请求时分摊在线程创建和销毁过程中产生的巨大开销。另一个额外的好处是，当请求到达时，工作线程通常已经存在，因此不会由于等待创建线程而延任务的执行，从而提高了响应性。通过适当调整线程池的大小，可以创建足够多的线程以便使处理器保持忙碌状态，同时还可以防止过多线程相互竞争资源而使应用程序耗尽内存或失败、&lt;/p&gt;
+&lt;p&gt;Executors 的静态工厂方法&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;newFixedThreadPool. newFixedThreadPool 将创建一个固定长度的线程池，每当提交个任务时就创建一个线程，直到达到线程池的最大数量，这时线程池的规模将不再变化（如果某个线程由于发生了未预期的 Exception 而结束，那么线程池会补充一个新的线程）。&lt;/li&gt;
+&lt;li&gt;newCachedThreadPool. newCachedThreadPool 将创建一个可缓存的线程池，如果线程池的当前规模超过了处理需求时，那么将回收空闲的线程，而当需求增加时，则可以添加新的线程，线程池的规模不存在任何限制。&lt;/li&gt;
+&lt;li&gt;newSingleThreadExecutor. newSingleThreadExecutor 是一个单线程的 Executor，它创建单个工作者线程来执行任务，如果这个线程异常结束，会创建另一个线程来替代。newSingleThreadExecutor 能确保依照任务在队列中的顺序来串行执行。&lt;/li&gt;
+&lt;li&gt;newScheduledThreadPool. newScheduledThreadPool 创建了一个固定长度的线程池。而且以延迟或定时的方式来执行任务，类似于 Timer。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Executor 的生命周期&lt;/p&gt;
 </description>
     </item>
     
