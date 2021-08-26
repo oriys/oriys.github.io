@@ -5,7 +5,15 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>Y.CH.Y</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Tue, 24 Aug 2021 19:36:59 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Thu, 26 Aug 2021 21:28:22 +0800</lastBuildDate>
+    <item>
+      <title> Java::Java并发编程实战::基础知识 </title>
+      <link>/notes/java_concurrency_in_practice_structuring_concurrent_applicatoins/</link>
+      <pubDate>Thu, 26 Aug 2021 21:28:22 +0800</pubDate>
+      <guid>/notes/java_concurrency_in_practice_structuring_concurrent_applicatoins/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>多线程::哲学家就餐</title>
       <link>/leetcode/1226/</link>
@@ -36,7 +44,7 @@
     </item>
     
     <item>
-      <title>Java::Java并发编程实战::基础知识</title>
+      <title>Java并发编程实战::基础知识</title>
       <link>/notes/java_concurrency_in_practice_basic/</link>
       <pubDate>Mon, 23 Aug 2021 15:55:20 +0800</pubDate>
       <guid>/notes/java_concurrency_in_practice_basic/</guid>
