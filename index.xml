@@ -7227,6 +7227,68 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
+&lt;li&gt;TCP 拥塞控制
+&lt;ul&gt;
+&lt;li&gt;慢启动
+&lt;ul&gt;
+&lt;li&gt;过程
+&lt;ul&gt;
+&lt;li&gt;当一条 TCP 连接开始时，cwnd 的值通常初始置为一个 MSS 的较小值&lt;/li&gt;
+&lt;li&gt;在慢启动(slow-start)状态，cwnd 的值以 1 个 MSS 开始并且每当传输的报文段首次被确认就增加 1 个 MSS。&lt;/li&gt;
+&lt;li&gt;TCP 向网络发送第一个报文段并等待一个确认。当该确认到达时，TCP 发送方将拥塞窗口增加一个 MSS, 并发送出两个最大长度的报文段。&lt;/li&gt;
+&lt;li&gt;这两个报文段被确认，则发送方对每个确认报文段将拥塞窗口增加一个 MSS, 使得拥塞窗口变为 4 个 MSS, 并这样下去 。这一过程每过一个 RTT, 发送速率就翻番。因此，TCP 发送速率起始慢，但在慢启动阶段以指数增长。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;何时结束增长
+&lt;ul&gt;
+&lt;li&gt;如果存在一个由超时指示的丢包事件，TCP 发送方将 cwnd 设置为 1 并重新开始慢启动过程。它还将第二个状态变量的值 ssthresh 设置为 cwnd/2, 即当检测到拥塞时将 ssthresh 置为拥塞窗口值的 一半&lt;/li&gt;
+&lt;li&gt;当检测到拥塞时 ssthresh 设为 cwnd 的值一半，当到达或超过 ssthresh 的值时，继续使 cwnd 翻番可能有些鲁莽。因此，当 cwnd 的值等于 sstbresh 时，结束慢启动并且 TCP 转移到拥塞避免模式。我们将会看到，当进入拥塞避免模式时，TCP 更为谨慎地增加 cwnd。&lt;/li&gt;
+&lt;li&gt;如果检测到 3 个冗余 ACK, 这时 TCP 执行一种快速重传并进入快速恢复状态。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;拥塞避免
+&lt;ul&gt;
+&lt;li&gt;当发生拥塞时，cwnd 将为原来的一般，后续的每个 RTT 只将 cwnd 的值增加一个 MSS&lt;/li&gt;
+&lt;li&gt;TCP 对这种丢包事件的行为，相比 于超时指示的丢包，应当不那么剧烈：TCP 将 cwnd 的值减半, 并且当收到 3 个冗余的 ACK, 将 ssthresh 的值记录为 cwnd 的值的一半。接下来进入快速恢复状态。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;快速恢复
+&lt;ul&gt;
+&lt;li&gt;在快速恢复中，对于引起 TCP 进入快速恢复状态的缺失报文段，对收到的每个冗余的 ACK, cwnd 的值增加 一个 MSS。 最终，当对丢失报文段的一个 ACK 到达时，TCP 在降低 cwnd 后进入拥塞避免状态。如果出现超时事件，快速恢复在执行如同在慢启动和拥塞避免中相同的动作后，迁移到慢启动状态：当丢包事件出现时，cwnd 的值被设置为 1 个 MSS,并且 ssthresh 的值设置为 cwnd 值的 一半 。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;TCP 拥塞控制：回顾
+&lt;ul&gt;
+&lt;li&gt;忽略一条连接开始时初始的慢启动阶段，假定丢包由 3 个冗余的 ACK 而不是超时指示，TCP 的拥塞控制是：每个 RTT 内 cwnd 线性（加性）增加 1MSS, 然后出现 3 个冗余 ACK 事件时 cwnd 减半（乘性减）。 因此，TCP 拥塞控制常常被称为加性增、乘性减(Additive-Increase. Multiplicative-Decrease , AIMO) 拥塞控制方式 。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;对 TCP 吞吐量的宏观描述
+&lt;ul&gt;
+&lt;li&gt;在一个特定的往返间隔内，TCP 发送数据的速率是拥塞窗口与当前 RTT 的函数与窗口长度是 w 字节，且当前往返时间是 RTT 秒时 ，则 TCP 的发送速率大约是 w/RTI。 于是, TCP 通过每经过 1 个 RTT 将 w 增加 1 个 MSS 探测出额外的带宽，直到一个丢包事件发生为止。 当一个丢包事件发生时，用 W 表示 w 的值。假设在连接持续期间 RTT 和 W 几乎不变 ，那么 TCP 的传输 速率在 W/( 2 x RTT ) 到 W/RTT 之间变化 。所以一条平均的吞吐量为（3/4 x W)/RTT。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;高宽带路径的 TCP
+&lt;ul&gt;
+&lt;li&gt;考虑一条具有 1500 字节报文段和 1OOms RTT 的 TCP 连接，假定我们要通过这条连接以 1OGbps 速率发送数据。根据 [RFC 3649], 我们注意到使用上述 TCP 吞吐量公式 ，为了取得 1OGbps 吞吐量，平均拥塞窗口长度将需要是 83333 个报文段。对如此大量的报文段，使我们相当关注这 83333 个传输中的报文段也许会丢失。为了取得 1OGbps 的吞吐量，今天的 TCP 拥塞控制算法仅能容忍 \(2\times10^{-10}\)的报文段丢失概率，这是一个非常低的值。这种观察导致许多研究人员为这种高速环境特别设计新版 TCP&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;公平性
+&lt;ul&gt;
+&lt;li&gt;TCP 趋于在竞争的多条 TCP 连接之间提供对一段瓶颈链路带宽的平等分享&lt;/li&gt;
+&lt;li&gt;在理想化情形中，我们假设仅有 TCP 连接穿过瓶颈链路，所有的连接具有相同的 RTT 值，且对于一个主机－目的地对而言只有一 条 TCP 连接与之相关联。实践中，这些条件通常是得不到满足的，客户－服务器应用因此能获得非常不平等的链路带宽份额。特别是，已经表明当多条连接共享一个共同的瓶颈链路时，那些具有较小 RTT 的连接能够在链路空闲时更快地抢到可用带宽，因而将比那些具有较大 RTT 的连接享用更高的吞吐量&lt;/li&gt;
+&lt;li&gt;公平性和 UDP: 从 TCP 的观点来看，运行在 UDP 上的多媒体应用是不公平的，因为它们不与其他连接合作，也不适时地调整其传输速 率。因为 TCP 拥塞控制在面临拥塞增加时，将降低其传输速率，而 UDP 源则不必这样做，UDP 源有可能压制 TCP 流量 。&lt;/li&gt;
+&lt;li&gt;公平性和并行 TCP 连接: 当一个应用使用多条并行连接时，它占用了一条拥塞链路中较大比例的带宽。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;明确拥塞通告：网络辅助拥塞控制
+&lt;ul&gt;
+&lt;li&gt;在网络层，IP 数据报首部的服务类型字段中的两个比特被用于 ECN。 路由器所使用的一种 ECN 比特设置指示该路由器正在历经拥塞。该拥塞指示则由被标记的 IP 数据报所携带，送给目的主机，再由目的主机通知发送主机&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
