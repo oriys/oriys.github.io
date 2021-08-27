@@ -1715,6 +1715,110 @@
     </item>
     
     <item>
+      <title>面试::八股文::网络</title>
+      <link>/notes/interview_questions_network/</link>
+      <pubDate>Fri, 20 Aug 2021 21:51:33 +0800</pubDate>
+      <guid>/notes/interview_questions_network/</guid>
+      <description>&lt;h2 id=&#34;网络&#34;&gt;网络&lt;/h2&gt;
+&lt;h3 id=&#34;简述-tcp-三次握手以及四次挥手的流程为什么需要三次握手以及四次挥手&#34;&gt;简述 TCP 三次握手以及四次挥手的流程。为什么需要三次握手以及四次挥手？&lt;/h3&gt;
+&lt;p&gt;三次握手流程&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;第一次握手: 建立连接，客户端 A 发送 SYN = 1、随机产生 Seq = client_isn 的数据包到服务器 B，等待服务器确认。&lt;/li&gt;
+&lt;li&gt;第二次握手: 服务器 B 收到请求后确认联机(可以接受数据)，发起第二次握手请求，ACK = (A 的 Seq + 1)、SYN = 1，随机产生 Seq = client_isn 的数据包到 A。&lt;/li&gt;
+&lt;li&gt;第三次握手: A 收到后检查 ACK 是否正确，若正确，A 会在发送确认包 ACK = 服务器 B 的 Seq + 1、ACK = 1，服务器 B 收到后确认 Seq 值与 ACK 值，若正确，则建立连接。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;四次挥手流程&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;第一次挥手：TCP 发送一个 FIN(结束)标识，用来关闭客户到服务端的连接。&lt;/li&gt;
+&lt;li&gt;第二次挥手：服务端收到这个 FIN 标识，他发回一个 ACK(确认)标识，确认收到序号为收到序号+1，和 SYN 一样，一个 FIN 将占用一个序号。TCP 服务器通知高层的应用进程，客户端向服务器的方向就释放了，这时候处于半关闭状态，即客户端已经没有数据要发送了，但是服务器若发送数据，客户端依然要接受。（服务器端继续发送未发送完的数据）&lt;/li&gt;
+&lt;li&gt;第三次挥手：服务端发送一个 FIN(结束)标识到客户端，服务端关闭客户端的连接。&lt;/li&gt;
+&lt;li&gt;第四次挥手：客户端发送 ACK(确认)标识报文确认，并将确认的序号+1，这样关闭完成。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;为什么需要三次握手&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://datatracker.ietf.org/doc/html/rfc793&#34;&gt;rfc793&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The principle reason for the three-way handshake is to prevent old duplicate connection initiations from causing confusion&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;为了防止旧重复连接初始化造成的混乱问题，导致服务器维护了无用的半连接。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/3rSeXxI.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
+&lt;p&gt;老的重传数据被当作新的数据接受。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/BJbiBqj.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
+&lt;p&gt;为什么需要四次挥手&lt;/p&gt;
+&lt;p&gt;因为 TCP 是全双工通信的&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;第一次挥手：因此当主动方发送断开连接的请求（即 FIN 报文）给被动方时，仅仅代表主动方不会再发送数据报文了，但主动方仍可以接收数据报文。&lt;/li&gt;
+&lt;li&gt;第二次挥手：被动方此时有可能还有相应的数据报文需要发送，因此需要先发送 ACK 报文，告知主动方“我知道你想断开连接的请求了”。这样主动方便不会因为没有收到应答而继续发送断开连接的请求（即 FIN 报文）。&lt;/li&gt;
+&lt;li&gt;第三次挥手：被动方在处理完数据报文后，便发送给主动方 FIN 报文；这样可以保证数据通信正常可靠地完成。发送完 FIN 报文后，被动方进入 LAST_ACK 阶段（超时等待）。&lt;/li&gt;
+&lt;li&gt;第四挥手：如果主动方及时发送 ACK 报文进行连接中断的确认，这时被动方就直接释放连接，进入可用状态。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;TCP 状态机&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/Ir7sNdS.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
+&lt;p&gt;异常状况&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://network.51cto.com/art/202002/610542.htm&#34;&gt;TCP 三次握手、四次挥手出现意外情况时，如何保证稳定可靠？&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;http-与-https-有哪些区别&#34;&gt;HTTP 与 HTTPS 有哪些区别？&lt;/h3&gt;
+&lt;h3 id=&#34;从输入-url-到展现页面的全过程&#34;&gt;从输入 URL 到展现页面的全过程&lt;/h3&gt;
+&lt;h3 id=&#34;tcp-与-udp-在网络协议中的哪一层他们之间有什么区别&#34;&gt;TCP 与 UDP 在网络协议中的哪一层，他们之间有什么区别？&lt;/h3&gt;
+&lt;h3 id=&#34;tcp-怎么保证可靠传输&#34;&gt;TCP 怎么保证可靠传输？&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;检验和；用于检测在一个传输分组中的比特错误&lt;/li&gt;
+&lt;li&gt;定时器：用于超时/重传一个分组，可能因为该分组〈或其 ACK) 在信道中丢失了。由于当一个分组延时但未丢失〈过早超时) ，或当一个分组已被接收方收到但从接收方到发送方的 ACK 丢失时，可能产生超时事件，所以接收方可能会收到一个分组的多个冗余副本&lt;/li&gt;
+&lt;li&gt;序号：用于为从发送方流向接收方的数据分组按顺序编号。所接收分组的序号间的空隙可使接收方检测出丢失的分组。具有相同序号的分组可使接收方检测出一个分组的冗余副本&lt;/li&gt;
+&lt;li&gt;确认：接收方用于告诉发送方一个分组或一组分组已被正确地接收到了。确认报文通常携带着被确认的分组或多个分组的序号。确认可以是逐个的或累积的，这取决于协议&lt;/li&gt;
+&lt;li&gt;否定确认：接收方用于告诉发送方某个分组未被正确地接收。否定确认报文通常据带着未被正确接收的分组的序号&lt;/li&gt;
+&lt;li&gt;窗口、流水线：发送方也许被限制仅发送那些序号落在一个指定范围内的分组。通过允许一次发送多个分组但未被确认，发送方的利用率可在停等操作模式的基础上得到增加。我们很快将会看到，窗口长度可根据接收方接收和缓存报文的能力、网络中的拥塞程度或两者情况来进行设置&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;简述-http-101120-的主要区别&#34;&gt;简述 HTTP 1.0，1.1，2.0 的主要区别&lt;/h3&gt;
+&lt;h3 id=&#34;tcp-中常见的拥塞控制算法有哪些&#34;&gt;TCP 中常见的拥塞控制算法有哪些？&lt;/h3&gt;
+&lt;h3 id=&#34;dns-查询服务器的基本流程是什么dns-劫持是什么&#34;&gt;DNS 查询服务器的基本流程是什么？DNS 劫持是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;cookie-和-session-的关系和区别是什么&#34;&gt;Cookie 和 Session 的关系和区别是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-https-的加密与认证过程&#34;&gt;简述 HTTPS 的加密与认证过程&lt;/h3&gt;
+&lt;h3 id=&#34;restful-是什么restful-请求的-url-有什么特点&#34;&gt;RestFul 是什么？RestFul 请求的 URL 有什么特点？&lt;/h3&gt;
+&lt;h3 id=&#34;什么是-tcp-粘包和拆包&#34;&gt;什么是 TCP 粘包和拆包？&lt;/h3&gt;
+&lt;h3 id=&#34;restful-与-rpc-的区别是什么restful-的优点在哪里&#34;&gt;RestFul 与 RPC 的区别是什么？RestFul 的优点在哪里？&lt;/h3&gt;
+&lt;h3 id=&#34;tcp-挥手时出现大量-close_wait-或-time_wait-怎么解决&#34;&gt;TCP 挥手时出现大量 CLOSE_WAIT 或 TIME_WAIT 怎么解决？&lt;/h3&gt;
+&lt;h3 id=&#34;什么是跨域什么情况下会发生跨域请求&#34;&gt;什么是跨域，什么情况下会发生跨域请求？&lt;/h3&gt;
+&lt;h3 id=&#34;简述对称与非对称加密的概念&#34;&gt;简述对称与非对称加密的概念&lt;/h3&gt;
+&lt;h3 id=&#34;http-中-get-和-post-区别&#34;&gt;HTTP 中 GET 和 POST 区别&lt;/h3&gt;
+&lt;h3 id=&#34;tcp-的-keepalive-了解吗说一说它和-http-的-keepalive-的区别&#34;&gt;TCP 的 keepalive 了解吗？说一说它和 HTTP 的 keepalive 的区别？&lt;/h3&gt;
+&lt;h3 id=&#34;简述常见的-http-状态码的含义301304401403&#34;&gt;简述常见的 HTTP 状态码的含义（301，304，401，403）&lt;/h3&gt;
+&lt;h3 id=&#34;简述-tcp-的-time_wait-和-close_wait&#34;&gt;简述 TCP 的 TIME_WAIT 和 CLOSE_WAIT&lt;/h3&gt;
+&lt;h3 id=&#34;简述-tcp-滑动窗口以及重传机制&#34;&gt;简述 TCP 滑动窗口以及重传机制&lt;/h3&gt;
+&lt;h3 id=&#34;简述-ddos-攻击原理如何防范它&#34;&gt;简述 DDOS 攻击原理，如何防范它？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-osi-七层模型tcpip-属于哪一层&#34;&gt;简述 OSI 七层模型，TCP，IP 属于哪一层？&lt;/h3&gt;
+&lt;h3 id=&#34;从系统层面上udp-如何保证尽量可靠&#34;&gt;从系统层面上，UDP 如何保证尽量可靠？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-jwt-的原理和校验机制&#34;&gt;简述 JWT 的原理和校验机制&lt;/h3&gt;
+&lt;h3 id=&#34;http-的方法有哪些&#34;&gt;HTTP 的方法有哪些？&lt;/h3&gt;
+&lt;h3 id=&#34;tcp-长连接和短连接有那么不同的使用场景&#34;&gt;TCP 长连接和短连接有那么不同的使用场景？&lt;/h3&gt;
+&lt;h3 id=&#34;什么是-arp-协议简述其使用场景&#34;&gt;什么是 ARP 协议？简述其使用场景&lt;/h3&gt;
+&lt;h3 id=&#34;简述-rpc-的调用过程&#34;&gt;简述 RPC 的调用过程&lt;/h3&gt;
+&lt;h3 id=&#34;tcp-中-syn-攻击是什么如何防止&#34;&gt;TCP 中 SYN 攻击是什么？如何防止？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-tcp-的报文头部结构&#34;&gt;简述 TCP 的报文头部结构&lt;/h3&gt;
+&lt;h3 id=&#34;tcp-的拥塞控制具体是怎么实现的udp-有拥塞控制吗&#34;&gt;TCP 的拥塞控制具体是怎么实现的？UDP 有拥塞控制吗？&lt;/h3&gt;
+&lt;h3 id=&#34;什么是中间人攻击如何防止攻击&#34;&gt;什么是中间人攻击？如何防止攻击？&lt;/h3&gt;
+&lt;h3 id=&#34;简述什么是-xss-攻击以及-csrf-攻击&#34;&gt;简述什么是 XSS 攻击以及 CSRF 攻击？&lt;/h3&gt;
+&lt;h3 id=&#34;如何防止传输内容被篡改&#34;&gt;如何防止传输内容被篡改？&lt;/h3&gt;
+&lt;h3 id=&#34;如何设计-api-接口使其实现幂等性&#34;&gt;如何设计 API 接口使其实现幂等性？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-bgp-协议和-ospf-协议的区别&#34;&gt;简述 BGP 协议和 OSPF 协议的区别&lt;/h3&gt;
+&lt;h3 id=&#34;http-是无状态的吗需要保持状态的场景应该怎么做&#34;&gt;HTTP 是无状态的吗？需要保持状态的场景应该怎么做？&lt;/h3&gt;
+&lt;h3 id=&#34;从系统层面上udp-如何保证尽量可靠-1&#34;&gt;从系统层面上，UDP 如何保证尽量可靠？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-tcp-协议的延迟-ack-和累计应答&#34;&gt;简述 TCP 协议的延迟 ACK 和累计应答&lt;/h3&gt;
+&lt;h3 id=&#34;ssl-握手流程为什么要使用非对称秘钥&#34;&gt;SSL 握手流程为什么要使用非对称秘钥？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-websocket-是如何进行传输的&#34;&gt;简述 WebSocket 是如何进行传输的&lt;/h3&gt;
+&lt;h3 id=&#34;traceroute-有什么作用&#34;&gt;traceroute 有什么作用？&lt;/h3&gt;
+&lt;h3 id=&#34;如何解决-tcp-传输丢包问题&#34;&gt;如何解决 TCP 传输丢包问题？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-http-的-keepalive-的原理和使用场景&#34;&gt;简述 HTTP 的 keepalive 的原理和使用场景&lt;/h3&gt;
+&lt;h3 id=&#34;简述在四层和七层网络协议中负载均衡的原理&#34;&gt;简述在四层和七层网络协议中负载均衡的原理&lt;/h3&gt;
+&lt;h3 id=&#34;简述-tcp-半连接发生场景&#34;&gt;简述 TCP 半连接发生场景&lt;/h3&gt;
+&lt;h3 id=&#34;什么是-syn-flood如何防止这类攻击&#34;&gt;什么是 SYN flood，如何防止这类攻击？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-http-报文头部的组成结构&#34;&gt;简述 HTTP 报文头部的组成结构&lt;/h3&gt;
+&lt;h3 id=&#34;为什么需要序列化有什么序列化的方式&#34;&gt;为什么需要序列化？有什么序列化的方式？&lt;/h3&gt;
+&lt;h3 id=&#34;tcp-如何实现数据有序性&#34;&gt;TCP 如何实现数据有序性？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-http-短链接与长链接的区别&#34;&gt;简述 HTTP 短链接与长链接的区别&lt;/h3&gt;
+&lt;h3 id=&#34;简述-ipv4-和-ipv6-的区别&#34;&gt;简述 iPv4 和 iPv6 的区别&lt;/h3&gt;
+</description>
+    </item>
+    
+    <item>
       <title>面试::八股文::Java</title>
       <link>/notes/interview_questions_java/</link>
       <pubDate>Thu, 19 Aug 2021 21:51:33 +0800</pubDate>
@@ -6979,9 +7083,65 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;ul&gt;
 &lt;li&gt;控制平面：传统的方法
 &lt;ul&gt;
-&lt;li&gt;路由选择算法运行在每台路由器中，并且在每台路由器中都包含转发和路由选择两种功能。&lt;/li&gt;
+&lt;li&gt;路由选择算法运行在每台路由器中，并且在每台路由器中都包含转发和路由选择两种功能。在一台路由器中的路由选择算法与在其他路由器中的路由选择算法通信，以计算出它的转发表的值。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
+&lt;li&gt;控制平面：SDN 方法
+&lt;ul&gt;
+&lt;li&gt;SDN 方法显示了从路由器物理上分离的另一种方法，远程控制器计算和分发转发表以供每台路由器所使用，路由选择设备仅执行转发。远程控制器可能实现在具有高可靠性和冗余的远程数据中心中，并可能由 ISP 或某些第三方管理。路由器和远程控制器通过交换包含转发表和其他路由选择信息的报文实现通信。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;网络服务模型
+&lt;ul&gt;
+&lt;li&gt;网络层能提供的某些可能的服务
+&lt;ul&gt;
+&lt;li&gt;确保交付。该服务确保分组将最终到达目的地。&lt;/li&gt;
+&lt;li&gt;具有时延上界的确保交付。该服务不仅确保分组的交付，而且在特定的主机到主机时延上界内（例如在 1OOms 内）交付 。&lt;/li&gt;
+&lt;li&gt;有序分组交付。该服务确保分组以它们发送的顺序到达目的地。&lt;/li&gt;
+&lt;li&gt;确保最小带宽。这种网络层服务模仿在发送和接收主机之间一条特定比特率（例如 1Mbps) 的传输链路的行为。只要发送主机以低于特定比特率的速率传输比特（作为分组的组成部分），则所有分组最终会交付到目的主机。&lt;/li&gt;
+&lt;li&gt;安全性。网络层能够在源加密所有数据报并在目的地解密这些分组，从而对所有运输层报文段提供机密性。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;因特网的网络层提供了单一的服务，称为尽力而为服务，使用尽力而为服务，传送的分组既不能保证以它们发送的顺序被接收，也不能保证它们最终交付；既不能保证端到端时延，也不能保证有最小的带宽。尽力而为服务看起来是根本无服务的一种委婉说法，即一个没有向目的地交付分组的网络也符合尽力而为交付服务的定义&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;路由器工作原理
+&lt;ul&gt;
+&lt;li&gt;通用路由器结构
+&lt;ul&gt;
+&lt;li&gt;输入端口
+&lt;ul&gt;
+&lt;li&gt;它在路由器中执行终结入物理链路的物理层功能&lt;/li&gt;
+&lt;li&gt;与位于入链路远端的数据链路层交互来执行数据链路层功能&lt;/li&gt;
+&lt;li&gt;执行查找功能，通过查询转发表决定路由器的输出端口，到达的分组通过路由器的交换结构转发到输出端口&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;交换结构
+&lt;ul&gt;
+&lt;li&gt;交换结构将路由器的输入端口连接到它的输出端口&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;输出端口
+&lt;ul&gt;
+&lt;li&gt;输出端口存储从交换结构接收的分组，并通过执行必要的链路层和物理层功能在输出链路上传输这些分组&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;路由选择处理器
+&lt;ul&gt;
+&lt;li&gt;路由选择处理器执行控制平面功能&lt;/li&gt;
+&lt;li&gt;在传统的路由器中，它执行路由选择协议，维护路由选择表与关联链路状态信息，并为该路由器计算转发表&lt;/li&gt;
+&lt;li&gt;在 SDN 路由器中，路由选择处理器负责与远程控制器通信，目的是接收由远程控制器计算的转发表项，并在该路由器的输入端口安装这些表项&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;输入端口处理和基于目的地转发
+&lt;ul&gt;
+&lt;li&gt;输入端口的线路端接功能与链路层处理实现了用于各个输入链路的物理层和链路层&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
