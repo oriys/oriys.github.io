@@ -164,6 +164,52 @@ if (!doNotTrack) {
 <h3 id="什么是跨域什么情况下会发生跨域请求">什么是跨域，什么情况下会发生跨域请求？</h3>
 <h3 id="简述对称与非对称加密的概念">简述对称与非对称加密的概念</h3>
 <h3 id="http-中-get-和-post-区别">HTTP 中 GET 和 POST 区别</h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>GET</th>
+<th>POST</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>请求是否有主体</td>
+<td>N(可以携带，是否处理取决于服务器)</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>成功的响应是否有主体</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>安全</td>
+<td>Y</td>
+<td>N</td>
+</tr>
+<tr>
+<td>幂等</td>
+<td>Y</td>
+<td>N</td>
+</tr>
+<tr>
+<td>可缓存</td>
+<td>Y</td>
+<td>Y(带上有关刷新的信息)</td>
+</tr>
+<tr>
+<td>HTML 表单是否支持</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://datatracker.ietf.org/doc/html/rfc7231#section-4.3.1">rfc7231</a></p>
+<blockquote>
+<p>A payload within a GET request message has no defined semantics; sending a payload body on a GET request might cause some existing implementations to reject the request.</p>
+</blockquote>
+<p>总而言之 RFC 只对 GET 和 POST 做了语义上的区别，他们的不同之处大多是浏览器行为</p>
 <h3 id="tcp-的-keepalive-了解吗说一说它和-http-的-keepalive-的区别">TCP 的 keepalive 了解吗？说一说它和 HTTP 的 keepalive 的区别？</h3>
 <h3 id="简述常见的-http-状态码的含义301304401403">简述常见的 HTTP 状态码的含义（301，304，401，403）</h3>
 <h3 id="简述-tcp-的-time_wait-和-close_wait">简述 TCP 的 TIME_WAIT 和 CLOSE_WAIT</h3>
