@@ -6961,6 +6961,36 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     </item>
     
     <item>
+      <title>计算机网络自顶向下方法::网络层::数据平面</title>
+      <link>/notes/computer_network_a_topdown_approach_04/</link>
+      <pubDate>Thu, 17 Jun 2021 20:27:06 +0800</pubDate>
+      <guid>/notes/computer_network_a_topdown_approach_04/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;网络层概述
+&lt;ul&gt;
+&lt;li&gt;路由器的数据平面的主要作用是从其输入链路向其输出链路转发数据报；控制平面的主要作用是协调这些本地的每路由器转发动作，使得数据报沿着源和目的地主机之间的路由器路径最终进行端到端传送。&lt;/li&gt;
+&lt;li&gt;转发和路由选择：数据平面和控制平面
+&lt;ul&gt;
+&lt;li&gt;转发：当一个分组到达某路由器的一条输入链路时，该路由器必须将该分组移动到适当的输出链路&lt;/li&gt;
+&lt;li&gt;路由选择：当分组从发送方流向接收方时，网络层必须决定这些分组所采用的路由或路径。计算这些路径的算法被称为路由选择算法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;每台网络路由器中有一个关键元素是它的转发表(fonvarding table)。路由器检查到达分组首部的一个或多个字段值，进而使用这些首部值在其转发表中索引，通过这种方法来转发分组。这些值对应存储在转发表项中的值，指出了该分组将被转发的路由器的输出链路接口。
+&lt;ul&gt;
+&lt;li&gt;控制平面：传统的方法
+&lt;ul&gt;
+&lt;li&gt;路由选择算法运行在每台路由器中，并且在每台路由器中都包含转发和路由选择两种功能。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
       <title>计算机网络自顶向下方法::运输层</title>
       <link>/notes/computer_network_a_topdown_approach_03/</link>
       <pubDate>Wed, 16 Jun 2021 20:27:06 +0800</pubDate>
