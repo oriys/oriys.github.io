@@ -116,9 +116,9 @@
     
     <item>
       <title>多线程::哲学家就餐</title>
-      <link>/leetcode/1226/</link>
+      <link>/algorithm/1226/</link>
       <pubDate>Tue, 24 Aug 2021 19:36:59 +0800</pubDate>
-      <guid>/leetcode/1226/</guid>
+      <guid>/algorithm/1226/</guid>
       <description>&lt;h2 id=&#34;解法一semaphore&#34;&gt;解法一：Semaphore&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;DiningPhilosophers&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
 
@@ -366,9 +366,9 @@
     
     <item>
       <title>多线程::H2O 生成</title>
-      <link>/leetcode/1117/</link>
+      <link>/algorithm/1117/</link>
       <pubDate>Mon, 23 Aug 2021 02:23:00 +0800</pubDate>
-      <guid>/leetcode/1117/</guid>
+      <guid>/algorithm/1117/</guid>
       <description>&lt;h2 id=&#34;链接&#34;&gt;链接&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://leetcode-cn.com/problems/building-h2o/&#34;&gt;1117. H2O 生成 - 力扣（LeetCode）&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;解法一semaphore&#34;&gt;解法一：Semaphore&lt;/h2&gt;
@@ -404,9 +404,9 @@
     
     <item>
       <title>多线程::交替打印字符串</title>
-      <link>/leetcode/1195/</link>
+      <link>/algorithm/1195/</link>
       <pubDate>Mon, 23 Aug 2021 02:23:00 +0800</pubDate>
-      <guid>/leetcode/1195/</guid>
+      <guid>/algorithm/1195/</guid>
       <description>&lt;h2 id=&#34;链接&#34;&gt;链接&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://leetcode-cn.com/problems/fizz-buzz-multithreaded/&#34;&gt;1195. 交替打印字符串 - 力扣（LeetCode）&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;解法一spin-lock&#34;&gt;解法一：Spin Lock&lt;/h2&gt;
@@ -685,9 +685,9 @@
     
     <item>
       <title>多线程::打印零与奇偶数</title>
-      <link>/leetcode/1116/</link>
+      <link>/algorithm/1116/</link>
       <pubDate>Sun, 22 Aug 2021 17:13:46 +0800</pubDate>
-      <guid>/leetcode/1116/</guid>
+      <guid>/algorithm/1116/</guid>
       <description>&lt;h2 id=&#34;链接&#34;&gt;链接&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://leetcode-cn.com/problems/print-zero-even-odd//&#34;&gt;1116. 打印零与奇偶数 - 力扣（LeetCode）&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;解法一spin-lock&#34;&gt;解法一：Spin Lock&lt;/h2&gt;
@@ -1003,9 +1003,9 @@
     
     <item>
       <title>多线程::交替打印FooBar</title>
-      <link>/leetcode/1115/</link>
+      <link>/algorithm/1115/</link>
       <pubDate>Sun, 22 Aug 2021 13:40:26 +0800</pubDate>
-      <guid>/leetcode/1115/</guid>
+      <guid>/algorithm/1115/</guid>
       <description>&lt;h2 id=&#34;链接&#34;&gt;链接&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://leetcode-cn.com/problems/print-foobar-alternately/&#34;&gt;1115. 交替打印 FooBar - 力扣（LeetCode）&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;解法一-semaphore&#34;&gt;解法一： Semaphore&lt;/h2&gt;
@@ -1267,9 +1267,9 @@
     
     <item>
       <title>算法::二分查找::第一个错误的版本</title>
-      <link>/leetcode/278/</link>
+      <link>/algorithm/278/</link>
       <pubDate>Sat, 21 Aug 2021 09:59:43 +0800</pubDate>
-      <guid>/leetcode/278/</guid>
+      <guid>/algorithm/278/</guid>
       <description>&lt;h2 id=&#34;链接&#34;&gt;链接&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://leetcode-cn.com/problems/first-bad-version/submissions/&#34;&gt;278. 第一个错误的版本 - 力扣（LeetCode）&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;解法&#34;&gt;解法&lt;/h2&gt;
@@ -1292,9 +1292,9 @@
     
     <item>
       <title>算法::二分查找::二分查找</title>
-      <link>/leetcode/704/</link>
+      <link>/algorithm/704/</link>
       <pubDate>Sat, 21 Aug 2021 09:39:35 +0800</pubDate>
-      <guid>/leetcode/704/</guid>
+      <guid>/algorithm/704/</guid>
       <description>&lt;h2 id=&#34;链接&#34;&gt;链接&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://leetcode-cn.com/problems/binary-search/&#34;&gt;704. 二分查找 - 力扣（LeetCode）&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;解法&#34;&gt;解法&lt;/h2&gt;
@@ -1317,9 +1317,9 @@
     
     <item>
       <title>算法::二分查找::搜索插入位置</title>
-      <link>/leetcode/35/</link>
+      <link>/algorithm/35/</link>
       <pubDate>Sat, 21 Aug 2021 09:39:35 +0800</pubDate>
-      <guid>/leetcode/35/</guid>
+      <guid>/algorithm/35/</guid>
       <description>&lt;h2 id=&#34;链接&#34;&gt;链接&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://leetcode-cn.com/problems/search-insert-position/&#34;&gt;35. 搜索插入位置 - 力扣（LeetCode）&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;解法&#34;&gt;解法&lt;/h2&gt;
@@ -1594,9 +1594,9 @@
     
     <item>
       <title>多线程::按需打印</title>
-      <link>/leetcode/1114/</link>
+      <link>/algorithm/1114/</link>
       <pubDate>Fri, 20 Aug 2021 22:48:32 +0800</pubDate>
-      <guid>/leetcode/1114/</guid>
+      <guid>/algorithm/1114/</guid>
       <description>&lt;h2 id=&#34;链接&#34;&gt;链接&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://leetcode-cn.com/problems/print-in-order/&#34;&gt;1114. 按序打印 - 力扣（LeetCode）&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;解法一synchronized--waitnotifyall&#34;&gt;解法一：synchronized + wait/notifyAll&lt;/h2&gt;
