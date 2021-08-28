@@ -2,14 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/algorithm/todo/</loc>
-    <lastmod>2021-08-28T20:17:30+08:00</lastmod>
-  </url><url>
     <loc>/algorithm/</loc>
-    <lastmod>2021-08-28T20:17:30+08:00</lastmod>
+    <lastmod>2021-08-28T20:32:29+08:00</lastmod>
   </url><url>
     <loc>/</loc>
-    <lastmod>2021-08-28T20:17:30+08:00</lastmod>
+    <lastmod>2021-08-28T20:32:29+08:00</lastmod>
+  </url><url>
+    <loc>/algorithm/21/</loc>
+    <lastmod>2021-08-28T20:32:29+08:00</lastmod>
   </url><url>
     <loc>/algorithm/19/</loc>
     <lastmod>2021-08-28T19:43:12+08:00</lastmod>
