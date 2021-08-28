@@ -8,9 +8,9 @@
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Thu, 26 Aug 2021 21:28:22 +0800</lastBuildDate>
     <item>
       <title>Java并发编程实战::结构化并发应用程序</title>
-      <link>/notes/java_concurrency_in_practice_structuring_concurrent_applicatoins/</link>
+      <link>/notes/jcip_structuring_concurrent_applicatoins/</link>
       <pubDate>Thu, 26 Aug 2021 21:28:22 +0800</pubDate>
-      <guid>/notes/java_concurrency_in_practice_structuring_concurrent_applicatoins/</guid>
+      <guid>/notes/jcip_structuring_concurrent_applicatoins/</guid>
       <description>&lt;h2 id=&#34;任务执行&#34;&gt;任务执行&lt;/h2&gt;
 &lt;p&gt;通过把应用程序的工作分解到多个任务中，可以简化程序的组织结构，提供一种自然的事务边界来优化错误恢复过程，以及提供一种自然的并行工作结构来提升并发性。&lt;/p&gt;
 &lt;h3 id=&#34;在线程中执行任务&#34;&gt;在线程中执行任务&lt;/h3&gt;
@@ -145,9 +145,9 @@
     
     <item>
       <title>Java并发编程实战::基础知识</title>
-      <link>/notes/java_concurrency_in_practice_basic/</link>
+      <link>/notes/jcip_baisc/</link>
       <pubDate>Mon, 23 Aug 2021 15:55:20 +0800</pubDate>
-      <guid>/notes/java_concurrency_in_practice_basic/</guid>
+      <guid>/notes/jcip_baisc/</guid>
       <description>&lt;h2 id=&#34;线程安全性&#34;&gt;线程安全性&lt;/h2&gt;
 &lt;p&gt;线程安全性的定义：当多个线程访问某个类时，这个类始终都能表现出正确的行为，那么就称这个类时线程安全的。在线程安全性的定义中，最核心的概念就是正确性。&lt;/p&gt;
 &lt;h3 id=&#34;原子性&#34;&gt;原子性&lt;/h3&gt;
