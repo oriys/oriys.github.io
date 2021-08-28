@@ -196,7 +196,155 @@ if (!doNotTrack) {
 </tbody>
 </table>
 <h3 id="信号量是如何实现的">信号量是如何实现的？</h3>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#00a8c8">struct</span> <span style="color:#111">semaphore</span> <span style="color:#111">{</span>
+    <span style="color:#111">raw_spinlock_t</span>        <span style="color:#111">lock</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">unsigned</span> <span style="color:#00a8c8">int</span>        <span style="color:#111">count</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">struct</span> <span style="color:#111">list_head</span>    <span style="color:#111">wait_list</span><span style="color:#111">;</span>
+<span style="color:#111">};</span>
 
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * down - acquire the semaphore
+</span><span style="color:#75715e"> * @sem: the semaphore to be acquired
+</span><span style="color:#75715e"> *
+</span><span style="color:#75715e"> * Acquires the semaphore.  If no more tasks are allowed to acquire the
+</span><span style="color:#75715e"> * semaphore, calling this function will put the task to sleep until the
+</span><span style="color:#75715e"> * semaphore is released.
+</span><span style="color:#75715e"> *
+</span><span style="color:#75715e"> * Use of this function is deprecated, please use down_interruptible() or
+</span><span style="color:#75715e"> * down_killable() instead.
+</span><span style="color:#75715e"> */</span>
+<span style="color:#00a8c8">void</span> <span style="color:#75af00">down</span><span style="color:#111">(</span><span style="color:#00a8c8">struct</span> <span style="color:#111">semaphore</span> <span style="color:#f92672">*</span><span style="color:#111">sem</span><span style="color:#111">)</span>
+<span style="color:#111">{</span>
+    <span style="color:#00a8c8">unsigned</span> <span style="color:#00a8c8">long</span> <span style="color:#111">flags</span><span style="color:#111">;</span>
+
+    <span style="color:#111">raw_spin_lock_irqsave</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">lock</span><span style="color:#111">,</span> <span style="color:#111">flags</span><span style="color:#111">);</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">likely</span><span style="color:#111">(</span><span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">count</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span><span style="color:#111">))</span>
+        <span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">count</span><span style="color:#f92672">--</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">else</span>
+        <span style="color:#111">__down</span><span style="color:#111">(</span><span style="color:#111">sem</span><span style="color:#111">);</span>
+    <span style="color:#111">raw_spin_unlock_irqrestore</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">lock</span><span style="color:#111">,</span> <span style="color:#111">flags</span><span style="color:#111">);</span>
+<span style="color:#111">}</span>
+
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * down_interruptible - acquire the semaphore unless interrupted
+</span><span style="color:#75715e"> * @sem: the semaphore to be acquired
+</span><span style="color:#75715e"> *
+</span><span style="color:#75715e"> * Attempts to acquire the semaphore.  If no more tasks are allowed to
+</span><span style="color:#75715e"> * acquire the semaphore, calling this function will put the task to sleep.
+</span><span style="color:#75715e"> * If the sleep is interrupted by a signal, this function will return -EINTR.
+</span><span style="color:#75715e"> * If the semaphore is successfully acquired, this function returns 0.
+</span><span style="color:#75715e"> */</span>
+<span style="color:#00a8c8">int</span> <span style="color:#75af00">down_interruptible</span><span style="color:#111">(</span><span style="color:#00a8c8">struct</span> <span style="color:#111">semaphore</span> <span style="color:#f92672">*</span><span style="color:#111">sem</span><span style="color:#111">)</span>
+<span style="color:#111">{</span>
+    <span style="color:#00a8c8">unsigned</span> <span style="color:#00a8c8">long</span> <span style="color:#111">flags</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">int</span> <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span><span style="color:#111">;</span>
+
+    <span style="color:#111">raw_spin_lock_irqsave</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">lock</span><span style="color:#111">,</span> <span style="color:#111">flags</span><span style="color:#111">);</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">likely</span><span style="color:#111">(</span><span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">count</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span><span style="color:#111">))</span>
+        <span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">count</span><span style="color:#f92672">--</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">else</span>
+        <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#111">__down_interruptible</span><span style="color:#111">(</span><span style="color:#111">sem</span><span style="color:#111">);</span>
+    <span style="color:#111">raw_spin_unlock_irqrestore</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">lock</span><span style="color:#111">,</span> <span style="color:#111">flags</span><span style="color:#111">);</span>
+
+    <span style="color:#00a8c8">return</span> <span style="color:#111">result</span><span style="color:#111">;</span>
+<span style="color:#111">}</span>
+
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * down_killable - acquire the semaphore unless killed
+</span><span style="color:#75715e"> * @sem: the semaphore to be acquired
+</span><span style="color:#75715e"> *
+</span><span style="color:#75715e"> * Attempts to acquire the semaphore.  If no more tasks are allowed to
+</span><span style="color:#75715e"> * acquire the semaphore, calling this function will put the task to sleep.
+</span><span style="color:#75715e"> * If the sleep is interrupted by a fatal signal, this function will return
+</span><span style="color:#75715e"> * -EINTR.  If the semaphore is successfully acquired, this function returns
+</span><span style="color:#75715e"> * 0.
+</span><span style="color:#75715e"> */</span>
+<span style="color:#00a8c8">int</span> <span style="color:#75af00">down_killable</span><span style="color:#111">(</span><span style="color:#00a8c8">struct</span> <span style="color:#111">semaphore</span> <span style="color:#f92672">*</span><span style="color:#111">sem</span><span style="color:#111">)</span>
+<span style="color:#111">{</span>
+    <span style="color:#00a8c8">unsigned</span> <span style="color:#00a8c8">long</span> <span style="color:#111">flags</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">int</span> <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span><span style="color:#111">;</span>
+
+    <span style="color:#111">raw_spin_lock_irqsave</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">lock</span><span style="color:#111">,</span> <span style="color:#111">flags</span><span style="color:#111">);</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">likely</span><span style="color:#111">(</span><span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">count</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span><span style="color:#111">))</span>
+        <span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">count</span><span style="color:#f92672">--</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">else</span>
+        <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#111">__down_killable</span><span style="color:#111">(</span><span style="color:#111">sem</span><span style="color:#111">);</span>
+    <span style="color:#111">raw_spin_unlock_irqrestore</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">lock</span><span style="color:#111">,</span> <span style="color:#111">flags</span><span style="color:#111">);</span>
+
+    <span style="color:#00a8c8">return</span> <span style="color:#111">result</span><span style="color:#111">;</span>
+<span style="color:#111">}</span>
+
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * down_trylock - try to acquire the semaphore, without waiting
+</span><span style="color:#75715e"> * @sem: the semaphore to be acquired
+</span><span style="color:#75715e"> *
+</span><span style="color:#75715e"> * Try to acquire the semaphore atomically.  Returns 0 if the semaphore has
+</span><span style="color:#75715e"> * been acquired successfully or 1 if it cannot be acquired.
+</span><span style="color:#75715e"> *
+</span><span style="color:#75715e"> * NOTE: This return value is inverted from both spin_trylock and
+</span><span style="color:#75715e"> * mutex_trylock!  Be careful about this when converting code.
+</span><span style="color:#75715e"> *
+</span><span style="color:#75715e"> * Unlike mutex_trylock, this function can be used from interrupt context,
+</span><span style="color:#75715e"> * and the semaphore can be released by any task or interrupt.
+</span><span style="color:#75715e"> */</span>
+<span style="color:#00a8c8">int</span> <span style="color:#75af00">down_trylock</span><span style="color:#111">(</span><span style="color:#00a8c8">struct</span> <span style="color:#111">semaphore</span> <span style="color:#f92672">*</span><span style="color:#111">sem</span><span style="color:#111">)</span>
+<span style="color:#111">{</span>
+    <span style="color:#00a8c8">unsigned</span> <span style="color:#00a8c8">long</span> <span style="color:#111">flags</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">int</span> <span style="color:#111">count</span><span style="color:#111">;</span>
+
+    <span style="color:#111">raw_spin_lock_irqsave</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">lock</span><span style="color:#111">,</span> <span style="color:#111">flags</span><span style="color:#111">);</span>
+    <span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">count</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">likely</span><span style="color:#111">(</span><span style="color:#111">count</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span><span style="color:#111">))</span>
+        <span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">count</span> <span style="color:#f92672">=</span> <span style="color:#111">count</span><span style="color:#111">;</span>
+    <span style="color:#111">raw_spin_unlock_irqrestore</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">lock</span><span style="color:#111">,</span> <span style="color:#111">flags</span><span style="color:#111">);</span>
+
+    <span style="color:#00a8c8">return</span> <span style="color:#111">(</span><span style="color:#111">count</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span><span style="color:#111">);</span>
+<span style="color:#111">}</span>
+
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * down_timeout - acquire the semaphore within a specified time
+</span><span style="color:#75715e"> * @sem: the semaphore to be acquired
+</span><span style="color:#75715e"> * @timeout: how long to wait before failing
+</span><span style="color:#75715e"> *
+</span><span style="color:#75715e"> * Attempts to acquire the semaphore.  If no more tasks are allowed to
+</span><span style="color:#75715e"> * acquire the semaphore, calling this function will put the task to sleep.
+</span><span style="color:#75715e"> * If the semaphore is not released within the specified number of jiffies,
+</span><span style="color:#75715e"> * this function returns -ETIME.  It returns 0 if the semaphore was acquired.
+</span><span style="color:#75715e"> */</span>
+<span style="color:#00a8c8">int</span> <span style="color:#75af00">down_timeout</span><span style="color:#111">(</span><span style="color:#00a8c8">struct</span> <span style="color:#111">semaphore</span> <span style="color:#f92672">*</span><span style="color:#111">sem</span><span style="color:#111">,</span> <span style="color:#00a8c8">long</span> <span style="color:#111">timeout</span><span style="color:#111">)</span>
+<span style="color:#111">{</span>
+    <span style="color:#00a8c8">unsigned</span> <span style="color:#00a8c8">long</span> <span style="color:#111">flags</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">int</span> <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span><span style="color:#111">;</span>
+
+    <span style="color:#111">raw_spin_lock_irqsave</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">lock</span><span style="color:#111">,</span> <span style="color:#111">flags</span><span style="color:#111">);</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">likely</span><span style="color:#111">(</span><span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">count</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span><span style="color:#111">))</span>
+        <span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">count</span><span style="color:#f92672">--</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">else</span>
+        <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#111">__down_timeout</span><span style="color:#111">(</span><span style="color:#111">sem</span><span style="color:#111">,</span> <span style="color:#111">timeout</span><span style="color:#111">);</span>
+    <span style="color:#111">raw_spin_unlock_irqrestore</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">lock</span><span style="color:#111">,</span> <span style="color:#111">flags</span><span style="color:#111">);</span>
+
+    <span style="color:#00a8c8">return</span> <span style="color:#111">result</span><span style="color:#111">;</span>
+<span style="color:#111">}</span>
+
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * up - release the semaphore
+</span><span style="color:#75715e"> * @sem: the semaphore to release
+</span><span style="color:#75715e"> *
+</span><span style="color:#75715e"> * Release the semaphore.  Unlike mutexes, up() may be called from any
+</span><span style="color:#75715e"> * context and even by tasks which have never called down().
+</span><span style="color:#75715e"> */</span>
+<span style="color:#00a8c8">void</span> <span style="color:#75af00">up</span><span style="color:#111">(</span><span style="color:#00a8c8">struct</span> <span style="color:#111">semaphore</span> <span style="color:#f92672">*</span><span style="color:#111">sem</span><span style="color:#111">)</span>
+<span style="color:#111">{</span>
+    <span style="color:#00a8c8">unsigned</span> <span style="color:#00a8c8">long</span> <span style="color:#111">flags</span><span style="color:#111">;</span>
+
+    <span style="color:#111">raw_spin_lock_irqsave</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">lock</span><span style="color:#111">,</span> <span style="color:#111">flags</span><span style="color:#111">);</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">likely</span><span style="color:#111">(</span><span style="color:#111">list_empty</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">wait_list</span><span style="color:#111">)))</span>
+        <span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">count</span><span style="color:#f92672">++</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">else</span>
+        <span style="color:#111">__up</span><span style="color:#111">(</span><span style="color:#111">sem</span><span style="color:#111">);</span>
+    <span style="color:#111">raw_spin_unlock_irqrestore</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#111">sem</span><span style="color:#f92672">-&gt;</span><span style="color:#111">lock</span><span style="color:#111">,</span> <span style="color:#111">flags</span><span style="color:#111">);</span>
+<span style="color:#111">}</span>
+</code></pre></div>
   
   </div>
 </article>
