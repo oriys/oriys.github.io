@@ -5,11 +5,11 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>Y.CH.Y</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Sun, 29 Aug 2021 02:25:49 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Sun, 29 Aug 2021 03:00:01 +0800</lastBuildDate>
     <item>
       <title>算法::TODOLIST</title>
       <link>/algorithm/todo/</link>
-      <pubDate>Sun, 29 Aug 2021 02:25:49 +0800</pubDate>
+      <pubDate>Sun, 29 Aug 2021 03:00:01 +0800</pubDate>
       <guid>/algorithm/todo/</guid>
       <description>&lt;ul&gt;
 &lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;a href=&#34;../..//algorithm/912/&#34;&gt;912.排序数组&lt;/a&gt;&lt;/li&gt;
@@ -332,6 +332,41 @@
 &lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 64.最小路径和&lt;/li&gt;
 &lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 79.Word Search&lt;/li&gt;
 &lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>八股文::Redis</title>
+      <link>/notes/interview_questions_redis/</link>
+      <pubDate>Sun, 29 Aug 2021 02:47:13 +0800</pubDate>
+      <guid>/notes/interview_questions_redis/</guid>
+      <description>&lt;h2 id=&#34;redis&#34;&gt;Redis&lt;/h2&gt;
+&lt;h3 id=&#34;redis-有哪些数据结构分别有什么使用场景&#34;&gt;Redis 有哪些数据结构，分别有什么使用场景？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-zset-相同-score-如何排序&#34;&gt;Redis ZSET 相同 score 如何排序？&lt;/h3&gt;
+&lt;h3 id=&#34;在爬虫中如何使用-redis-做-url-去重&#34;&gt;在爬虫中，如何使用 Redis 做 URL 去重？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-是否支持事务&#34;&gt;Redis 是否支持事务？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-中的-watch-命令是做什么的&#34;&gt;Redis 中的 WATCH 命令是做什么的？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-是如何保证高可用的&#34;&gt;Redis 是如何保证高可用的？&lt;/h3&gt;
+&lt;h3 id=&#34;如何使用-redis-来实现分布式锁redlock&#34;&gt;如何使用 Redis 来实现分布式锁？Redlock？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-是单线程还是多线程为什么这么设计&#34;&gt;Redis 是单线程还是多线程？为什么这么设计？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-中的字符串对象和-c-语言中的字符串有什么区别&#34;&gt;Redis 中的字符串对象和 C 语言中的字符串有什么区别？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-中是如何实现链表的&#34;&gt;Redis 中是如何实现链表的？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-中是如何实现字典的&#34;&gt;Redis 中是如何实现字典的？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-中的字典是如何进行动态扩容的&#34;&gt;Redis 中的字典是如何进行动态扩容的？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-中的跳表是如何实现的&#34;&gt;Redis 中的跳表是如何实现的？&lt;/h3&gt;
+&lt;h3 id=&#34;strlisthashsetzset-底层都是使用什么数据结构实现的&#34;&gt;STR/LIST/HASH/SET/ZSET 底层都是使用什么数据结构实现的？&lt;/h3&gt;
+&lt;h3 id=&#34;zset-什么时候使用-ziplist-实现什么时候使用-skiplist-实现&#34;&gt;ZSET 什么时候使用 Ziplist 实现，什么时候使用 Skiplist 实现？&lt;/h3&gt;
+&lt;h3 id=&#34;zset-为什么不用-bstavlb-tree红黑树而使用跳表&#34;&gt;ZSET 为什么不用 BST/AVL/B-Tree/红黑树，而使用跳表？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-的过期键删除策略是什么&#34;&gt;Redis 的过期键删除策略是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-的主从服务器是如何同步过期键的&#34;&gt;Redis 的主从服务器是如何同步过期键的？&lt;/h3&gt;
+&lt;h3 id=&#34;aof-和-rdb-持久化有什么区别&#34;&gt;AOF 和 RDB 持久化有什么区别？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-的主从是如何进行同步的&#34;&gt;Redis 的主从是如何进行同步的？&lt;/h3&gt;
+&lt;h3 id=&#34;如何解决长时间使用后-aof-文件过大的问题&#34;&gt;如何解决长时间使用后 AOF 文件过大的问题？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-的哨兵机制是如何实现的&#34;&gt;Redis 的哨兵机制是如何实现的？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-的集群方案有哪些&#34;&gt;Redis 的集群方案有哪些？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-的整体架构是什么样的从客户端发出命令到客户端接收到结果这整个流程是什么样的&#34;&gt;Redis 的整体架构是什么样的，从客户端发出命令，到客户端接收到结果，这整个流程是什么样的？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-是如何实现-lru-机制的&#34;&gt;Redis 是如何实现 LRU 机制的？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-是如何实现-lfu-机制的&#34;&gt;Redis 是如何实现 LFU 机制的？&lt;/h3&gt;
 </description>
     </item>
     
@@ -2009,7 +2044,7 @@
     </item>
     
     <item>
-      <title>面试::八股文::操作系统</title>
+      <title>八股文::操作系统</title>
       <link>/notes/interview_questions_operating_system/</link>
       <pubDate>Sat, 21 Aug 2021 03:28:49 +0800</pubDate>
       <guid>/notes/interview_questions_operating_system/</guid>
@@ -2635,7 +2670,7 @@
     </item>
     
     <item>
-      <title>面试::八股文::网络</title>
+      <title>八股文::网络</title>
       <link>/notes/interview_questions_network/</link>
       <pubDate>Fri, 20 Aug 2021 21:51:33 +0800</pubDate>
       <guid>/notes/interview_questions_network/</guid>
@@ -2784,7 +2819,7 @@
     </item>
     
     <item>
-      <title>面试::八股文::Java</title>
+      <title>八股文::Java</title>
       <link>/notes/interview_questions_java/</link>
       <pubDate>Thu, 19 Aug 2021 21:51:33 +0800</pubDate>
       <guid>/notes/interview_questions_java/</guid>

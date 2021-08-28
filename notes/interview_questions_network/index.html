@@ -7,13 +7,13 @@
   <link rel="preload" href="/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title> 面试::八股文::网络 | Y.CH.Y</title>
+  <title> 八股文::网络 | Y.CH.Y</title>
   <link rel = 'canonical' href = '/notes/interview_questions_network/'>
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
-  <meta property="og:title" content="面试::八股文::网络" />
+  <meta property="og:title" content="八股文::网络" />
 <meta property="og:description" content="网络 简述 TCP 三次握手以及四次挥手的流程。为什么需要三次握手以及四次挥手？ 三次握手流程
  第一次握手: 建立连接，客户端 A 发送 SYN = 1、随机产生 Seq = client_isn 的数据包到服务器 B，等待服务器确认。 第二次握手: 服务器 B 收到请求后确认联机(可以接受数据)，发起第二次握手请求，ACK = (A 的 Seq &#43; 1)、SYN = 1，随机产生 Seq = client_isn 的数据包到 A。 第三次握手: A 收到后检查 ACK 是否正确，若正确，A 会在发送确认包 ACK = 服务器 B 的 Seq &#43; 1、ACK = 1，服务器 B 收到后确认 Seq 值与 ACK 值，若正确，则建立连接。  四次挥手流程
  第一次挥手：TCP 发送一个 FIN(结束)标识，用来关闭客户到服务端的连接。 第二次挥手：服务端收到这个 FIN 标识，他发回一个 ACK(确认)标识，确认收到序号为收到序号&#43;1，和 SYN 一样，一个 FIN 将占用一个序号。TCP 服务器通知高层的应用进程，客户端向服务器的方向就释放了，这时候处于半关闭状态，即客户端已经没有数据要发送了，但是服务器若发送数据，客户端依然要接受。（服务器端继续发送未发送完的数据） 第三次挥手：服务端发送一个 FIN(结束)标识到客户端，服务端关闭客户端的连接。 第四次挥手：客户端发送 ACK(确认)标识报文确认，并将确认的序号&#43;1，这样关闭完成。  为什么需要三次握手" />
@@ -24,7 +24,7 @@
 
 
   <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="面试::八股文::网络"/>
+<meta name="twitter:title" content="八股文::网络"/>
 <meta name="twitter:description" content="网络 简述 TCP 三次握手以及四次挥手的流程。为什么需要三次握手以及四次挥手？ 三次握手流程
  第一次握手: 建立连接，客户端 A 发送 SYN = 1、随机产生 Seq = client_isn 的数据包到服务器 B，等待服务器确认。 第二次握手: 服务器 B 收到请求后确认联机(可以接受数据)，发起第二次握手请求，ACK = (A 的 Seq &#43; 1)、SYN = 1，随机产生 Seq = client_isn 的数据包到 A。 第三次握手: A 收到后检查 ACK 是否正确，若正确，A 会在发送确认包 ACK = 服务器 B 的 Seq &#43; 1、ACK = 1，服务器 B 收到后确认 Seq 值与 ACK 值，若正确，则建立连接。  四次挥手流程
  第一次挥手：TCP 发送一个 FIN(结束)标识，用来关闭客户到服务端的连接。 第二次挥手：服务端收到这个 FIN 标识，他发回一个 ACK(确认)标识，确认收到序号为收到序号&#43;1，和 SYN 一样，一个 FIN 将占用一个序号。TCP 服务器通知高层的应用进程，客户端向服务器的方向就释放了，这时候处于半关闭状态，即客户端已经没有数据要发送了，但是服务器若发送数据，客户端依然要接受。（服务器端继续发送未发送完的数据） 第三次挥手：服务端发送一个 FIN(结束)标识到客户端，服务端关闭客户端的连接。 第四次挥手：客户端发送 ACK(确认)标识报文确认，并将确认的序号&#43;1，这样关闭完成。  为什么需要三次握手"/>
