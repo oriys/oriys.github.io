@@ -100,7 +100,7 @@
     </item>
     
     <item>
-      <title>算法::排序::排序数组</title>
+      <title>算法::排序数组</title>
       <link>/algorithm/912/</link>
       <pubDate>Sat, 28 Aug 2021 15:07:19 +0800</pubDate>
       <guid>/algorithm/912/</guid>
@@ -844,7 +844,7 @@
     </item>
     
     <item>
-      <title>算法::二分查找::第一个错误的版本</title>
+      <title>算法::第一个错误的版本</title>
       <link>/algorithm/278/</link>
       <pubDate>Sat, 21 Aug 2021 09:59:43 +0800</pubDate>
       <guid>/algorithm/278/</guid>
@@ -869,7 +869,7 @@
     </item>
     
     <item>
-      <title>算法::二分查找::二分查找</title>
+      <title>算法::二分查找</title>
       <link>/algorithm/704/</link>
       <pubDate>Sat, 21 Aug 2021 09:39:35 +0800</pubDate>
       <guid>/algorithm/704/</guid>
@@ -894,7 +894,7 @@
     </item>
     
     <item>
-      <title>算法::二分查找::搜索插入位置</title>
+      <title>算法::搜索插入位置</title>
       <link>/algorithm/35/</link>
       <pubDate>Sat, 21 Aug 2021 09:39:35 +0800</pubDate>
       <guid>/algorithm/35/</guid>
