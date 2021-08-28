@@ -22,7 +22,7 @@
 &lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;a href=&#34;../../algorithm/232/&#34;&gt;232. 用栈实现队列&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;a href=&#34;../../algorithm/21&#34;&gt;21. 合并两个有序链表&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;a href=&#34;../../algorithm/112&#34;&gt;112. 路径总和&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 102. 二叉树的层序遍历&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;a href=&#34;../../algorithm/102&#34;&gt;102. 二叉树的层序遍历&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 215. 数组中的第 K 个最大元素&lt;/li&gt;
 &lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 53. 最大子序和&lt;/li&gt;
 &lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 300. 最长递增子序列&lt;/li&gt;
@@ -316,6 +316,35 @@
             &lt;span style=&#34;color:#111&#34;&gt;l2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;next&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;mergeTwoLists&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;l1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;l2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;next&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
             &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;l2&lt;/span&gt;
 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>算法::二叉树的层序遍历</title>
+      <link>/algorithm/102/</link>
+      <pubDate>Sat, 28 Aug 2021 19:43:12 +0800</pubDate>
+      <guid>/algorithm/102/</guid>
+      <description>&lt;h2 id=&#34;链接&#34;&gt;链接&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://leetcode-cn.com/problems/binary-tree-level-order-traversal/&#34;&gt;102. 二叉树的层序遍历 - 力扣（LeetCode）&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;解法&#34;&gt;解法&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Solution&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;levelOrder&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;root&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;TreeNode&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;List&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;List&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]]:&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;not&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;root&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+            &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[]&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;q&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;root&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;ans&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[]&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;q&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+            &lt;span style=&#34;color:#111&#34;&gt;length&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;len&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;q&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+            &lt;span style=&#34;color:#111&#34;&gt;level&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[]&lt;/span&gt;
+            &lt;span style=&#34;color:#00a8c8&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;range&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+                &lt;span style=&#34;color:#111&#34;&gt;node&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;q&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;pop&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+                &lt;span style=&#34;color:#111&#34;&gt;level&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;append&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;node&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;val&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+                &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;node&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;left&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+                    &lt;span style=&#34;color:#111&#34;&gt;q&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;append&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;node&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;left&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+                &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;node&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;right&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+                    &lt;span style=&#34;color:#111&#34;&gt;q&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;append&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;node&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;right&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+            &lt;span style=&#34;color:#111&#34;&gt;ans&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;append&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;level&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ans&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
