@@ -5,11 +5,11 @@
     <link>/algorithm/</link>
       <atom:link href="/algorithm/index.xml" rel="self" type="application/rss+xml" />
     <description>Algorithms</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Sun, 29 Aug 2021 04:58:52 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Sun, 29 Aug 2021 11:22:02 +0800</lastBuildDate>
     <item>
       <title>算法::TODOLIST</title>
       <link>/algorithm/todo/</link>
-      <pubDate>Sun, 29 Aug 2021 04:58:52 +0800</pubDate>
+      <pubDate>Sun, 29 Aug 2021 11:22:02 +0800</pubDate>
       <guid>/algorithm/todo/</guid>
       <description>&lt;ul&gt;
 &lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;a href=&#34;../..//algorithm/912/&#34;&gt;912.排序数组&lt;/a&gt;&lt;/li&gt;
