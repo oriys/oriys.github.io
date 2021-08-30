@@ -5,11 +5,11 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>Y.CH.Y</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Mon, 30 Aug 2021 17:41:27 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Mon, 30 Aug 2021 19:45:06 +0800</lastBuildDate>
     <item>
       <title>算法::TODOLIST</title>
       <link>/algorithm/todo/</link>
-      <pubDate>Mon, 30 Aug 2021 17:41:27 +0800</pubDate>
+      <pubDate>Mon, 30 Aug 2021 19:45:06 +0800</pubDate>
       <guid>/algorithm/todo/</guid>
       <description>&lt;ul&gt;
 &lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;a href=&#34;../..//algorithm/912/&#34;&gt;912.排序数组&lt;/a&gt;&lt;/li&gt;
@@ -8395,6 +8395,25 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;网际协议：IPv4、寻址、 IPv6 及其他
+&lt;ul&gt;
+&lt;li&gt;IPv4 数据报格式
+&lt;ul&gt;
+&lt;li&gt;版本（号）。这 4 比特规定了数据报的 IP 协议版本。通过查看版本号，路由器能够确定如何解释 IP 数据报的剩余部分 。不同的 IP 版本使用不同的数据报格式。&lt;/li&gt;
+&lt;li&gt;首部长度。因为一个 IPv4 数据报可包含一些可变数量的选项，故需要用这 4 比特来确定 IP 数据报中载荷实际开始的地方。大多数 IP 数据报不包含选项，所以一般的 IP 数据报具有 20 字节的首部。&lt;/li&gt;
+&lt;li&gt;服务类型。服务类型(TOS)比特包含在 IPv4 首部中，以便使不同类型的 IP 数据报能相互区别开来&lt;/li&gt;
+&lt;li&gt;数据报长度。这是 IP 数据报的总长度（首部加上数据），以字节计。因为该字段长为 16 比特，所以 IP 数据报的理论最大长度为 65535 字节。&lt;/li&gt;
+&lt;li&gt;标识、标志、片偏移。这个字段与所谓 IP 分片有关。&lt;/li&gt;
+&lt;li&gt;寿命。寿命字段用来确保数据报不会永远（如由于长时间的路由选择环路）在网络中循环。每当一台路由器处理数据报时，该字段 的值减 1。若 TTL 字段减为 0, 则该数据报必须丢弃。&lt;/li&gt;
+&lt;li&gt;协议。该字段通常仅当一个 IP 数据报到达其最终目的地时才会有用。该字段值指示了 IP 数据报的数据部分应交给哪个特定的运输层协议。&lt;/li&gt;
+&lt;li&gt;首部检验和，首部检验和用于帮助路由器检测收到的 IP 数据报中的比特错误&lt;/li&gt;
+&lt;li&gt;源和目的 IP 地址。当某源生成一个数据报时，它在源 IP 字段中插入它的 IP 地址，在目的 IP 地址字段中插入其最终目的地的地址。&lt;/li&gt;
+&lt;li&gt;选项。选项字段允许 IP 首部被扩展。&lt;/li&gt;
+&lt;li&gt;数据（有效栽荷）。IP 数据报中的数据字段包含要交付给目的地的运输层报文段 ( TCP 或 UDP)。然而，该数据字段也可承载其他类型的数据，如 ICMP 报文。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
