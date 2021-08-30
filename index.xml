@@ -5,11 +5,11 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>Y.CH.Y</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Mon, 30 Aug 2021 17:39:28 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Mon, 30 Aug 2021 17:41:27 +0800</lastBuildDate>
     <item>
       <title>算法::TODOLIST</title>
       <link>/algorithm/todo/</link>
-      <pubDate>Mon, 30 Aug 2021 17:39:28 +0800</pubDate>
+      <pubDate>Mon, 30 Aug 2021 17:41:27 +0800</pubDate>
       <guid>/algorithm/todo/</guid>
       <description>&lt;ul&gt;
 &lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;a href=&#34;../..//algorithm/912/&#34;&gt;912.排序数组&lt;/a&gt;&lt;/li&gt;
@@ -8381,6 +8381,8 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;li&gt;先进先出
 &lt;ul&gt;
 &lt;li&gt;调度规则按照分组到达输出链路队列的相同次序来选择分组在链路上传输，如果没有足够的缓存空间来容纳到达的分组，队列的分组丢弃策略则确定该分组是否将被队列中去除其他分组以便为到达的分组腾出空间，&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;优先权排队
 &lt;ul&gt;
 &lt;li&gt;到达输出链路的分组被分类放人输出队列中的优先权类，实践中，网络操作员可以配置一个队列，这样携带网络管理信息的分组获得超过用户流量的优先权，非抢占式优先权排队规则下，一旦分组开始传输，就不能打断。&lt;/li&gt;
@@ -8389,8 +8391,6 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;li&gt;循环和加权公平排队
 &lt;ul&gt;
 &lt;li&gt;其中，到达的分组被分类并在合适的每个类的等待区域排队。于是用循环调度一样，WFQ 调度器也以循环的方式为各个类提供服务，即首先服务第一类，然后第二类，接着第三类，然后重复这种服务模式。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
