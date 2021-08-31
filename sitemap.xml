@@ -2,52 +2,52 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/algorithm/todo/</loc>
-    <lastmod>2021-09-01T00:07:29+08:00</lastmod>
-  </url><url>
     <loc>/algorithm/</loc>
     <lastmod>2021-09-01T00:07:29+08:00</lastmod>
   </url><url>
-    <loc>/</loc>
-    <lastmod>2021-09-01T00:07:29+08:00</lastmod>
+    <loc>/algo/</loc>
+    <lastmod>2021-08-31T23:10:52+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/70/</loc>
+    <loc>/</loc>
+    <lastmod>2021-08-31T23:10:52+08:00</lastmod>
+  </url><url>
+    <loc>/algo/70/</loc>
     <lastmod>2021-08-31T23:10:52+08:00</lastmod>
   </url><url>
     <loc>/about/</loc>
     <lastmod>2021-08-31T17:12:59+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/236/</loc>
+    <loc>/algo/236/</loc>
     <lastmod>2021-08-29T02:00:06+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/169/</loc>
+    <loc>/algo/169/</loc>
     <lastmod>2021-08-29T01:51:23+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/21/</loc>
+    <loc>/algo/21/</loc>
     <lastmod>2021-08-28T20:32:29+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/102/</loc>
+    <loc>/algo/102/</loc>
     <lastmod>2021-08-28T19:43:12+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/19/</loc>
+    <loc>/algo/19/</loc>
     <lastmod>2021-08-28T19:43:12+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/232/</loc>
+    <loc>/algo/232/</loc>
     <lastmod>2021-08-28T19:43:12+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/206/</loc>
+    <loc>/algo/206/</loc>
     <lastmod>2021-08-28T17:21:38+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/146/</loc>
+    <loc>/algo/146/</loc>
     <lastmod>2021-08-28T16:16:37+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/141/</loc>
+    <loc>/algo/141/</loc>
     <lastmod>2021-08-28T16:02:41+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/912/</loc>
+    <loc>/algo/912/</loc>
     <lastmod>2021-08-28T15:07:19+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/112/</loc>
+    <loc>/algo/112/</loc>
     <lastmod>2021-08-28T15:07:19+08:00</lastmod>
   </url><url>
     <loc>/notes/jcip_structuring_concurrent_applicatoins/</loc>
@@ -56,16 +56,16 @@
     <loc>/notes/</loc>
     <lastmod>2021-08-26T21:28:22+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/1226/</loc>
+    <loc>/algo/1226/</loc>
     <lastmod>2021-08-24T19:36:59+08:00</lastmod>
   </url><url>
     <loc>/notes/jcip_baisc/</loc>
     <lastmod>2021-08-23T15:55:20+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/1117/</loc>
+    <loc>/algo/1117/</loc>
     <lastmod>2021-08-23T02:23:00+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/1195/</loc>
+    <loc>/algo/1195/</loc>
     <lastmod>2021-08-23T02:23:00+08:00</lastmod>
   </url><url>
     <loc>/reading/</loc>
@@ -74,28 +74,28 @@
     <loc>/reading/tao_of_programming/</loc>
     <lastmod>2021-08-22T21:58:06+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/1116/</loc>
+    <loc>/algo/1116/</loc>
     <lastmod>2021-08-22T17:13:46+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/1115/</loc>
+    <loc>/algo/1115/</loc>
     <lastmod>2021-08-22T13:40:26+08:00</lastmod>
   </url><url>
     <loc>/reading/douban_35390390/</loc>
     <lastmod>2021-08-21T17:14:37+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/278/</loc>
+    <loc>/algo/278/</loc>
     <lastmod>2021-08-21T09:59:43+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/704/</loc>
+    <loc>/algo/704/</loc>
     <lastmod>2021-08-21T09:39:35+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/35/</loc>
+    <loc>/algo/35/</loc>
     <lastmod>2021-08-21T09:39:35+08:00</lastmod>
   </url><url>
     <loc>/notes/interview_questions_operating_system/</loc>
     <lastmod>2021-08-21T03:28:49+08:00</lastmod>
   </url><url>
-    <loc>/algorithm/1114/</loc>
+    <loc>/algo/1114/</loc>
     <lastmod>2021-08-20T22:48:32+08:00</lastmod>
   </url><url>
     <loc>/notes/interview_questions_network/</loc>
