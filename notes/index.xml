@@ -6271,8 +6271,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
       <link>/notes/computer_network_a_topdown_approach_05/</link>
       <pubDate>Thu, 17 Jun 2021 20:28:06 +0800</pubDate>
       <guid>/notes/computer_network_a_topdown_approach_05/</guid>
-      <description>&lt;ul&gt;
-&lt;li&gt;概述
+      <description>&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;转发表和流表计算、维护和安装的两种方法
 &lt;ul&gt;
@@ -6283,8 +6282,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;li&gt;&amp;ldquo;逻辑集中式＂控制意味着就像路由选择控制服务位于单一的集中服务点那样获取它们，即使该服务出于容错和性能扩展性的原因，很可能经由多个服务器实现。&lt;/li&gt;
 &lt;li&gt;SDN 采用了逻辑集中式控制器的概念，而这种方法在生产部署中得到了越来越多的应用。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;路由选择算法
+&lt;h2 id=&#34;路由选择算法&#34;&gt;路由选择算法&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;其目的是从发送方到接收方的过程中确定一条通过路由器网络的好的路径（等价于路由）。通常，一条好路径指具有最低开销的路径。&lt;/li&gt;
 &lt;li&gt;第一种分类方式：根据该算法是集中式还是分散式来划分
@@ -6352,8 +6350,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;因特网中自治系统内部的路由选择：OSPF
+&lt;h2 id=&#34;因特网中自治系统内部的路由选择ospf&#34;&gt;因特网中自治系统内部的路由选择：OSPF&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;规模。随着路由器数目变得很大，涉及路由选择信息的通信、计算和存储的开销将高得不可实现。当今的因特网由数亿台主机组成。在这些主机中存储的路由选择信息显然需要巨大容量的内存。在所有路由器之间广播连通性和链路开销更新所要求的负担将是 巨大的！在如此大量的路由器中迭代的距离向量算法将肯定永远无法收敛！显然，必须采取一些措施以减少像因特网这种大型网络中的路由计算的复杂性 。&lt;/li&gt;
 &lt;li&gt;管理自治。因特网是 ISP 的网络，其中每个 ISP 都有它自己的路由器网络。ISP 通常希望按自己的意愿运行路由器，或对外部隐藏其网络的内部组织面貌。在理想情况下，一个组织应当能够按自己的愿望运行和管理其网络，还要能将其网络与其他外部网络连接起来。&lt;/li&gt;
@@ -6374,8 +6371,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;ISP 之间的路由选择：BGP
+&lt;h2 id=&#34;isp-之间的路由选择bgp&#34;&gt;ISP 之间的路由选择：BGP&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;在因特网中，所有的 AS 运行相同的 AS 间路由选择协议，称为边界网关协议(Broder Gateway Protocol, BGP)。正是这个协议将因特网中数以千计的 ISP 黏合起来。&lt;/li&gt;
 &lt;li&gt;BGP 的作用
@@ -6424,8 +6420,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;SDN 控制平面
+&lt;h2 id=&#34;sdn-控制平面&#34;&gt;SDN 控制平面&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;SDN 体系结构具有 4 个关键特征
 &lt;ul&gt;
@@ -6458,15 +6453,13 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;ICMP: 因特网控制报文协议
+&lt;h2 id=&#34;icmp-因特网控制报文协议&#34;&gt;ICMP: 因特网控制报文协议&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;ICMP 被主机和路由器用来彼此沟通网络层的信息。ICMP 最典型的用途是差错报告。&lt;/li&gt;
 &lt;li&gt;在某个位置，IP 路由器不能找到一条通往 HTTP 请求中所指定的主机的路径、该路由器就会向你的主机生成并发出一个 ICMP 报文以指示该错误。&lt;/li&gt;
 &lt;li&gt;另一个有趣的 ICMP 报文是源抑制报文。这种报文在实践中很少使用 。其最初目的是执行拥塞控制，即使得拥塞的路由器向一台主机发送一个 ICMP 源抑制报文，以强制该主机减小其发送速率。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;网络管理和 SNMP
+&lt;h2 id=&#34;网络管理和-snmp&#34;&gt;网络管理和 SNMP&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;网络管理框架
 &lt;ul&gt;
@@ -6484,8 +6477,6 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
 </description>
     </item>
     
@@ -6494,8 +6485,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
       <link>/notes/computer_network_a_topdown_approach_04/</link>
       <pubDate>Thu, 17 Jun 2021 20:27:06 +0800</pubDate>
       <guid>/notes/computer_network_a_topdown_approach_04/</guid>
-      <description>&lt;ul&gt;
-&lt;li&gt;网络层概述
+      <description>&lt;h2 id=&#34;网络层概述&#34;&gt;网络层概述&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;路由器的数据平面的主要作用是从其输入链路向其输出链路转发数据报；控制平面的主要作用是协调这些本地的每路由器转发动作，使得数据报沿着源和目的地主机之间的路由器路径最终进行端到端传送。&lt;/li&gt;
 &lt;li&gt;转发和路由选择：数据平面和控制平面
@@ -6533,8 +6523,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;路由器工作原理
+&lt;h2 id=&#34;路由器工作原理&#34;&gt;路由器工作原理&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;通用路由器结构
 &lt;ul&gt;
@@ -6646,8 +6635,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;网际协议：IPv4、寻址、 IPv6 及其他
+&lt;h2 id=&#34;网际协议ipv4寻址-ipv6-及其他&#34;&gt;网际协议：IPv4、寻址、 IPv6 及其他&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;IPv4 数据报格式
 &lt;ul&gt;
@@ -6734,8 +6722,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;通用转发吗和 SDN
+&lt;h2 id=&#34;通用转发和-sdn&#34;&gt;通用转发和 SDN&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;在通用转发中，一张匹配加动作表将基于目的地的转发表一般化了。因为能够使用网络层和／或链路层源和目的地址做出转发决定，所以显示转发设备更为准确地描述为“分组交换机”而不是第三层“路由器”或第二层“交换机”。&lt;/li&gt;
 &lt;li&gt;匹配加动作转发表在 OpenFlow 中称为流表 (flow table), 它的每个表项包括：
@@ -6767,8 +6754,6 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
 </description>
     </item>
     
@@ -6777,8 +6762,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
       <link>/notes/computer_network_a_topdown_approach_03/</link>
       <pubDate>Wed, 16 Jun 2021 20:27:06 +0800</pubDate>
       <guid>/notes/computer_network_a_topdown_approach_03/</guid>
-      <description>&lt;ul&gt;
-&lt;li&gt;概述和运输层服务
+      <description>&lt;h2 id=&#34;概述和运输层服务&#34;&gt;概述和运输层服务&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;运输层协议为运行在不同主机上的应用进程之间提供了逻辑通信。应用进程使用运输层提供的逻辑通信功能彼此发送报文，而无须考虑承载这些报文的物理基础设施的细节。&lt;/li&gt;
 &lt;li&gt;运输层协议是在端系统中而不是在路由器中实现的。在发送端，运输层将从发送应用程序进程接收到的报文转换成运输层分组，用因特网术语来讲该分组称为运输层报文段（segment）。在接收端，网络层从数据报中提取运输层报文段，并将该报文段向上交给运输层 。运输层则处理接收到的报文段，使该报文段中的数据为接收应用进程使用。&lt;/li&gt;
@@ -6803,8 +6787,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;多路复用和多路分解
+&lt;h2 id=&#34;多路复用和多路分解&#34;&gt;多路复用和多路分解&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;一个进程有一个或多个套接字，它相当于从网络向进程传递数据和从进程向网络传递数据的门户。在接收主机中的运输层实际上并没有直接将数据交付给进程，而是将数据交给了一个中间的套接字。由于在任一时刻，在接收主机上可能有不止一个套接字，所以每个套接字都有唯一的标识符。标识符的格式取决于它是 UDP 还是 TCP 套接字。&lt;/li&gt;
 &lt;li&gt;主机为了将一个到达的运输层报文段定向到适当的套接字，每个运输层报文段中具有几个字段。在接收端，运输层检查这些字段，标识出接收套接字，进而将报文段定向到该套接字。将运输层报文段中的数据交付到正确的套接字的工作称为多路分解(demulti plexing)。在源主机从不同套接字中收集数据块，并为每个数据块封装上首部信息（这将在以后用于分解）从而生成报文段，然后将报文段传递到网络层，所有这些工作称为多路复用(multiplexing)&lt;/li&gt;
@@ -6833,8 +6816,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;无连接运输：UDP
+&lt;h2 id=&#34;无连接运输udp&#34;&gt;无连接运输：UDP&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;UDP 只是做了运输协议能够做的最少工作。除了复用／分解功能及少量的差错检测外，它几乎没有对 IP 增加别的东西。&lt;/li&gt;
 &lt;li&gt;使用 UDP 时，在发送报文段之前，发送方和接收方的运输层实体之间没有握手&lt;/li&gt;
@@ -6865,8 +6847,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;可靠数据传输原理
+&lt;h2 id=&#34;可靠数据传输原理&#34;&gt;可靠数据传输原理&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;构造可靠数据传输协议
 &lt;ul&gt;
@@ -6956,8 +6937,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;可靠数据传输机制及其用途的总结
+&lt;h2 id=&#34;可靠数据传输机制及其用途的总结&#34;&gt;可靠数据传输机制及其用途的总结&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;检验和；用于检测在一个传输分组中的比特错误&lt;/li&gt;
 &lt;li&gt;定时器：用于超时/重传一个分组，可能因为该分组〈或其 ACK) 在信道中丢失了。由于当一个分组延时但未丢失〈过早超时) ，或当一个分组已被接收方收到但从接收方到发送方的 ACK 丢失时，可能产生超时事件，所以接收方可能会收到一个分组的多个冗余副本&lt;/li&gt;
@@ -6966,8 +6946,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;li&gt;否定确认：接收方用于告诉发送方某个分组未被正确地接收。否定确认报文通常据带着未被正确接收的分组的序号&lt;/li&gt;
 &lt;li&gt;窗口、流水线：发送方也许被限制仅发送那些序号落在一个指定范围内的分组。通过允许一次发送多个分组但未被确认，发送方的利用率可在停等操作模式的基础上得到增加。我们很快将会看到，窗口长度可根据接收方接收和缓存报文的能力、网络中的拥塞程度或两者情况来进行设置&lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;面向连接的运输：TCP
+&lt;h2 id=&#34;面向连接的运输tcp&#34;&gt;面向连接的运输：TCP&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;TCP 是因特网运输层的面向连接的可靠的运输协议&lt;/li&gt;
 &lt;li&gt;TCP 连接
@@ -7111,8 +7090,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;拥塞控制原理
+&lt;h2 id=&#34;拥塞控制原理&#34;&gt;拥塞控制原理&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;拥塞原因和代价
 &lt;ul&gt;
@@ -7146,8 +7124,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;TCP 拥塞控制
+&lt;h2 id=&#34;tcp-拥塞控制&#34;&gt;TCP 拥塞控制&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;慢启动
 &lt;ul&gt;
@@ -7205,8 +7182,6 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;li&gt;明确拥塞通告：网络辅助拥塞控制
 &lt;ul&gt;
 &lt;li&gt;在网络层，IP 数据报首部的服务类型字段中的两个比特被用于 ECN。 路由器所使用的一种 ECN 比特设置指示该路由器正在历经拥塞。该拥塞指示则由被标记的 IP 数据报所携带，送给目的主机，再由目的主机通知发送主机&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
