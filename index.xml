@@ -253,6 +253,7 @@
 &lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 867.Transpose Matrix&lt;/li&gt;
 &lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 64.最小路径和&lt;/li&gt;
 &lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 79.Word Search&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
@@ -351,32 +352,32 @@
       <pubDate>Tue, 31 Aug 2021 17:12:59 +0800</pubDate>
       <guid>/about/</guid>
       <description>&lt;h2 id=&#34;2021-书影音&#34;&gt;2021 书影音&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;../reading/understand_the_jvm&#34;&gt;编程::深入理解 Java 虚拟机&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../reading/tao_of_programming&#34;&gt;编程::编程之道&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../reading/modern_operating_systems&#34;&gt;编程::现代操作系统&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/35390390&#34;&gt;推理::字母表谜案&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/35296788&#34;&gt;推理::心灵侦探城塚翡翠&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/35016085&#34;&gt;推理::诡计博物馆&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/33404959&#34;&gt;推理::金色麦田&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/3211779&#34;&gt;推理::嫌疑人 X 的献身&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/34998167&#34;&gt;推理::绝对不在场证明&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/1012611/&#34;&gt;心理::乌合之众&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/26348596&#34;&gt;推理::密室收藏家&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../reading/ddia&#34;&gt;编程::数据密集型应用系统设计&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/1082154/&#34;&gt;文学::活着&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/1029791/&#34;&gt;文学::许三观卖血记&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/26369699&#34;&gt;心理学::被讨厌的勇气&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../reading/computer_network_a_topdown_approach&#34;&gt;编程::计算机网络自顶向下方法&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/26877752&#34;&gt;推理::恶意&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://movie.douban.com/subject/30337388/&#34;&gt;电影::失控玩家 Free Guy (2021)&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://movie.douban.com/subject/26741632/&#34;&gt;电影::X 特遣队：全员集结 The Suicide Squad (2021)&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://movie.douban.com/subject/30331432/&#34;&gt;美剧::洛基 第一季 Loki Season 1 (2021)&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://movie.douban.com/subject/30367642/&#34;&gt;美剧::猎鹰与冬兵 The Falcon and the Winter Soldier (2021)&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://movie.douban.com/subject/6748086/&#34;&gt;动漫::全职猎人 2011 HUNTER×HUNTER (2011)&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://movie.douban.com/subject/27186493/&#34;&gt;动漫::关于我转生变成史莱姆这档事 第二季 (2021)&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://movie.douban.com/subject/30513783/&#34;&gt;动漫::无职转生：到了异世界就拿出真本事 (2021)&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://movie.douban.com/subject/35235594/&#34;&gt;动漫::我的英雄学院 第 5 季 (2021)&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://movie.douban.com/subject/34845781/&#34;&gt;动漫::鬼灭之刃 剧场版 无限列车篇 (2020)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../reading/understand_the_jvm&#34;&gt;编程::深入理解 Java 虚拟机&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;../reading/tao_of_programming&#34;&gt;编程::编程之道&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;../reading/modern_operating_systems&#34;&gt;编程::现代操作系统&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/35390390&#34;&gt;推理::字母表谜案&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/35296788&#34;&gt;推理::心灵侦探城塚翡翠&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/35016085&#34;&gt;推理::诡计博物馆&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/33404959&#34;&gt;推理::金色麦田&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/3211779&#34;&gt;推理::嫌疑人 X 的献身&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/34998167&#34;&gt;推理::绝对不在场证明&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/1012611/&#34;&gt;心理::乌合之众&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/26348596&#34;&gt;推理::密室收藏家&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;../reading/ddia&#34;&gt;编程::数据密集型应用系统设计&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/1082154/&#34;&gt;文学::活着&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/1029791/&#34;&gt;文学::许三观卖血记&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/26369699&#34;&gt;心理学::被讨厌的勇气&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;../reading/computer_network_a_topdown_approach&#34;&gt;编程::计算机网络自顶向下方法&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/26877752&#34;&gt;推理::恶意&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://movie.douban.com/subject/30337388/&#34;&gt;电影::失控玩家 Free Guy (2021)&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://movie.douban.com/subject/26741632/&#34;&gt;电影::X 特遣队：全员集结 The Suicide Squad (2021)&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://movie.douban.com/subject/30331432/&#34;&gt;美剧::洛基 第一季 Loki Season 1 (2021)&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://movie.douban.com/subject/30367642/&#34;&gt;美剧::猎鹰与冬兵 The Falcon and the Winter Soldier (2021)&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://movie.douban.com/subject/6748086/&#34;&gt;动漫::全职猎人 2011 HUNTER×HUNTER (2011)&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://movie.douban.com/subject/27186493/&#34;&gt;动漫::关于我转生变成史莱姆这档事 第二季 (2021)&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://movie.douban.com/subject/30513783/&#34;&gt;动漫::无职转生：到了异世界就拿出真本事 (2021)&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://movie.douban.com/subject/35235594/&#34;&gt;动漫::我的英雄学院 第 5 季 (2021)&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://movie.douban.com/subject/34845781/&#34;&gt;动漫::鬼灭之刃 剧场版 无限列车篇 (2020)&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
