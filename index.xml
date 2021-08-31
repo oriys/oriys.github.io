@@ -5,11 +5,11 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>Y.CH.Y</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Tue, 31 Aug 2021 14:18:39 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Tue, 31 Aug 2021 17:22:53 +0800</lastBuildDate>
     <item>
       <title>算法::TODOLIST</title>
       <link>/algorithm/todo/</link>
-      <pubDate>Tue, 31 Aug 2021 14:18:39 +0800</pubDate>
+      <pubDate>Tue, 31 Aug 2021 17:22:53 +0800</pubDate>
       <guid>/algorithm/todo/</guid>
       <description>&lt;ul&gt;
 &lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;a href=&#34;../..//algorithm/912/&#34;&gt;912.排序数组&lt;/a&gt;&lt;/li&gt;
@@ -261,6 +261,29 @@
 &lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 64.最小路径和&lt;/li&gt;
 &lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 79.Word Search&lt;/li&gt;
 &lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Tue, 31 Aug 2021 17:12:59 +0800</pubDate>
+      <guid>/about/</guid>
+      <description>&lt;h2 id=&#34;2021-书单&#34;&gt;2021 书单&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;../reading/understand_the_jvm&#34;&gt;编程::深入理解Java虚拟机&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../reading/tao_of_programming&#34;&gt;编程::编程之道&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../reading/modern_operating_systems&#34;&gt;编程::现代操作系统&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/35390390&#34;&gt;推理::字母表谜案&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/35296788&#34;&gt;推理::心灵侦探城塚翡翠&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/35016085&#34;&gt;推理::诡计博物馆&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/33404959&#34;&gt;推理::金色麦田&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/3211779&#34;&gt;推理::嫌疑人X的献身&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/34998167&#34;&gt;推理::绝对不在场证明&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/26348596&#34;&gt;推理::密室收藏家&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../reading/ddia&#34;&gt;编程::数据密集型应用系统设计&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/26369699&#34;&gt;心理学::被讨厌的勇气&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../reading/computer_network_a_topdown_approach&#34;&gt;编程::计算机网络自顶向下方法&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/26877752&#34;&gt;推理::恶意&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
