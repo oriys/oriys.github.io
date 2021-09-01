@@ -4327,24 +4327,6 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>编程::现代操作系统</title>
-      <link>/notes/modern_operating_systems/</link>
-      <pubDate>Sat, 24 Jul 2021 19:12:26 +0800</pubDate>
-      <guid>/notes/modern_operating_systems/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;../../notes/modern_operating_systems_introduction&#34;&gt;现代操作系统::引论&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/modern_operating_systems_process_and_thread&#34;&gt;现代操作系统::进程与线程&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/modern_operating_systems_memory_manage&#34;&gt;现代操作系统::内存管理&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/modern_operating_systems_file_system&#34;&gt;现代操作系统::文件系统&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/modern_operating_systems_input_output&#34;&gt;现代操作系统::输入/输出&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/modern_operating_systems_deadlock&#34;&gt;现代操作系统::死锁&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/modern_operating_systems_virtualization_and_the_cloud&#34;&gt;现代操作系统::虚拟化与云&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/modern_operating_systems_multiple_processor_systems&#34;&gt;现代操作系统::多处理器系统&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/modern_operating_systems_security&#34;&gt;现代操作系统::系统安全&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/modern_operating_systems_operating_system_design&#34;&gt;现代操作系统::操作系统设计&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>编程::现代操作系统</title>
       <link>/reading/modern_operating_systems/</link>
       <pubDate>Sat, 24 Jul 2021 19:12:26 +0800</pubDate>
       <guid>/reading/modern_operating_systems/</guid>
@@ -7542,19 +7524,6 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
       <pubDate>Sat, 03 Jul 2021 17:14:37 +0800</pubDate>
       <guid>/reading/douban_35296788/</guid>
       <description>&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/Eak6FFB.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>编程::计算机网络自顶向下方法</title>
-      <link>/notes/computer_network_a_topdown_approach/</link>
-      <pubDate>Thu, 24 Jun 2021 19:27:56 +0800</pubDate>
-      <guid>/notes/computer_network_a_topdown_approach/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;../../notes/computer_network_a_topdown_approach_01&#34;&gt;计算机网络自顶向下方法::计算机网络和因特网&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/computer_network_a_topdown_approach_02&#34;&gt;计算机网络自顶向下方法::应用层&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/computer_network_a_topdown_approach_03&#34;&gt;计算机网络自顶向下方法::运输层&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/computer_network_a_topdown_approach_04&#34;&gt;计算机网络自顶向下方法::网络层::数据平面&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/computer_network_a_topdown_approach_05&#34;&gt;计算机网络自顶向下方法::网络层::控制平面&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
@@ -11747,17 +11716,6 @@ Subject: Searching for the meaning of life.
 &lt;p&gt;是的。人生很简单，并不是什么深刻的事情。如果认真过好了每一个刹那，就没有什么必要令其过于深刻。&lt;/p&gt;
 &lt;p&gt;人生中最大的谎言就是不活在“此时此刻”。纠结过去、关注未来，把微弱而模糊的光打向人生整体，自认为看到了些什么。你之前就一直忽略“此时此刻”，只关注根本不在的过去和未来。对自己的人生和无可替代的刹那撒了一个大大的谎言。&lt;/p&gt;
 &lt;p&gt;无论你过着怎样的刹那，即使有人讨厌你，只要没有迷失“他者贡献”这颗引导之星，那么你就不会迷失，而且做什么都可以。即使被讨厌自己的人讨厌着也可以自由地生活。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>编程::数据密集型应用系统设计</title>
-      <link>/notes/ddia/</link>
-      <pubDate>Wed, 24 Mar 2021 19:27:56 +0800</pubDate>
-      <guid>/notes/ddia/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;../../notes/designing_data_intensive_application_foundations_of_data_systems&#34;&gt;数据密集型应用系统设计::数据系统基础&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/designing_data_intensive_application_distributed_data&#34;&gt;数据密集型应用系统设计::分布式数据系统&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/designing_data_intensive_application_derived_data&#34;&gt;数据密集型应用系统设计::派生数据&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
