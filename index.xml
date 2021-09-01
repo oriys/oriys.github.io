@@ -2774,15 +2774,6 @@
     </item>
     
     <item>
-      <title>八股文::分布式系统</title>
-      <link>/notes/interview_questions_distribution/</link>
-      <pubDate>Fri, 20 Aug 2021 21:51:33 +0800</pubDate>
-      <guid>/notes/interview_questions_distribution/</guid>
-      <description>&lt;h2 id=&#34;分布式系统&#34;&gt;分布式系统&lt;/h2&gt;
-</description>
-    </item>
-    
-    <item>
       <title>八股文::系统设计</title>
       <link>/notes/interview_questions_system_design/</link>
       <pubDate>Fri, 20 Aug 2021 21:51:33 +0800</pubDate>
@@ -7729,6 +7720,8 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;p&gt;&lt;a href=&#34;../../notes/computer_network_a_topdown_approach_03&#34;&gt;计算机网络自顶向下方法::运输层&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;../../notes/computer_network_a_topdown_approach_04&#34;&gt;计算机网络自顶向下方法::网络层::数据平面&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;../../notes/computer_network_a_topdown_approach_05&#34;&gt;计算机网络自顶向下方法::网络层::控制平面&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/computer_network_a_topdown_approach_06&#34;&gt;计算机网络自顶向下方法::链路层与局域网&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../../notes/computer_network_a_topdown_approach_07&#34;&gt;计算机网络自顶向下方法::计算机网络中的安全&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
