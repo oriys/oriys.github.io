@@ -7541,6 +7541,44 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     </item>
     
     <item>
+      <title>计算机网络自顶向下方法::链路层与局域网</title>
+      <link>/notes/computer_network_a_topdown_approach_06/</link>
+      <pubDate>Fri, 18 Jun 2021 20:28:06 +0800</pubDate>
+      <guid>/notes/computer_network_a_topdown_approach_06/</guid>
+      <description>&lt;h2 id=&#34;链路层概述&#34;&gt;链路层概述&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;在本章中为方便讨论，将运行链路层协议协议的任何设备均称为节点。节点包括主机、路由器、交换机和 WiFi 接入点 。我们也把沿着通信路径连接相邻节点的通信信道称为链路。为了将一个数据报从源主机传输到目的主机，数据报必须通过沿端到端路径上的各段链路传输。&lt;/li&gt;
+&lt;li&gt;链路层提供的服务
+&lt;ul&gt;
+&lt;li&gt;成帧(framing).在每个网络层数据报经链路传送之前，几乎所有的链路层协议都要将其用链路层帧封装起来。一个帧由一个数据字段和若干首部字段组成，其中网络层数据报就插在数据字段中。帧的结构由链路层协议规定。&lt;/li&gt;
+&lt;li&gt;链路接入。媒体访问控制(Medium Access Control, MAC)协议规定了帧在链路上传输的规则。&lt;/li&gt;
+&lt;li&gt;可靠交付。当链路层协议提供可靠交付服务时。它保证无差错地经链路层移动每个网络层数据报&lt;/li&gt;
+&lt;li&gt;差错检测和纠正。当帧中的一个比特作为 1 传输时，接收方节点中的链路层硬件可能不正确地将其判断为 0,反之亦然。这种比特差错是由信号衰减和电磁噪声导致的。因为没有必要转发一个有差错的数据报，所以许多链路层协议提供一种机制来检测这样的比特差错。通过让发送节点在帧中包括差错检测比特，让接收节点进行差错检查，以此来完成这项工作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;链路层在何处实现
+&lt;ul&gt;
+&lt;li&gt;链路层的主体部分是在网络适配器(network adapter)中实现的，网络适配器有时也称为网络接口卡(Nehvork Interface Card, NIC)。位于网络适配器核心的是链路层控制器，该控制器通常是一个实现了许多链路层服务（成帧、链路接入、差错检测等）的专用片。因此，链路层控制器的许多功能是用硬件实现的。&lt;/li&gt;
+&lt;li&gt;在发送端，控制器取得了由协议栈较高层生成并存储在主机内存中的数据报，在链路层帧中封装该数据报（填写该帧的各个字段），然后遵循链路接入协议将该帧传进通信链路中。在接收端，控制器接收了整个帧，抽取出网络层数据报。如果链路层执行差错检 测，则需要发送控制器在该帧的首部设置差错检测比特，由接收控制器执行差错检测。&lt;/li&gt;
+&lt;li&gt;链路层的软件组件实现了高层链路层功能，如组装链路层寻址信息和激活控制器硬件。在接收端，链路层软件响应控制器中断，处理差错条件和将数据报向上传递给网络层。所以，链路层是硬件和软件的结合体。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;差错检测和纠正技术&#34;&gt;差错检测和纠正技术&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h2 id=&#34;奇偶位校验&#34;&gt;奇偶位校验&lt;/h2&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;多路访问链路和协议&#34;&gt;多路访问链路和协议&lt;/h2&gt;
+&lt;h2 id=&#34;交换局域网&#34;&gt;交换局域网&lt;/h2&gt;
+&lt;h2 id=&#34;链路虚拟化网络化作链路层&#34;&gt;链路虚拟化：网络化作链路层&lt;/h2&gt;
+&lt;h2 id=&#34;数据中心网络&#34;&gt;数据中心网络&lt;/h2&gt;
+&lt;h2 id=&#34;回顾web-页面请求的历程&#34;&gt;回顾：Web 页面请求的历程&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
       <title>计算机网络自顶向下方法::网络层::控制平面</title>
       <link>/notes/computer_network_a_topdown_approach_05/</link>
       <pubDate>Thu, 17 Jun 2021 20:28:06 +0800</pubDate>
@@ -9242,168 +9280,6 @@ Subject: Searching for the meaning of life.
 &lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_11/&#34;&gt;深入理解 Java 虚拟机::后端编译与优化&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_12/&#34;&gt;深入理解 Java 虚拟机::Java 内存模型与线程&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_13/&#34;&gt;深入理解 Java 虚拟机::线程安全和锁优化&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>深入理解计算机系统::计算机系统漫游</title>
-      <link>/notes/csapp_01/</link>
-      <pubDate>Thu, 15 Apr 2021 00:17:05 +0800</pubDate>
-      <guid>/notes/csapp_01/</guid>
-      <description>&lt;h2 id=&#34;计算机系统漫游&#34;&gt;计算机系统漫游&lt;/h2&gt;
-&lt;h3 id=&#34;信息就是位--上下文&#34;&gt;信息就是位 + 上下文&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;文件分为文本文件和二进制文件。&lt;/li&gt;
-&lt;li&gt;8 个比特被组织成一组，称为字节。&lt;/li&gt;
-&lt;li&gt;系统中所有的信息：包括磁盘文件，内存中的程序、内存中存放的用户数据以及网络上传送的数据，都是由一串比特表示的。区分不同数据对象的唯一方法就是我们读到这些数据对象时的上下文呢。在不同的上下文中，一个同样的字节序列可能表示一个整数、浮点数、字符串或者机器指令。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;程序被其他程序翻译成不同的格式&#34;&gt;程序被其他程序翻译成不同的格式&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;预处理阶段：预处理器根据以字符#开头的命令，修改原始的 C 程序。&lt;/li&gt;
-&lt;li&gt;编译阶段：编译器将预处理后的文本文件翻译成包含汇编语言程序的文本文件。&lt;/li&gt;
-&lt;li&gt;汇编阶段：汇编器将包含低汇编语言程序的文本文件翻译成机器语言指令，并将结果保存在目标文件中，目标文件是一个二进制文件。&lt;/li&gt;
-&lt;li&gt;链接阶段：链接器以某种方式合并程序中调用的函数预编译目标中间，最终得到一个可执行文件，可以被加载到内存中，有系统执行。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;了解编译系统如何工作是大有益处的&#34;&gt;了解编译系统如何工作是大有益处的&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;优化程序性能&lt;/li&gt;
-&lt;li&gt;理解链接时出现的错误&lt;/li&gt;
-&lt;li&gt;避免安全漏洞&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;处理器读并解释储存在内存中的指令&#34;&gt;处理器读并解释储存在内存中的指令&lt;/h3&gt;
-&lt;h4 id=&#34;系统的硬件组成&#34;&gt;系统的硬件组成&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;总线
-&lt;ul&gt;
-&lt;li&gt;贯穿整个系统的一组电子管道&lt;/li&gt;
-&lt;li&gt;负责携带信息字节并负责在各个部件中传递。&lt;/li&gt;
-&lt;li&gt;通常总线被设计成传递定长的字节块，称为字(word)，不同机器上字长不一致，需要具体的上下文判断。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;I/O 设备
-&lt;ul&gt;
-&lt;li&gt;I/O 设备是系统与外部世界的联系通道。&lt;/li&gt;
-&lt;li&gt;每个 I/O 设备通过一个控制器或适配器与 I/O 总线相连。
-&lt;ul&gt;
-&lt;li&gt;控制器是 I/O 设备本身或者系统的主印刷电路板上的芯片组。&lt;/li&gt;
-&lt;li&gt;适配器是一块插在主板插槽上的卡。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;主存
-&lt;ul&gt;
-&lt;li&gt;主存是一个临时存储设备，在处理器执行程序时，用来存放程序和程序所处理的数据。&lt;/li&gt;
-&lt;li&gt;从物理角度来说，主存是由一组 DRAM 芯片组成的。&lt;/li&gt;
-&lt;li&gt;从逻辑上来说，存储器是一个线性的字节数据，每个字节都有其唯一的地址。&lt;/li&gt;
-&lt;li&gt;组成程序的每条机器指令有不同数量的字节构成。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;处理器
-&lt;ul&gt;
-&lt;li&gt;CPU，解释或者执行存储在内存中指令的引擎。&lt;/li&gt;
-&lt;li&gt;程序计数器 PC，在任何时候，PC 都指向主存中的某条机器语言指令。&lt;/li&gt;
-&lt;li&gt;寄存器文件，由一些单个字长的寄存器组成，每个寄存器都有唯一的名字。&lt;/li&gt;
-&lt;li&gt;ALU，算数逻辑单元，负责做算术运算。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;运行程序&#34;&gt;运行程序&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;shell 等待输入。&lt;/li&gt;
-&lt;li&gt;输入命令。&lt;/li&gt;
-&lt;li&gt;shell 读取命令，并将字符串放到内存中。&lt;/li&gt;
-&lt;li&gt;shell 执行一系列指令来加载可执行文件，并将目标文件中的代码和数据从磁盘复制到主存。&lt;/li&gt;
-&lt;li&gt;处理器开始执行程序中 main 程序中的机器语言指令。&lt;/li&gt;
-&lt;li&gt;程序中的数据从主存加载到寄存器文件中。&lt;/li&gt;
-&lt;li&gt;从寄存器文件中复制到显示设备，最终显示到屏幕上。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;高速缓存至关重要&#34;&gt;高速缓存至关重要&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;处理器处理数据的速度远远超出从主存读取数据的速度，系统设计者引入了高速缓存存储器作为但是的集结区域，存放处理器近期可能会需要的信息。&lt;/li&gt;
-&lt;li&gt;高速缓存的局部性原理，程序具有访问局部区域里的数据和代码的趋势。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;存储设备形成层次结构&#34;&gt;存储设备形成层次结构&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/LomKAzN.png&#34; alt=&#34;一个存储器层次结构的示例&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;操作系统管理硬件&#34;&gt;操作系统管理硬件&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;操作系统的两个基本功能
-&lt;ul&gt;
-&lt;li&gt;防止硬件被时空的应用程序滥用&lt;/li&gt;
-&lt;li&gt;向应用程序提供简单一致的机制来控制复杂而又通常不大相同的低级硬件设备。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;操作系统通过几个基本的抽象概念（进程、虚拟内存和文件）来实现以上功能。
-&lt;ul&gt;
-&lt;li&gt;文件是对 I/O 设备的抽象&lt;/li&gt;
-&lt;li&gt;虚拟内存是对主存和磁盘 I/O 设备的抽象表示&lt;/li&gt;
-&lt;li&gt;进程是对处理器、主存和 I/O 设备的抽象表示&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;进程
-&lt;ul&gt;
-&lt;li&gt;进程是操作系统对一个正在运行的程序的一种抽象。&lt;/li&gt;
-&lt;li&gt;并发，不同的进程的指令是交错执行的。&lt;/li&gt;
-&lt;li&gt;多核处理器可以并行执行多个进程。&lt;/li&gt;
-&lt;li&gt;任何一个时刻，但处理器都只能执行一个进程的代码。&lt;/li&gt;
-&lt;li&gt;不同进程切换交错执行的机制称为上下文切换，上下文是操作系统保持跟踪进程运行所需的所有状态信息。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;线程
-&lt;ul&gt;
-&lt;li&gt;一个进程由多个称为线程的执行单元组成，每个线程运行在进程的上下文中，共享一部分代码和数据。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;虚拟内存
-&lt;ul&gt;
-&lt;li&gt;提供一种每个进程都独占整片主存的假象。称为虚拟地址空间。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;文件
-&lt;ul&gt;
-&lt;li&gt;文件解释字节序列。&lt;/li&gt;
-&lt;li&gt;每个 I/O 设备，包括磁盘、键盘、显示器、甚至网络都可以看成是文件。&lt;/li&gt;
-&lt;li&gt;系统的所有输入输出都是通过使用一小组称为 Unix I/O 的系统函数调用读写文件来实现的。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;系统之间利用网络通信&#34;&gt;系统之间利用网络通信&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;现代系统通过网络和其他系统连接在一起&lt;/li&gt;
-&lt;li&gt;网络可视为一个 I/O 设备&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;重要主题&#34;&gt;重要主题&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Amdahl 定律：当我们对系统的某个部分加速时，其对系统的影响取决于该部分的重要性和加速程度。&lt;/li&gt;
-&lt;li&gt;并发与并行
-&lt;ul&gt;
-&lt;li&gt;线程级并行
-&lt;ul&gt;
-&lt;li&gt;多任务快速切换&lt;/li&gt;
-&lt;li&gt;多核处理器&lt;/li&gt;
-&lt;li&gt;超线程技术&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;指令级并行
-&lt;ul&gt;
-&lt;li&gt;现代处理器可以同时执行多条指令&lt;/li&gt;
-&lt;li&gt;流水线&lt;/li&gt;
-&lt;li&gt;超标量操作&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;单指令、多数据并行 SIMD
-&lt;ul&gt;
-&lt;li&gt;一条执行产生多个可以并行执行的操作&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;抽象的重要性
-&lt;ul&gt;
-&lt;li&gt;虚拟机&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
 </description>
     </item>
     
@@ -15698,328 +15574,6 @@ Subject: Searching for the meaning of life.
 &lt;p&gt;第二步 提出高层次的设计方案并获得认同： 10 - 15 分钟&lt;/p&gt;
 &lt;p&gt;第三步 深入设计：10&amp;ndash;25 分钟&lt;/p&gt;
 &lt;p&gt;第四步 收尾。3-5 分钟&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>APUE::Threads</title>
-      <link>/notes/advanced_programming_in_the_unix_environment_threads/</link>
-      <pubDate>Mon, 11 Jan 2021 00:43:37 +0800</pubDate>
-      <guid>/notes/advanced_programming_in_the_unix_environment_threads/</guid>
-      <description>&lt;h2 id=&#34;threads&#34;&gt;Threads&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Thread Concepts
-&lt;ul&gt;
-&lt;li&gt;simplify code that deals with asynchronous events by assigning a separate thread to handle each event type&lt;/li&gt;
-&lt;li&gt;Threads automatically have access to the same memory address space and file descriptors&lt;/li&gt;
-&lt;li&gt;Some problems can be partitioned so that overall program throughput can be improved&lt;/li&gt;
-&lt;li&gt;interactive programs can realize improved response time by using multiple threads&lt;/li&gt;
-&lt;li&gt;The benefits of a multithreaded programming model can be realized even if your program is running on a uniprocessor&lt;/li&gt;
-&lt;li&gt;A thread consists of the information necessary to represent an execution context within a process
-&lt;ul&gt;
-&lt;li&gt;a thread ID that identifies the thread within a process&lt;/li&gt;
-&lt;li&gt;a set of register values&lt;/li&gt;
-&lt;li&gt;a stack&lt;/li&gt;
-&lt;li&gt;a scheduling priority and policy&lt;/li&gt;
-&lt;li&gt;a signal mask&lt;/li&gt;
-&lt;li&gt;an errno variable&lt;/li&gt;
-&lt;li&gt;thread-specific data&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Everything within a process is sharable among the threads in a process
-&lt;ul&gt;
-&lt;li&gt;text of the executable program&lt;/li&gt;
-&lt;li&gt;the program’s global and heap memory, the stacks&lt;/li&gt;
-&lt;li&gt;the file descriptors&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Thread Identification
-&lt;ul&gt;
-&lt;li&gt;every thread has a thread ID&lt;/li&gt;
-&lt;li&gt;the thread ID has significance only within the context of the process to which it belongs&lt;/li&gt;
-&lt;li&gt;A thread ID is represented by the pthread_t data type&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Thread Creation
-&lt;ul&gt;
-&lt;li&gt;When a thread is created, there is no guarantee which will run first: the newly created thread or the calling thread&lt;/li&gt;
-&lt;li&gt;The memory location pointed to by tidp is set to the thread ID of the newly created thread when pthread_create returns successfully&lt;/li&gt;
-&lt;li&gt;pthread functions usually return an error code when they fail. They don’t set errno like the other POSIX functions&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Thread Termination
-&lt;ul&gt;
-&lt;li&gt;If any thread within a process calls exit, _Exit, or _exit, then the entire process terminates&lt;/li&gt;
-&lt;li&gt;the default action is to terminate the process, a signal sent to a thread will terminate the entire process&lt;/li&gt;
-&lt;li&gt;A single thread can exit in three ways, thereby stopping its flow of control, without terminating the entire process
-&lt;ul&gt;
-&lt;li&gt;The thread can simply return from the start routine. The return value is the thread’s exit code&lt;/li&gt;
-&lt;li&gt;The thread can be canceled by another thread in the same process&lt;/li&gt;
-&lt;li&gt;The thread can call pthread_exit&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;One thread can request that another in the same process be canceled by calling the pthread_cancel function
-&lt;ul&gt;
-&lt;li&gt;However, a thread can elect to ignore or otherwise control how it is canceled&lt;/li&gt;
-&lt;li&gt;thread_cancel doesn’t wait for the thread to terminate; it merely makes the request&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;A thread can arrange for functions to be called when it exits pthread_cleanup_push
-&lt;ul&gt;
-&lt;li&gt;Makes a call to pthread_exit&lt;/li&gt;
-&lt;li&gt;Responds to a cancellation request&lt;/li&gt;
-&lt;li&gt;Makes a call to pthread_cleanup_pop with a nonzero execute argument&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Thread Synchronization
-&lt;ul&gt;
-&lt;li&gt;When multiple threads of control share the same memory, we need to make sure that each thread sees a consistent view of its data&lt;/li&gt;
-&lt;li&gt;Mutexes
-&lt;ul&gt;
-&lt;li&gt;A mutex is basically a lock that we set (lock) before accessing a shared resource and release (unlock) when we’re done&lt;/li&gt;
-&lt;li&gt;we must first initialize it by either setting it to the constant PTHREAD_MUTEX_INITIALIZER (for statically allocated mutexes only) or calling pthread_mutex_init&lt;/li&gt;
-&lt;li&gt;To lock a mutex, we call pthread_mutex_lock&lt;/li&gt;
-&lt;li&gt;To unlock a mutex, we call pthread_mutex_unlock&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Deadlock Avoidance
-&lt;ul&gt;
-&lt;li&gt;Deadlocks can be avoided by carefully controlling the order in which mutexes are locked&lt;/li&gt;
-&lt;li&gt;assume that you have two mutexes, A and B, that you need to lock at the same time. If all threads always lock mutex A before mutex B, no deadlock can occur from the use of the two mutexes&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;pthread_mutex_timedlock
-&lt;ul&gt;
-&lt;li&gt;The timeout specifies how long we are willing to wait in terms of absolute time (as opposed to relative time; we specify that we are willing to block until time X instead of saying that we are willing to block for Y seconds)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Reader–writer locks
-&lt;ul&gt;
-&lt;li&gt;Only one thread at a time can hold a reader–writer lock in write mode, but multiple threads can hold a reader–writer lock in read mode at the same time&lt;/li&gt;
-&lt;li&gt;Reader–writer locks are well suited for situations in which data structures are read more often than they are modified&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Reader–Writer Locking with Timeouts
-&lt;ul&gt;
-&lt;li&gt;pthread_rwlock_timedwrlock&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Condition Variables
-&lt;ul&gt;
-&lt;li&gt;When used with mutexes, condition variables allow threads to wait in a race-free way for arbitrary conditions to occur&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Spin Locks
-&lt;ul&gt;
-&lt;li&gt;the process is blocked by busy-waiting (spinning) until the lock can be acquired
-&lt;ul&gt;
-&lt;li&gt;A spin lock could be used in situations where locks are held for short periods of times and threads don’t want to incur the cost of being descheduled&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Many mutex implementations are so efficient that the performance of applications using mutex locks is equivalent to their performance if they had used spin locks&lt;/li&gt;
-&lt;li&gt;The interfaces for spin locks are similar to those for mutexes, making it relatively easy to replace one with the other&lt;/li&gt;
-&lt;li&gt;if a spin lock is currently unlocked, then the pthread_spin_lock function can lock it without spinning. If the thread already has it locked, the results are undefined. The call to pthread_spin_lock could fail with the EDEADLK error (or some other error), or the call could spin indefinitely. The behavior depends on the implementation. If we try to unlock a spin lock that is not locked, the results are also undefined&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Barriers
-&lt;ul&gt;
-&lt;li&gt;Barriers are a synchronization mechanism that can be used to coordinate multiple threads working in parallel&lt;/li&gt;
-&lt;li&gt;A barrier allows each thread to wait until all cooperating threads have reached the same point, and then continue executing from there&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>APUE::UNIX System Overview</title>
-      <link>/notes/advanced_programming_in_the_unix_environment_overview/</link>
-      <pubDate>Fri, 01 Jan 2021 00:43:37 +0800</pubDate>
-      <guid>/notes/advanced_programming_in_the_unix_environment_overview/</guid>
-      <description>&lt;h2 id=&#34;unix-system-overview&#34;&gt;UNIX System Overview&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;an operating system can be defined as the software that controls the hardware resources of the computer and provides an environment under which programs can run
-&lt;ul&gt;
-&lt;li&gt;Kernel is relatively small and resides at the core of the environment&lt;/li&gt;
-&lt;li&gt;The interface to the kernel is a layer of software called the system calls&lt;/li&gt;
-&lt;li&gt;Libraries of common functions are built on top of the system call interface, but applications are free to use both&lt;/li&gt;
-&lt;li&gt;The shell is a special application that provides an interface for running other applications&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;In a broad sense, an operating system consists of the kernel and all the other software that makes a computer useful and gives the computer its personality. This other software includes system utilities, applications, shells, libraries of common functions, and so on&lt;/li&gt;
-&lt;li&gt;shell
-&lt;ul&gt;
-&lt;li&gt;Bourne shell&lt;/li&gt;
-&lt;li&gt;C shell&lt;/li&gt;
-&lt;li&gt;Korn shell&lt;/li&gt;
-&lt;li&gt;Bourne-again shell&lt;/li&gt;
-&lt;li&gt;TENEX C shell&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;File System
-&lt;ul&gt;
-&lt;li&gt;The UNIX file system is a hierarchical arrangement of directories and files&lt;/li&gt;
-&lt;li&gt;Everything starts in the directory called root, whose name is the single character /&lt;/li&gt;
-&lt;li&gt;A directory is a file that contains directory entries&lt;/li&gt;
-&lt;li&gt;The stat and fstat functions return a structure of information containing all the attributes of a file&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Filename
-&lt;ul&gt;
-&lt;li&gt;The names in a directory are called filenames&lt;/li&gt;
-&lt;li&gt;The only two characters that cannot appear in a filename are the slash character (/) and the null character.&lt;/li&gt;
-&lt;li&gt;POSIX.1 recommends restricting filenames to consist of the following characters: letters (a-z, A-Z), numbers (0-9), period (.), dash (-), and underscore (_)&lt;/li&gt;
-&lt;li&gt;Two filenames are automatically created whenever a new directory is created: . (called dot) and .. (called dot-dot). Dot refers to the current directory, and dot-dot refers to the parent directory. In the root directory, dot-dot is the same as dot.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Pathname
-&lt;ul&gt;
-&lt;li&gt;A sequence of one or more filenames, separated by slashes and optionally starting with a slash, forms a pathname&lt;/li&gt;
-&lt;li&gt;absolute pathname&lt;/li&gt;
-&lt;li&gt;relative pathname&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Working Directory
-&lt;ul&gt;
-&lt;li&gt;the directory from which all relative pathnames are interpreted&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Home Directory
-&lt;ul&gt;
-&lt;li&gt;when we log in, the working directory is set to our home directory&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;File Descriptors
-&lt;ul&gt;
-&lt;li&gt;File descriptors are normally small non-negative integers that the kernel uses to identify the files accessed by a process.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Standard Input, Standard Output, and Standard Error
-&lt;ul&gt;
-&lt;li&gt;all shells open three descriptors whenever a new program is run&lt;/li&gt;
-&lt;li&gt;then all three are connected to the terminal&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Unbuffered I/O
-&lt;ul&gt;
-&lt;li&gt;Unbuffered I/O is provided by the functions open, read, write, lseek, and close&lt;/li&gt;
-&lt;li&gt;These functions all work with file descriptors&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Programs and Processes
-&lt;ul&gt;
-&lt;li&gt;Programs
-&lt;ul&gt;
-&lt;li&gt;A program is an executable file residing on disk in a directory&lt;/li&gt;
-&lt;li&gt;A program is read into memory and is executed by the kernel as a result of one of the seven exec functions&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Processes and Process ID
-&lt;ul&gt;
-&lt;li&gt;An executing instance of a program is called a process&lt;/li&gt;
-&lt;li&gt;The UNIX System guarantees that every process has a unique numeric identifier called the process ID&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Process Control
-&lt;ul&gt;
-&lt;li&gt;fork&lt;/li&gt;
-&lt;li&gt;exec&lt;/li&gt;
-&lt;li&gt;waitpid&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Threads and Thread IDs
-&lt;ul&gt;
-&lt;li&gt;All threads within a process share the same address space, file descriptors, stacks, and process-related attributes&lt;/li&gt;
-&lt;li&gt;Each thread executes on its own stack&lt;/li&gt;
-&lt;li&gt;threads are identified by IDs - Thread IDs&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Error Handling
-&lt;ul&gt;
-&lt;li&gt;When an error occurs in one of the UNIX System functions, a negative value is often returned, and the integer errno is usually set to a value that tells why&lt;/li&gt;
-&lt;li&gt;The errors defined in &amp;lt;errno.h&amp;gt; can be divided into two categories: fatal and nonfatal&lt;/li&gt;
-&lt;li&gt;A fatal error has no recovery action. The best we can do is print an error message on the user’s screen or to a log file, and then exit.&lt;/li&gt;
-&lt;li&gt;Nonfatal errors, on the other hand, can sometimes be dealt with more robustly. Most nonfatal errors are temporary, such as a resource shortage, and might not occur when there is less activity on the system.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;User Identification
-&lt;ul&gt;
-&lt;li&gt;User ID
-&lt;ul&gt;
-&lt;li&gt;This user ID is assigned by the system administrator when our login name is assigned, and we cannot change it&lt;/li&gt;
-&lt;li&gt;The user ID is normally assigned to be unique for every user&lt;/li&gt;
-&lt;li&gt;the kernel uses the user ID to check whether we have the appropriate permissions to perform certain operations&lt;/li&gt;
-&lt;li&gt;We call the user whose user ID is 0 either root or the superuser&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Group ID
-&lt;ul&gt;
-&lt;li&gt;Groups are normally used to collect users together into projects or departments. This allows the sharing of resources, such as files, among members of the same group.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Signals
-&lt;ul&gt;
-&lt;li&gt;Signals are a technique used to notify a process that some condition has occurred&lt;/li&gt;
-&lt;li&gt;The process has three choices for dealing with the signal
-&lt;ul&gt;
-&lt;li&gt;Ignore the signal&lt;/li&gt;
-&lt;li&gt;Let the default action occur&lt;/li&gt;
-&lt;li&gt;Provide a function that is called when the signal occurs&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Time Values
-&lt;ul&gt;
-&lt;li&gt;Calendar time
-&lt;ul&gt;
-&lt;li&gt;This value counts the number of seconds since the Epoch: 00:00:00 January 1, 1970&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Process time
-&lt;ul&gt;
-&lt;li&gt;This is also called CPU time and measures the central processor resources used by a process. Process time is measured in clock ticks, which have historically been 50, 60, or 100 ticks per second&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;UNIX System maintains three values for a process:
-&lt;ul&gt;
-&lt;li&gt;Clock time
-&lt;ul&gt;
-&lt;li&gt;amount of time the process takes to run&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;User CPU time
-&lt;ul&gt;
-&lt;li&gt;CPU time attributed to user instructions&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;system CPU
-&lt;ul&gt;
-&lt;li&gt;CPU time attributed to the kernel when it executes on behalf of the process&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;System Calls and Library Functions
-&lt;ul&gt;
-&lt;li&gt;All implementations of the UNIX System provide a well-defined, limited number of entry points directly into the kernel called system calls&lt;/li&gt;
-&lt;li&gt;Its definition is in the C language&lt;/li&gt;
-&lt;li&gt;The technique used on UNIX systems is for each system call to have a function of the same name in the standard C library&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
 </description>
     </item>
     
