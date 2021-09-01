@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> 现代操作系统::虚拟化与云 | Y.CH.Y</title>
+  <link rel = 'canonical' href = '/cs/modern_operating_systems_virtualization_and_the_cloud/'>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="现代操作系统::虚拟化与云" />
+<meta property="og:description" content="虚拟化与云  介绍  在一个虚拟化系统中，不同的服务器可以运行在不同的虚拟机上，从而以更低的开销和更好的可维护性保留多计算机系统具有的局部故障模型。而且，可以在同一硬件上运行多个不同的操作系统，并享受虚拟机隔离带来的安全性和其他好处。 虚拟化技术有效的前提是绝大多数服务中断不是硬件缺陷造成的，而是由与软件设计不周、不可靠、有缺陷、配置不当造成的，特别是操作系统。 物理机数址的减少节省了硬件和电力开销以及机架空间的占用。 虚拟化技术还能在尝试新想法时提供帮助 虚拟机的另一个优势是设置检查点和虚拟机迁移(例如跨多台胀务器进行负载均衡)比在普通操作系统上运行的迁移要容易得多 在已停止支持或无法工作于当前硬件的操作系统(或操作系统版本)上运行遗留应用程序。 协助软件开发。程序员不需要在多台机器上安装不同操作系统来保证软件能在不同系统上运行。 虚拟化技术目前最重要最时髦的用途是云。云的核心思想很直接:将你的计箕或存储需求外包给一个管理良好的数据中心。   历史  20 世纪 60 年代，IBM 开发了 SIMMON 和 CP-40，运行在 System/360，重新实现成 CP-67 1974 年，加拿大的两位计算机科学家发表论文定义了一个计算机体系结构有效支持虚拟化所需满足的条件 20 世纪 90 年代，VMware 成立，后续 Xen，KVM，VirtualBox，Hyper-V，Parallels 也相继出现。   虚拟化的必要条件  虚拟机管理程序需要实现良好的表现  安全性: 虚拟机管理程序应完全掌控虚拟资源。 保真性: 程序在虚拟机上执行的行为应与在裸机上相同. 高效性: 虚拟机中运行的大部分代码应不受虚拟机管理程序的干涉。   安全性  解释器(例如 Bochs)中逐条考虑指令井准确执行其行为是一种安全执行指令的方式。   保真性  每个包含内核态和用户态的 CPU 都有一个特殊的指令集合，其中的指令在内核态和用户态执行的行为不同。这些指令包括进行 I/O 操作和修改 MMU 设置的指令，Popek 和 Goldberg 称之为敏感指令 (sensitive instruction)。 还有另一个指令集合，其中的指令在用户态执行时会导致陷人，Popek 和 Goldberg 称之为特权指令 他们的论文首次指出机器可虚拟化的一个必要条件是敏感指令为特权指令的子集 Intel 和 AMD 在 CPU 中引入虚拟化支持 VT，使问题得以解决。VM 技术的基本思想是创建可以运行虚拟机的容器。客户操作系统在容器中启动井持续运行，直到触发异常并陷入虚拟机管理程序   半虚拟化  半虚拟化提供一层类似物理机器的软件接口，显式暴露出自身是一个虚拟化的环境." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/cs/modern_operating_systems_virtualization_and_the_cloud/" /><meta property="article:section" content="cs" />
+<meta property="article:published_time" content="2021-07-20T02:11:01+08:00" />
+<meta property="article:modified_time" content="2021-07-20T02:11:01+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="现代操作系统::虚拟化与云"/>
+<meta name="twitter:description" content="虚拟化与云  介绍  在一个虚拟化系统中，不同的服务器可以运行在不同的虚拟机上，从而以更低的开销和更好的可维护性保留多计算机系统具有的局部故障模型。而且，可以在同一硬件上运行多个不同的操作系统，并享受虚拟机隔离带来的安全性和其他好处。 虚拟化技术有效的前提是绝大多数服务中断不是硬件缺陷造成的，而是由与软件设计不周、不可靠、有缺陷、配置不当造成的，特别是操作系统。 物理机数址的减少节省了硬件和电力开销以及机架空间的占用。 虚拟化技术还能在尝试新想法时提供帮助 虚拟机的另一个优势是设置检查点和虚拟机迁移(例如跨多台胀务器进行负载均衡)比在普通操作系统上运行的迁移要容易得多 在已停止支持或无法工作于当前硬件的操作系统(或操作系统版本)上运行遗留应用程序。 协助软件开发。程序员不需要在多台机器上安装不同操作系统来保证软件能在不同系统上运行。 虚拟化技术目前最重要最时髦的用途是云。云的核心思想很直接:将你的计箕或存储需求外包给一个管理良好的数据中心。   历史  20 世纪 60 年代，IBM 开发了 SIMMON 和 CP-40，运行在 System/360，重新实现成 CP-67 1974 年，加拿大的两位计算机科学家发表论文定义了一个计算机体系结构有效支持虚拟化所需满足的条件 20 世纪 90 年代，VMware 成立，后续 Xen，KVM，VirtualBox，Hyper-V，Parallels 也相继出现。   虚拟化的必要条件  虚拟机管理程序需要实现良好的表现  安全性: 虚拟机管理程序应完全掌控虚拟资源。 保真性: 程序在虚拟机上执行的行为应与在裸机上相同. 高效性: 虚拟机中运行的大部分代码应不受虚拟机管理程序的干涉。   安全性  解释器(例如 Bochs)中逐条考虑指令井准确执行其行为是一种安全执行指令的方式。   保真性  每个包含内核态和用户态的 CPU 都有一个特殊的指令集合，其中的指令在内核态和用户态执行的行为不同。这些指令包括进行 I/O 操作和修改 MMU 设置的指令，Popek 和 Goldberg 称之为敏感指令 (sensitive instruction)。 还有另一个指令集合，其中的指令在用户态执行时会导致陷人，Popek 和 Goldberg 称之为特权指令 他们的论文首次指出机器可虚拟化的一个必要条件是敏感指令为特权指令的子集 Intel 和 AMD 在 CPU 中引入虚拟化支持 VT，使问题得以解决。VM 技术的基本思想是创建可以运行虚拟机的容器。客户操作系统在容器中启动井持续运行，直到触发异常并陷入虚拟机管理程序   半虚拟化  半虚拟化提供一层类似物理机器的软件接口，显式暴露出自身是一个虚拟化的环境."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="/css/styles.c61fc3c2ee4a9b16e496ebbd00aca64c62a3fb9690445e8bb87400c69fdb11a46ed08f463cc2ce7eb743c7d462f0d6ff89e2d1c281c1860e9e6204ab85ddb79d.css" integrity="sha512-xh/Dwu5Kmxbkluu9AKymTGKj&#43;5aQRF6LuHQAxp/bEaRu0I9GPMLOfrdDx9Ri8Nb/ieLRwoHBhg6eYgSrhd23nQ=="> 
+
+  
+  
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="/images/favicon.ico" />
+
+  
+  
+  
+  
+  
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-X1L70M4MM0', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+  
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="/">
+  
+    <div id="logo" style="background-image: url(/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Y.CH.Y</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
+      </li>
+      
+        <li><a href="/">首页</a></li>
+      
+        <li><a href="/algorithm">算法</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+    </ul>
+  </div>
+</header>
+
+
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h2 id="虚拟化与云">虚拟化与云</h2>
+<ul>
+<li>介绍
+<ul>
+<li>在一个虚拟化系统中，不同的服务器可以运行在不同的虚拟机上，从而以更低的开销和更好的可维护性保留多计算机系统具有的局部故障模型。而且，可以在同一硬件上运行多个不同的操作系统，并享受虚拟机隔离带来的安全性和其他好处。</li>
+<li>虚拟化技术有效的前提是绝大多数服务中断不是硬件缺陷造成的，而是由与软件设计不周、不可靠、有缺陷、配置不当造成的，特别是操作系统。</li>
+<li>物理机数址的减少节省了硬件和电力开销以及机架空间的占用。</li>
+<li>虚拟化技术还能在尝试新想法时提供帮助</li>
+<li>虚拟机的另一个优势是设置检查点和虚拟机迁移(例如跨多台胀务器进行负载均衡)比在普通操作系统上运行的迁移要容易得多</li>
+<li>在已停止支持或无法工作于当前硬件的操作系统(或操作系统版本)上运行遗留应用程序。</li>
+<li>协助软件开发。程序员不需要在多台机器上安装不同操作系统来保证软件能在不同系统上运行。</li>
+<li>虚拟化技术目前最重要最时髦的用途是云。云的核心思想很直接:将你的计箕或存储需求外包给一个管理良好的数据中心。</li>
+</ul>
+</li>
+<li>历史
+<ul>
+<li>20 世纪 60 年代，IBM 开发了 SIMMON 和 CP-40，运行在 System/360，重新实现成 CP-67</li>
+<li>1974 年，加拿大的两位计算机科学家发表论文定义了一个计算机体系结构有效支持虚拟化所需满足的条件</li>
+<li>20 世纪 90 年代，VMware 成立，后续 Xen，KVM，VirtualBox，Hyper-V，Parallels 也相继出现。</li>
+</ul>
+</li>
+<li>虚拟化的必要条件
+<ul>
+<li>虚拟机管理程序需要实现良好的表现
+<ul>
+<li>安全性: 虚拟机管理程序应完全掌控虚拟资源。</li>
+<li>保真性: 程序在虚拟机上执行的行为应与在裸机上相同.</li>
+<li>高效性: 虚拟机中运行的大部分代码应不受虚拟机管理程序的干涉。</li>
+</ul>
+</li>
+<li>安全性
+<ul>
+<li>解释器(例如 Bochs)中逐条考虑指令井准确执行其行为是一种安全执行指令的方式。</li>
+</ul>
+</li>
+<li>保真性
+<ul>
+<li>每个包含内核态和用户态的 CPU 都有一个特殊的指令集合，其中的指令在内核态和用户态执行的行为不同。这些指令包括进行 I/O 操作和修改 MMU 设置的指令，Popek 和 Goldberg 称之为敏感指令 (sensitive instruction)。</li>
+<li>还有另一个指令集合，其中的指令在用户态执行时会导致陷人，Popek 和 Goldberg 称之为特权指令</li>
+<li>他们的论文首次指出机器可虚拟化的一个必要条件是敏感指令为特权指令的子集</li>
+<li>Intel 和 AMD 在 CPU 中引入虚拟化支持 VT，使问题得以解决。VM 技术的基本思想是创建可以运行虚拟机的容器。客户操作系统在容器中启动井持续运行，直到触发异常并陷入虚拟机管理程序</li>
+</ul>
+</li>
+<li>半虚拟化
+<ul>
+<li>半虚拟化提供一层类似物理机器的软件接口，显式暴露出自身是一个虚拟化的环境.例如，它提供一组虚拟化调用 (hypercall), 允许客户机向虚拟机管理程序发送显式的请求，就像系统调用为应用程序提供服务那样。客户机使用虚拟化调用执行特权操作，如修改页表等，但由于操作是客户机和虚拟机管理程序协作完成的，因此整个系统更加简单快速。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>第一类和第二类虚拟机管理程序
+<ul>
+<li>第一类虚拟机管理程序就像一个操作系统，因为它是唯一一个运行在最高特权级的程序。 它的工作是支持真实硬件的多个虚拟机 (virtual machine) 拷贝，类似千普通操作系统支持的进程。</li>
+<li>第二类虚拟机管理程序则不同。它是一个依赖于 Windows、 Linux 等操作系统分配和调度资源的程序，很像一个普通的进程。寄托于宿主操作系统提供大量的功能。</li>
+</ul>
+</li>
+<li>高效虚拟化技术
+<ul>
+<li>在不支持虚拟化的平台上实现虚拟化
+<ul>
+<li>虚拟机上的操作系统认为自己运行在内核态(实际上不是)。我们称之为虚拟内核态。</li>
+<li>在不支持 VT 的 CPU 上，执行内核态才能执行指令会失败井导致操作系统崩溃。在支持 VT 的 CPU 上， 客户操作系统执行敏感指令时，会陷入虚拟机管理程序，虚拟机管理程序可以检查这条指令是由虚拟机中的客户操作系统执行的还是用户程序执行的。如果是前者，虚拟机管理程序将安排这条指令功能的正确执行。否则，虚拟机管理程序将换拟其实硬件面对用户态执行敏感指令时的行为。</li>
+<li>在不支持 VT 的平台上，软件工程师们利用二进制翻译和 x86 平台确实存在的硬件特性(如处理器的特权级)构建出了虚拟机系统。</li>
+<li>进制翻译器改写运行在第 1 级的客户操作系统，虚拟机管理程序运行在第 0 级</li>
+<li>直接运行客户机代码井使用完全相同的技术需要第二类虚拟机管理程序能在最底层操纵硬件，这在用户态无法实现，因此，大多数现代的第二类虚拟机管理程序有一个在第 0 级运行的内核模块，能够使用特权指令操纵硬件。</li>
+</ul>
+</li>
+<li>虚拟化的开销
+<ul>
+<li>VT 硬件使用的陷入井模拟方法会产生大量陷入，而陷入在现代硬件上开销很大，因为 CPU 高速缓存、 TLB、转移预测都会受到不利影响。</li>
+<li>使用二进制翻译后，代码既有可能变快，也有可能变慢。替换了部分需要陷入的指令。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>虚拟机管理程序是真正的微内核吗
+<ul>
+<li>第一类和第二类虚拟机管理程序都支持未修改的客户操作系统，但需要费尽于辛万苦才能取得较好 的性能</li>
+<li>半虚拟化 采取了不同的方法，要求修改客户操作系统的諒代码。半虚拟化的客户机执行虚拟化调用而不是敏感指令，这套调用接口实际上构成了应用编程接口 (Application Programming Interface, API), 虽然接口由客户操作系统而非应用程序使用。</li>
+<li>移除客户操作系统中的所有敏感指令，只让它通过虚拟化调用访问 I/O 等系统服务，就将虚拟机管理程序变成了微内核</li>
+</ul>
+</li>
+<li>内存虚拟化
+<ul>
+<li>对每台虚拟机，虚拟机管理程序都需要创建一个影子页表, 将虚拟机使用的虚拟页映射到它分配给虚拟机的实际物理页上。</li>
+<li>嵌套页表的硬件支持
+<ul>
+<li>使用影子页表会造成巨大的开销。</li>
+<li>芯片生产商添加了嵌套页表 (nested page table) 的硬件支持。在无需陷入的悄况下由硬件处理虚拟化引发的额外页表操作，以降低开销。</li>
+</ul>
+</li>
+<li>回收内存
+<ul>
+<li>一个小的气球模块作为伪设备驱动程序加载到每个虚拟机中，与虚拟机管理程序通信。气球模块在虚拟机管理程序的请求下可以通过申请锁定页面来膨胀，也可以通过释放这些页面而紧缩。气球膨胀，客户机的实际可用物理内存减少，客户操作系统将以换出最不重要页面的方式响应这一变化，正如期望的那样。反过来，气球紧缩，客户机可用内存增加。虚拟机管理程序让操作系统来帮它作决定，通俗地讲这叫踢皮球。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>I/O 虚拟化
+<ul>
+<li>I/O MMU</li>
+<li>设备隔离</li>
+<li>设备域</li>
+<li>单根 I/O 虚拟化</li>
+</ul>
+</li>
+<li>虚拟应用
+<ul>
+<li>软件开发人员可以精心构造一个虚拟机.装上需要的操作系统、编译器、运行库和应用程序代码，固定整个虚拟机使之可以随时运行。这个虚拟机镜像可以刻录到 CD-ROM 或发布到网 站上让用户安装或下载。这种方法意味着只有软件开发人员需要知道所有的依赖关系。客户得到的是能 实际运行的完整包，与他们使用的操作系统和安装的其他软件包、运行库完全无关。这类&quot;盒装”的虚 拟机通常称作虚拟应用</li>
+</ul>
+</li>
+<li>多核 CPU 上的虚拟机
+<ul>
+<li>由于多核芯片上的所有核心共享相同的 RAM, 因此单一的四核芯片根据摇要可以很容易地配置成 32 节点多处理器或多计算机系统。</li>
+</ul>
+</li>
+<li>授权问题
+<ul>
+<li>某些情况下，软件生产商会在授权中显式加入禁止在(未授权)虚拟机上运行软件的条款</li>
+</ul>
+</li>
+<li>云
+<ul>
+<li>云的特征
+<ul>
+<li>按需自助服务 。无需人为操作就能自动为用户提供资源。</li>
+<li>普适的网络访问 。所有资源都可以通过网络用标准化的机制访问，以支持各种异构设备。</li>
+<li>资源池。云提供商拥有的资源可以服务多个用户并动态再分配，用户通常不知道他们使用的资源 的具体位置。</li>
+<li>快速可伸缩 。能根据用户需求弹性甚至是自动地获取和释放资源。</li>
+<li>服务可计量。云提供商按服务类型计量用户使用的资源。</li>
+</ul>
+</li>
+<li>云即服务
+<ul>
+<li>将计算资源集中到少数儿个地方可以实现规模经济效益。将计算处理工作外包意味着不用再过于关心 IT 基础设施的管理、备份、维护、折旧、伸缩性、可靠性、性能甚至安全性。所有这些工作都梊中在一处完成，假设云提供商是称职的，则这些都能很好地完成。</li>
+</ul>
+</li>
+<li>虚拟机迁移
+<ul>
+<li>使用内存预复制迁移 (pre-copy memory migration) , 能在虚拟机提供服务的同时复制内存页。大多数内存页的写入井不频繁，直接复制是安全的。但是，虚拟机仍在运行，所以页面复制之后可能会被修改。页面修改时将其标记为脏的，以确保最新版本复制到目标机器。脏页面会重新复制。当大多数页面复制完成后，只剩少量脏页面。短暂地暂停虚拟机以复制它们，然后在目标机器上恢复虚拟机执行。虽然仍有暂停，但时间很短，应用程序通常不会受到影响。若停机时间不箕太耗时，就称作无缝热迁移</li>
+<li>虚拟机与物理硬件的解耦还有其他优势，尤其是可以暂停一个虚拟机，保存快照的最直接方式是复制所有状态，包括完整的文件系统。然而，即使磁盘速度很快，复制上 TB 的磁盘内容也会花点时间。和前面的虚拟机迁移相同，我们不想暂停太久。解决方案是使用写时复制技术，数据只有在绝对必需时才进行复制。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>有关虚拟化和云的研究
+<ul>
+<li>虚拟化技术</li>
+<li>无线网络的虚拟化</li>
+<li>嵌套虚拟化</li>
+</ul>
+</li>
+</ul>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+  <div class="footer-left">
+    Copyright  &copy; 2021  Y.CH.Y 
+    
+    
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">首页</a></li>
+         
+        <li><a href="/algorithm">算法</a></li>
+         
+        <li><a href="/about">关于</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>
