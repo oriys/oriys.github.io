@@ -1406,6 +1406,91 @@
     </item>
     
     <item>
+      <title>八股文::数据库</title>
+      <link>/notes/interview_questions_db/</link>
+      <pubDate>Sun, 22 Aug 2021 21:51:33 +0800</pubDate>
+      <guid>/notes/interview_questions_db/</guid>
+      <description>&lt;h2 id=&#34;数据库&#34;&gt;数据库&lt;/h2&gt;
+&lt;h3 id=&#34;mysql-为什么使用-b-树来作索引对比-b-树它的优点和缺点是什么&#34;&gt;MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;数据库的事务隔离级别有哪些各有哪些优缺点&#34;&gt;数据库的事务隔离级别有哪些？各有哪些优缺点？&lt;/h3&gt;
+&lt;h3 id=&#34;简述乐观锁以及悲观锁的区别以及使用场景&#34;&gt;简述乐观锁以及悲观锁的区别以及使用场景&lt;/h3&gt;
+&lt;h3 id=&#34;产生死锁的必要条件有哪些如何解决死锁&#34;&gt;产生死锁的必要条件有哪些？如何解决死锁？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-如何实现分布式锁&#34;&gt;Redis 如何实现分布式锁？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-redis-持久化中-rdb-以及-aof-方案的优缺点&#34;&gt;简述 Redis 持久化中 RDB 以及 AOF 方案的优缺点&lt;/h3&gt;
+&lt;h3 id=&#34;简述-redis-中如何防止缓存雪崩和缓存击穿&#34;&gt;简述 Redis 中如何防止缓存雪崩和缓存击穿&lt;/h3&gt;
+&lt;h3 id=&#34;聚簇索引和非聚簇索引有什么区别&#34;&gt;聚簇索引和非聚簇索引有什么区别？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-有几种数据结构zset-是如何实现的&#34;&gt;Redis 有几种数据结构？Zset 是如何实现的？&lt;/h3&gt;
+&lt;h3 id=&#34;简述脏读和幻读的发生场景innodb-是如何解决幻读的&#34;&gt;简述脏读和幻读的发生场景，InnoDB 是如何解决幻读的？&lt;/h3&gt;
+&lt;h3 id=&#34;为什么-redis-在单线程下能如此快&#34;&gt;为什么 Redis 在单线程下能如此快？&lt;/h3&gt;
+&lt;h3 id=&#34;什么是数据库事务mysql-为什么会使用-innodb-作为默认选项&#34;&gt;什么是数据库事务，MySQL 为什么会使用 InnoDB 作为默认选项&lt;/h3&gt;
+&lt;h3 id=&#34;简述什么是最左匹配原则&#34;&gt;简述什么是最左匹配原则&lt;/h3&gt;
+&lt;h3 id=&#34;简述-redis-中常见类型的底层数据结构&#34;&gt;简述 Redis 中常见类型的底层数据结构&lt;/h3&gt;
+&lt;h3 id=&#34;简述数据库中的-acid-分别是什么&#34;&gt;简述数据库中的 ACID 分别是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;mysql-中-innodb-和-mylsam-的区别是什么&#34;&gt;MySQL 中 InnoDB 和 MylSAM 的区别是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;数据库如何设计索引如何优化查询&#34;&gt;数据库如何设计索引，如何优化查询？&lt;/h3&gt;
+&lt;h3 id=&#34;简述数据库中什么情况下进行分库什么情况下进行分表&#34;&gt;简述数据库中什么情况下进行分库，什么情况下进行分表？&lt;/h3&gt;
+&lt;h3 id=&#34;什么是-sql-注入攻击如何防止这类攻击&#34;&gt;什么是 SQL 注入攻击？如何防止这类攻击？&lt;/h3&gt;
+&lt;h3 id=&#34;数据库有哪些常见索引数据库设计的范式是什么&#34;&gt;数据库有哪些常见索引？数据库设计的范式是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;mysql-有哪些常见的存储引擎它们的区别是什么&#34;&gt;MySQL 有哪些常见的存储引擎？它们的区别是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-redis-中跳表的应用以及优缺点&#34;&gt;简述 Redis 中跳表的应用以及优缺点&lt;/h3&gt;
+&lt;h3 id=&#34;简述一致性哈希算法的实现方式及原理&#34;&gt;简述一致性哈希算法的实现方式及原理&lt;/h3&gt;
+&lt;h3 id=&#34;简述-redis-的过期机制和内存淘汰策略&#34;&gt;简述 Redis 的过期机制和内存淘汰策略&lt;/h3&gt;
+&lt;h3 id=&#34;mysql-中-join-与-left-join-的区别是什么&#34;&gt;MySQL 中 join 与 left join 的区别是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;联合索引的存储结构是什么&#34;&gt;联合索引的存储结构是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-mysql-常见索引类型介绍一下覆盖索引&#34;&gt;简述 MySQL 常见索引类型，介绍一下覆盖索引&lt;/h3&gt;
+&lt;h3 id=&#34;数据库索引的实现原理是什么&#34;&gt;数据库索引的实现原理是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-redis-的哨兵机制&#34;&gt;简述 Redis 的哨兵机制&lt;/h3&gt;
+&lt;h3 id=&#34;redis-的缓存淘汰策略有哪些&#34;&gt;Redis 的缓存淘汰策略有哪些？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-mysql-的主从同步机制如果同步失败会怎么样&#34;&gt;简述 MySQL 的主从同步机制，如果同步失败会怎么样？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-mysql-mvcc-的实现原理&#34;&gt;简述 MySQL MVCC 的实现原理&lt;/h3&gt;
+&lt;h3 id=&#34;简述-mysql-三种日志的使用场景&#34;&gt;简述 MySQL 三种日志的使用场景&lt;/h3&gt;
+&lt;h3 id=&#34;简述-redis-集群配置以及基础原理&#34;&gt;简述 Redis 集群配置以及基础原理&lt;/h3&gt;
+&lt;h3 id=&#34;数据库的读写分离的作用是什么如何实现&#34;&gt;数据库的读写分离的作用是什么？如何实现？&lt;/h3&gt;
+&lt;h3 id=&#34;如何解决缓存与数据库不一致的问题&#34;&gt;如何解决缓存与数据库不一致的问题？&lt;/h3&gt;
+&lt;h3 id=&#34;mysql-的索引什么情况下会失效&#34;&gt;MySQL 的索引什么情况下会失效？&lt;/h3&gt;
+&lt;h3 id=&#34;mysql-联合索引底层原理是什么&#34;&gt;MySQL 联合索引底层原理是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;唯一索引与普通索引的区别是什么使用索引会有哪些优缺点&#34;&gt;唯一索引与普通索引的区别是什么？使用索引会有哪些优缺点？&lt;/h3&gt;
+&lt;h3 id=&#34;简述事务的四大特性&#34;&gt;简述事务的四大特性&lt;/h3&gt;
+&lt;h3 id=&#34;简述-sql-中左连接和右连接的区别&#34;&gt;简述 SQL 中左连接和右连接的区别&lt;/h3&gt;
+&lt;h3 id=&#34;简述-mysql-的间隙锁&#34;&gt;简述 MySQL 的间隙锁&lt;/h3&gt;
+&lt;h3 id=&#34;b-树中叶子节点存储的是什么数据&#34;&gt;B+ 树中叶子节点存储的是什么数据&lt;/h3&gt;
+&lt;h3 id=&#34;mysql-索引使用什么数据结构&#34;&gt;MySQL 索引使用什么数据结构？&lt;/h3&gt;
+&lt;h3 id=&#34;sql-优化的方案有哪些如何定位问题并解决问题&#34;&gt;SQL 优化的方案有哪些，如何定位问题并解决问题？&lt;/h3&gt;
+&lt;h3 id=&#34;简述主从复制以及读写分离的使用场景&#34;&gt;简述主从复制以及读写分离的使用场景&lt;/h3&gt;
+&lt;h3 id=&#34;简述-redis-的线程模型以及底层架构设计&#34;&gt;简述 Redis 的线程模型以及底层架构设计&lt;/h3&gt;
+&lt;h3 id=&#34;假设建立联合索引-a-b-c-如果对字段-a-和-c-查询会用到这个联合索引吗&#34;&gt;假设建立联合索引 (a, b, c) 如果对字段 a 和 c 查询，会用到这个联合索引吗？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-序列化有哪些方式&#34;&gt;Redis 序列化有哪些方式？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-redis-如何处理热点-key-访问&#34;&gt;简述 Redis 如何处理热点 key 访问&lt;/h3&gt;
+&lt;h3 id=&#34;kafka-发送消息是如何保证可靠性的&#34;&gt;Kafka 发送消息是如何保证可靠性的？&lt;/h3&gt;
+&lt;h3 id=&#34;mysql-有什么调优的方式&#34;&gt;MySQL 有什么调优的方式？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-如何实现高可用&#34;&gt;Redis 如何实现高可用？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-redis-字符串的底层结构&#34;&gt;简述 Redis 字符串的底层结构&lt;/h3&gt;
+&lt;h3 id=&#34;redis-中sentinel-和-cluster-的区别和适用场景是什么&#34;&gt;Redis 中，sentinel 和 cluster 的区别和适用场景是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;mysql-常用的聚合函数有哪些&#34;&gt;MySQL 常用的聚合函数有哪些？&lt;/h3&gt;
+&lt;h3 id=&#34;简述数据库事务复制原理&#34;&gt;简述数据库事务复制原理&lt;/h3&gt;
+&lt;h3 id=&#34;简述常见的负载均衡算法&#34;&gt;简述常见的负载均衡算法&lt;/h3&gt;
+&lt;h3 id=&#34;什么时候索引会失效&#34;&gt;什么时候索引会失效？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-redis-的通信模型&#34;&gt;简述 Redis 的通信模型&lt;/h3&gt;
+&lt;h3 id=&#34;如何解决主从不一致的问题&#34;&gt;如何解决主从不一致的问题？&lt;/h3&gt;
+&lt;h3 id=&#34;数据库主键索引和唯一索引有什么区别&#34;&gt;数据库主键索引和唯一索引有什么区别？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-undo-log-和-redo-log-的作用&#34;&gt;简述 undo log 和 redo log 的作用&lt;/h3&gt;
+&lt;h3 id=&#34;模糊查询是如何实现的&#34;&gt;模糊查询是如何实现的？&lt;/h3&gt;
+&lt;h3 id=&#34;mysql-中-varchar-和-char-的区别是什么&#34;&gt;MySQL 中 varchar 和 char 的区别是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;如何设计数据库压测方案&#34;&gt;如何设计数据库压测方案？&lt;/h3&gt;
+&lt;h3 id=&#34;数据库查询中左外连接和内连接的区别是什么&#34;&gt;数据库查询中左外连接和内连接的区别是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;假设-redis-的-master-节点宕机了你会怎么进行数据恢复&#34;&gt;假设 Redis 的 master 节点宕机了，你会怎么进行数据恢复？&lt;/h3&gt;
+&lt;h3 id=&#34;并发事务会引发哪些问题如何解决&#34;&gt;并发事务会引发哪些问题？如何解决？&lt;/h3&gt;
+&lt;h3 id=&#34;数据库索引的叶子结点为什么是有序链表&#34;&gt;数据库索引的叶子结点为什么是有序链表？&lt;/h3&gt;
+&lt;h3 id=&#34;如何定位以及优化数据库慢查询&#34;&gt;如何定位以及优化数据库慢查询&lt;/h3&gt;
+&lt;h3 id=&#34;建立了三个单列索引-a-b-c-查询-where-a---b---c--索引会起作用吗&#34;&gt;建立了三个单列索引 a, b, c 查询 where a = ? b = ? c = ？索引会起作用吗？&lt;/h3&gt;
+&lt;h3 id=&#34;数据库反范式设计会出现什么问题&#34;&gt;数据库反范式设计会出现什么问题？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-如何实现主从同步&#34;&gt;Redis 如何实现主从同步？&lt;/h3&gt;
+&lt;h3 id=&#34;什么是公平锁什么是非公平锁&#34;&gt;什么是公平锁？什么是非公平锁？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-redis-哨兵的选举过程&#34;&gt;简述 Redis 哨兵的选举过程&lt;/h3&gt;
+</description>
+    </item>
+    
+    <item>
       <title>多线程::打印零与奇偶数</title>
       <link>/algo/1116/</link>
       <pubDate>Sun, 22 Aug 2021 17:13:46 +0800</pubDate>
@@ -2698,6 +2783,98 @@
     </item>
     
     <item>
+      <title>八股文::系统设计</title>
+      <link>/notes/interview_questions_system_design/</link>
+      <pubDate>Fri, 20 Aug 2021 21:51:33 +0800</pubDate>
+      <guid>/notes/interview_questions_system_design/</guid>
+      <description>&lt;h2 id=&#34;系统设计&#34;&gt;系统设计&lt;/h2&gt;
+&lt;h3 id=&#34;电商系统中如何实现秒杀功能如何解决商品的超卖问题&#34;&gt;电商系统中，如何实现秒杀功能？如何解决商品的超卖问题？&lt;/h3&gt;
+&lt;h3 id=&#34;什么是-cap-什么是最终一致性什么是幂等操作&#34;&gt;什么是 CAP ？什么是最终一致性？什么是幂等操作？&lt;/h3&gt;
+&lt;h3 id=&#34;项目上有什么技术难点&#34;&gt;项目上有什么技术难点？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-zookeeper-基础原理以及使用场景&#34;&gt;简述 Zookeeper 基础原理以及使用场景&lt;/h3&gt;
+&lt;h3 id=&#34;简述中间件削峰和限流的使用场景&#34;&gt;简述中间件削峰和限流的使用场景&lt;/h3&gt;
+&lt;h3 id=&#34;简述一致性哈希算法的实现方式及原理&#34;&gt;简述一致性哈希算法的实现方式及原理&lt;/h3&gt;
+&lt;h3 id=&#34;简述-kafka-的基本架构如何用-kafka-保证消息的有序性&#34;&gt;简述 Kafka 的基本架构，如何用 Kafka 保证消息的有序性？&lt;/h3&gt;
+&lt;h3 id=&#34;简述常见的负载均衡算法&#34;&gt;简述常见的负载均衡算法&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;随机算法
+&lt;ul&gt;
+&lt;li&gt;随机，按权重设置随机概率。在一个截面上碰撞的概率高，但调用量越大分布越均匀，而且按概率使用权重后也比较均匀，有利于动态调整提供者权重。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;轮询及加权轮询
+&lt;ul&gt;
+&lt;li&gt;当服务器群中各服务器的处理能力相同时，且每笔业务处理量差异不大时，最适合使用这种算法。轮循，按公约后的权重设置轮循比率。存在慢的提供者累积请求问题，比如：第二台机器很慢，但没挂，当请求调到第二台时就卡在那，久而久之，所有请求都卡在调到第二台上。&lt;/li&gt;
+&lt;li&gt;为轮询中的每台服务器附加一定权重的算法。比如服务器 1 权重 1，服务器 2 权重 2，服务器 3 权重 3，则顺序为 1-2-2-3-3-3-1-2-2-3-3-3-&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;最小连接及加权最小连接
+&lt;ul&gt;
+&lt;li&gt;在多个服务器中，与处理连接数(会话数)最少的服务器进行通信的算法。即使在每台服务器处理能力各不相同，每笔业务处理量也不相同的情况下，也能够在一定程度上降低服务器的负载。&lt;/li&gt;
+&lt;li&gt;为最少连接算法中的每台服务器附加权重的算法，该算法事先为每台服务器分配处理连接的数量，并将客户端请求转至连接数最少的服务器上。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;哈希算法
+&lt;ul&gt;
+&lt;li&gt;普通哈希&lt;/li&gt;
+&lt;li&gt;一致性 Hash，相同参数的请求总是发到同一提供者。当某一台提供者挂时，原本发往该提供者的请求，基于虚拟节点，平摊到其它提供者，不会引起剧烈变动。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;IP 地址散列
+&lt;ul&gt;
+&lt;li&gt;通过管理发送方 IP 和目的地 IP 地址的散列，将来自同一发送方的分组(或发送至同一目的地的分组)统一转发到相同服务器的算法。当客户端有一系列业务需要处理而必须和一个服务器反复通信时，该算法能够以流(会话)为单位，保证来自相同客户端的通信能够一直在同一服务器中进行处理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;URL 散列
+&lt;ul&gt;
+&lt;li&gt;通过管理客户端请求 URL 信息的散列，将发送至相同 URL 的请求转发至同一服务器的算法。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;设计一个阻塞队列&#34;&gt;设计一个阻塞队列&lt;/h3&gt;
+&lt;h3 id=&#34;简述生产者消费者模型&#34;&gt;简述生产者消费者模型&lt;/h3&gt;
+&lt;h3 id=&#34;designing-a-url-shortening-service-like-tinyurl&#34;&gt;Designing a URL Shortening service like TinyURL&lt;/h3&gt;
+&lt;h3 id=&#34;了解高并发的解决方案吗例如动静分离缓存负载均衡&#34;&gt;了解高并发的解决方案吗？例如动静分离，缓存，负载均衡&lt;/h3&gt;
+&lt;h3 id=&#34;如何设计一个线程池&#34;&gt;如何设计一个线程池&lt;/h3&gt;
+&lt;h3 id=&#34;有哪些实现服务发现的方法&#34;&gt;有哪些实现服务发现的方法？&lt;/h3&gt;
+&lt;h3 id=&#34;如何实现唯一的分布式-id&#34;&gt;如何实现唯一的分布式 ID&lt;/h3&gt;
+&lt;h3 id=&#34;如何解决缓存与数据库不一致的问题&#34;&gt;如何解决缓存与数据库不一致的问题？&lt;/h3&gt;
+&lt;h3 id=&#34;简述什么是两阶段提交&#34;&gt;简述什么是两阶段提交？&lt;/h3&gt;
+&lt;h3 id=&#34;zookeeper-的-zab-算法与-paxos-的区别是什么&#34;&gt;ZooKeeper 的 ZAB 算法与 Paxos 的区别是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-kafka-的选举过程&#34;&gt;简述 Kafka 的选举过程&lt;/h3&gt;
+&lt;h3 id=&#34;什么是设计模式描述几个常用的设计模式&#34;&gt;什么是设计模式，描述几个常用的设计模式&lt;/h3&gt;
+&lt;h3 id=&#34;如何实现百度搜索功能&#34;&gt;如何实现百度搜索功能？&lt;/h3&gt;
+&lt;h3 id=&#34;微服务中如何实现服务发现&#34;&gt;微服务中如何实现服务发现&lt;/h3&gt;
+&lt;h3 id=&#34;熔断与限流是如何实现的&#34;&gt;熔断与限流是如何实现的？&lt;/h3&gt;
+&lt;h3 id=&#34;高并发情景下核心线程池该如何设置参数&#34;&gt;高并发情景下，核心线程池该如何设置参数？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-nginx-的工作模型为什么-nginx-性能如此高&#34;&gt;简述 Nginx 的工作模型，为什么 Nginx 性能如此高？&lt;/h3&gt;
+&lt;h3 id=&#34;如何测试应用的-qps&#34;&gt;如何测试应用的 QPS？&lt;/h3&gt;
+&lt;h3 id=&#34;如何设计一个消息队列&#34;&gt;如何设计一个消息队列&lt;/h3&gt;
+&lt;h3 id=&#34;常用的限流算法有哪些简述令牌桶算法原理&#34;&gt;常用的限流算法有哪些？简述令牌桶算法原理&lt;/h3&gt;
+&lt;h3 id=&#34;designing-pastebin&#34;&gt;Designing Pastebin&lt;/h3&gt;
+&lt;h3 id=&#34;简述-dubbo-服务注册与发现的过程&#34;&gt;简述 Dubbo 服务注册与发现的过程&lt;/h3&gt;
+&lt;h3 id=&#34;design-typeahead-system&#34;&gt;Design typeahead system&lt;/h3&gt;
+&lt;h3 id=&#34;简述-zookeeper-选举机制&#34;&gt;简述 ZooKeeper 选举机制&lt;/h3&gt;
+&lt;h3 id=&#34;简述-mapreduce-的原理&#34;&gt;简述 MapReduce 的原理&lt;/h3&gt;
+&lt;h3 id=&#34;假如明天是活动高峰qps-预计会翻-10-倍你要怎么做&#34;&gt;假如明天是活动高峰？QPS 预计会翻 10 倍，你要怎么做？&lt;/h3&gt;
+&lt;h3 id=&#34;如何阅读大型项目的源码&#34;&gt;如何阅读大型项目的源码？&lt;/h3&gt;
+&lt;h3 id=&#34;kafka-如何保证消息一致性&#34;&gt;kafka 如何保证消息一致性？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-git-的工作流&#34;&gt;简述 Git 的工作流&lt;/h3&gt;
+&lt;h3 id=&#34;design-parking-system&#34;&gt;Design Parking System&lt;/h3&gt;
+&lt;h3 id=&#34;design-bicycle-rental-system&#34;&gt;Design Bicycle Rental System&lt;/h3&gt;
+&lt;h3 id=&#34;restful-与-rpc-的区别是什么restful-的优点在哪里&#34;&gt;RestFul 与 RPC 的区别是什么？RestFul 的优点在哪里？&lt;/h3&gt;
+&lt;h3 id=&#34;设计-tiny-url-系统&#34;&gt;设计 Tiny URL 系统&lt;/h3&gt;
+&lt;h3 id=&#34;design-a-web-crawler&#34;&gt;Design a web crawler&lt;/h3&gt;
+&lt;h3 id=&#34;停车场有有限个车位有多个车来抢车位设计一个系统需要根据车辆进入和离开停车场的时间进行计费&#34;&gt;停车场有有限个车位，有多个车来抢车位，设计一个系统需要根据车辆进入和离开停车场的时间进行计费&lt;/h3&gt;
+&lt;h3 id=&#34;design-twitter&#34;&gt;Design twitter&lt;/h3&gt;
+&lt;h3 id=&#34;阻塞队列都有哪几种有什么区别&#34;&gt;阻塞队列都有哪几种，有什么区别？&lt;/h3&gt;
+&lt;h3 id=&#34;design-taxi-service-like-uber&#34;&gt;Design taxi service like Uber&lt;/h3&gt;
+&lt;h3 id=&#34;容器化了解吗它的基本原理是什么&#34;&gt;容器化了解吗？它的基本原理是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;rabbitmq-如何保证信息可靠性&#34;&gt;RabbitMQ 如何保证信息可靠性？&lt;/h3&gt;
+</description>
+    </item>
+    
+    <item>
       <title>八股文::网络</title>
       <link>/notes/interview_questions_network/</link>
       <pubDate>Fri, 20 Aug 2021 21:51:33 +0800</pubDate>
@@ -2889,6 +3066,12 @@
 &lt;h3 id=&#34;tcp-长连接和短连接有那么不同的使用场景&#34;&gt;TCP 长连接和短连接有那么不同的使用场景？&lt;/h3&gt;
 &lt;h3 id=&#34;什么是-arp-协议简述其使用场景&#34;&gt;什么是 ARP 协议？简述其使用场景&lt;/h3&gt;
 &lt;h3 id=&#34;简述-rpc-的调用过程&#34;&gt;简述 RPC 的调用过程&lt;/h3&gt;
+&lt;p&gt;Client 首先会调用本地的代理 Proxy&lt;/p&gt;
+&lt;p&gt;Client 端 Proxy 会按照协议（Protocol），将调用中传入的数据序列化成字节流。&lt;/p&gt;
+&lt;p&gt;之后 Client 会通过网络，将字节数据发送到 Server 端。&lt;/p&gt;
+&lt;p&gt;Server 端接收到字节数据之后，会按照协议进行反序列化，得到相应的请求信息。&lt;/p&gt;
+&lt;p&gt;Server 端 Proxy 会根据序列化后的请求信息，调用相应的业务逻辑。&lt;/p&gt;
+&lt;p&gt;Server 端业务逻辑的返回值，也会按照上述逻辑返回给 Client 端。&lt;/p&gt;
 &lt;h3 id=&#34;tcp-中-syn-攻击是什么如何防止&#34;&gt;TCP 中 SYN 攻击是什么？如何防止？&lt;/h3&gt;
 &lt;h3 id=&#34;简述-tcp-的报文头部结构&#34;&gt;简述 TCP 的报文头部结构&lt;/h3&gt;
 &lt;h3 id=&#34;tcp-的拥塞控制具体是怎么实现的udp-有拥塞控制吗&#34;&gt;TCP 的拥塞控制具体是怎么实现的？UDP 有拥塞控制吗？&lt;/h3&gt;
