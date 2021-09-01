@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> 计算机网络自顶向下方法::应用层 | Y.CH.Y</title>
+  <link rel = 'canonical' href = '/notes/computer_network_a_topdown_approach_02/'>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="计算机网络自顶向下方法::应用层" />
+<meta property="og:description" content="应用层协议原理  应用层协议原理  研发网络应用程序的核心是写出能够运行在不同的端系统和通过网络彼此通信的程序 当研发新应用程序时，你需要编写将在多台端系统上运行的软件   网络应用体系结构  从应用程序研发者的角度看，网络体系结构是固定的，并为应用程序提供了特定的服务集合 应用程序体系结构 (application architecture) 由应用程序研发者设计，规定了如何在各种端系统上组织该应用程序。  客户-服务器体系结构  有一个总是打开的主机称为服务器，它服务于来自许多其他称为客户的主机的请求 客户-服务器体系结构，客户相互之间不直接通信 服务器具有固定的、周知的地址，该地址称为 IP 地址 具有客户-服务器体系结构的非常著名的应用程序包括 Web、FTP、Telnet 和电子邮件 一个流行的社交网络站点如果仅有一台服务器来处理所有请求，将很快变得不堪重负。为此，配备大量主机的数据中心(data center)常被用于创建强大的虚拟服务器。   P2P 体系结构  对数据中心服务器有最小的依赖 应用程序在间断连接的主机对之间使用直接通信，这些主机对被称为对等方 具有自扩展性，成本效率高，不需要庞大的基础设施 具有 P2P 体系结构的应用包括 BitTorrent、因特网电话和视频会议(例如 Skype)       进程通信  客户与服务器通信  网络应用程序由成对的进程组成，这些进程通过网络相互发送报文 对每对通信进程，我们通常将这两个进程之一标识为客户(client) , 而另一个进程标识为服务器 在 P2P 文件共享的某些应用中，一个进程能够既是客户又是服务器 我们定义客户和服务器进程如下: 在一对进程之间的通信会话场景中，发起通信(即在该会话开始时发起与其他进程的联系)的进程被标识为客户，在会话开始时等待联系的进程是服务器   进程与计算机网络之问的接口  进程通过一个称为套接字(socket)的软件接口向网络发送报文和从网络接收报文 套接字是同一台主机内应用层与运输层之间的接口。由于该套接字是建立网络应用程序的可编程接口，因此套接字也称为应用程序和网络之间的应用程序编程接口   进程寻址  为了标识该接收进程，需要定义两种信息  主机的地址 目的主机中指定接受进程的标识符   在因特网中，主机由其 IP 地址 (IP adress) 标识 目的地端口号 (port number) 用于指定运行在接收主机上的接收进程(更具体地说，接收套接字)     可供应用程序使用的运输服务  可靠数据传输  确保由应用程序的一端发送的数据正确、完全地交付给该应用程序的另一端   吞吐量  运输层协议能够以某种特定的速率提供确保的可用吞吐量 带宽敏感的应用具有特定的吞吐量要求，而弹性应用 (elastic application) 能够根据当时可用的带宽或多或少地利用可供使用的吞吐量   定时  运输层协议也能提供定时保证，能够以多种形式实现。这种服务将对交互式实时应用程序有吸引力。   安全性  在发送和接收进程之间提供机密性，以防该数据以某种方式在这两个进程之间被观察到。运输协议还能提供除了机密性以外的其他安全性服务，包括数据完整性和端点鉴别     因特网的提供的运输服务  TCP 服务  面向连接服务和可靠数据传输服务 在应用层数据报文开始流动之前，TCP 让客户端和服务器互相交换运输层控制信息。在握手后，一个全双工 TCP 连接就在两者之间建立了。当应用程序结束报文发送时，必须拆除该连接。 通信进程能够依靠 TCP, 无差错、按适当顺序交付所有发送的数据。当应用程序的一端将字节流传进套接字时，它能够依靠 TCP 将相同的字节流交付给接收方的套接字，而没有字节的丢失和冗余。 TCP 也提供拥塞控制机制，当发送方和接收方之间的网络出现拥塞时，TCP 的拥塞控制机制会抑制发送进程，TCP 拥塞控制也试图限制每个 TCP 连接，使它们达到公平共享网络带宽的目的。   UDP 服务  UDP 是一种不提供不必要服务的轻量级运输协议，它仅提供最小服务。UDP 是无连接的，因此在两个进程通信前没有握手过程。 UDP 协议提供一种不可靠数据传送服务，不保证报文能到达接受进程，也不保证顺序。 UDP 没有拥塞控制机制，可以以任意速率向下层注入数据。   运输协议不提供的服务  吞吐量和定时保证     应用层协议  交换的报文类型，例如请求报文和响应报文。 各种报文类型的语法，如报文中的各个字段及这些字段是如何描述的。 字段的语义，即这些字段中的信息的含义。 确定一个进程何时以及如何发送报文，对报文进行响应的规则。    Web 和 HTTP   HTTP 概况" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/notes/computer_network_a_topdown_approach_02/" /><meta property="article:section" content="notes" />
+<meta property="article:published_time" content="2021-06-16T20:26:06+08:00" />
+<meta property="article:modified_time" content="2021-06-16T20:26:06+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="计算机网络自顶向下方法::应用层"/>
+<meta name="twitter:description" content="应用层协议原理  应用层协议原理  研发网络应用程序的核心是写出能够运行在不同的端系统和通过网络彼此通信的程序 当研发新应用程序时，你需要编写将在多台端系统上运行的软件   网络应用体系结构  从应用程序研发者的角度看，网络体系结构是固定的，并为应用程序提供了特定的服务集合 应用程序体系结构 (application architecture) 由应用程序研发者设计，规定了如何在各种端系统上组织该应用程序。  客户-服务器体系结构  有一个总是打开的主机称为服务器，它服务于来自许多其他称为客户的主机的请求 客户-服务器体系结构，客户相互之间不直接通信 服务器具有固定的、周知的地址，该地址称为 IP 地址 具有客户-服务器体系结构的非常著名的应用程序包括 Web、FTP、Telnet 和电子邮件 一个流行的社交网络站点如果仅有一台服务器来处理所有请求，将很快变得不堪重负。为此，配备大量主机的数据中心(data center)常被用于创建强大的虚拟服务器。   P2P 体系结构  对数据中心服务器有最小的依赖 应用程序在间断连接的主机对之间使用直接通信，这些主机对被称为对等方 具有自扩展性，成本效率高，不需要庞大的基础设施 具有 P2P 体系结构的应用包括 BitTorrent、因特网电话和视频会议(例如 Skype)       进程通信  客户与服务器通信  网络应用程序由成对的进程组成，这些进程通过网络相互发送报文 对每对通信进程，我们通常将这两个进程之一标识为客户(client) , 而另一个进程标识为服务器 在 P2P 文件共享的某些应用中，一个进程能够既是客户又是服务器 我们定义客户和服务器进程如下: 在一对进程之间的通信会话场景中，发起通信(即在该会话开始时发起与其他进程的联系)的进程被标识为客户，在会话开始时等待联系的进程是服务器   进程与计算机网络之问的接口  进程通过一个称为套接字(socket)的软件接口向网络发送报文和从网络接收报文 套接字是同一台主机内应用层与运输层之间的接口。由于该套接字是建立网络应用程序的可编程接口，因此套接字也称为应用程序和网络之间的应用程序编程接口   进程寻址  为了标识该接收进程，需要定义两种信息  主机的地址 目的主机中指定接受进程的标识符   在因特网中，主机由其 IP 地址 (IP adress) 标识 目的地端口号 (port number) 用于指定运行在接收主机上的接收进程(更具体地说，接收套接字)     可供应用程序使用的运输服务  可靠数据传输  确保由应用程序的一端发送的数据正确、完全地交付给该应用程序的另一端   吞吐量  运输层协议能够以某种特定的速率提供确保的可用吞吐量 带宽敏感的应用具有特定的吞吐量要求，而弹性应用 (elastic application) 能够根据当时可用的带宽或多或少地利用可供使用的吞吐量   定时  运输层协议也能提供定时保证，能够以多种形式实现。这种服务将对交互式实时应用程序有吸引力。   安全性  在发送和接收进程之间提供机密性，以防该数据以某种方式在这两个进程之间被观察到。运输协议还能提供除了机密性以外的其他安全性服务，包括数据完整性和端点鉴别     因特网的提供的运输服务  TCP 服务  面向连接服务和可靠数据传输服务 在应用层数据报文开始流动之前，TCP 让客户端和服务器互相交换运输层控制信息。在握手后，一个全双工 TCP 连接就在两者之间建立了。当应用程序结束报文发送时，必须拆除该连接。 通信进程能够依靠 TCP, 无差错、按适当顺序交付所有发送的数据。当应用程序的一端将字节流传进套接字时，它能够依靠 TCP 将相同的字节流交付给接收方的套接字，而没有字节的丢失和冗余。 TCP 也提供拥塞控制机制，当发送方和接收方之间的网络出现拥塞时，TCP 的拥塞控制机制会抑制发送进程，TCP 拥塞控制也试图限制每个 TCP 连接，使它们达到公平共享网络带宽的目的。   UDP 服务  UDP 是一种不提供不必要服务的轻量级运输协议，它仅提供最小服务。UDP 是无连接的，因此在两个进程通信前没有握手过程。 UDP 协议提供一种不可靠数据传送服务，不保证报文能到达接受进程，也不保证顺序。 UDP 没有拥塞控制机制，可以以任意速率向下层注入数据。   运输协议不提供的服务  吞吐量和定时保证     应用层协议  交换的报文类型，例如请求报文和响应报文。 各种报文类型的语法，如报文中的各个字段及这些字段是如何描述的。 字段的语义，即这些字段中的信息的含义。 确定一个进程何时以及如何发送报文，对报文进行响应的规则。    Web 和 HTTP   HTTP 概况"/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="/css/styles.c61fc3c2ee4a9b16e496ebbd00aca64c62a3fb9690445e8bb87400c69fdb11a46ed08f463cc2ce7eb743c7d462f0d6ff89e2d1c281c1860e9e6204ab85ddb79d.css" integrity="sha512-xh/Dwu5Kmxbkluu9AKymTGKj&#43;5aQRF6LuHQAxp/bEaRu0I9GPMLOfrdDx9Ri8Nb/ieLRwoHBhg6eYgSrhd23nQ=="> 
+
+  
+  
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="/images/favicon.ico" />
+
+  
+  
+  
+  
+  
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-X1L70M4MM0', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+  
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="/">
+  
+    <div id="logo" style="background-image: url(/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Y.CH.Y</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
+      </li>
+      
+        <li><a href="/">首页</a></li>
+      
+        <li><a href="/algorithm">算法</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+    </ul>
+  </div>
+</header>
+
+
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h2 id="应用层协议原理">应用层协议原理</h2>
+<ul>
+<li>应用层协议原理
+<ul>
+<li>研发网络应用程序的核心是写出能够运行在不同的端系统和通过网络彼此通信的程序</li>
+<li>当研发新应用程序时，你需要编写将在多台端系统上运行的软件</li>
+</ul>
+</li>
+<li>网络应用体系结构
+<ul>
+<li>从应用程序研发者的角度看，网络体系结构是固定的，并为应用程序提供了特定的服务集合</li>
+<li>应用程序体系结构 (application architecture) 由应用程序研发者设计，规定了如何在各种端系统上组织该应用程序。
+<ul>
+<li>客户-服务器体系结构
+<ul>
+<li>有一个总是打开的主机称为服务器，它服务于来自许多其他称为客户的主机的请求</li>
+<li>客户-服务器体系结构，客户相互之间不直接通信</li>
+<li>服务器具有固定的、周知的地址，该地址称为 IP 地址</li>
+<li>具有客户-服务器体系结构的非常著名的应用程序包括 Web、FTP、Telnet 和电子邮件</li>
+<li>一个流行的社交网络站点如果仅有一台服务器来处理所有请求，将很快变得不堪重负。为此，配备大量主机的数据中心(data center)常被用于创建强大的虚拟服务器。</li>
+</ul>
+</li>
+<li>P2P 体系结构
+<ul>
+<li>对数据中心服务器有最小的依赖</li>
+<li>应用程序在间断连接的主机对之间使用直接通信，这些主机对被称为对等方</li>
+<li>具有自扩展性，成本效率高，不需要庞大的基础设施</li>
+<li>具有 P2P 体系结构的应用包括 BitTorrent、因特网电话和视频会议(例如 Skype)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>进程通信
+<ul>
+<li>客户与服务器通信
+<ul>
+<li>网络应用程序由成对的进程组成，这些进程通过网络相互发送报文</li>
+<li>对每对通信进程，我们通常将这两个进程之一标识为客户(client) , 而另一个进程标识为服务器</li>
+<li>在 P2P 文件共享的某些应用中，一个进程能够既是客户又是服务器</li>
+<li>我们定义客户和服务器进程如下: 在一对进程之间的通信会话场景中，发起通信(即在该会话开始时发起与其他进程的联系)的进程被标识为客户，在会话开始时等待联系的进程是服务器</li>
+</ul>
+</li>
+<li>进程与计算机网络之问的接口
+<ul>
+<li>进程通过一个称为套接字(socket)的软件接口向网络发送报文和从网络接收报文</li>
+<li>套接字是同一台主机内应用层与运输层之间的接口。由于该套接字是建立网络应用程序的可编程接口，因此套接字也称为应用程序和网络之间的应用程序编程接口</li>
+</ul>
+</li>
+<li>进程寻址
+<ul>
+<li>为了标识该接收进程，需要定义两种信息
+<ul>
+<li>主机的地址</li>
+<li>目的主机中指定接受进程的标识符</li>
+</ul>
+</li>
+<li>在因特网中，主机由其 IP 地址 (IP adress) 标识</li>
+<li>目的地端口号 (port number) 用于指定运行在接收主机上的接收进程(更具体地说，接收套接字)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>可供应用程序使用的运输服务
+<ul>
+<li>可靠数据传输
+<ul>
+<li>确保由应用程序的一端发送的数据正确、完全地交付给该应用程序的另一端</li>
+</ul>
+</li>
+<li>吞吐量
+<ul>
+<li>运输层协议能够以某种特定的速率提供确保的可用吞吐量</li>
+<li>带宽敏感的应用具有特定的吞吐量要求，而弹性应用 (elastic application) 能够根据当时可用的带宽或多或少地利用可供使用的吞吐量</li>
+</ul>
+</li>
+<li>定时
+<ul>
+<li>运输层协议也能提供定时保证，能够以多种形式实现。这种服务将对交互式实时应用程序有吸引力。</li>
+</ul>
+</li>
+<li>安全性
+<ul>
+<li>在发送和接收进程之间提供机密性，以防该数据以某种方式在这两个进程之间被观察到。运输协议还能提供除了机密性以外的其他安全性服务，包括数据完整性和端点鉴别</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>因特网的提供的运输服务
+<ul>
+<li>TCP 服务
+<ul>
+<li>面向连接服务和可靠数据传输服务</li>
+<li>在应用层数据报文开始流动之前，TCP 让客户端和服务器互相交换运输层控制信息。在握手后，一个全双工 TCP 连接就在两者之间建立了。当应用程序结束报文发送时，必须拆除该连接。</li>
+<li>通信进程能够依靠 TCP, 无差错、按适当顺序交付所有发送的数据。当应用程序的一端将字节流传进套接字时，它能够依靠 TCP 将相同的字节流交付给接收方的套接字，而没有字节的丢失和冗余。</li>
+<li>TCP 也提供拥塞控制机制，当发送方和接收方之间的网络出现拥塞时，TCP 的拥塞控制机制会抑制发送进程，TCP 拥塞控制也试图限制每个 TCP 连接，使它们达到公平共享网络带宽的目的。</li>
+</ul>
+</li>
+<li>UDP 服务
+<ul>
+<li>UDP 是一种不提供不必要服务的轻量级运输协议，它仅提供最小服务。UDP 是无连接的，因此在两个进程通信前没有握手过程。</li>
+<li>UDP 协议提供一种不可靠数据传送服务，不保证报文能到达接受进程，也不保证顺序。</li>
+<li>UDP 没有拥塞控制机制，可以以任意速率向下层注入数据。</li>
+</ul>
+</li>
+<li>运输协议不提供的服务
+<ul>
+<li>吞吐量和定时保证</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>应用层协议
+<ul>
+<li>交换的报文类型，例如请求报文和响应报文。</li>
+<li>各种报文类型的语法，如报文中的各个字段及这些字段是如何描述的。</li>
+<li>字段的语义，即这些字段中的信息的含义。</li>
+<li>确定一个进程何时以及如何发送报文，对报文进行响应的规则。</li>
+</ul>
+</li>
+</ul>
+<h2 id="web-和-http">Web 和 HTTP</h2>
+<ul>
+<li>
+<p>HTTP 概况</p>
+<ul>
+<li>Web 的应用层协议是超文本传输协议 (HyperText Transfer Protocol, HTTP) , 它是 Web 的核心</li>
+<li>HTTP 定义了这些报文的结构以及客户和服务器进行报文交换的方式</li>
+<li>Web 页面 (Web page) (也叫文档)是由对象组成的。一个对象 (objeel) 只是一个文件，诸如一个 HTML 文件、一个 JPEG 图形、一个 Java 小程序或一个视频片段这样的文件，且它们可通过一个 URL 地址寻址。多数 Web 页面含有一个 HTML 基本文件 (baseHTML file) 以及几个引用对象。</li>
+<li>每个 URL 地址由两部分组成:存放对象的服务器主机名和对象的路径名</li>
+<li>Web 浏览器 (Web browser) (例如 IE 和 Firefox) 实现了 HTTP 的客户端</li>
+<li>Web 服务器 (Weh server) 实现了 HTTP 的服务器端，它用于存储 Web 对象，每个对象由 URL 寻址。</li>
+<li>HTTP 定义了 Web 客户向 Web 服务器请求 Web 页面的方式，以及服务器向客户传送 Web 页面的方式</li>
+<li>HTTP 使用 TCP 作为它的支撑运输协议</li>
+<li>因为 HTTP 服务器并不保存关于客户的任何信息，所以我们说 HTTP 是一个无状态协议</li>
+</ul>
+</li>
+<li>
+<p>非连续连接和连续连接</p>
+<ul>
+<li>考虑一个 HTML 页面，包含了额外 10 个对象</li>
+<li>采用非连续连接会产生 11 个连接，以及额外的 10 个 RTT</li>
+<li>采用连续连接会产生 1 个连接</li>
+</ul>
+</li>
+<li>
+<p>HTTP 报文格式</p>
+<ul>
+<li>
+<p>请求报文</p>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#75af00">GET</span> <span style="color:#111">/somedir/page.html</span> <span style="color:#00a8c8">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
+<span style="color:#111">Host</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">www.someschool.edu</span>
+<span style="color:#111">Connection</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">close</span>
+<span style="color:#111">User-agent</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">Mozilla/5.0</span>
+<span style="color:#111">Accept-language</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">fr</span>
+
+(data data data data data ...)
+</code></pre></div></li>
+<li>
+<p>HTTP 请求报文的第一行叫作请求行 ( request line) , 其后继的行叫作首部行 (header line)。</p>
+</li>
+<li>
+<p>请求行有 3 个字段:方法字段、URL 字段和 HTTP 版本字段。方法字段可以取几种不同的值，包括 GET、POST、HEAD 、PUT 和 DELETE 等，绝大部分的 HTTP 请求报文使用 GET 方法。当浏览器请求一个对象时，使用 GET 方法，在 URL 字段带有请求对象的标识。在本例中，该浏览器正在请求对象 /somedir/page.html。其版本字段是自解释的，在本例中，浏览器实现的是 HTTP/1.1 版本。</p>
+</li>
+<li>
+<p>首部行 Host: <a href="http://www.someschool.edu">www.someschool.edu</a> 指明了对象所在的主机。</p>
+</li>
+<li>
+<p>connection: close 首部行，该浏览器告诉服务器不要麻烦地使用持续连接，它要求服务器在发送完被请求的对象后就关闭这条连接。</p>
+</li>
+<li>
+<p>User-agent: 首部行用来指明用户代理即向服务器发送请求的浏览器的类型。这里浏览器类型是 Mozilla/5.0, 即 Firefox 浏览器。这个首部行是有用的，因为服务器可以有效地为不同类型的用户代理实际发送相同对象的不同版本。</p>
+</li>
+<li>
+<p>最后，Accept-language: 首部行表示用户想得到该对象的法语版本(如果服务器中有这样的对象的话);否则，服务器应当发送它的默认版本。Accept-language: 首部行仅是 HTTP 中可用的众多内容协商首部之一</p>
+</li>
+<li>
+<p>GET 请求也可以携带 body，但大多数服务器不会处理</p>
+</li>
+</ul>
+</li>
+<li>
+<p>响应报文</p>
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#00a8c8">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span> <span style="color:#ae81ff">200</span> <span style="color:#75af00">OK</span>
+<span style="color:#111">Connection</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">close</span>
+<span style="color:#111">Date</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">Tue, 18 Aug 2015 15:44:04 GMT</span>
+<span style="color:#111">Server</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">Apache/2.2.3 (CentOS)</span>
+<span style="color:#111">Last-Modified</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">Tue, 18 Aug 2015 15:11:03 GMT</span>
+<span style="color:#111">Content-Length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">6821</span>
+<span style="color:#111">Content-Type</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">text/html</span>
+
+(data data data data data ...)
+</code></pre></div></li>
+<li>
+<p>它有三个部分:一个初始状态行 (stalus line), 6 个 首部行 (headerline) , 然后是实体体 (entity body)。 实体体部分是报文的主要部分，即它包含了所请求的对象本身 (表示为 data data data data data ···)。状态行有 3 个字段:协议版本字段、状态码和相应状态信息。在这个例子中，状态行指示服务器正在使用 HTTP/1.1 并且一切正常。</p>
+</li>
+<li>
+<p>服务器用 Connection: close 首部行告诉客户，发送完报文后将关闭该 TCP 连接 。</p>
+</li>
+<li>
+<p>Date: 首部行指示服务器产生并发送该响应报文的日期和时间。值得一提的是，这个时间不是指对象创建或者最后修改的时间，而是服务器从它的文件系统中检索到该对象，将该对象插入响应报文，并发送该响应报文的时间。</p>
+</li>
+<li>
+<p>Server: 首部行指示该报文是由一台 Apache Web 服务器产生的、它类似于 HTTP 请求报文中的 User-agent : 首部行。</p>
+</li>
+<li>
+<p>Last-Modified: 首部行指示了对象创建或者最后修改的日期和时间。Last-Modified : 首部行对既可能在本地客户也可能在网络缓存服务器上的对象缓存来说非状态行常重要。</p>
+</li>
+<li>
+<p>Content-Length: 首部行指示了被发送对象中的字节数。</p>
+</li>
+<li>
+<p>Content-Type : 首部行指示了实体体中的对象是 HTML 文本。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>常见 HTTP 状态码和说明</p>
+<ul>
+<li>200 OK: 请求成功，信息在返回的响应报文中。</li>
+<li>301 Moved Permanently: 请求的对象已经被永久转移了，新的 URL 定义在响应报的 Location: 首部行中。客户软件将自动获取新的 URL</li>
+<li>400 Bad Request : 一个通用差错代码，指示该请求不能被服务器理解。</li>
+<li>404 Not Found: 被请求的文档不在服务器上。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Cookie</p>
+<ul>
+<li>HTTP 使用 cookie 识别客户端</li>
+<li>cookie 技术有 4 个组件:
+<ul>
+<li>在 HTTP 响应报文中的一个 cookie 首部行</li>
+<li>在 HTTP 请求报文中的一个 cookie 首部行</li>
+<li>在用户端系统中保留有一个 cookie 文件，并由用户的浏览器进行管理</li>
+<li>位于 Web 站点的一个后端数据库</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Web 缓存</p>
+<ul>
+<li>web 缓存器 (Web cache) 也叫代理服务器 (proxy server),它是能够代表初始 Web 服务器来满足 HTTP 请求的网络 实体。Web 缓存器有自己的磁盘存储空间，并在存储空间中保存最近请求过的对象的副本。</li>
+<li>通过使用内容分发网络(Content Distribution Network, CDN),Web 缓存器正在因特网中发挥着越来越重要的作用。CDN 公司在因特网上安装了许多地理上分散的缓存器，因而使大量流量实现了本地化。有多个共享的 CDN (例如 Akamai 和 Limelight) 和专用的 CDN (例如谷歌和 Netflix) 。</li>
+</ul>
+</li>
+<li>
+<p>条件 GET 方法</p>
+<ul>
+<li>针对缓存过期问题，HTTP 协议有一种机制，允许缓存器证实它的对象是最新的。这种机制就是条件 GET (conditional GET)方法。如果: 请求报文使用 GET 方法并且请求报文中包含一个 &lsquo;If-Modified-Since:&rsquo; 首部行，那么，这个 HTTP 请求报文就是一个条件 GET 请求报文。</li>
+</ul>
+</li>
+</ul>
+<h2 id="英特网中的电子邮件">英特网中的电子邮件</h2>
+<ul>
+<li>电子邮件系统有 3 个主要组成部分:用户代理 (user agent)、邮件服务器 (mail server) 和 简单邮件传输协议(Simple Mail Transfer Protocol, SMTP)</li>
+<li>邮件服务器形成了电子邮件体系结构的核心。每个接收方在其中的某个邮件服务器上有一个邮箱 (mailbox)。</li>
+<li>一个典型的邮件发送过程是: 从发送方的用户代理开始，传输到发送方的邮件服务器，再传输到接收方的邮件服务器，然后在这里被分发到接收方的邮箱中。</li>
+<li>如果的发送服务器不能将邮件交付给接受服务器，发送邮件服务器在一个报文队列中保持该报文并在以后尝试再次发送。通常每 30 分钟左右进行一次尝试; 如果几天后仍不能成功，服务器就删除该报文并以电子邮件的形式通知发送方</li>
+<li>SMTP
+<ul>
+<li>SMTP 是因特网电子邮件的核心，用于从发送方的邮件服务器发送报文到接收方的邮件服务器</li>
+<li>基本操作
+<ul>
+<li>假设 Alice 想给 Bob 发送一封简单的 ASCTI 报文 。</li>
+<li>Alice 调用她的邮件代理程序并提供 Bob 的邮件地址(例如 <a href="mailto:bob@someschool.edu">bob@someschool.edu</a>),撰写报文，然后指示用户代理发送该报文。</li>
+<li>从 Alice 的用户代理把报文发给她的邮件服务器，在那里该报文被放在报文队列中 。</li>
+<li>运行在 Alice 的邮件服务器上的 SMTP 客户端发现了报文队列中的这个报文，它就创建一个到运行在 Bob 的邮件服务器上的 SMTP 服务器的 TCP 连接 。</li>
+<li>在经过一些初始 SMTP 握手后，SMTP 客户通过该 TCP 连接发送 Alice 的报文 。</li>
+<li>在 Bob 的邮件服务器上，SMTP 的服务器端接收该报文。Bob 的邮件服务器然后将该报文放入 Bob 的邮箱中 。</li>
+<li>在 Bob 方便的时候，他调用用户代理阅读该报文。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>与 HTTP 的对比
+<ul>
+<li>HTTP 是 pull，SMTP 是 push</li>
+<li>SMTP 要求每个报文(包括它们的体)采用 7 比特 ASCII 码格式。如果某报文包含了非 7 比特 ASCII 字符(如具有重音的法文字符)或二进制数据(如图形文件)，则该报文必须按照 7 比特 ASCII 码进行编码。HTTP 数据则不受这种限制 。</li>
+<li>HTTP 把每个对象封装到它自己的 HTTP 响应报文中，而 SMTP 则把所有报文对象放在一个报文之中 。</li>
+</ul>
+</li>
+<li>邮件报文格式
+<ul>
+<li>每个首部必须含有一个 From: 首部行和一个 To: 首部行; 一个首部也许包含一个 Subject: 首部行以及其他可选的首部行。</li>
+<li>
+<pre><code class="language-eml" data-lang="eml">From: alice@crepes.fr
+To: bob@hamburger.edu
+Subject: Searching for the meaning of life.
+</code></pre></li>
+<li>在报文首部之后，紧接着一个空白行，然后是以 ACSII 格式表示的报文体</li>
+</ul>
+</li>
+<li>邮件访问协议
+<ul>
+<li>POP3 (Post Office Protocol—Version3)
+<ul>
+<li>POP3 按照三个阶段进行工作:特许(authorization)、事务处理以及更新
+<ul>
+<li>在第一个阶段即特许阶段，用户代理发送(以明文形式)用户名和口令以鉴别用户。</li>
+<li>在第二个阶段即事务处理阶段，用户代理取回报文; 同时在这个阶段用户代理还能进行如下操作，对报文做删除标记，取消报文删除标记，以及获取邮件的统计信息。</li>
+<li>在第三个阶段即更新阶段，它出现在客户发出了 quit 命令之后，目的是结束该 POP3 会话; 这时，该邮件服务器删除那些被标记为删除的报文 。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>IMAP
+<ul>
+<li>IMAP 服务器把每个报文与一个文件夹联系起来; 当报文第一次到达服务器时，它与收件人的 INBOX 文件夹相关联。收件人则能够把邮件移到 一个新的、用户创建的文件夹中，阅读邮件，删除邮件等 。</li>
+<li>IMAP 协议为用户提供了创建文件夹以及将邮件从一个文件夹移动到另一个文件夹的命令。</li>
+<li>IMAP 还为用户提供了在远程文件夹中查询邮件的命令，按指定条件去查询匹配的邮件。值得注意的是，与 POP3 不同， IMAP 服务器维护了 IMAP 会话的用户状态信息，例如，文件夹的名字以及哪些报文与哪些文件夹相关联。</li>
+<li>IMAP 的另一个重要特性是它具有允许用户代理获取报文某些部分的命令，这个特性非常有用。使用这种低带宽连接时，用户可能并不想取回他邮箱中的所有邮件</li>
+</ul>
+</li>
+<li>基于 Web 的电子邮件
+<ul>
+<li>很多公司提供了基于 Web 的电子邮件。使用这种服务，用户代理就是普通的浏览器，用户和他远程邮箱之间的通信则通过 HTTP 进行</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="dns英特网的目录服务">DNS：英特网的目录服务</h2>
+<ul>
+<li>DNS 提供的服务
+<ul>
+<li>识别主机有两种方式，通过主机名或者 IP 地址。们喜欢便于记忆的主机名标识方式，而路由器则喜欢定长的、有着层次结构的 IP 地址。为了折中这些不同的偏好，我们需要一种能进行主机名到 IP 地址转换的目录服务。这就是域名系统 (DomainNameSystem, DNS) 的主要任务</li>
+<li>DNS 是:
+<ul>
+<li>一个由分层的 DNS 服务器(DNS server)实现的分布式数据库;</li>
+<li>个使得主机能够查询分布式数据库的应用层协议。</li>
+<li>DNS 服务器通常是运行 BIND (Berkeley Internet Name Domain) 软件的 UNIX 机器。DNS 协议运行在 UDP 之上，使用 53 号端口。</li>
+</ul>
+</li>
+<li>DNS 通常是由其他应用层协议所使用的，包括 HTTP、 SMTP 和 FTP, 将用户提供的主机名解析为 IP 地址。</li>
+<li>基本过程
+<ul>
+<li>同一台用户主机上运行着 DNS 应用的客户端.</li>
+<li>浏览器从上述 URL 中抽取出主机名 <a href="http://www.somschool.edu">www.somschool.edu</a>，并将这台主机名传给 DNS 应用的客户端 。</li>
+<li>DNS 客户向 DNS 服务器发送一个包含主机名的请求 。</li>
+<li>DNS 客户最终会收到一份回答报文，其中含有对应于该主机名的 IP 地址。</li>
+<li>一旦浏览器接收到来自 DNS 的该 IP 地址，它能够向位于该 IP 地址 80 端口的 HTTP 服务器进程发起一个 TCP 连接。</li>
+</ul>
+</li>
+<li>DNS 提供的其他服务
+<ul>
+<li>主机别名</li>
+<li>邮件服务器别名</li>
+<li>负载分配</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>DNS 工作原理
+<ul>
+<li>假设运行在用户主机上的某些应用程序(如 Web 浏览器或邮件阅读器)需要将主机名转换为 IP 地址。这些应用程序将调用 DNS 的客户端，并指明需要被转换的主机名 (在很多基于 UNIX 的机器上，应用程序为了执行这种转换需要调用函数 <code>gethostbyname()</code>)。用户主机上的 DNS 接收到后，向网络中发送一个 DNS 查询报文。所有的 DNS 请求和回答报文使用 UDP 数据报经端口 53 发送。经过若干毫秒到若干秒的时延后，用户主机上的 DNS 接收到一个提供所希望映射的 DNS 回答报文。这个映射结果则被传递到调用 DNS 的应用程序 。</li>
+<li>集中式的问题
+<ul>
+<li>单点故障</li>
+<li>通信容量</li>
+<li>远距离的集中式数据库</li>
+<li>维护成本高</li>
+</ul>
+</li>
+<li>分布式、层次数据库
+<ul>
+<li>为了处理扩展性问题，DNS 使用了大量的 DNS 服务器，它们以层次方式组织，并且分布在全世界范围内</li>
+<li>DNS 服务器大概分成三种
+<ul>
+<li>根 DNS 服务器：有 400 多个根名字服务器遍及全世界。这些根名字服务器由 13 个不同的组织管理。根名字服务器提供 TLD 服务器的 IP 地址。</li>
+<li>顶级域 (DNS) 服务器。对于每个顶级域(如 com、org、net、edu 和 gov) 和所有国家的顶级域(如 uk、fr、ca 和 jp) 都有 TLD 服务器 (或服务器集群)。</li>
+<li>权威 DNS 服务器。在因特网上具有公共可访问主机(如 Web 服务器和邮件服务器)的每个组织机构必须提供公共可访问的 DNS 记录，这些记录将这些主机的名字映射为 IP 地址。一个组织机构的权威 DNS 服务器收藏了这些 DNS 记录。一个组织机构能够选择实现它自己的权威 DNS 服务器以保存这些记录; 另一种方法是，该组织能够支付费用，让这些记录存储在某个服务提供商的一个权威 DNS 服务器中。多数大学和大公司实现和维护它们自已基本和辅助(备份)的权威 DNS 服务器 。</li>
+</ul>
+</li>
+<li>查询过程
+<ul>
+<li>假设主机 cse.nyu.edu 想知道主机 gaia.cs.umss.edu 的 IP 地址。同时假设纽约大学 (NYU) 的 cse.nyu.edu 主机的本地 DNS 服务器为 dns.nyu.edu 并且 gaia.cs.umass.edu 的权威 DNS 服务器为 dns.umass.edu。</li>
+<li>主机 cse.nyu.edu 首先向它的本地 DNS 服务器 dns.nyu.edu 发送一个 DNS 查询报文。该查询报文含有被转换的主机名 gaia.cs.umass.edu。</li>
+<li>本地 DNS 服务器将该报文转发到根 DNS 服务器。该根 DNS 服务器注意到其 edu 前缀并向本地 DNS 服务器返回负责 edu 的 TLD 的 IP 地址列表。</li>
+<li>该本地 DNS 服务器则再次向这些 TLD 服务器之一发送查询报文。该 TLD 服务器注意到 umass.edu 前缀，并用权威 DNS 服务器的 IP 地址进行响应，该权威 DNS 服务器是负责马萨诸塞大学的 dns.umass.edu。</li>
+<li>最后，本地 DNS 服务器直接向 dns.umass.edu 重发查询报文，dns.umass.edu 用 gaia.cs.umass.edu 的 IP 地址行响应。</li>
+<li>这个过程中总共发送了 8 份 DNS 报文: 4 份查询报文和 4 份回答报文</li>
+<li>DNS 查询过程可能是递归或者迭代的。</li>
+</ul>
+</li>
+<li>DNS 缓存
+<ul>
+<li>为了改善时延性能并减少在因特网上到处传输的 DNS 报文数量 DNS 广泛使用了缓存技术</li>
+<li>在一个请求链中，当某 DNS 服务器接收一个 DNS 回答(例如，包含某主机名到 IP 地址的映射)时，它能将映射缓存在本地存储器中。当另一台服务器对同一域名发起查询时就可以做到及时响应。该存储不是永久的，一段时间后失效。</li>
+<li>因为缓存，除了少数 DNS 查询以外，根服务器被绕过了。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>DNS 记录和报文
+<ul>
+<li>DNS 记录
+<ul>
+<li>共同实现 DNS 分布式数据库的所有 DNS 服务器存储了资源记录 (Resource Record, RR), RR 提供了主机名到 IP 地址的映射。每个 DNS 回答报文包含了一条或多条资源记录。</li>
+<li>资源记录是一个包含了下列字段的 4 元组: (Name, Value, Type, TTL)，TTL 是过期时间，Name 和 Value 的值取决于 Type</li>
+<li>如果 Type=A, 则 Name 是主机名，Value 是该主机名对应的 IP 地址。因此，一条类型为 A 的资源记录提供了标准的主机名到 IP 地址的映射。例如 (relayl. bar.foo.com, 145.37.93.126, A) 就是一条类型 A 记录。</li>
+<li>如果 Type=NS, 则 Name 是个域(如 foo. com),而 Value 是个知道如何获得该域中主机 IP 地址的权威 DNS 服务器的主机名。这个记录用于沿着查询链来路由 DNS 查询。例如 (foo.com, dns.foo.com, NS) 就是一条类型为 NS 的记录。</li>
+<li>如果 Type=CNAME, 则 Value 是别名为 Name 的主机对应的规范主机名。该记录能够向查询的主机提供一个主机名对应的规范主机名，例如 (foo.com, relay1.bai.foo.com, CNAME) 就是一条 CNAME 类型的记录 。</li>
+<li>如果 Type=MX、则 Value 是个别名为 Name 的邮件服务器的规范主机名。举例来说，(foo.com, mail.bar.foo.com, MX) 就是一条 MX 记录。 MX 记录允许邮件服器主机名具有简单的别名。 值得注意的是，通过使用 MX 记录，一个公司的邮件服务器和其他服务器(如它的 Web 服务器)可以使用相同的别名。 为了获得邮件服务器的规范主机名，DNS 客户应当请求一条 MX 记录; 而为了获得其他服务器的规范主机名，DNS 客户应当请求 CNAME 记录 。</li>
+</ul>
+</li>
+<li>DNS 报文
+<ul>
+<li>前 12 个字节是首部区域，其中有几个字段。第一个字段(标识符)是一个 16 比 特的数，用于标识该查询。</li>
+<li>问题区域包含着正在进行的查询信息。该区域包括: 名字字段，包含正在被查询的主机名字; 类型字段，指出有关该名字的正被询问的间题类型，例如主机地址是与一个名字相关联(类型 A)还是与某个名字的邮件服务器相关联(类型 MX) 。</li>
+<li>回答区域包含了对最初请求的名字的资源记录。 前面讲过每个资源记录中有 Type (如 A、NS、CNAME 和 MX) 字段、 Value 字段和 TTL 字段。在回答报文的回答区域中可以包含多条 RR, 因此一个主机名能够有多个 IP 地址</li>
+<li>权威区域包含了其他权威服务器的记录</li>
+<li>附加区域包含了其他有帮助的记录</li>
+</ul>
+</li>
+<li>在 DNS 数据库中插人记录
+<ul>
+<li>当你向某些注册登记机构注册域名 networkutopia.com 时，需要向该机构提供你的基本和辅助权威 DNS 服务器的名字和 IP 地址，假定该名字和 IP 地址 是 dns1.networkutopia.com 和 dns2.nehvorkutopia.com 及 212.212. 212.1 和 212.212.212.2。对这两个权威 DNS 服务器的每一个，该注册登记机构确保将一个类型 NS 和一个类型 A 的记录输入 TLD com 服务器 。特别是对于用于 networkutopia.com 的基本权威服务器，该注册登记机构将下列两条资 源记录插入该 DNS 系统中。</li>
+<li>你还必须确保用于 Web 服务器 <a href="http://www.networkutopia.com">www.networkutopia.com</a> 的类型 A 资源记录和用于邮件服务器 mail.networkutopia.com 的类型 MX 资源记录被输入你的权威 DNS 服务器中</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="p2p-文件分发">P2P 文件分发</h2>
+<ul>
+<li>使用 P2P 体系结构，对总是打开的基础设施服务器有最小的(或者没有)依赖。成对间歇连接的主机(称为对等方)彼此直接通信。这些对等方并不为服务提供商所拥有，而是受用户控制的桌面计算机和膝上计算机。</li>
+<li>P2P 体系结构的扩展性
+<ul>
+<li>当一个对等方接收到某些文件数据，它能够使用自己的上载能力重新将数据分发给其他对等方。</li>
+<li>P2P 网络中最小分发时间比上数量总是小于 1</li>
+</ul>
+</li>
+<li>BitTorrent
+<ul>
+<li>BitTorrent 是一种用于文件分发的流行 P2P 协议</li>
+<li>参与一个特定文件分发的所有对等方的集合被称为一个洪流(torrent)。在一个洪流中的对等方彼此下载等长度的文件块 (chunk), 典型的块长度为 256KB。当一个对等方首次加入一个洪流时，它没有块 。随着时间的流逝，它累积了越来越多的块 。当它下载块时，也为其他对等方上载了多个块 。一旦某对等方获得了整个文件，它也许(自私地)离开洪流，或(大公无私地)留在该洪流中并继续向其他对等方上载块 。同时，任何对等方可能在任何时候仅具有块的子集就离开该洪流，并在以后重新加入该洪流中 。</li>
+<li>每个洪流具有一个基础设施节点，称为追踪器 (tracker) 。 当一个对等方加入某洪流时，它向追踪器注册自己，并周期性地通知追踪器它仍在该洪流中。 以这种方式，追踪器跟踪参与在洪流中的对等方。 一个给定的洪流可能在任何时刻具有数以百计或数以千计的对等方 。</li>
+<li>当一个新的对等方 Alice 加入该洪流时， 追踪器随机地从参与对等方的集合中选择对等方的一个子集(为了具体起见，设有 50 个对等方)，并将这 50 个对等方的 IP 地址发送给 Alice。 Alice 持有对等方的这张列表，试图与该列表上的所有对等方创建并行的 TCP 连接。我们称所有这样与 Alice 成功地创建一个 TCP 连接的对等方为&quot;邻近对等方”</li>
+<li>在任何给定的时间，每个对等方将具有来自该文件的块的子集，并且不同的对等方具有不同的子集。 Alice 周期性地(经 TCP 连接)询问每个邻近对等方它们所具有的块列表。如果 Alice 具有 L 个不同的邻居，她将获得 L 个块列表。 有了这个信息， Alice 将对她当前还没有的块发出请求 (仍通过 TCP 连接) 。</li>
+<li>决定请求哪些块的过程中， Alice 使用一种称为最稀缺优先 (raiest first)的技术。 这种技术的思路是，针对她没有的块在她的邻居中决定最稀缺的块(最稀缺的块就是那些在她的邻居中副本数量最少的块)，并首先请求那些最稀缺的块。 这样，最稀缺块得到更为迅速的重新分发，其目标是(大致地)均衡每个块在洪流中的副本数量。</li>
+</ul>
+</li>
+<li>分布式散列表
+<ul>
+<li>分布式散列表是一种简单的数据库，其数据库记录分布在一个 P2P 系统的多个对等方上。DHT 得到了广泛实现(如在 BitTorrent 中)，并成为大量研究的主题。</li>
+</ul>
+</li>
+</ul>
+<h2 id="视频流和内容分发网络">视频流和内容分发网络</h2>
+<ul>
+<li>因特网视频
+<ul>
+<li>网络上存在大量的视频，用户按需向服务器请求观看视频，根据用户自身的网络状况，可以请求不同版本的视频。</li>
+</ul>
+</li>
+<li>HTTP 流和 DASH (Dynamic Adaptive Streaming over HTTP)
+<ul>
+<li>在 HTTP 流中，视频只是存储在 HTTP 服务器中作为一个普通的文件，每个文件有一个特定的 URL</li>
+<li>在 DASH 中，视频编码为几个不同的版本，其中每个版本具有不同的比特率 ，对应于不同的质量水平。客户动态地请求来自不同版本且长度为几秒的视频段数据块。当可用带宽量较高时，客户自然地选择来自高速率版本的块; 当可用带宽量较低时，客户自然地选择来自低速率版本的块。客户用 HTTP GET 请求报文一次选择一个不同的块</li>
+</ul>
+</li>
+<li>内容分发网络
+<ul>
+<li>为了应对向分布于全世界的用户分发巨量视频数据的挑战，几乎所有主要的视频流公司都利用内容分发网 (Content Distribution Network, CDN)。CDN 管理分布在多个地理位置上的服务器，在它的服务器中存储视频(和其他类型的 Web 内容，包括文档、图片和音频)的副本，并且所有试图将每个用户请求定向到一个将提供最好的用户体验的 CDN 位置。CDN 可以是专用 CDN (private CDN),即它由内容提供商自己所拥有; 例如，谷歌的 CDN 分发 YouTube 视频和其他类型的内容。另一种 CDN 可以是第三方 CON (third-party CON), 它代表多个内容提供商分发内容; Akamai、Limelight 和 level-3 都运行第三方 CDN。</li>
+<li>CDN 通常采用两种不同的服务器安置原则
+<ul>
+<li>深入。第一个原则由 Akamai 首创，该原则是通过在遍及全球的接入 ISP 中部署服务器集群来深入到 ISP 的接入网中。其目标是靠近端用户，通过减少端用户和 CDN 集群之间(内容从这里收到)链路和路由器的数量，从而改善了用户感受的时延和吞吐量。因为这种高度分布式设计，维护和管理集群的任务成为挑战。</li>
+<li>邀请做客。第二个设计原则由 Limelight 和许多其他 CDN 公司所采用，该原则是通过在少量关键位置建造大集群来邀请到 ISP 做客。不是将集群放在接入 ISP 中，这些 CDN 通常将它们的集群放置在因特网交换点 (IXP)。与深入设计原则相比，邀请做客设计通常产生较低的维护和管理开销，可能以对端用户的较高时延和较低吞吐量为代价。</li>
+</ul>
+</li>
+<li>事实上，许多 CDN 没有将视频推入它们的集群，而是使用一种简单的拉策略:如果客户向一个未存储该视频的集群请求某视频，则该集群检索该视频(从某中心仓库或者从另一个集群)，向客户流式传输视频时的同时在本地存储一个副本。类似于因特网缓存，当某集群存储器变满时,它删除不经常请求的视频 。</li>
+</ul>
+</li>
+<li>CDN 操作
+<ul>
+<li>用户访问位于 NetCinema 的 Web 网页。</li>
+<li>当用户点击链接 video.netcinema.com/6Y7B23V 时，该用户主机发送了一个对于 video.netcinema.com 的 DNS 请求。</li>
+<li>用户的本地 DNS 服务器 (LDNS) 将该 DNS 请求中继到一台用于 NetCinema 的权威 DNS 服务器，该服务器观察到主机名 video.netcinema.com 中的字符串 &lsquo;video&rsquo;。 为了将 该 DNS 请求移交给 KingCDN, NetCinema 权威 DNS 服务器并不返回一个 IP 地址，而是向 DNS 返回 一个 KingCDN 域的主机名,如 a1105.kingcdn.com。</li>
+<li>从这时起，DNS 请求进入了 KingCDN 专用 DNS 基础设施。用户的 LDNS 则发送第二个请求，此时是对 a1105.kingcdn. com 的 DNS 请求，KingCDN 的 DNS 系统最终向 LDNS 返回 KingCDN 内容服务器的 IP 地址。所以正是在这里，在 KingCDN 的 DNS 系统中，指定了 CDN 服务器、客户将能够从这台服务器接收到它的内容。</li>
+<li>LONS 向用户主机转发内容服务 CDN 节点的 IP 地址 。</li>
+<li>一旦客户收到 KingCDN 内容服务器的 IP 地址. 它与具有该 IP 地址的服务器创建了一条直接的 TCP 连接，并且发出对该视频的 HTTP GET 请求。如果使用了 DASH, 服务器将首先向客户发送具有 URL 列表的告示文件，每个 URL 对应视频的每个版本，并且客户将动态地选择来自不同版本的块。</li>
+</ul>
+</li>
+<li>集群选择策略
+<ul>
+<li>地理位置优先</li>
+<li>时延优先</li>
+</ul>
+</li>
+</ul>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+  <div class="footer-left">
+    Copyright  &copy; 2021  Y.CH.Y 
+    
+    
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">首页</a></li>
+         
+        <li><a href="/algorithm">算法</a></li>
+         
+        <li><a href="/about">关于</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>

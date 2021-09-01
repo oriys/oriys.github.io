@@ -730,9 +730,9 @@
     
     <item>
       <title>Java并发编程实战::结构化并发应用程序</title>
-      <link>/cs/jcip_structuring_concurrent_applicatoins/</link>
+      <link>/notes/jcip_structuring_concurrent_applicatoins/</link>
       <pubDate>Thu, 26 Aug 2021 21:28:22 +0800</pubDate>
-      <guid>/cs/jcip_structuring_concurrent_applicatoins/</guid>
+      <guid>/notes/jcip_structuring_concurrent_applicatoins/</guid>
       <description>&lt;h2 id=&#34;任务执行&#34;&gt;任务执行&lt;/h2&gt;
 &lt;p&gt;通过把应用程序的工作分解到多个任务中，可以简化程序的组织结构，提供一种自然的事务边界来优化错误恢复过程，以及提供一种自然的并行工作结构来提升并发性。&lt;/p&gt;
 &lt;h3 id=&#34;在线程中执行任务&#34;&gt;在线程中执行任务&lt;/h3&gt;
@@ -867,9 +867,9 @@
     
     <item>
       <title>Java并发编程实战::基础知识</title>
-      <link>/cs/jcip_baisc/</link>
+      <link>/notes/jcip_baisc/</link>
       <pubDate>Mon, 23 Aug 2021 15:55:20 +0800</pubDate>
-      <guid>/cs/jcip_baisc/</guid>
+      <guid>/notes/jcip_baisc/</guid>
       <description>&lt;h2 id=&#34;线程安全性&#34;&gt;线程安全性&lt;/h2&gt;
 &lt;p&gt;线程安全性的定义：当多个线程访问某个类时，这个类始终都能表现出正确的行为，那么就称这个类时线程安全的。在线程安全性的定义中，最核心的概念就是正确性。&lt;/p&gt;
 &lt;h3 id=&#34;原子性&#34;&gt;原子性&lt;/h3&gt;
@@ -3449,9 +3449,9 @@ final 修饰类：不能被继承&lt;/p&gt;
     
     <item>
       <title>CMU::15-445/645::Tree Indexes 笔记</title>
-      <link>/cs/cmu_15_445_06_note/</link>
+      <link>/notes/cmu_15_445_06_note/</link>
       <pubDate>Thu, 05 Aug 2021 08:41:54 +0800</pubDate>
-      <guid>/cs/cmu_15_445_06_note/</guid>
+      <guid>/notes/cmu_15_445_06_note/</guid>
       <description>&lt;h2 id=&#34;树形索引第一部分&#34;&gt;树形索引第一部分&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/RK21nhh.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;表索引&#34;&gt;表索引&lt;/h3&gt;
@@ -3519,9 +3519,9 @@ final 修饰类：不能被继承&lt;/p&gt;
     
     <item>
       <title>CMU::15-445/645::Hash Tables 笔记</title>
-      <link>/cs/cmu_15_445_05_note/</link>
+      <link>/notes/cmu_15_445_05_note/</link>
       <pubDate>Wed, 04 Aug 2021 16:20:16 +0800</pubDate>
-      <guid>/cs/cmu_15_445_05_note/</guid>
+      <guid>/notes/cmu_15_445_05_note/</guid>
       <description>&lt;h2 id=&#34;散列表&#34;&gt;散列表&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/4jDQyjR.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;数据结构&#34;&gt;数据结构&lt;/h3&gt;
@@ -3628,9 +3628,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>CMU::15-445/645::Buffer Pools 笔记</title>
-      <link>/cs/cmu_15_445_04_note/</link>
+      <link>/notes/cmu_15_445_04_note/</link>
       <pubDate>Tue, 03 Aug 2021 23:17:58 +0800</pubDate>
-      <guid>/cs/cmu_15_445_04_note/</guid>
+      <guid>/notes/cmu_15_445_04_note/</guid>
       <description>&lt;h2 id=&#34;缓冲池和内存管理&#34;&gt;缓冲池和内存管理&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/whxG5l3.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
@@ -3703,9 +3703,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>CMU::15-445/645::Database Storage 笔记</title>
-      <link>/cs/cmu_15_445_03_note/</link>
+      <link>/notes/cmu_15_445_03_note/</link>
       <pubDate>Mon, 02 Aug 2021 09:07:42 +0800</pubDate>
-      <guid>/cs/cmu_15_445_03_note/</guid>
+      <guid>/notes/cmu_15_445_03_note/</guid>
       <description>&lt;h2 id=&#34;数据库存储第一部分&#34;&gt;数据库存储第一部分&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/qhTvXK1.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;存储&#34;&gt;存储&lt;/h3&gt;
@@ -3970,9 +3970,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>CMU::15-445/645::Advanced SQL 笔记</title>
-      <link>/cs/cmu_15_445_02_note/</link>
+      <link>/notes/cmu_15_445_02_note/</link>
       <pubDate>Sun, 01 Aug 2021 09:07:42 +0800</pubDate>
-      <guid>/cs/cmu_15_445_02_note/</guid>
+      <guid>/notes/cmu_15_445_02_note/</guid>
       <description>&lt;h2 id=&#34;高级-sql&#34;&gt;高级 SQL&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/flXoQVk.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;关系语言&#34;&gt;关系语言&lt;/h3&gt;
@@ -4206,9 +4206,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>CMU::15-445/645::Relational Model 笔记</title>
-      <link>/cs/cmu_15_445_01_note/</link>
+      <link>/notes/cmu_15_445_01_note/</link>
       <pubDate>Sat, 31 Jul 2021 01:51:13 +0800</pubDate>
-      <guid>/cs/cmu_15_445_01_note/</guid>
+      <guid>/notes/cmu_15_445_01_note/</guid>
       <description>&lt;h2 id=&#34;关系模型和关系代数&#34;&gt;关系模型和关系代数&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/0W1wSYn.png&#34; alt=&#34;0W1wSYn&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;数据库&#34;&gt;数据库&lt;/h3&gt;
@@ -4363,9 +4363,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>现代操作系统::操作系统设计</title>
-      <link>/cs/modern_operating_systems_operating_system_design/</link>
+      <link>/notes/modern_operating_systems_operating_system_design/</link>
       <pubDate>Fri, 23 Jul 2021 02:11:01 +0800</pubDate>
-      <guid>/cs/modern_operating_systems_operating_system_design/</guid>
+      <guid>/notes/modern_operating_systems_operating_system_design/</guid>
       <description>&lt;h2 id=&#34;操作系统设计&#34;&gt;操作系统设计&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;设计问题的本质
@@ -4597,9 +4597,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>现代操作系统::安全</title>
-      <link>/cs/modern_operating_systems_security/</link>
+      <link>/notes/modern_operating_systems_security/</link>
       <pubDate>Thu, 22 Jul 2021 02:11:01 +0800</pubDate>
-      <guid>/cs/modern_operating_systems_security/</guid>
+      <guid>/notes/modern_operating_systems_security/</guid>
       <description>&lt;h2 id=&#34;安全&#34;&gt;安全&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;环境安全
@@ -4805,9 +4805,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>现代操作系统::多处理器系统</title>
-      <link>/cs/modern_operating_systems_multiple_processor_systems/</link>
+      <link>/notes/modern_operating_systems_multiple_processor_systems/</link>
       <pubDate>Wed, 21 Jul 2021 02:11:01 +0800</pubDate>
-      <guid>/cs/modern_operating_systems_multiple_processor_systems/</guid>
+      <guid>/notes/modern_operating_systems_multiple_processor_systems/</guid>
       <description>&lt;h2 id=&#34;多处理器系统&#34;&gt;多处理器系统&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;多处理机
@@ -5146,9 +5146,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>现代操作系统::虚拟化与云</title>
-      <link>/cs/modern_operating_systems_virtualization_and_the_cloud/</link>
+      <link>/notes/modern_operating_systems_virtualization_and_the_cloud/</link>
       <pubDate>Tue, 20 Jul 2021 02:11:01 +0800</pubDate>
-      <guid>/cs/modern_operating_systems_virtualization_and_the_cloud/</guid>
+      <guid>/notes/modern_operating_systems_virtualization_and_the_cloud/</guid>
       <description>&lt;h2 id=&#34;虚拟化与云&#34;&gt;虚拟化与云&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;介绍
@@ -5307,9 +5307,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>现代操作系统::死锁</title>
-      <link>/cs/modern_operating_systems_deadlock/</link>
+      <link>/notes/modern_operating_systems_deadlock/</link>
       <pubDate>Mon, 19 Jul 2021 02:11:01 +0800</pubDate>
-      <guid>/cs/modern_operating_systems_deadlock/</guid>
+      <guid>/notes/modern_operating_systems_deadlock/</guid>
       <description>&lt;h2 id=&#34;死锁&#34;&gt;死锁&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;资源
@@ -5452,9 +5452,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>现代操作系统::输入/输出</title>
-      <link>/cs/modern_operating_systems_input_output/</link>
+      <link>/notes/modern_operating_systems_input_output/</link>
       <pubDate>Sun, 18 Jul 2021 02:11:01 +0800</pubDate>
-      <guid>/cs/modern_operating_systems_input_output/</guid>
+      <guid>/notes/modern_operating_systems_input_output/</guid>
       <description>&lt;h2 id=&#34;输入输出&#34;&gt;输入/输出&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;I/O 硬件原理
@@ -5931,9 +5931,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>现代操作系统::文件系统</title>
-      <link>/cs/modern_operating_systems_file_system/</link>
+      <link>/notes/modern_operating_systems_file_system/</link>
       <pubDate>Sat, 17 Jul 2021 11:01:25 +0800</pubDate>
-      <guid>/cs/modern_operating_systems_file_system/</guid>
+      <guid>/notes/modern_operating_systems_file_system/</guid>
       <description>&lt;h2 id=&#34;文件系统&#34;&gt;文件系统&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;文件
@@ -6178,9 +6178,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>现代操作系统::内存管理</title>
-      <link>/cs/modern_operating_systems_memory_manage/</link>
+      <link>/notes/modern_operating_systems_memory_manage/</link>
       <pubDate>Fri, 16 Jul 2021 09:39:03 +0800</pubDate>
-      <guid>/cs/modern_operating_systems_memory_manage/</guid>
+      <guid>/notes/modern_operating_systems_memory_manage/</guid>
       <description>&lt;h2 id=&#34;内存管理&#34;&gt;内存管理&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;操作系统中管理分层存储器体系的部分称为存储管理器 (memory manager)。它的任务是有效地管理内存，即记录哪些内存是正在使用的，哪些内存是空闲的，在进程需要时为其分配内存，在进程使用完后释放内存。&lt;/li&gt;
@@ -6624,9 +6624,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>现代操作系统::进程与线程</title>
-      <link>/cs/modern_operating_systems_process_and_thread/</link>
+      <link>/notes/modern_operating_systems_process_and_thread/</link>
       <pubDate>Thu, 15 Jul 2021 09:39:03 +0800</pubDate>
-      <guid>/cs/modern_operating_systems_process_and_thread/</guid>
+      <guid>/notes/modern_operating_systems_process_and_thread/</guid>
       <description>&lt;h2 id=&#34;进程与线程&#34;&gt;进程与线程&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;进程
@@ -7147,9 +7147,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>现代操作系统::引论</title>
-      <link>/cs/modern_operating_systems_introduction/</link>
+      <link>/notes/modern_operating_systems_introduction/</link>
       <pubDate>Wed, 14 Jul 2021 09:39:03 +0800</pubDate>
-      <guid>/cs/modern_operating_systems_introduction/</guid>
+      <guid>/notes/modern_operating_systems_introduction/</guid>
       <description>&lt;h2 id=&#34;引论&#34;&gt;引论&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;什么是操作系统
@@ -7573,9 +7573,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>计算机网络自顶向下方法::链路层与局域网</title>
-      <link>/cs/computer_network_a_topdown_approach_06/</link>
+      <link>/notes/computer_network_a_topdown_approach_06/</link>
       <pubDate>Fri, 18 Jun 2021 20:28:06 +0800</pubDate>
-      <guid>/cs/computer_network_a_topdown_approach_06/</guid>
+      <guid>/notes/computer_network_a_topdown_approach_06/</guid>
       <description>&lt;h2 id=&#34;链路层概述&#34;&gt;链路层概述&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;在本章中为方便讨论，将运行链路层协议协议的任何设备均称为节点。节点包括主机、路由器、交换机和 WiFi 接入点 。我们也把沿着通信路径连接相邻节点的通信信道称为链路。为了将一个数据报从源主机传输到目的主机，数据报必须通过沿端到端路径上的各段链路传输。&lt;/li&gt;
@@ -7702,9 +7702,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>计算机网络自顶向下方法::网络层::控制平面</title>
-      <link>/cs/computer_network_a_topdown_approach_05/</link>
+      <link>/notes/computer_network_a_topdown_approach_05/</link>
       <pubDate>Thu, 17 Jun 2021 20:28:06 +0800</pubDate>
-      <guid>/cs/computer_network_a_topdown_approach_05/</guid>
+      <guid>/notes/computer_network_a_topdown_approach_05/</guid>
       <description>&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;转发表和流表计算、维护和安装的两种方法
@@ -7916,9 +7916,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>计算机网络自顶向下方法::网络层::数据平面</title>
-      <link>/cs/computer_network_a_topdown_approach_04/</link>
+      <link>/notes/computer_network_a_topdown_approach_04/</link>
       <pubDate>Thu, 17 Jun 2021 20:27:06 +0800</pubDate>
-      <guid>/cs/computer_network_a_topdown_approach_04/</guid>
+      <guid>/notes/computer_network_a_topdown_approach_04/</guid>
       <description>&lt;h2 id=&#34;网络层概述&#34;&gt;网络层概述&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;路由器的数据平面的主要作用是从其输入链路向其输出链路转发数据报；控制平面的主要作用是协调这些本地的每路由器转发动作，使得数据报沿着源和目的地主机之间的路由器路径最终进行端到端传送。&lt;/li&gt;
@@ -8193,9 +8193,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>计算机网络自顶向下方法::运输层</title>
-      <link>/cs/computer_network_a_topdown_approach_03/</link>
+      <link>/notes/computer_network_a_topdown_approach_03/</link>
       <pubDate>Wed, 16 Jun 2021 20:27:06 +0800</pubDate>
-      <guid>/cs/computer_network_a_topdown_approach_03/</guid>
+      <guid>/notes/computer_network_a_topdown_approach_03/</guid>
       <description>&lt;h2 id=&#34;概述和运输层服务&#34;&gt;概述和运输层服务&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;运输层协议为运行在不同主机上的应用进程之间提供了逻辑通信。应用进程使用运输层提供的逻辑通信功能彼此发送报文，而无须考虑承载这些报文的物理基础设施的细节。&lt;/li&gt;
@@ -8624,9 +8624,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>计算机网络自顶向下方法::应用层</title>
-      <link>/cs/computer_network_a_topdown_approach_02/</link>
+      <link>/notes/computer_network_a_topdown_approach_02/</link>
       <pubDate>Wed, 16 Jun 2021 20:26:06 +0800</pubDate>
-      <guid>/cs/computer_network_a_topdown_approach_02/</guid>
+      <guid>/notes/computer_network_a_topdown_approach_02/</guid>
       <description>&lt;h2 id=&#34;应用层协议原理&#34;&gt;应用层协议原理&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;应用层协议原理
@@ -9132,9 +9132,9 @@ Subject: Searching for the meaning of life.
     
     <item>
       <title>计算机网络自顶向下方法::计算机网络和因特网</title>
-      <link>/cs/computer_network_a_topdown_approach_01/</link>
+      <link>/notes/computer_network_a_topdown_approach_01/</link>
       <pubDate>Tue, 15 Jun 2021 20:26:06 +0800</pubDate>
-      <guid>/cs/computer_network_a_topdown_approach_01/</guid>
+      <guid>/notes/computer_network_a_topdown_approach_01/</guid>
       <description>&lt;h2 id=&#34;计算机网络和因特网&#34;&gt;计算机网络和因特网&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;什么是因特网
@@ -9386,27 +9386,6 @@ Subject: Searching for the meaning of life.
     
     <item>
       <title>编程::深入理解Java虚拟机</title>
-      <link>/notes/understand_the_jvm/</link>
-      <pubDate>Sat, 24 Apr 2021 19:12:26 +0800</pubDate>
-      <guid>/notes/understand_the_jvm/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_01/&#34;&gt;深入理解 Java 虚拟机::走进 Java&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_02/&#34;&gt;深入理解 Java 虚拟机::自动内存管理&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_03/&#34;&gt;深入理解 Java 虚拟机::垃圾收集器与内存分配策略&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_04/&#34;&gt;深入理解 Java 虚拟机::虚拟机性能监控、故障处理工具&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_05/&#34;&gt;深入理解 Java 虚拟机::调优案例分析与实战&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_06/&#34;&gt;深入理解 Java 虚拟机::类文件结构&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_07/&#34;&gt;深入理解 Java 虚拟机::虚拟机类加载机制&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_08/&#34;&gt;深入理解 Java 虚拟机::虚拟机字节码执行引擎&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_09/&#34;&gt;深入理解 Java 虚拟机::类加载及执行子系统的案例与实战&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_10/&#34;&gt;深入理解 Java 虚拟机::前段编译与优化&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_11/&#34;&gt;深入理解 Java 虚拟机::后端编译与优化&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_12/&#34;&gt;深入理解 Java 虚拟机::Java 内存模型与线程&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;../../notes/understand_the_jvm_13/&#34;&gt;深入理解 Java 虚拟机::线程安全和锁优化&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>编程::深入理解Java虚拟机</title>
       <link>/reading/understand_the_jvm/</link>
       <pubDate>Sat, 24 Apr 2021 19:12:26 +0800</pubDate>
       <guid>/reading/understand_the_jvm/</guid>
@@ -9428,9 +9407,9 @@ Subject: Searching for the meaning of life.
     
     <item>
       <title>深入理解Java虚拟机::线程安全和锁优化</title>
-      <link>/cs/understand_the_jvm_13/</link>
+      <link>/notes/understand_the_jvm_13/</link>
       <pubDate>Mon, 12 Apr 2021 22:10:56 +0800</pubDate>
-      <guid>/cs/understand_the_jvm_13/</guid>
+      <guid>/notes/understand_the_jvm_13/</guid>
       <description>&lt;h2 id=&#34;线程安全和锁优化&#34;&gt;线程安全和锁优化&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;线程安全
@@ -9574,9 +9553,9 @@ Subject: Searching for the meaning of life.
     
     <item>
       <title>深入理解Java虚拟机::Java 内存模型与线程</title>
-      <link>/cs/understand_the_jvm_12/</link>
+      <link>/notes/understand_the_jvm_12/</link>
       <pubDate>Sun, 11 Apr 2021 22:10:56 +0800</pubDate>
-      <guid>/cs/understand_the_jvm_12/</guid>
+      <guid>/notes/understand_the_jvm_12/</guid>
       <description>&lt;h2 id=&#34;java-内存模型与线程&#34;&gt;Java 内存模型与线程&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Amdahl 定律通过系统中并行化与串行化的比重来描述多处理器系统能获得的运算加速能力，摩尔定律则用于描述处理器晶体管数量与运行效率之间的发展关系。这两个定律的更替代表了近年来硬件发展从追求处理器频率到追求多核心并行处理的发展过程。&lt;/li&gt;
@@ -9805,9 +9784,9 @@ Subject: Searching for the meaning of life.
     
     <item>
       <title>深入理解Java虚拟机::后端编译与优化</title>
-      <link>/cs/understand_the_jvm_11/</link>
+      <link>/notes/understand_the_jvm_11/</link>
       <pubDate>Sat, 10 Apr 2021 22:10:56 +0800</pubDate>
-      <guid>/cs/understand_the_jvm_11/</guid>
+      <guid>/notes/understand_the_jvm_11/</guid>
       <description>&lt;h2 id=&#34;后端编译与优化&#34;&gt;后端编译与优化&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -9940,9 +9919,9 @@ Subject: Searching for the meaning of life.
     
     <item>
       <title>深入理解Java虚拟机::前段编译与优化</title>
-      <link>/cs/understand_the_jvm_10/</link>
+      <link>/notes/understand_the_jvm_10/</link>
       <pubDate>Fri, 09 Apr 2021 22:10:56 +0800</pubDate>
-      <guid>/cs/understand_the_jvm_10/</guid>
+      <guid>/notes/understand_the_jvm_10/</guid>
       <description>&lt;h2 id=&#34;前段编译与优化&#34;&gt;前段编译与优化&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;前端编译器：把 *.java 文件转变成 *.class 文件&lt;/li&gt;
@@ -10040,9 +10019,9 @@ Subject: Searching for the meaning of life.
     
     <item>
       <title>深入理解Java虚拟机::类加载及执行子系统的案例与实战</title>
-      <link>/cs/understand_the_jvm_09/</link>
+      <link>/notes/understand_the_jvm_09/</link>
       <pubDate>Thu, 08 Apr 2021 22:10:56 +0800</pubDate>
-      <guid>/cs/understand_the_jvm_09/</guid>
+      <guid>/notes/understand_the_jvm_09/</guid>
       <description>&lt;h2 id=&#34;类加载及执行子系统的案例与实战&#34;&gt;类加载及执行子系统的案例与实战&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Tomcat:正统的类加载器架构
@@ -10091,9 +10070,9 @@ Subject: Searching for the meaning of life.
     
     <item>
       <title>深入理解Java虚拟机::虚拟机字节码执行引擎</title>
-      <link>/cs/understand_the_jvm_08/</link>
+      <link>/notes/understand_the_jvm_08/</link>
       <pubDate>Wed, 07 Apr 2021 22:10:56 +0800</pubDate>
-      <guid>/cs/understand_the_jvm_08/</guid>
+      <guid>/notes/understand_the_jvm_08/</guid>
       <description>&lt;h2 id=&#34;虚拟机字节码执行引擎&#34;&gt;虚拟机字节码执行引擎&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;概述
@@ -10275,9 +10254,9 @@ Subject: Searching for the meaning of life.
     
     <item>
       <title>深入理解Java虚拟机::虚拟机类加载机制</title>
-      <link>/cs/understand_the_jvm_07/</link>
+      <link>/notes/understand_the_jvm_07/</link>
       <pubDate>Tue, 06 Apr 2021 22:10:56 +0800</pubDate>
-      <guid>/cs/understand_the_jvm_07/</guid>
+      <guid>/notes/understand_the_jvm_07/</guid>
       <description>&lt;h2 id=&#34;虚拟机类加载机制&#34;&gt;虚拟机类加载机制&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;概述
@@ -10491,9 +10470,9 @@ Subject: Searching for the meaning of life.
     
     <item>
       <title>深入理解Java虚拟机::类文件结构</title>
-      <link>/cs/understand_the_jvm_06/</link>
+      <link>/notes/understand_the_jvm_06/</link>
       <pubDate>Mon, 05 Apr 2021 22:10:56 +0800</pubDate>
-      <guid>/cs/understand_the_jvm_06/</guid>
+      <guid>/notes/understand_the_jvm_06/</guid>
       <description>&lt;h2 id=&#34;类文件结构&#34;&gt;类文件结构&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;实现语言无关性的基础是虚拟机和字节码存储格式&lt;/li&gt;
@@ -10754,9 +10733,9 @@ Subject: Searching for the meaning of life.
     
     <item>
       <title>深入理解Java虚拟机::调优案例分析与实战</title>
-      <link>/cs/understand_the_jvm_05/</link>
+      <link>/notes/understand_the_jvm_05/</link>
       <pubDate>Sun, 04 Apr 2021 22:10:56 +0800</pubDate>
-      <guid>/cs/understand_the_jvm_05/</guid>
+      <guid>/notes/understand_the_jvm_05/</guid>
       <description>&lt;h2 id=&#34;调优案例分析与实战&#34;&gt;调优案例分析与实战&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;大内存硬件上的程序部署策略
@@ -10827,9 +10806,9 @@ Subject: Searching for the meaning of life.
     
     <item>
       <title>深入理解Java虚拟机::虚拟机性能监控、故障处理工具</title>
-      <link>/cs/understand_the_jvm_04/</link>
+      <link>/notes/understand_the_jvm_04/</link>
       <pubDate>Sat, 03 Apr 2021 22:10:56 +0800</pubDate>
-      <guid>/cs/understand_the_jvm_04/</guid>
+      <guid>/notes/understand_the_jvm_04/</guid>
       <description>&lt;h2 id=&#34;虚拟机性能监控故障处理工具&#34;&gt;虚拟机性能监控、故障处理工具&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;jps
@@ -10883,9 +10862,9 @@ Subject: Searching for the meaning of life.
     
     <item>
       <title>深入理解Java虚拟机::垃圾收集器与内存分配策略</title>
-      <link>/cs/understand_the_jvm_03/</link>
+      <link>/notes/understand_the_jvm_03/</link>
       <pubDate>Fri, 02 Apr 2021 22:10:56 +0800</pubDate>
-      <guid>/cs/understand_the_jvm_03/</guid>
+      <guid>/notes/understand_the_jvm_03/</guid>
       <description>&lt;h2 id=&#34;垃圾收集器与内存分配策略&#34;&gt;垃圾收集器与内存分配策略&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;垃圾回收需要完成的三件事
@@ -11282,9 +11261,9 @@ Subject: Searching for the meaning of life.
     
     <item>
       <title>深入理解Java虚拟机::自动内存管理</title>
-      <link>/cs/understand_the_jvm_02/</link>
+      <link>/notes/understand_the_jvm_02/</link>
       <pubDate>Thu, 01 Apr 2021 22:10:56 +0800</pubDate>
-      <guid>/cs/understand_the_jvm_02/</guid>
+      <guid>/notes/understand_the_jvm_02/</guid>
       <description>&lt;h2 id=&#34;自动内存管理&#34;&gt;自动内存管理&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;程序计数器
@@ -11452,9 +11431,9 @@ Subject: Searching for the meaning of life.
     
     <item>
       <title>深入理解Java虚拟机::走进 Java</title>
-      <link>/cs/understand_the_jvm_01/</link>
+      <link>/notes/understand_the_jvm_01/</link>
       <pubDate>Wed, 31 Mar 2021 22:10:56 +0800</pubDate>
-      <guid>/cs/understand_the_jvm_01/</guid>
+      <guid>/notes/understand_the_jvm_01/</guid>
       <description>&lt;h2 id=&#34;走进-java&#34;&gt;走进 Java&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;发展史
@@ -11790,9 +11769,9 @@ Subject: Searching for the meaning of life.
     
     <item>
       <title>数据密集型应用系统设计::派生数据</title>
-      <link>/cs/designing_data_intensive_application_derived_data/</link>
+      <link>/notes/designing_data_intensive_application_derived_data/</link>
       <pubDate>Mon, 22 Mar 2021 21:57:43 +0800</pubDate>
-      <guid>/cs/designing_data_intensive_application_derived_data/</guid>
+      <guid>/notes/designing_data_intensive_application_derived_data/</guid>
       <description>&lt;h2 id=&#34;派生数据&#34;&gt;派生数据&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;记录系统
@@ -12930,9 +12909,9 @@ Subject: Searching for the meaning of life.
     
     <item>
       <title>数据密集型应用系统设计::分布式数据系统</title>
-      <link>/cs/designing_data_intensive_application_distributed_data/</link>
+      <link>/notes/designing_data_intensive_application_distributed_data/</link>
       <pubDate>Sun, 21 Mar 2021 21:57:43 +0800</pubDate>
-      <guid>/cs/designing_data_intensive_application_distributed_data/</guid>
+      <guid>/notes/designing_data_intensive_application_distributed_data/</guid>
       <description>&lt;h2 id=&#34;分布式数据系统&#34;&gt;分布式数据系统&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;扩展性&lt;/li&gt;
@@ -14555,9 +14534,9 @@ Subject: Searching for the meaning of life.
     
     <item>
       <title>数据密集型应用系统设计::数据系统基础</title>
-      <link>/cs/designing_data_intensive_application_foundations_of_data_systems/</link>
+      <link>/notes/designing_data_intensive_application_foundations_of_data_systems/</link>
       <pubDate>Sat, 20 Mar 2021 21:57:43 +0800</pubDate>
-      <guid>/cs/designing_data_intensive_application_foundations_of_data_systems/</guid>
+      <guid>/notes/designing_data_intensive_application_foundations_of_data_systems/</guid>
       <description>&lt;h2 id=&#34;数据系统基础&#34;&gt;数据系统基础&lt;/h2&gt;
 &lt;h3 id=&#34;可靠可扩展与可维护的应用系统&#34;&gt;可靠、可扩展与可维护的应用系统&lt;/h3&gt;
 &lt;ul&gt;
