@@ -7851,9 +7851,77 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;h2 id=&#34;使-tcp-连接安全ssl&#34;&gt;使 TCP 连接安全：SSL&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;TCP 的这种强化版本通常被称为安全套接字层(Secure Socket Layer, 修改的版本被称为运输层安全性(Transport Layer Secu1ily, SSL)。SSL 版本 3 的一个稍加修改的版本被称为运输层安全性（Transport Layer Securily，TLS), 已经由 IETF 标准化。&lt;/li&gt;
+&lt;li&gt;握手
+&lt;ul&gt;
+&lt;li&gt;Bob 与 Alice 创建一条 TCP 连接&lt;/li&gt;
+&lt;li&gt;验证 Alice 是真实的 Alice&lt;/li&gt;
+&lt;li&gt;发送给 Alice 一个主密钥，Bob 和 Alice 待用该主密钥生成 SSL 会话所需的所有对称密钥&lt;/li&gt;
+&lt;li&gt;一旦创建了 TCP 连接， Bob 就向 Alice 发送一个 hello 报文 。Alice 则用她的证书进行响应，证书中包含了她的公钥。因为该证书已被某 CA 证实过，Bob 明白无误地知道该公钥属于 Alice。&lt;/li&gt;
+&lt;li&gt;Bob 产生一个主密钥 (MS)(该 MS 将仅用于这个 SSL 会话），用 Alice 的公钥加密该 MS 以生成加密的主密钥 (EMS),并将该 EMS 发送给 Alice&lt;/li&gt;
+&lt;li&gt;Alice 用她的私钥解密该 EMS 从而得到该 MS&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;SSL 握手
+&lt;ul&gt;
+&lt;li&gt;客户发送它支持的密码算法的列表，连同一个客户的不重数。&lt;/li&gt;
+&lt;li&gt;从该列表中，服务器选择一种对称算法（例如 AES)、一 种公钥算法（例如具有特定密钥长度的 RSA)和一种 MAC 算法。它把它的选择以及证书和一个服务器不重数返回给客户。&lt;/li&gt;
+&lt;li&gt;客户验证该证书，提取服务器的公钥，生成一个前主密钥（Pre-Master Secret,PMS），用服务器的公钥加密该 PMS, 并将加密的 PMS 发送给服务器 。&lt;/li&gt;
+&lt;li&gt;使用相同的密钥导出函数（就像 SSL 标准定义的那样），客户和服务器独立地从 PMS 和不重数中计算出主密钥(Master Secret,MS)。然后该 MS 被切片以生成两个密码和两个 MAC 密钥。此外，当选择的对称密码应用于 CBC(例如 3DES 或 AES),则两个初始化向量(Initialization Vector,IV)也从该 MS 获得，这两个 IV 分别用于该连接的两端。自此以后，客户和服务器之间发送的所有报文均被加密和鉴别（使用 MAC)。&lt;/li&gt;
+&lt;li&gt;客户发送所有握手报文的一个 MAC 。&lt;/li&gt;
+&lt;li&gt;服务器发送所有握手报文的一个 MAC 。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;关闭连接
+&lt;ul&gt;
+&lt;li&gt;在某个时刻，Bob 或者 Alice 将要终止 SSL 会话。一个方法是让 Bob 通过直接终止底层的 TCP 连接来结束该 SSL 会话，这就是说，通过让 Bob 向 Alice 发送一个 TCP FIN 报文段。但是这种幼稚设计为截断攻击(truncation attack)创造了条件，Trudy 再一次介入一个进行中的 SSL 会话中，并用 TCP FIN 过早地结束了该会话。如果 Trudy 这样做的话，Alice 将会认为她收到了 Bob 的所有数据，而实际上她仅收到了其中的一部分。对这个问题的解决方法是，在类型字段中指出该记录是否是用于终止该 SSL 会话的。（尽管 SSL 类型是以明文形式发送的，但在接收方使用了记录的 MAC 对它进行了鉴别。）通过包括这样一个字段，如果 Alice 在收到一个关闭 SSL 记录之前突然收到了一个 TCP FIN,她可能知道正在进行着某些耍花招的事情。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;网络层安全性ipsec-和虚拟安全网&#34;&gt;网络层安全性：IPsec 和虚拟安全网&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;IP 安全(IP Security)协议更常被称为 IPsec,它为网络层提供了安全性。IPsec 为任意两个网络层实体（包括主机和路由器）之间的 IP 数据报提供了安全。如我们很快要描述的那样，许多机构（公司、政府部门、非营利组织等等）使用 IPsec 创建了运行在公共因特网之上的虚拟专用网 (Vir1ual Private, Network, VPN) 。&lt;/li&gt;
+&lt;li&gt;除了机密性，网络层安全协议潜在地能够提供其他安全性服务。例如，它能提供源鉴别，使得接收实体能够验证安全数据报的源。网络层安全协议能够提供数据完整性，使得接收实体能够核对在数据报传输过程中可能出现的任何篡改。网络层安全服务也能提供防止重放攻击功能，这意味着 Bob 能够检测任何攻击者可能插入的任何冗余数据报。我们将很快看到 IPsec 的确提供了用于些安全服务的机制，即机密性、源鉴别、数据完整性和重放攻击防护。&lt;/li&gt;
+&lt;li&gt;IPsec 和虚拟专用网
+&lt;ul&gt;
+&lt;li&gt;当总部中的一台主机向某旅馆中的某销售员发送一个 IP 数据报时，总部中的网关路由器将经典的 IPv4 转换成为 IPsec 数据报，然后将该 IPsec 数据报转发进因特网。该 IPsec 数据报实际上具有传统的 IPv4 首部，因此在公共因特网中的路由器处理该数据报，仿佛它对路由器而言是一个普通的 IPv4 数据报。IPsec 数据报的载荷包括了一个 IPsec 首部，该首部被用于 IPsec 处理；此外，IPsec 数据报的载荷是被加密的。当该 IPsec 数据报到达销售员的便携机时，便携机的操作系统解密载荷并提供其他安全服务，如验证数据完整性，并将解密的载荷传递给上层协议（例如，给 TCP 或 UDP)。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&#34;运行安全性防火墙和入侵检测系统&#34;&gt;运行安全性：防火墙和入侵检测系统&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;防火墙(firewall)是一个硬件和软件的结合体，它将一个机构的内部网络与整个因特网隔离开，允许一些数据分组通过而阻止另一些分组通过。防火墙允许网络管理员控制外部和被管理网络内部资源之间的访问，这种控制是通过管理流人和流出这些资源的流量实现的。
+&lt;ul&gt;
+&lt;li&gt;从外部到内部和从内部到外部的所有流量都通过防火墙。&lt;/li&gt;
+&lt;li&gt;仅被授权的流量（由本地安全策略定义）允许通过。&lt;/li&gt;
+&lt;li&gt;防火墙自身免于渗透。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;防火墙分类
+&lt;ul&gt;
+&lt;li&gt;传统分组过滤器 (traditional packet filter)
+&lt;ul&gt;
+&lt;li&gt;一个机构通常都有一个将其内部网络与其 ISP(并因此与更大的公共因特网相连）相连的网关路由器。所有离开和进入内部网络的流量都要经过这个路由器，而这个路由器正是分组过滤(packet filtering)出现的地方。分组过滤器独立地检查每个数据报，然后基于管理员特定的规则决定该数据报应当允许通过还是应当丢弃。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;状态过滤器 (slateful filter)
+&lt;ul&gt;
+&lt;li&gt;传统的防火墙无法管理连接，大量的连接仍然能使内部网络崩溃。状态过滤器通过用一张连接表来跟踪所有进行中的 TCP 连接来解决这个问题。防火墙能够通过观察三次握手(SYN、SYN ACK 和 ACK)来观察一条新连接的开始；而且当它看到该连接的一个 FIN 分组时，它能够观察该连接的结束，当防火墙经过比如说 60 秒还没有看到该连接的任何活动性，它也能够（保守地）假设该连接结束了。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;应用程序网关
+&lt;ul&gt;
+&lt;li&gt;为了得到更高水平的安全性，防火墙必须把分组过滤器和应用程序网关结合起来。应 用程序网关除了看 IP/TCP/UDP 首部外，还基于应用数据来做策略决定。一个应用程序网关 (application gateway )是一个应用程序特定的服务器，所有应用程序数据（入和出的）都必须通过它。多个应用程序网关可以在同一主机上运行，但是每一个网关都是有自己的进程的单独服务器 。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;入侵检测程序
+&lt;ul&gt;
+&lt;li&gt;为了检测多种攻击类型，我们需要执行深度分组检查(deep packet inspection),即查看首部字段以外部分，深入查看分组携带的实际应用数据。应用程序网关经常做深度分组检查。而一个应用程序网关仅对一种特定的应用程序执行这种检查。&lt;/li&gt;
+&lt;li&gt;入侵检测设备仅能够检查所有通过它传递的分组的首部（类似于分组过滤器 ），而且能执行深度分组检查（与分组过滤器不同）的设备。当这样的设备观察到一个可疑的分组时，或一系列可疑的分组时，它能够防止这些分组进入该机构网络。或者仅仅是因为觉得该活动可疑，该设备虽说能够让这些分组通过，但要向网络管理员发出告警，网络管理员然后密切关注该流量并采取适当的行动。 当观察到潜在恶意流量时能产生告警的设备称为入侵检测系统 (Intrusion Detection System,IDS)。滤除可疑流量的设备称为入侵防止系统(Intrusion Prevention System , IPS) 。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 </description>
     </item>
     
