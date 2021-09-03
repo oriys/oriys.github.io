@@ -7,24 +7,24 @@
   <link rel="preload" href="/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>  | Y.CH.Y</title>
+  <title> Java 并发知识大纲 | Y.CH.Y</title>
   <link rel = 'canonical' href = '/notes/java_concurrency/'>
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
-  <meta property="og:title" content="" />
-<meta property="og:description" content="Java 并发知识大纲 实现多线程 继承 Thread 类，重写 run 方法 class Demo extends Thread { @Override public void run() { System.out.println(&#34;implements thread via thread class&#34;); } } 实现 Runnable 接口，并把 Runnable 对象传给 Thread 类 class Demo implements Runnable { @Override public void run() { System.out.println(&#34;implements thread via runnable interface&#34;); } } 对比 实现 Runnable 更好，解耦方法实现，可以节省资源，利用线程池，无需与 Thread 类的创建销毁绑定，Thread 有单继承限制。
+  <meta property="og:title" content="Java 并发知识大纲" />
+<meta property="og:description" content="实现多线程 继承 Thread 类，重写 run 方法 class Demo extends Thread { @Override public void run() { System.out.println(&#34;implements thread via thread class&#34;); } } 实现 Runnable 接口，并把 Runnable 对象传给 Thread 类 class Demo implements Runnable { @Override public void run() { System.out.println(&#34;implements thread via runnable interface&#34;); } } 对比 实现 Runnable 更好，解耦方法实现，可以节省资源，利用线程池，无需与 Thread 类的创建销毁绑定，Thread 有单继承限制。
 本质 /** * If this thread was constructed using a separate * {@code Runnable} run object, then that * {@code Runnable} object&#39;s {@code run} method is called; * otherwise, this method does nothing and returns." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/notes/java_concurrency/" /><meta property="article:section" content="notes" />
-
-
+<meta property="article:published_time" content="2021-09-03T22:16:38+08:00" />
+<meta property="article:modified_time" content="2021-09-03T22:16:38+08:00" />
 
 
   <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="Java 并发知识大纲 实现多线程 继承 Thread 类，重写 run 方法 class Demo extends Thread { @Override public void run() { System.out.println(&#34;implements thread via thread class&#34;); } } 实现 Runnable 接口，并把 Runnable 对象传给 Thread 类 class Demo implements Runnable { @Override public void run() { System.out.println(&#34;implements thread via runnable interface&#34;); } } 对比 实现 Runnable 更好，解耦方法实现，可以节省资源，利用线程池，无需与 Thread 类的创建销毁绑定，Thread 有单继承限制。
+<meta name="twitter:title" content="Java 并发知识大纲"/>
+<meta name="twitter:description" content="实现多线程 继承 Thread 类，重写 run 方法 class Demo extends Thread { @Override public void run() { System.out.println(&#34;implements thread via thread class&#34;); } } 实现 Runnable 接口，并把 Runnable 对象传给 Thread 类 class Demo implements Runnable { @Override public void run() { System.out.println(&#34;implements thread via runnable interface&#34;); } } 对比 实现 Runnable 更好，解耦方法实现，可以节省资源，利用线程池，无需与 Thread 类的创建销毁绑定，Thread 有单继承限制。
 本质 /** * If this thread was constructed using a separate * {@code Runnable} run object, then that * {@code Runnable} object&#39;s {@code run} method is called; * otherwise, this method does nothing and returns."/>
 
   
@@ -102,8 +102,7 @@ if (!doNotTrack) {
 
   <div class="content" itemprop="articleBody">
   
-    <h1 id="java-并发知识大纲">Java 并发知识大纲</h1>
-<h2 id="实现多线程">实现多线程</h2>
+    <h2 id="实现多线程">实现多线程</h2>
 <h3 id="继承-thread-类重写-run-方法">继承 Thread 类，重写 run 方法</h3>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Demo</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">Thread</span> <span style="color:#f92672">{</span>
 
@@ -190,6 +189,20 @@ if (!doNotTrack) {
 <span style="color:#f92672">}</span>
 
 </code></pre></div><h2 id="启动线程的方法">启动线程的方法</h2>
+<h3 id="start方法的含义"><code>start()</code>方法的含义</h3>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#00a8c8">new</span> <span style="color:#111">Thread</span><span style="color:#f92672">(()-&gt;{</span>
+            <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#d88200">&#34;RUN&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">}).</span><span style="color:#75af00">start</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>调用<code>start()</code>方法通知 JVM 有资源时启动新线程</p>
+<p>不能重复执行<code>start()</code>方法，启动新线程时检查线程状态，加入新线程，调用<code>start0()</code>方法</p>
+<h3 id="run方法的含义"><code>run()</code>方法的含义</h3>
+<p>在主线程中直接执行 Runnable 的<code>run()</code>方法，相当于执行一个普通方法</p>
+<p>在 Thread 类中执行调用<code>start()</code>方法，再由<code>start()</code>方法调用<code>run()</code>方法，从而创建多线程</p>
+<h3 id="停止线程">停止线程</h3>
 <h2 id="线程状态">线程状态</h2>
 <h2 id="thread-和-object-类中和线程相关的重要方法">Thread 和 Object 类中和线程相关的重要方法</h2>
 <h2 id="线程属性">线程属性</h2>
