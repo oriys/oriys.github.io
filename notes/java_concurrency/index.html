@@ -202,7 +202,99 @@ if (!doNotTrack) {
 <h3 id="run方法的含义"><code>run()</code>方法的含义</h3>
 <p>在主线程中直接执行 Runnable 的<code>run()</code>方法，相当于执行一个普通方法</p>
 <p>在 Thread 类中执行调用<code>start()</code>方法，再由<code>start()</code>方法调用<code>run()</code>方法，从而创建多线程</p>
-<h3 id="停止线程">停止线程</h3>
+<h3 id="正确停止线程">正确停止线程</h3>
+<p>使用<code>interrupt()</code>来通知，而不是强制停止线程，把停止的实现的交给线程本身，是否相应中断，何时中断。</p>
+<p>停止线程的时机：执行完毕，未捕获异常</p>
+<ol>
+<li>普通情况，用轮训判断<code>isInterrupted()</code>是否被中断</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+        <span style="color:#111">Thread</span> <span style="color:#111">thread</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Thread</span><span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+            <span style="color:#00a8c8">long</span> <span style="color:#111">sum</span> <span style="color:#f92672">=</span> <span style="color:#111">0L</span><span style="color:#f92672">;</span>
+            <span style="color:#00a8c8">for</span> <span style="color:#f92672">(</span><span style="color:#00a8c8">long</span> <span style="color:#111">i</span> <span style="color:#f92672">=</span> <span style="color:#111">0</span><span style="color:#f92672">;</span> <span style="color:#111">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">10_000_000_000_000_000L</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span><span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">currentThread</span><span style="color:#f92672">().</span><span style="color:#75af00">isInterrupted</span><span style="color:#f92672">();</span> <span style="color:#111">i</span><span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+                <span style="color:#111">sum</span> <span style="color:#f92672">+=</span> <span style="color:#111">i</span><span style="color:#f92672">;</span>
+                <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">sum</span> <span style="color:#f92672">&gt;</span> <span style="color:#111">10_000_000_000_000_000L</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">currentThread</span><span style="color:#f92672">().</span><span style="color:#75af00">interrupt</span><span style="color:#f92672">();</span>
+                    <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">i</span><span style="color:#f92672">);</span>
+                <span style="color:#f92672">}</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">sum</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">});</span>
+        <span style="color:#111">thread</span><span style="color:#f92672">.</span><span style="color:#75af00">start</span><span style="color:#f92672">();</span>
+        <span style="color:#111">thread</span><span style="color:#f92672">.</span><span style="color:#75af00">join</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><ol start="2">
+<li>线程阻塞</li>
+</ol>
+<p>当线程在 sleep 时执行它的<code>interrupt()</code>方法，sleep 会响应中断，抛出异常</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+        <span style="color:#111">Thread</span> <span style="color:#111">thread</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Thread</span><span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+            <span style="color:#00a8c8">long</span> <span style="color:#111">sum</span> <span style="color:#f92672">=</span> <span style="color:#111">0L</span><span style="color:#f92672">;</span>
+            <span style="color:#00a8c8">try</span> <span style="color:#f92672">{</span>
+                <span style="color:#00a8c8">while</span> <span style="color:#f92672">(</span><span style="color:#111">sum</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">300</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span><span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">currentThread</span><span style="color:#f92672">().</span><span style="color:#75af00">isInterrupted</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+                    <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">sum</span> <span style="color:#f92672">%</span> <span style="color:#111">100</span> <span style="color:#f92672">==</span> <span style="color:#111">0</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                        <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">sum</span><span style="color:#f92672">);</span>
+                    <span style="color:#f92672">}</span>
+                    <span style="color:#111">sum</span><span style="color:#f92672">++;</span>
+                <span style="color:#f92672">}</span>
+                <span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">sleep</span><span style="color:#f92672">(</span><span style="color:#111">1000</span><span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span> <span style="color:#00a8c8">catch</span> <span style="color:#f92672">(</span><span style="color:#111">InterruptedException</span> <span style="color:#111">e</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#111">e</span><span style="color:#f92672">.</span><span style="color:#75af00">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">});</span>
+        <span style="color:#111">thread</span><span style="color:#f92672">.</span><span style="color:#75af00">start</span><span style="color:#f92672">();</span>
+        <span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">sleep</span><span style="color:#f92672">(</span><span style="color:#111">100</span><span style="color:#f92672">);</span>
+        <span style="color:#111">thread</span><span style="color:#f92672">.</span><span style="color:#75af00">interrupt</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>输出</p>
+<pre tabindex="0"><code class="language-log" data-lang="log">0
+100
+200
+java.lang.InterruptedException: sleep interrupted
+	at java.base/java.lang.Thread.sleep(Native Method)
+	at me.ychy.Main.lambda$main$0(Main.java:16)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+</code></pre><ol start="3">
+<li>每次迭代后阻塞</li>
+</ol>
+<p>不再需要判断是否发生中断，而是由异常处理来捕获发生的异常，捕获异常后会清空中断标记位，需要二次中断</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">Main</span> <span style="color:#f92672">{</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#75af00">main</span><span style="color:#f92672">(</span><span style="color:#111">String</span><span style="color:#f92672">[]</span> <span style="color:#111">args</span><span style="color:#f92672">)</span> <span style="color:#00a8c8">throws</span> <span style="color:#111">InterruptedException</span> <span style="color:#f92672">{</span>
+        <span style="color:#111">Thread</span> <span style="color:#111">thread</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Thread</span><span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+            <span style="color:#00a8c8">long</span> <span style="color:#111">sum</span> <span style="color:#f92672">=</span> <span style="color:#111">0L</span><span style="color:#f92672">;</span>
+            <span style="color:#00a8c8">while</span> <span style="color:#f92672">(</span><span style="color:#111">sum</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">10000</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#00a8c8">if</span> <span style="color:#f92672">(</span><span style="color:#111">sum</span> <span style="color:#f92672">%</span> <span style="color:#111">100</span> <span style="color:#f92672">==</span> <span style="color:#111">0</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#111">System</span><span style="color:#f92672">.</span><span style="color:#75af00">out</span><span style="color:#f92672">.</span><span style="color:#75af00">println</span><span style="color:#f92672">(</span><span style="color:#111">sum</span><span style="color:#f92672">);</span>
+                <span style="color:#f92672">}</span>
+                <span style="color:#00a8c8">try</span> <span style="color:#f92672">{</span>
+                    <span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">sleep</span><span style="color:#f92672">(</span><span style="color:#111">10</span><span style="color:#f92672">);</span>
+                <span style="color:#f92672">}</span> <span style="color:#00a8c8">catch</span> <span style="color:#f92672">(</span><span style="color:#111">InterruptedException</span> <span style="color:#111">e</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#111">e</span><span style="color:#f92672">.</span><span style="color:#75af00">printStackTrace</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span>
+                <span style="color:#111">sum</span><span style="color:#f92672">++;</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">});</span>
+        <span style="color:#111">thread</span><span style="color:#f92672">.</span><span style="color:#75af00">start</span><span style="color:#f92672">();</span>
+        <span style="color:#111">Thread</span><span style="color:#f92672">.</span><span style="color:#75af00">sleep</span><span style="color:#f92672">(</span><span style="color:#111">5000</span><span style="color:#f92672">);</span>
+        <span style="color:#111">thread</span><span style="color:#f92672">.</span><span style="color:#75af00">interrupt</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>中断处理</p>
+<ol>
+<li>
+<p>在方法签名中抛出中断异常，交给上层调用者处理</p>
+</li>
+<li>
+<p>恢复在 catch 块中恢复中断</p>
+</li>
+<li>
+<p>不应该屏蔽中断</p>
+</li>
+</ol>
 <h2 id="线程状态">线程状态</h2>
 <h2 id="thread-和-object-类中和线程相关的重要方法">Thread 和 Object 类中和线程相关的重要方法</h2>
 <h2 id="线程属性">线程属性</h2>
