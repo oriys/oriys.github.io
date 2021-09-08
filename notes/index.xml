@@ -323,6 +323,32 @@ B 树优点：如果在 B 树中查找的数据离根节点近，由于 B 树节
 &lt;p&gt;&lt;a href=&#34;https://blog.csdn.net/JYL15732624861/article/details/82493502&#34;&gt;MySQL 复制原理_焦玉丽-CSDN 博客&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;什么时候索引会失效&#34;&gt;什么时候索引会失效？&lt;/h3&gt;
 &lt;h3 id=&#34;如何解决主从不一致的问题&#34;&gt;如何解决主从不一致的问题？&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;问题
+&lt;ul&gt;
+&lt;li&gt;log 传送开销较小，主要是消费 relay log 耗时&lt;/li&gt;
+&lt;li&gt;备库性能不如主库&lt;/li&gt;
+&lt;li&gt;备库承担了很多分析 SQL&lt;/li&gt;
+&lt;li&gt;主库的长事务未提交&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;处理方法
+&lt;ul&gt;
+&lt;li&gt;主备使用相同配置的机器&lt;/li&gt;
+&lt;li&gt;备库关闭 log 实时沙盘&lt;/li&gt;
+&lt;li&gt;增加从库数量，应对分析 SQL&lt;/li&gt;
+&lt;li&gt;binlog 传送至大数据系统，供分析&lt;/li&gt;
+&lt;li&gt;大事务一分多&lt;/li&gt;
+&lt;li&gt;多线程分配执行 relay log
+&lt;ul&gt;
+&lt;li&gt;按表分发&lt;/li&gt;
+&lt;li&gt;按行分发&lt;/li&gt;
+&lt;li&gt;按事务组分发&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;数据库主键索引和唯一索引有什么区别&#34;&gt;数据库主键索引和唯一索引有什么区别？&lt;/h3&gt;
 &lt;h3 id=&#34;简述-binlogundo-log-和-redo-log-的作用&#34;&gt;简述 binlog、undo log 和 redo log 的作用&lt;/h3&gt;
 &lt;ul&gt;
@@ -357,6 +383,7 @@ B 树优点：如果在 B 树中查找的数据离根节点近，由于 B 树节
 &lt;/ul&gt;
 &lt;h3 id=&#34;模糊查询是如何实现的&#34;&gt;模糊查询是如何实现的？&lt;/h3&gt;
 &lt;h3 id=&#34;mysql-中-varchar-和-char-的区别是什么&#34;&gt;MySQL 中 varchar 和 char 的区别是什么？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://dev.mysql.com/doc/refman/8.0/en/char.html&#34;&gt;MySQL :: MySQL 8.0 Reference Manual :: 11.3.2 The CHAR and VARCHAR Types&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;如何设计数据库压测方案&#34;&gt;如何设计数据库压测方案？&lt;/h3&gt;
 &lt;h3 id=&#34;数据库查询中左外连接和内连接的区别是什么&#34;&gt;数据库查询中左外连接和内连接的区别是什么？&lt;/h3&gt;
 &lt;h3 id=&#34;并发事务会引发哪些问题如何解决&#34;&gt;并发事务会引发哪些问题？如何解决？&lt;/h3&gt;
@@ -367,7 +394,7 @@ B 树优点：如果在 B 树中查找的数据离根节点近，由于 B 树节
 &lt;h3 id=&#34;建立了三个单列索引-a-b-c-查询-where-a---b---c--索引会起作用吗&#34;&gt;建立了三个单列索引 a, b, c 查询 where a = ? b = ? c = ？索引会起作用吗？&lt;/h3&gt;
 &lt;p&gt;会&lt;/p&gt;
 &lt;h3 id=&#34;数据库反范式设计会出现什么问题&#34;&gt;数据库反范式设计会出现什么问题？&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.kancloud.cn/thinkphp/mysql-design-optimalize/39324&#34;&gt;数据中设计中的范式与反范式 · Mysql设计与优化专题 · 看云&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.kancloud.cn/thinkphp/mysql-design-optimalize/39324&#34;&gt;数据中设计中的范式与反范式 · Mysql 设计与优化专题 · 看云&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;mysql-锁的种类&#34;&gt;MySQL 锁的种类&lt;/h3&gt;
 &lt;p&gt;按照粒度分，MySQL 锁可以分为全局锁、表级锁、行锁&lt;/p&gt;
 &lt;ul&gt;

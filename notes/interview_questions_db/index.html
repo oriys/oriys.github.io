@@ -347,6 +347,32 @@ B 树优点：如果在 B 树中查找的数据离根节点近，由于 B 树节
 <p><a href="https://blog.csdn.net/JYL15732624861/article/details/82493502">MySQL 复制原理_焦玉丽-CSDN 博客</a></p>
 <h3 id="什么时候索引会失效">什么时候索引会失效？</h3>
 <h3 id="如何解决主从不一致的问题">如何解决主从不一致的问题？</h3>
+<ul>
+<li>问题
+<ul>
+<li>log 传送开销较小，主要是消费 relay log 耗时</li>
+<li>备库性能不如主库</li>
+<li>备库承担了很多分析 SQL</li>
+<li>主库的长事务未提交</li>
+</ul>
+</li>
+<li>处理方法
+<ul>
+<li>主备使用相同配置的机器</li>
+<li>备库关闭 log 实时沙盘</li>
+<li>增加从库数量，应对分析 SQL</li>
+<li>binlog 传送至大数据系统，供分析</li>
+<li>大事务一分多</li>
+<li>多线程分配执行 relay log
+<ul>
+<li>按表分发</li>
+<li>按行分发</li>
+<li>按事务组分发</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h3 id="数据库主键索引和唯一索引有什么区别">数据库主键索引和唯一索引有什么区别？</h3>
 <h3 id="简述-binlogundo-log-和-redo-log-的作用">简述 binlog、undo log 和 redo log 的作用</h3>
 <ul>
@@ -381,6 +407,7 @@ B 树优点：如果在 B 树中查找的数据离根节点近，由于 B 树节
 </ul>
 <h3 id="模糊查询是如何实现的">模糊查询是如何实现的？</h3>
 <h3 id="mysql-中-varchar-和-char-的区别是什么">MySQL 中 varchar 和 char 的区别是什么？</h3>
+<p><a href="https://dev.mysql.com/doc/refman/8.0/en/char.html">MySQL :: MySQL 8.0 Reference Manual :: 11.3.2 The CHAR and VARCHAR Types</a></p>
 <h3 id="如何设计数据库压测方案">如何设计数据库压测方案？</h3>
 <h3 id="数据库查询中左外连接和内连接的区别是什么">数据库查询中左外连接和内连接的区别是什么？</h3>
 <h3 id="并发事务会引发哪些问题如何解决">并发事务会引发哪些问题？如何解决？</h3>
@@ -391,7 +418,7 @@ B 树优点：如果在 B 树中查找的数据离根节点近，由于 B 树节
 <h3 id="建立了三个单列索引-a-b-c-查询-where-a---b---c--索引会起作用吗">建立了三个单列索引 a, b, c 查询 where a = ? b = ? c = ？索引会起作用吗？</h3>
 <p>会</p>
 <h3 id="数据库反范式设计会出现什么问题">数据库反范式设计会出现什么问题？</h3>
-<p><a href="https://www.kancloud.cn/thinkphp/mysql-design-optimalize/39324">数据中设计中的范式与反范式 · Mysql设计与优化专题 · 看云</a></p>
+<p><a href="https://www.kancloud.cn/thinkphp/mysql-design-optimalize/39324">数据中设计中的范式与反范式 · Mysql 设计与优化专题 · 看云</a></p>
 <h3 id="mysql-锁的种类">MySQL 锁的种类</h3>
 <p>按照粒度分，MySQL 锁可以分为全局锁、表级锁、行锁</p>
 <ul>
