@@ -1085,6 +1085,13 @@
       <guid>/notes/interview_questions_db/</guid>
       <description>&lt;h2 id=&#34;数据库&#34;&gt;数据库&lt;/h2&gt;
 &lt;h3 id=&#34;mysql-为什么使用-b-树来作索引对比-b-树它的优点和缺点是什么&#34;&gt;MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？&lt;/h3&gt;
+&lt;p&gt;由于 mysql 通常将数据存放在磁盘中，读取数据就会产生磁盘 IO 消耗。而 B+ 树的非叶子节点中不保存数据，B 树中非叶子节点会保存数据，通常一个节点大小会设置为磁盘页大小，这样 B+树每个节点可放更多的 key，B 树则更少。这样就造成了，B 树的高度会比 B+ 树更高，从而会产生更多的磁盘 IO 消耗。&lt;/p&gt;
+&lt;p&gt;B+ 树叶子节点构成链表，更利用范围查找和排序。而 B 树进行范围查找和排序则要对树进行递归遍历&lt;/p&gt;
+&lt;p&gt;B+ 树层级更少，查找更快
+B+ 树查询速度稳定：由于 B+ 树所有数据都存储在叶子节点，所以查询任意数据的次数都是树的高度 h
+B+ 树有利于范围查找
+B+ 树全节点遍历更快：所有叶子节点构成链表，全节点扫描，只需遍历这个链表即可
+B 树优点：如果在 B 树中查找的数据离根节点近，由于 B 树节点中保存有数据，那么这时查询速度比 B+树快。&lt;/p&gt;
 &lt;h3 id=&#34;数据库的事务隔离级别有哪些各有哪些优缺点&#34;&gt;数据库的事务隔离级别有哪些？各有哪些优缺点？&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;读未提交
@@ -1117,22 +1124,102 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;简述乐观锁以及悲观锁的区别以及使用场景&#34;&gt;简述乐观锁以及悲观锁的区别以及使用场景&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;悲观锁
+&lt;ul&gt;
+&lt;li&gt;每次获取数据的时候，都会担心数据被修改，所以每次获取数据的时候都会进行加锁，确保在自己使用的过程中数据不会被别人修改，使用完成后进行数据解锁。由于数据进行加锁，期间对该数据进行读写的其他线程都会进行等待。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;乐观锁
+&lt;ul&gt;
+&lt;li&gt;每次获取数据的时候，都不会担心数据被修改，所以每次获取数据的时候都不会进行加锁，但是在更新数据的时候需要判断该数据是否被别人修改过。如果数据被其他线程修改，则不进行数据更新，如果数据没有被其他线程修改，则进行数据更新。由于数据没有进行加锁，期间该数据可以被其他线程进行读写操作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;使用场景
+&lt;ul&gt;
+&lt;li&gt;悲观锁
+&lt;ul&gt;
+&lt;li&gt;比较适合写入操作比较频繁的场景，如果出现大量的读取操作，每次读取的时候都会进行加锁，这样会增加大量的锁的开销，降低了系统的吞吐量&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;乐观锁
+&lt;ul&gt;
+&lt;li&gt;比较适合读取操作比较频繁的场景，如果出现大量的写入操作，数据发现冲突的可能性会加大，为了保证数据的一致性，应用层需要不断的重现获取数据，这样会增加大量的查询操作，降低了系统的吞吐量。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;产生死锁的必要条件有哪些如何解决死锁&#34;&gt;产生死锁的必要条件有哪些？如何解决死锁？&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;四个条件
+&lt;ul&gt;
+&lt;li&gt;互斥条件：一个资源每次只能被一个进程使用。&lt;/li&gt;
+&lt;li&gt;请求与保持条件：一个进程因请求资源而阻塞时，对已获得的资源保持不放。&lt;/li&gt;
+&lt;li&gt;不剥夺条件:进程已获得的资源，在末使用完之前，不能强行剥夺。&lt;/li&gt;
+&lt;li&gt;循环等待条件:若干进程之间形成一种头尾相接的循环等待资源关系。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;解决
+&lt;ul&gt;
+&lt;li&gt;按同一顺序访问对象:如果所有并发事务按同一顺序访问对象，则发生死锁的可能性会降低。&lt;/li&gt;
+&lt;li&gt;避免事务中的用户交互:避免编写包含用户交互的事务，因为运行没有用户交互的批处理的速度要远远快于用户手动响应查询的速度&lt;/li&gt;
+&lt;li&gt;保持事务简短并在一个批处理中:在同一数据库中并发执行多个需要长时间运行的事务时通常发生死锁。事务运行时间越长，其持有排它锁或更新锁的时间也就越长，从而堵塞了其它活动并可能导致死锁。保持事务在一个批处理中，可以最小化事务的网络通信往返量，减少完成事务可能的延迟并释放锁。&lt;/li&gt;
+&lt;li&gt;使用低隔离级别:确定事务是否能在更低的隔离级别上运行。执行提交读允许事务读取另一个事务已读取（未修改）的数据，而不必等待第一个事务完成。使用较低的隔离级别（例如提交读）而不使用较高的隔离级别（例如可串行读）可以缩短持有共享锁的时间，从而降低了锁定争夺。&lt;/li&gt;
+&lt;li&gt;使用绑定连接:使用绑定连接使同一应用程序所打开的两个或多个连接可以相互合作。次级连接所获得的任何锁可以象由主连接获得的锁那样持有，反之亦然，因此不会相互阻塞。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;聚簇索引和非聚簇索引有什么区别&#34;&gt;聚簇索引和非聚簇索引有什么区别？&lt;/h3&gt;
+&lt;p&gt;聚簇索引是对磁盘上实际数据重新组织以按指定的一个或多个列的值排序的算法。特点是存储数据的顺序和索引顺序一致。一般情况下主键会默认创建聚簇索引，且一张表只允许存在一个聚簇索引。聚簇索引的叶子节点就是数据节点，而非聚簇索引的叶子节点仍然是索引节点，只不过有指向对应数据块的指针。&lt;/p&gt;
+&lt;p&gt;InnoDB 的的二级索引的叶子节点存放的是 KEY 字段加主键值。因此，通过二级索引查询首先查到是主键值，然后 InnoDB 再根据查到的主键值通过主键索引找到相应的数据块。而 MyISAM 的二级索引叶子节点存放的还是列值与行号的组合，叶子节点中保存的是数据的物理地址。所以可以看出 MYISAM 的主键索引和二级索引没有任何区别，主键索引仅仅只是一个叫做 PRIMARY 的唯一、非空的索引，且 MYISAM 引擎中可以不设主键。&lt;/p&gt;
 &lt;h3 id=&#34;什么是数据库事务mysql-为什么会使用-innodb-作为默认选项&#34;&gt;什么是数据库事务，MySQL 为什么会使用 InnoDB 作为默认选项&lt;/h3&gt;
+&lt;p&gt;数据库事务是指一个逻辑单元执行的一系列操作，一个逻辑工作单元必须有四个属性，称为 ACID（原子性、一致性、隔离性和持久性）属性&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;以主流的 MyISAM 和 InnoDB 的对比
+&lt;ul&gt;
+&lt;li&gt;功能对比
+&lt;ul&gt;
+&lt;li&gt;InnoDB 支持 ACID 的事务 4 个特性，而 MyISAM 不支持；&lt;/li&gt;
+&lt;li&gt;InnoDB 支持 4 种事务隔离级别，默认是可重复读 repeatable read，MyISAM 不支持；&lt;/li&gt;
+&lt;li&gt;InnoDB 支持 crash 安全恢复，MyISAM 不支持；InnoDB 支持外键，MyISAM 不支持；&lt;/li&gt;
+&lt;li&gt;InnoDB 支持行级别的锁粒度，MyISAM 不支持，只支持表级别的锁粒度；&lt;/li&gt;
+&lt;li&gt;InnoDB 支持 MVCC，MyISAM 不支持。&lt;/li&gt;
+&lt;li&gt;InnoDB 特性上，InnoDB 表最大可以 64TB，支持聚簇索引、支持压缩数据存储，支持数据加密，支持查询/索引/数据高速缓存，支持自适应 hash 索引、空间索引，支持热备份和恢复等。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;性能对比
+&lt;ul&gt;
+&lt;li&gt;读写混合模式下，随着 CPU 核数的增加，InnoDB 的读写能力呈线性增长，在这个测试用例里，最高可达近 9000 的 TPS，但 MyISAM 因为读写不能并发，它的处理能力跟核数没关系，呈一条水平线，TPS 低于 500。&lt;/li&gt;
+&lt;li&gt;只读模式下，随着 CPU 核数的增加，InnoDB 的读写能力呈线性增长，最高可达近 14000 的 TPS，但 MyISAM 的处理能力不到 3000。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;简述什么是最左匹配原则&#34;&gt;简述什么是最左匹配原则&lt;/h3&gt;
+&lt;p&gt;最左优先，以最左边的为起点任何连续的索引都能匹配上&lt;/p&gt;
+&lt;p&gt;skip scan 之后所谓的最左原则还成立吗？&lt;/p&gt;
 &lt;h3 id=&#34;mysql-中-innodb-和-mylsam-的区别是什么&#34;&gt;MySQL 中 InnoDB 和 MylSAM 的区别是什么？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.runoob.com/w3cnote/mysql-different-nnodb-myisam.html&#34;&gt;MySQL 存储引擎 InnoDB 与 Myisam 的六大区别 | 菜鸟教程&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;数据库如何设计索引如何优化查询&#34;&gt;数据库如何设计索引，如何优化查询？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://segmentfault.com/a/1190000038921156&#34;&gt;MySQL 如何设计索引更高效？ - SegmentFault 思否&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;简述数据库中什么情况下进行分库什么情况下进行分表&#34;&gt;简述数据库中什么情况下进行分库，什么情况下进行分表？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://segmentfault.com/a/1190000038944473&#34;&gt;这四种情况下，才是考虑分库分表的时候！ - SegmentFault 思否&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;什么是-sql-注入攻击如何防止这类攻击&#34;&gt;什么是 SQL 注入攻击？如何防止这类攻击？&lt;/h3&gt;
-&lt;h3 id=&#34;数据库有哪些常见索引数据库设计的范式是什么&#34;&gt;数据库有哪些常见索引？数据库设计的范式是什么？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://segmentfault.com/a/1190000023211211&#34;&gt;SQL 注入攻击原因及预防 - SegmentFault 思否&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;mysql-有哪些常见的存储引擎它们的区别是什么&#34;&gt;MySQL 有哪些常见的存储引擎？它们的区别是什么？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://dev.mysql.com/doc/refman/8.0/en/storage-engines.html&#34;&gt;MySQL :: MySQL 8.0 Reference Manual :: 16 Alternative Storage Engines&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;简述一致性哈希算法的实现方式及原理&#34;&gt;简述一致性哈希算法的实现方式及原理&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://morven.life/posts/consistent_hash/&#34;&gt;大话「一致性哈希」&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;mysql-中-join-与-left-join-的区别是什么&#34;&gt;MySQL 中 join 与 left join 的区别是什么？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://dev.mysql.com/doc/refman/8.0/en/join.html&#34;&gt;MySQL :: MySQL 8.0 Reference Manual :: 13.2.10.2 JOIN Clause&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;联合索引的存储结构是什么&#34;&gt;联合索引的存储结构是什么？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://juejin.cn/post/6844904073955639304&#34;&gt;联合索引在 B+树上的存储结构及数据查找方式 - 掘金&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;简述-mysql-常见索引类型介绍一下覆盖索引&#34;&gt;简述 MySQL 常见索引类型，介绍一下覆盖索引&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://dev.mysql.com/doc/refman/8.0/en/create-index.html&#34;&gt;MySQL :: MySQL 8.0 Reference Manual :: 13.1.15 CREATE INDEX Statement&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;数据库索引的实现原理是什么&#34;&gt;数据库索引的实现原理是什么？&lt;/h3&gt;
-&lt;h3 id=&#34;简述-mysql-的主从同步机制如果同步失败会怎么样&#34;&gt;简述 MySQL 的主从同步机制，如果同步失败会怎么样？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://tech.meituan.com/2014/06/30/mysql-index.html&#34;&gt;MySQL 索引原理及慢查询优化 - 美团技术团队&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;简述-mysql-mvcc-的实现原理&#34;&gt;简述 MySQL MVCC 的实现原理&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;行记录的版本控制
@@ -1160,12 +1247,16 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;简述-mysql-三种日志的使用场景&#34;&gt;简述 MySQL 三种日志的使用场景&lt;/h3&gt;
 &lt;h3 id=&#34;数据库的读写分离的作用是什么如何实现&#34;&gt;数据库的读写分离的作用是什么？如何实现？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://dannashen.github.io/2019/07/04/MySQL%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/&#34;&gt;MySQL 读写分离 — Danna 的博客&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;如何解决缓存与数据库不一致的问题&#34;&gt;如何解决缓存与数据库不一致的问题？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://yunpengn.github.io/blog/2019/05/04/consistent-redis-sql/&#34;&gt;Consistency between Redis Cache and SQL Database | Yunpeng&amp;rsquo;s Blog&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;mysql-的索引什么情况下会失效&#34;&gt;MySQL 的索引什么情况下会失效？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://dev.mysql.com/doc/refman/8.0/en/mysql-indexes.html&#34;&gt;MySQL :: MySQL 8.0 Reference Manual :: 8.3.1 How MySQL Uses Indexes&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;mysql-联合索引底层原理是什么&#34;&gt;MySQL 联合索引底层原理是什么？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://blog.51cto.com/u_15317888/3232479&#34;&gt;MYSQL 索引的底层原理【图文】&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;唯一索引与普通索引的区别是什么使用索引会有哪些优缺点&#34;&gt;唯一索引与普通索引的区别是什么？使用索引会有哪些优缺点？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://blog.xuanweiyao.com/archives/3b3c800b6b8648f2aae88f61dac30b53&#34;&gt;唯一索引与普通索引的区别是什么？使用索引会有哪些优缺点？ | Jamin 的个人博客&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;简述事务的四大特性&#34;&gt;简述事务的四大特性&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;原子性(Atomicity)
@@ -1195,7 +1286,6 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;简述-sql-中左连接和右连接的区别&#34;&gt;简述 SQL 中左连接和右连接的区别&lt;/h3&gt;
 &lt;h3 id=&#34;如何解决幻读的问题&#34;&gt;如何解决幻读的问题&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;间隙锁的功能与行锁相同，只是针对间隙加锁&lt;/li&gt;
@@ -1219,14 +1309,19 @@
 &lt;li&gt;执行器调用引擎的提交事务接口，引擎把刚刚写入的 redo log 改成提交（commit）状态，解 X 锁，更新完成。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;b-树中叶子节点存储的是什么数据&#34;&gt;B+ 树中叶子节点存储的是什么数据&lt;/h3&gt;
+&lt;p&gt;聚簇索引是数据，二级索引是&lt;/p&gt;
 &lt;h3 id=&#34;mysql-索引使用什么数据结构&#34;&gt;MySQL 索引使用什么数据结构？&lt;/h3&gt;
+&lt;p&gt;B+ 树&lt;/p&gt;
 &lt;h3 id=&#34;sql-优化的方案有哪些如何定位问题并解决问题&#34;&gt;SQL 优化的方案有哪些，如何定位问题并解决问题？&lt;/h3&gt;
 &lt;h3 id=&#34;简述主从复制以及读写分离的使用场景&#34;&gt;简述主从复制以及读写分离的使用场景&lt;/h3&gt;
 &lt;h3 id=&#34;假设建立联合索引-a-b-c-如果对字段-a-和-c-查询会用到这个联合索引吗&#34;&gt;假设建立联合索引 (a, b, c) 如果对字段 a 和 c 查询，会用到这个联合索引吗？&lt;/h3&gt;
+&lt;p&gt;会&lt;/p&gt;
 &lt;h3 id=&#34;mysql-有什么调优的方式&#34;&gt;MySQL 有什么调优的方式？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/39038788&#34;&gt;MySQL 性能调优的 10 个方法 - 知乎&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;mysql-常用的聚合函数有哪些&#34;&gt;MySQL 常用的聚合函数有哪些？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html&#34;&gt;MySQL :: MySQL 8.0 Reference Manual :: 12.20.1 Aggregate Function Descriptions&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;简述数据库事务复制原理&#34;&gt;简述数据库事务复制原理&lt;/h3&gt;
-&lt;h3 id=&#34;简述常见的负载均衡算法&#34;&gt;简述常见的负载均衡算法&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://blog.csdn.net/JYL15732624861/article/details/82493502&#34;&gt;MySQL 复制原理_焦玉丽-CSDN 博客&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;什么时候索引会失效&#34;&gt;什么时候索引会失效？&lt;/h3&gt;
 &lt;h3 id=&#34;如何解决主从不一致的问题&#34;&gt;如何解决主从不一致的问题？&lt;/h3&gt;
 &lt;h3 id=&#34;数据库主键索引和唯一索引有什么区别&#34;&gt;数据库主键索引和唯一索引有什么区别？&lt;/h3&gt;
@@ -1267,9 +1362,13 @@
 &lt;h3 id=&#34;数据库查询中左外连接和内连接的区别是什么&#34;&gt;数据库查询中左外连接和内连接的区别是什么？&lt;/h3&gt;
 &lt;h3 id=&#34;并发事务会引发哪些问题如何解决&#34;&gt;并发事务会引发哪些问题？如何解决？&lt;/h3&gt;
 &lt;h3 id=&#34;数据库索引的叶子结点为什么是有序链表&#34;&gt;数据库索引的叶子结点为什么是有序链表？&lt;/h3&gt;
+&lt;p&gt;为了范围查找&lt;/p&gt;
 &lt;h3 id=&#34;如何定位以及优化数据库慢查询&#34;&gt;如何定位以及优化数据库慢查询&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/164897114&#34;&gt;数据库优化（一）Mysql 慢查询的定位和分析 - 知乎&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;建立了三个单列索引-a-b-c-查询-where-a---b---c--索引会起作用吗&#34;&gt;建立了三个单列索引 a, b, c 查询 where a = ? b = ? c = ？索引会起作用吗？&lt;/h3&gt;
+&lt;p&gt;会&lt;/p&gt;
 &lt;h3 id=&#34;数据库反范式设计会出现什么问题&#34;&gt;数据库反范式设计会出现什么问题？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.kancloud.cn/thinkphp/mysql-design-optimalize/39324&#34;&gt;数据中设计中的范式与反范式 · Mysql设计与优化专题 · 看云&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;mysql-锁的种类&#34;&gt;MySQL 锁的种类&lt;/h3&gt;
 &lt;p&gt;按照粒度分，MySQL 锁可以分为全局锁、表级锁、行锁&lt;/p&gt;
 &lt;ul&gt;
@@ -1408,8 +1507,95 @@
 &lt;/li&gt;
 &lt;li&gt;工具
 &lt;ul&gt;
-&lt;li&gt;mysqldump：逻辑，热备，全量或部分&lt;/li&gt;
-&lt;li&gt;xtrabackup：物理，热，全量+增量备份&lt;/li&gt;
+&lt;li&gt;mysqldump：逻辑，热备，全量或部分
+&lt;ul&gt;
+&lt;li&gt;特点
+&lt;ul&gt;
+&lt;li&gt;非常常用的 MySQL 逻辑备份工具&lt;/li&gt;
+&lt;li&gt;MySQL Server 自带&lt;/li&gt;
+&lt;li&gt;输出的备份内容为 SQL 语句，平衡了阅读和还原&lt;/li&gt;
+&lt;li&gt;SQL 语句占空间较小&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;原理
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;SELECT SQL_NO_CACHE * FROM table_name&lt;/code&gt;，避免干扰其他事务，不会进入 SQL 缓存&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;使用方法
+&lt;ul&gt;
+&lt;li&gt;导出 &lt;code&gt;mysqldump -uroot -p123456 --database db --single-transaction &amp;gt; db.sql&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;导入 &lt;code&gt;source db.sql&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;缺点
+&lt;ul&gt;
+&lt;li&gt;导出逻辑数据，备份慢&lt;/li&gt;
+&lt;li&gt;导入需要执行 SQL 语句，备份慢&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;增量备份
+&lt;ul&gt;
+&lt;li&gt;思路：binglog 忠实记录了 MySQL 数据的变化，mysqldump 全量备份之后，可以用 binlog 作为增量，mysqldump 全量备份时，切换到新的 binlog 文件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mysqldump -uroot -p123456 --database db --single-transaction --flush-logs --master-data=2&amp;gt; db.sql&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;xtrabackup：物理，热，全量 + 增量备份
+&lt;ul&gt;
+&lt;li&gt;特点
+&lt;ul&gt;
+&lt;li&gt;直接备份 InnoDB 底层数据文件&lt;/li&gt;
+&lt;li&gt;导出不需要转换，速度快&lt;/li&gt;
+&lt;li&gt;工作时对数据库压力小&lt;/li&gt;
+&lt;li&gt;容易实现增量备份&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;实现
+&lt;ul&gt;
+&lt;li&gt;启动 redo log 监听线程，开始收集 redo leg&lt;/li&gt;
+&lt;li&gt;拷贝 ibd 数据文件&lt;/li&gt;
+&lt;li&gt;停止收集 redo log&lt;/li&gt;
+&lt;li&gt;加 FTWRL 锁拷贝元数据 frm，一小段温备时间&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;还原
+&lt;ul&gt;
+&lt;li&gt;还原 ibd，重放 redo log&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;使用
+&lt;ul&gt;
+&lt;li&gt;备份 &lt;code&gt;innobackupex --user==root --password=123456 backdir/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;还原 &lt;code&gt;innobackupex --copy-back bakdir/xxxx-xx-xx/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;增量备份 &lt;code&gt;innobackupex --user=root --password=123456 --incremental bakdir/ --increamental-basedir=&#39;bakdir/xxxx-xx-xx/&#39;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;合并增量到全量 &lt;code&gt;innobackupex --apply-log bakdir/xxxx-xx-xx/ --incremental-dir=bakdir/yyyy-yy-yy/&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;其他
+&lt;ul&gt;
+&lt;li&gt;mylvmbackup
+&lt;ul&gt;
+&lt;li&gt;物理、温备、利用 LVM、直接备份磁盘数据&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;mydumper
+&lt;ul&gt;
+&lt;li&gt;对比 mysqldump 实现了多线程并发&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Zmanda Recovery Manage
+&lt;ul&gt;
+&lt;li&gt;集成了多种功能备份工具&lt;/li&gt;
+&lt;li&gt;集成了 binlog 分析工具&lt;/li&gt;
+&lt;li&gt;图形化界面&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
