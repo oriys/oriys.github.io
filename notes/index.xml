@@ -269,7 +269,6 @@
 &lt;h3 id=&#34;如何定位以及优化数据库慢查询&#34;&gt;如何定位以及优化数据库慢查询&lt;/h3&gt;
 &lt;h3 id=&#34;建立了三个单列索引-a-b-c-查询-where-a---b---c--索引会起作用吗&#34;&gt;建立了三个单列索引 a, b, c 查询 where a = ? b = ? c = ？索引会起作用吗？&lt;/h3&gt;
 &lt;h3 id=&#34;数据库反范式设计会出现什么问题&#34;&gt;数据库反范式设计会出现什么问题？&lt;/h3&gt;
-&lt;h3 id=&#34;什么是公平锁什么是非公平锁&#34;&gt;什么是公平锁？什么是非公平锁？&lt;/h3&gt;
 &lt;h3 id=&#34;mysql-锁的种类&#34;&gt;MySQL 锁的种类&lt;/h3&gt;
 &lt;p&gt;按照粒度分，MySQL 锁可以分为全局锁、表级锁、行锁&lt;/p&gt;
 &lt;ul&gt;
@@ -346,6 +345,44 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;h3 id=&#34;长事务危害&#34;&gt;长事务危害&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;行级锁长时间无法释放，导致其他事务等待
+&lt;ul&gt;
+&lt;li&gt;当前读会对数据行加锁，事务提交前无法释放&lt;/li&gt;
+&lt;li&gt;调整 innodb_lock_wait_timeout 参数，默认 50 秒，超过 50 秒还未获取锁报错，适当缩短参数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;容易产生死锁
+&lt;ul&gt;
+&lt;li&gt;两个事务都等待对方的锁释放&lt;/li&gt;
+&lt;li&gt;主动死锁检测: innodb_deadlock_detect，发现死锁回滚代价比较小的事务&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;MDL 锁 hold 住大量事务，造成 MySQL 奔溃
+&lt;ul&gt;
+&lt;li&gt;事务访问数据时，会自动给表加 MDL 锁&lt;/li&gt;
+&lt;li&gt;事务修改元数据时，自动加 MDL 锁&lt;/li&gt;
+&lt;li&gt;遇到锁不兼容时，申请 MDL 锁的事务形成一个队列&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;查看影响性能的锁
+&lt;ul&gt;
+&lt;li&gt;查看长事务 infomation_schema 库 innodb_trx 表&lt;/li&gt;
+&lt;li&gt;查看锁 infomation_schema 库 innodb_locks 表&lt;/li&gt;
+&lt;li&gt;查看阻塞的事务 infomation_schema 库 innodb_locks_waits 表&lt;/li&gt;
+&lt;li&gt;查看锁 performance_schema 库 data_locks 表&lt;/li&gt;
+&lt;li&gt;查看锁等待 performance_schema 库 data_locks_waits 表&lt;/li&gt;
+&lt;li&gt;查看 MDL 锁 performance_schema 库 matadata_locko 表&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;业务上的建议
+&lt;ul&gt;
+&lt;li&gt;控制长事务，没有必要的情况不开始事务&lt;/li&gt;
+&lt;li&gt;数据修改尽量放在事务后部分，降低锁时间&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 </description>
     </item>
     

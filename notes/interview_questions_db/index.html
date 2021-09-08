@@ -287,7 +287,6 @@ if (!doNotTrack) {
 <h3 id="如何定位以及优化数据库慢查询">如何定位以及优化数据库慢查询</h3>
 <h3 id="建立了三个单列索引-a-b-c-查询-where-a---b---c--索引会起作用吗">建立了三个单列索引 a, b, c 查询 where a = ? b = ? c = ？索引会起作用吗？</h3>
 <h3 id="数据库反范式设计会出现什么问题">数据库反范式设计会出现什么问题？</h3>
-<h3 id="什么是公平锁什么是非公平锁">什么是公平锁？什么是非公平锁？</h3>
 <h3 id="mysql-锁的种类">MySQL 锁的种类</h3>
 <p>按照粒度分，MySQL 锁可以分为全局锁、表级锁、行锁</p>
 <ul>
@@ -364,6 +363,44 @@ if (!doNotTrack) {
 </tr>
 </tbody>
 </table>
+<h3 id="长事务危害">长事务危害</h3>
+<ul>
+<li>行级锁长时间无法释放，导致其他事务等待
+<ul>
+<li>当前读会对数据行加锁，事务提交前无法释放</li>
+<li>调整 innodb_lock_wait_timeout 参数，默认 50 秒，超过 50 秒还未获取锁报错，适当缩短参数</li>
+</ul>
+</li>
+<li>容易产生死锁
+<ul>
+<li>两个事务都等待对方的锁释放</li>
+<li>主动死锁检测: innodb_deadlock_detect，发现死锁回滚代价比较小的事务</li>
+</ul>
+</li>
+<li>MDL 锁 hold 住大量事务，造成 MySQL 奔溃
+<ul>
+<li>事务访问数据时，会自动给表加 MDL 锁</li>
+<li>事务修改元数据时，自动加 MDL 锁</li>
+<li>遇到锁不兼容时，申请 MDL 锁的事务形成一个队列</li>
+</ul>
+</li>
+<li>查看影响性能的锁
+<ul>
+<li>查看长事务 infomation_schema 库 innodb_trx 表</li>
+<li>查看锁 infomation_schema 库 innodb_locks 表</li>
+<li>查看阻塞的事务 infomation_schema 库 innodb_locks_waits 表</li>
+<li>查看锁 performance_schema 库 data_locks 表</li>
+<li>查看锁等待 performance_schema 库 data_locks_waits 表</li>
+<li>查看 MDL 锁 performance_schema 库 matadata_locko 表</li>
+</ul>
+</li>
+<li>业务上的建议
+<ul>
+<li>控制长事务，没有必要的情况不开始事务</li>
+<li>数据修改尽量放在事务后部分，降低锁时间</li>
+</ul>
+</li>
+</ul>
 
   
   </div>
