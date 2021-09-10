@@ -8,7 +8,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title> CMU::15-445/645::Tree Indexes 笔记 | Y.CH.Y</title>
-  <link rel = 'canonical' href = '/courses/cmu_15_445_06_note/'>
+  <link rel = 'canonical' href = '/oc/cmu_15_445_06_note/'>
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="all,follow">
@@ -26,7 +26,7 @@ B&#43;树 B&#43;Tree 是一种自平衡的树形数据结构，它可以保持�
 插入 要在 B&#43;树中插入一个新的条目，必须沿着树向下遍历，并使用内部节点来确定将值插入哪个叶子节点。
  找到正确的叶子 L。 按排序顺序将新条目添加到 L 中。  如果 L 有足够的空间，操作就完成了。 否则将 L 分成两个结点 L 和 L2。均匀地重新分配条目，并将中间的键复制上去。 将指向 L2 的索引条目插入 L 的父节点中。   要分割一个内部节点，均匀地重新分配条目，但要把中间的键向上推。  可视化演示网址" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/courses/cmu_15_445_06_note/" /><meta property="article:section" content="courses" />
+<meta property="og:url" content="/oc/cmu_15_445_06_note/" /><meta property="article:section" content="oc" />
 <meta property="article:published_time" content="2021-08-05T08:41:54+08:00" />
 <meta property="article:modified_time" content="2021-08-05T08:41:54+08:00" />
 
@@ -105,9 +105,13 @@ if (!doNotTrack) {
       
         <li><a href="/">首页</a></li>
       
-        <li><a href="/algorithm">算法</a></li>
-      
         <li><a href="/outline">大纲</a></li>
+      
+        <li><a href="/oc">课程</a></li>
+      
+        <li><a href="/algo">算法</a></li>
+      
+        <li><a href="/journal">日志</a></li>
       
         <li><a href="/about">关于</a></li>
       
@@ -204,9 +208,13 @@ if (!doNotTrack) {
          
         <li><a href="/">首页</a></li>
          
-        <li><a href="/algorithm">算法</a></li>
-         
         <li><a href="/outline">大纲</a></li>
+         
+        <li><a href="/oc">课程</a></li>
+         
+        <li><a href="/algo">算法</a></li>
+         
+        <li><a href="/journal">日志</a></li>
          
         <li><a href="/about">关于</a></li>
         
