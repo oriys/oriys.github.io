@@ -14,6 +14,7 @@
       <description>&lt;h1 id=&#34;分布式系统大纲&#34;&gt;分布式系统大纲&lt;/h1&gt;
 &lt;p&gt;介绍分布式系统基础。直观地了解关键的分布式系统术语，概述算法领域，并探索生产环境的问题。&lt;/p&gt;
 &lt;p&gt;转载 &lt;a href=&#34;https://iswade.github.io/translate/distsys/&#34;&gt;分布式系统大纲 - iswade&amp;rsquo;s blog&lt;/a&gt;，补充了落后的部分以及部分翻译和格式修正&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.xmind.net/m/gvS6by/&#34;&gt;分布式系统大纲 - XMind&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;为什么需要分布式&#34;&gt;为什么需要分布式?&lt;/h2&gt;
 &lt;p&gt;Lamport, 1987:&lt;/p&gt;
 &lt;blockquote&gt;
