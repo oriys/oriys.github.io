@@ -643,7 +643,7 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;回顾&#34;&gt;回顾&lt;/h2&gt;
+&lt;h3 id=&#34;回顾&#34;&gt;回顾&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;我们已经介绍了分布式系统的基本原理。节点通过网络交换消息，节点和网络都可能以各种方式失败。TCP 和 UDP 等协议为我们提供了原始信道通信流程，我们可以使用时钟排序时间。现在，我们会讨论分布式系统的一些高级 &lt;em&gt;属性&lt;/em&gt; 。&lt;/li&gt;
 &lt;/ul&gt;
@@ -1402,7 +1402,7 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;回顾-2&#34;&gt;回顾&lt;/h2&gt;
+&lt;h3 id=&#34;回顾-2&#34;&gt;回顾&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;只添加而不是收回的系统需要较少的协调就能构建。我们可以使用 gossip 系统向其他进程广播消息，CRDT 用于合并来自对端的更新，以及用于弱隔离事务的 HAT。可串行化和线性化需要 &lt;em&gt;共识&lt;/em&gt; ，我们可以通过 Paxos，ZAB，VR 或 Raft 获得。现在，我们将讨论分布式系统的不同规模。&lt;/li&gt;
 &lt;/ul&gt;
@@ -2941,7 +2941,7 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;回顾-6&#34;&gt;回顾&lt;/h2&gt;
+&lt;h3 id=&#34;回顾-6&#34;&gt;回顾&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;运行分布式系统需要开发人员，QA 和运营工程师之间的合作。静态分析和包括基于示例和属性的测试的测试套件可以帮助确保程序的正确性，但了解生产行为需要全面的测量和警报。成熟的分布式系统团队经常投资工具：流量阴影，版本控制，增量部署和功能标记。最后，队列需要特别小心。&lt;/li&gt;
 &lt;/ul&gt;
@@ -3785,9 +3785,9 @@
     
     <item>
       <title>八股文::数据库</title>
-      <link>/notes/interview_questions_db/</link>
+      <link>/interview/interview_questions_db/</link>
       <pubDate>Sun, 22 Aug 2021 21:51:33 +0800</pubDate>
-      <guid>/notes/interview_questions_db/</guid>
+      <guid>/interview/interview_questions_db/</guid>
       <description>&lt;h2 id=&#34;数据库&#34;&gt;数据库&lt;/h2&gt;
 &lt;h3 id=&#34;mysql-为什么使用-b-树来作索引对比-b-树它的优点和缺点是什么&#34;&gt;MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？&lt;/h3&gt;
 &lt;p&gt;由于 mysql 通常将数据存放在磁盘中，读取数据就会产生磁盘 IO 消耗。而 B+ 树的非叶子节点中不保存数据，B 树中非叶子节点会保存数据，通常一个节点大小会设置为磁盘页大小，这样 B+树每个节点可放更多的 key，B 树则更少。这样就造成了，B 树的高度会比 B+ 树更高，从而会产生更多的磁盘 IO 消耗。&lt;/p&gt;
@@ -4993,9 +4993,9 @@ B 树优点：如果在 B 树中查找的数据离根节点近，由于 B 树节
     
     <item>
       <title>八股文::操作系统</title>
-      <link>/notes/interview_questions_operating_system/</link>
+      <link>/interview/interview_questions_operating_system/</link>
       <pubDate>Sat, 21 Aug 2021 03:28:49 +0800</pubDate>
-      <guid>/notes/interview_questions_operating_system/</guid>
+      <guid>/interview/interview_questions_operating_system/</guid>
       <description>&lt;h2 id=&#34;操作系统&#34;&gt;操作系统&lt;/h2&gt;
 &lt;h3 id=&#34;进程和线程之间有什么区别&#34;&gt;进程和线程之间有什么区别？&lt;/h3&gt;
 &lt;h3 id=&#34;进程间有哪些通信方式&#34;&gt;进程间有哪些通信方式？&lt;/h3&gt;
@@ -5619,9 +5619,9 @@ B 树优点：如果在 B 树中查找的数据离根节点近，由于 B 树节
     
     <item>
       <title>八股文::系统设计</title>
-      <link>/notes/interview_questions_system_design/</link>
+      <link>/interview/interview_questions_system_design/</link>
       <pubDate>Fri, 20 Aug 2021 21:51:33 +0800</pubDate>
-      <guid>/notes/interview_questions_system_design/</guid>
+      <guid>/interview/interview_questions_system_design/</guid>
       <description>&lt;h2 id=&#34;系统设计&#34;&gt;系统设计&lt;/h2&gt;
 &lt;h3 id=&#34;电商系统中如何实现秒杀功能如何解决商品的超卖问题&#34;&gt;电商系统中，如何实现秒杀功能？如何解决商品的超卖问题？&lt;/h3&gt;
 &lt;h3 id=&#34;什么是-cap-什么是最终一致性什么是幂等操作&#34;&gt;什么是 CAP ？什么是最终一致性？什么是幂等操作？&lt;/h3&gt;
@@ -5711,9 +5711,9 @@ B 树优点：如果在 B 树中查找的数据离根节点近，由于 B 树节
     
     <item>
       <title>八股文::网络</title>
-      <link>/notes/interview_questions_network/</link>
+      <link>/interview/interview_questions_network/</link>
       <pubDate>Fri, 20 Aug 2021 21:51:33 +0800</pubDate>
-      <guid>/notes/interview_questions_network/</guid>
+      <guid>/interview/interview_questions_network/</guid>
       <description>&lt;h2 id=&#34;网络&#34;&gt;网络&lt;/h2&gt;
 &lt;h3 id=&#34;简述-tcp-三次握手以及四次挥手的流程为什么需要三次握手以及四次挥手&#34;&gt;简述 TCP 三次握手以及四次挥手的流程。为什么需要三次握手以及四次挥手？&lt;/h3&gt;
 &lt;p&gt;三次握手流程&lt;/p&gt;
@@ -5935,9 +5935,9 @@ B 树优点：如果在 B 树中查找的数据离根节点近，由于 B 树节
     
     <item>
       <title>八股文::Redis</title>
-      <link>/notes/interview_questions_redis/</link>
+      <link>/interview/interview_questions_redis/</link>
       <pubDate>Fri, 20 Aug 2021 02:47:13 +0800</pubDate>
-      <guid>/notes/interview_questions_redis/</guid>
+      <guid>/interview/interview_questions_redis/</guid>
       <description>&lt;h2 id=&#34;redis&#34;&gt;Redis&lt;/h2&gt;
 &lt;h3 id=&#34;redis-有哪些数据结构分别有什么使用场景&#34;&gt;Redis 有哪些数据结构，分别有什么使用场景？&lt;/h3&gt;
 &lt;h3 id=&#34;redis-zset-相同-score-如何排序&#34;&gt;Redis ZSET 相同 score 如何排序？&lt;/h3&gt;
@@ -5970,9 +5970,9 @@ B 树优点：如果在 B 树中查找的数据离根节点近，由于 B 树节
     
     <item>
       <title>八股文::Java</title>
-      <link>/notes/interview_questions_java/</link>
+      <link>/interview/interview_questions_java/</link>
       <pubDate>Thu, 19 Aug 2021 21:51:33 +0800</pubDate>
-      <guid>/notes/interview_questions_java/</guid>
+      <guid>/interview/interview_questions_java/</guid>
       <description>&lt;h2 id=&#34;java&#34;&gt;Java&lt;/h2&gt;
 &lt;h3 id=&#34;多线程的出现是要解决什么问题的&#34;&gt;多线程的出现是要解决什么问题的?&lt;/h3&gt;
 &lt;h3 id=&#34;并发出现线程不安全的本质什么&#34;&gt;并发出现线程不安全的本质什么?&lt;/h3&gt;
@@ -6159,9 +6159,9 @@ B 树优点：如果在 B 树中查找的数据离根节点近，由于 B 树节
     
     <item>
       <title>CMU::15-445/645::Tree Indexes 笔记</title>
-      <link>/notes/cmu_15_445_06_note/</link>
+      <link>/courses/cmu_15_445_06_note/</link>
       <pubDate>Thu, 05 Aug 2021 08:41:54 +0800</pubDate>
-      <guid>/notes/cmu_15_445_06_note/</guid>
+      <guid>/courses/cmu_15_445_06_note/</guid>
       <description>&lt;h2 id=&#34;树形索引第一部分&#34;&gt;树形索引第一部分&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/RK21nhh.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;表索引&#34;&gt;表索引&lt;/h3&gt;
@@ -6229,9 +6229,9 @@ B 树优点：如果在 B 树中查找的数据离根节点近，由于 B 树节
     
     <item>
       <title>CMU::15-445/645::Hash Tables 笔记</title>
-      <link>/notes/cmu_15_445_05_note/</link>
+      <link>/courses/cmu_15_445_05_note/</link>
       <pubDate>Wed, 04 Aug 2021 16:20:16 +0800</pubDate>
-      <guid>/notes/cmu_15_445_05_note/</guid>
+      <guid>/courses/cmu_15_445_05_note/</guid>
       <description>&lt;h2 id=&#34;散列表&#34;&gt;散列表&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/4jDQyjR.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;数据结构&#34;&gt;数据结构&lt;/h3&gt;
@@ -6338,9 +6338,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>CMU::15-445/645::Buffer Pools 笔记</title>
-      <link>/notes/cmu_15_445_04_note/</link>
+      <link>/courses/cmu_15_445_04_note/</link>
       <pubDate>Tue, 03 Aug 2021 23:17:58 +0800</pubDate>
-      <guid>/notes/cmu_15_445_04_note/</guid>
+      <guid>/courses/cmu_15_445_04_note/</guid>
       <description>&lt;h2 id=&#34;缓冲池和内存管理&#34;&gt;缓冲池和内存管理&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/whxG5l3.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
@@ -6413,9 +6413,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>CMU::15-445/645::Database Storage 笔记</title>
-      <link>/notes/cmu_15_445_03_note/</link>
+      <link>/courses/cmu_15_445_03_note/</link>
       <pubDate>Mon, 02 Aug 2021 09:07:42 +0800</pubDate>
-      <guid>/notes/cmu_15_445_03_note/</guid>
+      <guid>/courses/cmu_15_445_03_note/</guid>
       <description>&lt;h2 id=&#34;数据库存储第一部分&#34;&gt;数据库存储第一部分&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/qhTvXK1.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;存储&#34;&gt;存储&lt;/h3&gt;
@@ -6680,9 +6680,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>CMU::15-445/645::Advanced SQL 笔记</title>
-      <link>/notes/cmu_15_445_02_note/</link>
+      <link>/courses/cmu_15_445_02_note/</link>
       <pubDate>Sun, 01 Aug 2021 09:07:42 +0800</pubDate>
-      <guid>/notes/cmu_15_445_02_note/</guid>
+      <guid>/courses/cmu_15_445_02_note/</guid>
       <description>&lt;h2 id=&#34;高级-sql&#34;&gt;高级 SQL&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/flXoQVk.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;关系语言&#34;&gt;关系语言&lt;/h3&gt;
@@ -6916,9 +6916,9 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
     
     <item>
       <title>CMU::15-445/645::Relational Model 笔记</title>
-      <link>/notes/cmu_15_445_01_note/</link>
+      <link>/courses/cmu_15_445_01_note/</link>
       <pubDate>Sat, 31 Jul 2021 01:51:13 +0800</pubDate>
-      <guid>/notes/cmu_15_445_01_note/</guid>
+      <guid>/courses/cmu_15_445_01_note/</guid>
       <description>&lt;h2 id=&#34;关系模型和关系代数&#34;&gt;关系模型和关系代数&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/0W1wSYn.png&#34; alt=&#34;0W1wSYn&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;数据库&#34;&gt;数据库&lt;/h3&gt;

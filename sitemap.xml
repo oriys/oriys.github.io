@@ -77,7 +77,10 @@
     <loc>/reading/tao_of_programming/</loc>
     <lastmod>2021-08-22T21:58:06+08:00</lastmod>
   </url><url>
-    <loc>/notes/interview_questions_db/</loc>
+    <loc>/interview/</loc>
+    <lastmod>2021-08-22T21:51:33+08:00</lastmod>
+  </url><url>
+    <loc>/interview/interview_questions_db/</loc>
     <lastmod>2021-08-22T21:51:33+08:00</lastmod>
   </url><url>
     <loc>/algo/1116/</loc>
@@ -98,40 +101,43 @@
     <loc>/algo/35/</loc>
     <lastmod>2021-08-21T09:39:35+08:00</lastmod>
   </url><url>
-    <loc>/notes/interview_questions_operating_system/</loc>
+    <loc>/interview/interview_questions_operating_system/</loc>
     <lastmod>2021-08-21T03:28:49+08:00</lastmod>
   </url><url>
     <loc>/algo/1114/</loc>
     <lastmod>2021-08-20T22:48:32+08:00</lastmod>
   </url><url>
-    <loc>/notes/interview_questions_system_design/</loc>
+    <loc>/interview/interview_questions_system_design/</loc>
     <lastmod>2021-08-20T21:51:33+08:00</lastmod>
   </url><url>
-    <loc>/notes/interview_questions_network/</loc>
+    <loc>/interview/interview_questions_network/</loc>
     <lastmod>2021-08-20T21:51:33+08:00</lastmod>
   </url><url>
-    <loc>/notes/interview_questions_redis/</loc>
+    <loc>/interview/interview_questions_redis/</loc>
     <lastmod>2021-08-20T02:47:13+08:00</lastmod>
   </url><url>
-    <loc>/notes/interview_questions_java/</loc>
+    <loc>/interview/interview_questions_java/</loc>
     <lastmod>2021-08-19T21:51:33+08:00</lastmod>
   </url><url>
-    <loc>/notes/cmu_15_445_06_note/</loc>
+    <loc>/courses/cmu_15_445_06_note/</loc>
     <lastmod>2021-08-05T08:41:54+08:00</lastmod>
   </url><url>
-    <loc>/notes/cmu_15_445_05_note/</loc>
+    <loc>/courses/</loc>
+    <lastmod>2021-08-05T08:41:54+08:00</lastmod>
+  </url><url>
+    <loc>/courses/cmu_15_445_05_note/</loc>
     <lastmod>2021-08-04T16:20:16+08:00</lastmod>
   </url><url>
-    <loc>/notes/cmu_15_445_04_note/</loc>
+    <loc>/courses/cmu_15_445_04_note/</loc>
     <lastmod>2021-08-03T23:17:58+08:00</lastmod>
   </url><url>
-    <loc>/notes/cmu_15_445_03_note/</loc>
+    <loc>/courses/cmu_15_445_03_note/</loc>
     <lastmod>2021-08-02T09:07:42+08:00</lastmod>
   </url><url>
-    <loc>/notes/cmu_15_445_02_note/</loc>
+    <loc>/courses/cmu_15_445_02_note/</loc>
     <lastmod>2021-08-01T09:07:42+08:00</lastmod>
   </url><url>
-    <loc>/notes/cmu_15_445_01_note/</loc>
+    <loc>/courses/cmu_15_445_01_note/</loc>
     <lastmod>2021-07-31T01:51:13+08:00</lastmod>
   </url><url>
     <loc>/reading/modern_operating_systems/</loc>
