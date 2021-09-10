@@ -5,18 +5,20 @@
     <link>/outline/</link>
       <atom:link href="/outline/index.xml" rel="self" type="application/rss+xml" />
     <description>Outlines</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Fri, 10 Sep 2021 03:39:50 +0800</lastBuildDate>
     <item>
-      <title></title>
+      <title>分布式系统大纲</title>
       <link>/outline/distsys_outline/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 10 Sep 2021 03:39:50 +0800</pubDate>
       <guid>/outline/distsys_outline/</guid>
       <description>&lt;h1 id=&#34;分布式系统大纲&#34;&gt;分布式系统大纲&lt;/h1&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;介绍分布式系统基础。直观地了解关键的分布式系统术语，概述算法领域，并探索生产环境的问题。&lt;/p&gt;
+&lt;p&gt;转载 &lt;a href=&#34;https://iswade.github.io/translate/distsys/&#34;&gt;分布式系统大纲 - iswade&amp;rsquo;s blog&lt;/a&gt;，补充了落后的部分以及部分翻译和格式修正&lt;/p&gt;
 &lt;h2 id=&#34;为什么需要分布式&#34;&gt;为什么需要分布式?&lt;/h2&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;Lamport, 1987:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;分布式系统是：你不知道存在计算机故障会导致您自己的计算机无法使用的系统。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;首先，在托管中心运行*nix 的盒子，进程通过 TCP 或者 UDP 通信。
 &lt;ul&gt;
