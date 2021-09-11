@@ -338,8 +338,129 @@ if (!doNotTrack) {
 </li>
 </ul>
 <h3 id="checkpoint-技术">Checkpoint 技术</h3>
+<ul>
+<li>WAL 策略
+<ul>
+<li>当事务提交时，先写重做日式，再修改页</li>
+<li>当发生宕机事故时，通过重做日志来完成对数据的恢复</li>
+</ul>
+</li>
+<li>目标
+<ul>
+<li>缩短数据库的恢复时间
+<ul>
+<li>当数据库发生宕机时，数据库只需对 Checkpoint 后的重做日志进行恢复</li>
+</ul>
+</li>
+<li>缓冲池日志不够用时，将脏页刷新到磁盘
+<ul>
+<li>根据 LRU 算法会移除最近最少使用的页，若此页为脏页，需要强制 Checkpoint，将脏页刷回磁盘</li>
+</ul>
+</li>
+<li>重做日志不够用时，刷新脏页
+<ul>
+<li>重做日志被设计成可以循环使用，重做日志可以覆盖已经刷到磁盘的部分</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>LSN
+<ul>
+<li>InnoDB 通过 LSN 来管理版本</li>
+<li>每个页有 LSN，重做日志有 LSN，Checkpoint 也有 LSN</li>
+<li>InnoDB 内部有两种 Checkpoint
+<ul>
+<li>Sharp Checkpoint
+<ul>
+<li>当数据库关闭时，把所有脏页刷新到磁盘</li>
+</ul>
+</li>
+<li>Fuzzy Checkpoint
+<ul>
+<li>Master Thread Checkpoint</li>
+<li>FLUSH_LRU_LIST Checkpoint</li>
+<li>Async/Sync Flush Point</li>
+<li>Dirty Page too mush Checkpoint</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h3 id="master-thread-工作">Master Thread 工作</h3>
-<h3 id="innodb-工作特性">InnoDB 工作特性</h3>
+<ul>
+<li>最高级别线程</li>
+<li>主循环
+<ul>
+<li>每一秒
+<ul>
+<li>日志缓冲刷新到磁盘，即使这个事务没有提交</li>
+<li>合并插入缓冲</li>
+<li>之多刷新 100 个 InnoDB 的缓冲池中的脏页到磁盘</li>
+<li>如果没有互动切换到后台循环</li>
+</ul>
+</li>
+<li>每十秒
+<ul>
+<li>刷新 100 个脏页到磁盘</li>
+<li>合并至多 5 个插入缓冲</li>
+<li>将日志缓冲刷新到磁盘</li>
+<li>删除无用的 Undo 页</li>
+<li>刷新 10 个或 100 个脏页到磁磁盘</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>后台循环
+<ul>
+<li>删除无用的 Undo 页</li>
+<li>合并 20 个插入缓冲</li>
+<li>跳到主循环</li>
+<li>不断刷新 100 个页直到符合条件</li>
+</ul>
+</li>
+<li>刷新循环
+<ul>
+<li>刷新页面到磁盘</li>
+</ul>
+</li>
+<li>暂停循环
+<ul>
+<li>将 Master Thread 挂起</li>
+</ul>
+</li>
+<li>Master Thread 根据数据库状态在几个循环之间切换</li>
+</ul>
+<h3 id="innodb-关键特性">InnoDB 关键特性</h3>
+<ul>
+<li>插入缓冲
+<ul>
+<li>Insert buffer
+<ul>
+<li>对于非聚集索引的插入或者更新操作，不是每一次直接插入到索引页，而是先判断插入的非聚集索引页是否在缓冲池中，若在，则直接插入，若不在，则先放入到一个 Insert Buffer 对象中。然后再以一定频率和情况进行 Insert Buffer 和辅助索引页字节点的额合并操作，将多个插入合并到一个操作中。</li>
+<li>索引是辅助索引</li>
+<li>索引不是唯一的</li>
+</ul>
+</li>
+<li>change buffer
+<ul>
+<li>Insert buffer 的升级版</li>
+<li>InnoDB 对 DML 操作进行缓存，分别是 Insert buffer、Delete Buffer、Purge Buffer</li>
+</ul>
+</li>
+<li>Insert Buffer 内部实现
+<ul>
+<li>使用 B+ 树实现</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>两次写</li>
+<li>自适应哈希索引</li>
+<li>异步 IO</li>
+<li>刷新邻接页</li>
+</ul>
 <h3 id="启动关闭与恢复">启动、关闭与恢复</h3>
 <h2 id="文件">文件</h2>
 <h2 id="表">表</h2>

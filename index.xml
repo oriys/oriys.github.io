@@ -495,8 +495,129 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;checkpoint-技术&#34;&gt;Checkpoint 技术&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;WAL 策略
+&lt;ul&gt;
+&lt;li&gt;当事务提交时，先写重做日式，再修改页&lt;/li&gt;
+&lt;li&gt;当发生宕机事故时，通过重做日志来完成对数据的恢复&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;目标
+&lt;ul&gt;
+&lt;li&gt;缩短数据库的恢复时间
+&lt;ul&gt;
+&lt;li&gt;当数据库发生宕机时，数据库只需对 Checkpoint 后的重做日志进行恢复&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;缓冲池日志不够用时，将脏页刷新到磁盘
+&lt;ul&gt;
+&lt;li&gt;根据 LRU 算法会移除最近最少使用的页，若此页为脏页，需要强制 Checkpoint，将脏页刷回磁盘&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;重做日志不够用时，刷新脏页
+&lt;ul&gt;
+&lt;li&gt;重做日志被设计成可以循环使用，重做日志可以覆盖已经刷到磁盘的部分&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;LSN
+&lt;ul&gt;
+&lt;li&gt;InnoDB 通过 LSN 来管理版本&lt;/li&gt;
+&lt;li&gt;每个页有 LSN，重做日志有 LSN，Checkpoint 也有 LSN&lt;/li&gt;
+&lt;li&gt;InnoDB 内部有两种 Checkpoint
+&lt;ul&gt;
+&lt;li&gt;Sharp Checkpoint
+&lt;ul&gt;
+&lt;li&gt;当数据库关闭时，把所有脏页刷新到磁盘&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Fuzzy Checkpoint
+&lt;ul&gt;
+&lt;li&gt;Master Thread Checkpoint&lt;/li&gt;
+&lt;li&gt;FLUSH_LRU_LIST Checkpoint&lt;/li&gt;
+&lt;li&gt;Async/Sync Flush Point&lt;/li&gt;
+&lt;li&gt;Dirty Page too mush Checkpoint&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;master-thread-工作&#34;&gt;Master Thread 工作&lt;/h3&gt;
-&lt;h3 id=&#34;innodb-工作特性&#34;&gt;InnoDB 工作特性&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;最高级别线程&lt;/li&gt;
+&lt;li&gt;主循环
+&lt;ul&gt;
+&lt;li&gt;每一秒
+&lt;ul&gt;
+&lt;li&gt;日志缓冲刷新到磁盘，即使这个事务没有提交&lt;/li&gt;
+&lt;li&gt;合并插入缓冲&lt;/li&gt;
+&lt;li&gt;之多刷新 100 个 InnoDB 的缓冲池中的脏页到磁盘&lt;/li&gt;
+&lt;li&gt;如果没有互动切换到后台循环&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;每十秒
+&lt;ul&gt;
+&lt;li&gt;刷新 100 个脏页到磁盘&lt;/li&gt;
+&lt;li&gt;合并至多 5 个插入缓冲&lt;/li&gt;
+&lt;li&gt;将日志缓冲刷新到磁盘&lt;/li&gt;
+&lt;li&gt;删除无用的 Undo 页&lt;/li&gt;
+&lt;li&gt;刷新 10 个或 100 个脏页到磁磁盘&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;后台循环
+&lt;ul&gt;
+&lt;li&gt;删除无用的 Undo 页&lt;/li&gt;
+&lt;li&gt;合并 20 个插入缓冲&lt;/li&gt;
+&lt;li&gt;跳到主循环&lt;/li&gt;
+&lt;li&gt;不断刷新 100 个页直到符合条件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;刷新循环
+&lt;ul&gt;
+&lt;li&gt;刷新页面到磁盘&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;暂停循环
+&lt;ul&gt;
+&lt;li&gt;将 Master Thread 挂起&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Master Thread 根据数据库状态在几个循环之间切换&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;innodb-关键特性&#34;&gt;InnoDB 关键特性&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;插入缓冲
+&lt;ul&gt;
+&lt;li&gt;Insert buffer
+&lt;ul&gt;
+&lt;li&gt;对于非聚集索引的插入或者更新操作，不是每一次直接插入到索引页，而是先判断插入的非聚集索引页是否在缓冲池中，若在，则直接插入，若不在，则先放入到一个 Insert Buffer 对象中。然后再以一定频率和情况进行 Insert Buffer 和辅助索引页字节点的额合并操作，将多个插入合并到一个操作中。&lt;/li&gt;
+&lt;li&gt;索引是辅助索引&lt;/li&gt;
+&lt;li&gt;索引不是唯一的&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;change buffer
+&lt;ul&gt;
+&lt;li&gt;Insert buffer 的升级版&lt;/li&gt;
+&lt;li&gt;InnoDB 对 DML 操作进行缓存，分别是 Insert buffer、Delete Buffer、Purge Buffer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Insert Buffer 内部实现
+&lt;ul&gt;
+&lt;li&gt;使用 B+ 树实现&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;两次写&lt;/li&gt;
+&lt;li&gt;自适应哈希索引&lt;/li&gt;
+&lt;li&gt;异步 IO&lt;/li&gt;
+&lt;li&gt;刷新邻接页&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;启动关闭与恢复&#34;&gt;启动、关闭与恢复&lt;/h3&gt;
 &lt;h2 id=&#34;文件&#34;&gt;文件&lt;/h2&gt;
 &lt;h2 id=&#34;表&#34;&gt;表&lt;/h2&gt;
