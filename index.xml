@@ -5,7 +5,7 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>Y.CH.Y</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Sat, 11 Sep 2021 09:56:50 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Sat, 11 Sep 2021 10:03:18 +0800</lastBuildDate>
     <item>
       <title>algorithm</title>
       <link>/algorithm/</link>
@@ -255,6 +255,23 @@
 &lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 79.Word Search&lt;/li&gt;
 &lt;li&gt;&lt;/li&gt;
 &lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>MySQL技术内幕::InnoDB存储引擎</title>
+      <link>/notes/inside_mysql/</link>
+      <pubDate>Sat, 11 Sep 2021 10:03:18 +0800</pubDate>
+      <guid>/notes/inside_mysql/</guid>
+      <description>&lt;h2 id=&#34;mysql-体系结构和存储引擎&#34;&gt;MySQL 体系结构和存储引擎&lt;/h2&gt;
+&lt;h2 id=&#34;innodb-存储引擎&#34;&gt;InnoDB 存储引擎&lt;/h2&gt;
+&lt;h2 id=&#34;文件&#34;&gt;文件&lt;/h2&gt;
+&lt;h2 id=&#34;表&#34;&gt;表&lt;/h2&gt;
+&lt;h2 id=&#34;索引和算法&#34;&gt;索引和算法&lt;/h2&gt;
+&lt;h2 id=&#34;锁&#34;&gt;锁&lt;/h2&gt;
+&lt;h2 id=&#34;事务&#34;&gt;事务&lt;/h2&gt;
+&lt;h2 id=&#34;备份与恢复&#34;&gt;备份与恢复&lt;/h2&gt;
+&lt;h2 id=&#34;性能调优&#34;&gt;性能调优&lt;/h2&gt;
 </description>
     </item>
     
