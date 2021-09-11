@@ -5,7 +5,7 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>Y.CH.Y</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Fri, 10 Sep 2021 03:39:50 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Fri, 10 Sep 2021 22:07:43 +0800</lastBuildDate>
     <item>
       <title>algorithm</title>
       <link>/algorithm/</link>
@@ -255,6 +255,15 @@
 &lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 79.Word Search&lt;/li&gt;
 &lt;li&gt;&lt;/li&gt;
 &lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>数据库系统概念::关系型语言</title>
+      <link>/notes/database_system_concepts_7th_relational_languages/</link>
+      <pubDate>Fri, 10 Sep 2021 22:07:43 +0800</pubDate>
+      <guid>/notes/database_system_concepts_7th_relational_languages/</guid>
+      <description>&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
 </description>
     </item>
     
@@ -3060,7 +3069,7 @@
 &lt;p&gt;&lt;a href=&#34;../reading/understand_the_jvm&#34;&gt;编程::深入理解 Java 虚拟机&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;../reading/tao_of_programming&#34;&gt;编程::编程之道&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;../reading/modern_operating_systems&#34;&gt;编程::现代操作系统&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;https://book.douban.com/subject/27087564/&#34;&gt;编程::MyBatis技术内幕&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/27087564/&#34;&gt;编程::MyBatis 技术内幕&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;https://book.douban.com/subject/35390390&#34;&gt;推理::字母表谜案&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;https://book.douban.com/subject/35296788&#34;&gt;推理::心灵侦探城塚翡翠&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;https://book.douban.com/subject/35016085&#34;&gt;推理::诡计博物馆&lt;/a&gt;&lt;br&gt;
@@ -3076,6 +3085,7 @@
 &lt;a href=&#34;../reading/computer_network_a_topdown_approach&#34;&gt;编程::计算机网络自顶向下方法&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;https://book.douban.com/subject/26877752&#34;&gt;推理::恶意&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;https://movie.douban.com/subject/30337388/&#34;&gt;电影::失控玩家 Free Guy (2021)&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://movie.douban.com/subject/27138615/&#34;&gt;电影::自卫的艺术 The Art of Self-Defense (2019)&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;https://movie.douban.com/subject/26741632/&#34;&gt;电影::X 特遣队：全员集结 The Suicide Squad (2021)&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;https://movie.douban.com/subject/30331432/&#34;&gt;美剧::洛基 第一季 Loki Season 1 (2021)&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;https://movie.douban.com/subject/30367642/&#34;&gt;美剧::猎鹰与冬兵 The Falcon and the Winter Soldier (2021)&lt;/a&gt;&lt;br&gt;

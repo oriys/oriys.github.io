@@ -5,7 +5,16 @@
     <link>/notes/</link>
       <atom:link href="/notes/index.xml" rel="self" type="application/rss+xml" />
     <description>Notes</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Wed, 01 Sep 2021 04:45:33 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Fri, 10 Sep 2021 22:07:43 +0800</lastBuildDate>
+    <item>
+      <title>数据库系统概念::关系型语言</title>
+      <link>/notes/database_system_concepts_7th_relational_languages/</link>
+      <pubDate>Fri, 10 Sep 2021 22:07:43 +0800</pubDate>
+      <guid>/notes/database_system_concepts_7th_relational_languages/</guid>
+      <description>&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
+</description>
+    </item>
+    
     <item>
       <title>论文::如何阅读一篇论文</title>
       <link>/notes/how_to_read_a_paper/</link>
