@@ -14,7 +14,7 @@
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
   <meta property="og:title" content="MySQL技术内幕::InnoDB存储引擎" />
-<meta property="og:description" content="MySQL 体系结构和存储引擎 定义数据库和实例  数据库  物理操作系统文件和其他形式文件类型的集合 frm、MYD、MYI、ibd 结尾的文件   实例  MySQL 数据库由后台线程和一个共享内存组成 数据库实例才是真正用来操作数据库的   实例与数据库一一对应 MySQL 数据库实例在系统上的表现就是一个进程 配置加载顺序  /etc/my.cnf =&gt; /etc/mysql/my.cnf =&gt; /usr/local/mysql/etc/my.cnf =&gt; $HOME/.my.cnf    MySQL 体系结构  组成  连接池组建 管理服务和工具组建 SQL 接口组件 查询分析器组件 优化器组件 缓冲组件 插件式存储引擎 物理文件   存储引擎是基于表的，而不是数据库  存储引擎  InnoDB 存储引擎  支持事务，面向 OLTP 应用 行锁，外键 支持裸设备 多版本并发控制，四种隔离级别 next-key locking 避免幻读 插入缓冲、二次写、自适应哈希索引、预读 采用索引组织表，每张表的存储都是按照转的顺序存放的   MyISAM 存储引擎  不支持事务 表锁设计 支持全文索引 面向 OLAP 只缓存索引文件 MyISAM 存储引擎表由 MYD 和 MYI 组成  MYD 存放数据文件 MYI 存放索引文件     NDB 存储引擎  集群存储引擎 share nothing 架构   Memory 存储引擎  表数据放在内存 使用哈希索引 用于存放临时结果集   Archive 存储引擎  只支持 INSERT 和 SELECT 使用 zlib 压缩数据，有较好的压缩率 适合归档数据   Federated 存储引擎  指向一台远程 MySQL 数据库服务器上的表   Maria 存储引擎  目标取代 MyISAM 特性同 InnoDB 存储引擎   其他存储引擎  Merge CSV Sphinx Infobright    存储引擎比较  MySQL :: MySQL 8." />
+<meta property="og:description" content="MySQL 体系结构和存储引擎 定义数据库和实例  数据库  物理操作系统文件和其他形式文件类型的集合 frm、MYD、MYI、ibd 结尾的文件   实例  MySQL 数据库由后台线程和一个共享内存组成 数据库实例才是真正用来操作数据库的   实例与数据库一一对应 MySQL 数据库实例在系统上的表现就是一个进程 配置加载顺序  /etc/my.cnf =&gt; /etc/mysql/my.cnf =&gt; /usr/local/mysql/etc/my.cnf =&gt; $HOME/.my.cnf    MySQL 体系结构  组成  连接池组建 管理服务和工具组建 SQL 接口组件 查询分析器组件 优化器组件 缓冲组件 插件式存储引擎 物理文件   存储引擎是基于表的，而不是数据库  存储引擎  InnoDB 存储引擎  支持事务，面向 OLTP 应用 行锁，外键 支持裸设备 多版本并发控制，四种隔离级别 next-key locking 避免幻读 插入缓冲、二次写、自适应哈希索引、预读 采用索引组织表，每张表的存储都是按照转的顺序存放的   MyISAM 存储引擎  不支持事务 表锁设计 支持全文索引 面向 OLAP 只缓存索引文件 MyISAM 存储引擎表由 MYD 和 MYI 组成  MYD 存放数据文件 MYI 存放索引文件     NDB 存储引擎  集群存储引擎 share nothing 架构   Memory 存储引擎  表数据放在内存 使用哈希索引 用于存放临时结果集   Archive 存储引擎  只支持 INSERT 和 SELECT 使用 zlib 压缩数据，有较好的压缩率 适合归档数据   Federated 存储引擎  指向一台远程 MySQL 数据库服务器上的表   Maria 存储引擎  目标取代 MyISAM 特性同 InnoDB 存储引擎   其他存储引擎  Merge CSV Sphinx Infobright    存储引擎比较  MySQL :: 16 Alternative Storage Engines  连接 MySQL  TCP/IP  不同机器之间 在客户端和服务器端连接   命名管道和共享内存  在同一台机器上 通过 &ndash;enable-named-pipe 启用   UNIX 域套接字  同一台机器上使用 通过 &ndash;socket=/etc/mysql." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/notes/inside_mysql/" /><meta property="article:section" content="notes" />
 <meta property="article:published_time" content="2021-09-11T10:03:18+08:00" />
@@ -23,7 +23,7 @@
 
   <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="MySQL技术内幕::InnoDB存储引擎"/>
-<meta name="twitter:description" content="MySQL 体系结构和存储引擎 定义数据库和实例  数据库  物理操作系统文件和其他形式文件类型的集合 frm、MYD、MYI、ibd 结尾的文件   实例  MySQL 数据库由后台线程和一个共享内存组成 数据库实例才是真正用来操作数据库的   实例与数据库一一对应 MySQL 数据库实例在系统上的表现就是一个进程 配置加载顺序  /etc/my.cnf =&gt; /etc/mysql/my.cnf =&gt; /usr/local/mysql/etc/my.cnf =&gt; $HOME/.my.cnf    MySQL 体系结构  组成  连接池组建 管理服务和工具组建 SQL 接口组件 查询分析器组件 优化器组件 缓冲组件 插件式存储引擎 物理文件   存储引擎是基于表的，而不是数据库  存储引擎  InnoDB 存储引擎  支持事务，面向 OLTP 应用 行锁，外键 支持裸设备 多版本并发控制，四种隔离级别 next-key locking 避免幻读 插入缓冲、二次写、自适应哈希索引、预读 采用索引组织表，每张表的存储都是按照转的顺序存放的   MyISAM 存储引擎  不支持事务 表锁设计 支持全文索引 面向 OLAP 只缓存索引文件 MyISAM 存储引擎表由 MYD 和 MYI 组成  MYD 存放数据文件 MYI 存放索引文件     NDB 存储引擎  集群存储引擎 share nothing 架构   Memory 存储引擎  表数据放在内存 使用哈希索引 用于存放临时结果集   Archive 存储引擎  只支持 INSERT 和 SELECT 使用 zlib 压缩数据，有较好的压缩率 适合归档数据   Federated 存储引擎  指向一台远程 MySQL 数据库服务器上的表   Maria 存储引擎  目标取代 MyISAM 特性同 InnoDB 存储引擎   其他存储引擎  Merge CSV Sphinx Infobright    存储引擎比较  MySQL :: MySQL 8."/>
+<meta name="twitter:description" content="MySQL 体系结构和存储引擎 定义数据库和实例  数据库  物理操作系统文件和其他形式文件类型的集合 frm、MYD、MYI、ibd 结尾的文件   实例  MySQL 数据库由后台线程和一个共享内存组成 数据库实例才是真正用来操作数据库的   实例与数据库一一对应 MySQL 数据库实例在系统上的表现就是一个进程 配置加载顺序  /etc/my.cnf =&gt; /etc/mysql/my.cnf =&gt; /usr/local/mysql/etc/my.cnf =&gt; $HOME/.my.cnf    MySQL 体系结构  组成  连接池组建 管理服务和工具组建 SQL 接口组件 查询分析器组件 优化器组件 缓冲组件 插件式存储引擎 物理文件   存储引擎是基于表的，而不是数据库  存储引擎  InnoDB 存储引擎  支持事务，面向 OLTP 应用 行锁，外键 支持裸设备 多版本并发控制，四种隔离级别 next-key locking 避免幻读 插入缓冲、二次写、自适应哈希索引、预读 采用索引组织表，每张表的存储都是按照转的顺序存放的   MyISAM 存储引擎  不支持事务 表锁设计 支持全文索引 面向 OLAP 只缓存索引文件 MyISAM 存储引擎表由 MYD 和 MYI 组成  MYD 存放数据文件 MYI 存放索引文件     NDB 存储引擎  集群存储引擎 share nothing 架构   Memory 存储引擎  表数据放在内存 使用哈希索引 用于存放临时结果集   Archive 存储引擎  只支持 INSERT 和 SELECT 使用 zlib 压缩数据，有较好的压缩率 适合归档数据   Federated 存储引擎  指向一台远程 MySQL 数据库服务器上的表   Maria 存储引擎  目标取代 MyISAM 特性同 InnoDB 存储引擎   其他存储引擎  Merge CSV Sphinx Infobright    存储引擎比较  MySQL :: 16 Alternative Storage Engines  连接 MySQL  TCP/IP  不同机器之间 在客户端和服务器端连接   命名管道和共享内存  在同一台机器上 通过 &ndash;enable-named-pipe 启用   UNIX 域套接字  同一台机器上使用 通过 &ndash;socket=/etc/mysql."/>
 
   
   
@@ -215,7 +215,7 @@ if (!doNotTrack) {
 </ul>
 <h3 id="存储引擎比较">存储引擎比较</h3>
 <ul>
-<li><a href="https://dev.mysql.com/doc/refman/8.0/en/storage-engines.html">MySQL :: MySQL 8.0 Reference Manual :: 16 Alternative Storage Engines</a></li>
+<li><a href="https://dev.mysql.com/doc/refman/8.0/en/storage-engines.html">MySQL :: 16 Alternative Storage Engines</a></li>
 </ul>
 <h3 id="连接-mysql">连接 MySQL</h3>
 <ul>
@@ -239,6 +239,108 @@ if (!doNotTrack) {
 </li>
 </ul>
 <h2 id="innodb-存储引擎">InnoDB 存储引擎</h2>
+<h3 id="innodb-存储引擎概述">InnoDB 存储引擎概述</h3>
+<ul>
+<li>是第一个支持完整 ACID 事务的 MySQL 存储引擎</li>
+<li>其特点是行锁设计、支持 MVCC、支持外键、提供一致性非锁定读</li>
+<li>高效利用内存和 CPU</li>
+</ul>
+<h3 id="innodb-体系架构">InnoDB 体系架构</h3>
+<ul>
+<li>后台线程
+<ul>
+<li>描述
+<ul>
+<li>负责刷新内存池中的数据，保证缓冲池中的内存缓存的是最近的数据</li>
+<li>此外将以修改的数据文件刷新到磁盘文件</li>
+<li>同时保证在数据库发生异常的情况下 InnoDB 能恢复到正常运行状态</li>
+</ul>
+</li>
+<li>不同的线程
+<ul>
+<li>Master Thread
+<ul>
+<li>核心后台线程，负责将缓存池中的数据异步刷新到磁盘，保证数据的一致性，包括脏页的刷新，合并插入缓冲，UNDO 页的回收等</li>
+</ul>
+</li>
+<li>IO Thread
+<ul>
+<li>InnoDB 中大量使用 AIO 处理请求</li>
+<li>IO Thread 的工作是负责这些 IO 请求的回调处理</li>
+</ul>
+</li>
+<li>Purge Thread
+<ul>
+<li>回收已经使用并分配的 undo 页</li>
+</ul>
+</li>
+<li>Page Cleaner Thread
+<ul>
+<li>将之前版本中脏页的刷新操作放入到单独的线程中完成</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>内存
+<ul>
+<li>缓冲池
+<ul>
+<li>通过内存的速度弥补磁盘速度较慢对数据库性能的影响</li>
+<li>对内容的读取先判断是否在缓冲池中，否则从磁盘读取到缓冲池中，再从缓冲池中读取</li>
+<li>对内容的更性操作先在缓冲池中进行，然后通过 checkpoint 机制写入磁盘</li>
+<li>缓冲池的大小直接影响数据库的性能</li>
+<li>数据页类型
+<ul>
+<li>索引页</li>
+<li>数据页</li>
+<li>undo 页</li>
+<li>插入缓冲</li>
+<li>自适应哈希索引</li>
+<li>InnoDB 存储的锁信息</li>
+<li>数据字典信息</li>
+<li>等</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>LRU List、Free List 和 Flush List
+<ul>
+<li>数据库中的缓冲池通过 LRU 算法来管理</li>
+<li>最频繁使用的页面在最前面，最少使用的在 LRU 列表的尾端</li>
+<li>当缓冲池不能存放新读取到的页面时，将首先释放 LRU 列表中尾端的页</li>
+<li>优化，最新读区到的页放到列表中间位置，避免新页导致热点页被刷到磁盘</li>
+<li>LRU 列表从 Free 列表分配页面</li>
+<li>可以使用`show engine innodb status 来观察 LRU 列表和 Free 列表的使用情况和状态</li>
+<li>非 16KB 的压缩页面通过伙伴算法分配</li>
+<li>Flush List 用来管理需要被刷回磁盘的脏页</li>
+</ul>
+</li>
+<li>redo 日志缓存
+<ul>
+<li>InnoDB 会把 redo 日志放入这个缓冲区，然后刷到磁盘上</li>
+<li>时机
+<ul>
+<li>Master Thread 每一秒将重做日志缓存刷新到重做日志文件</li>
+<li>每个事务提交前会将重做日志缓存刷新到重做日志文件</li>
+<li>当重做日志缓冲池小于一半时，重做日志缓存刷新到重做日志文件</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>额外的内存池
+<ul>
+<li>在对一些数据结构本身的内存进行分配时，会从额外的内存池申请。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="checkpoint-技术">Checkpoint 技术</h3>
+<h3 id="master-thread-工作">Master Thread 工作</h3>
+<h3 id="innodb-工作特性">InnoDB 工作特性</h3>
+<h3 id="启动关闭与恢复">启动、关闭与恢复</h3>
 <h2 id="文件">文件</h2>
 <h2 id="表">表</h2>
 <h2 id="索引和算法">索引和算法</h2>

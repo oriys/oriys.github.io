@@ -120,7 +120,7 @@
 &lt;/ul&gt;
 &lt;h3 id=&#34;存储引擎比较&#34;&gt;存储引擎比较&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://dev.mysql.com/doc/refman/8.0/en/storage-engines.html&#34;&gt;MySQL :: MySQL 8.0 Reference Manual :: 16 Alternative Storage Engines&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://dev.mysql.com/doc/refman/8.0/en/storage-engines.html&#34;&gt;MySQL :: 16 Alternative Storage Engines&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;连接-mysql&#34;&gt;连接 MySQL&lt;/h3&gt;
 &lt;ul&gt;
@@ -144,6 +144,108 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;innodb-存储引擎&#34;&gt;InnoDB 存储引擎&lt;/h2&gt;
+&lt;h3 id=&#34;innodb-存储引擎概述&#34;&gt;InnoDB 存储引擎概述&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;是第一个支持完整 ACID 事务的 MySQL 存储引擎&lt;/li&gt;
+&lt;li&gt;其特点是行锁设计、支持 MVCC、支持外键、提供一致性非锁定读&lt;/li&gt;
+&lt;li&gt;高效利用内存和 CPU&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;innodb-体系架构&#34;&gt;InnoDB 体系架构&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;后台线程
+&lt;ul&gt;
+&lt;li&gt;描述
+&lt;ul&gt;
+&lt;li&gt;负责刷新内存池中的数据，保证缓冲池中的内存缓存的是最近的数据&lt;/li&gt;
+&lt;li&gt;此外将以修改的数据文件刷新到磁盘文件&lt;/li&gt;
+&lt;li&gt;同时保证在数据库发生异常的情况下 InnoDB 能恢复到正常运行状态&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;不同的线程
+&lt;ul&gt;
+&lt;li&gt;Master Thread
+&lt;ul&gt;
+&lt;li&gt;核心后台线程，负责将缓存池中的数据异步刷新到磁盘，保证数据的一致性，包括脏页的刷新，合并插入缓冲，UNDO 页的回收等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;IO Thread
+&lt;ul&gt;
+&lt;li&gt;InnoDB 中大量使用 AIO 处理请求&lt;/li&gt;
+&lt;li&gt;IO Thread 的工作是负责这些 IO 请求的回调处理&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Purge Thread
+&lt;ul&gt;
+&lt;li&gt;回收已经使用并分配的 undo 页&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Page Cleaner Thread
+&lt;ul&gt;
+&lt;li&gt;将之前版本中脏页的刷新操作放入到单独的线程中完成&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;内存
+&lt;ul&gt;
+&lt;li&gt;缓冲池
+&lt;ul&gt;
+&lt;li&gt;通过内存的速度弥补磁盘速度较慢对数据库性能的影响&lt;/li&gt;
+&lt;li&gt;对内容的读取先判断是否在缓冲池中，否则从磁盘读取到缓冲池中，再从缓冲池中读取&lt;/li&gt;
+&lt;li&gt;对内容的更性操作先在缓冲池中进行，然后通过 checkpoint 机制写入磁盘&lt;/li&gt;
+&lt;li&gt;缓冲池的大小直接影响数据库的性能&lt;/li&gt;
+&lt;li&gt;数据页类型
+&lt;ul&gt;
+&lt;li&gt;索引页&lt;/li&gt;
+&lt;li&gt;数据页&lt;/li&gt;
+&lt;li&gt;undo 页&lt;/li&gt;
+&lt;li&gt;插入缓冲&lt;/li&gt;
+&lt;li&gt;自适应哈希索引&lt;/li&gt;
+&lt;li&gt;InnoDB 存储的锁信息&lt;/li&gt;
+&lt;li&gt;数据字典信息&lt;/li&gt;
+&lt;li&gt;等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;LRU List、Free List 和 Flush List
+&lt;ul&gt;
+&lt;li&gt;数据库中的缓冲池通过 LRU 算法来管理&lt;/li&gt;
+&lt;li&gt;最频繁使用的页面在最前面，最少使用的在 LRU 列表的尾端&lt;/li&gt;
+&lt;li&gt;当缓冲池不能存放新读取到的页面时，将首先释放 LRU 列表中尾端的页&lt;/li&gt;
+&lt;li&gt;优化，最新读区到的页放到列表中间位置，避免新页导致热点页被刷到磁盘&lt;/li&gt;
+&lt;li&gt;LRU 列表从 Free 列表分配页面&lt;/li&gt;
+&lt;li&gt;可以使用`show engine innodb status 来观察 LRU 列表和 Free 列表的使用情况和状态&lt;/li&gt;
+&lt;li&gt;非 16KB 的压缩页面通过伙伴算法分配&lt;/li&gt;
+&lt;li&gt;Flush List 用来管理需要被刷回磁盘的脏页&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;redo 日志缓存
+&lt;ul&gt;
+&lt;li&gt;InnoDB 会把 redo 日志放入这个缓冲区，然后刷到磁盘上&lt;/li&gt;
+&lt;li&gt;时机
+&lt;ul&gt;
+&lt;li&gt;Master Thread 每一秒将重做日志缓存刷新到重做日志文件&lt;/li&gt;
+&lt;li&gt;每个事务提交前会将重做日志缓存刷新到重做日志文件&lt;/li&gt;
+&lt;li&gt;当重做日志缓冲池小于一半时，重做日志缓存刷新到重做日志文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;额外的内存池
+&lt;ul&gt;
+&lt;li&gt;在对一些数据结构本身的内存进行分配时，会从额外的内存池申请。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;checkpoint-技术&#34;&gt;Checkpoint 技术&lt;/h3&gt;
+&lt;h3 id=&#34;master-thread-工作&#34;&gt;Master Thread 工作&lt;/h3&gt;
+&lt;h3 id=&#34;innodb-工作特性&#34;&gt;InnoDB 工作特性&lt;/h3&gt;
+&lt;h3 id=&#34;启动关闭与恢复&#34;&gt;启动、关闭与恢复&lt;/h3&gt;
 &lt;h2 id=&#34;文件&#34;&gt;文件&lt;/h2&gt;
 &lt;h2 id=&#34;表&#34;&gt;表&lt;/h2&gt;
 &lt;h2 id=&#34;索引和算法&#34;&gt;索引和算法&lt;/h2&gt;
