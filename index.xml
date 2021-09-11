@@ -264,6 +264,137 @@
       <pubDate>Sat, 11 Sep 2021 10:03:18 +0800</pubDate>
       <guid>/notes/inside_mysql/</guid>
       <description>&lt;h2 id=&#34;mysql-体系结构和存储引擎&#34;&gt;MySQL 体系结构和存储引擎&lt;/h2&gt;
+&lt;h3 id=&#34;定义数据库和实例&#34;&gt;定义数据库和实例&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;数据库
+&lt;ul&gt;
+&lt;li&gt;物理操作系统文件和其他形式文件类型的集合&lt;/li&gt;
+&lt;li&gt;frm、MYD、MYI、ibd 结尾的文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;实例
+&lt;ul&gt;
+&lt;li&gt;MySQL 数据库由后台线程和一个共享内存组成&lt;/li&gt;
+&lt;li&gt;数据库实例才是真正用来操作数据库的&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;实例与数据库一一对应&lt;/li&gt;
+&lt;li&gt;MySQL 数据库实例在系统上的表现就是一个进程&lt;/li&gt;
+&lt;li&gt;配置加载顺序
+&lt;ul&gt;
+&lt;li&gt;/etc/my.cnf =&amp;gt; /etc/mysql/my.cnf =&amp;gt; /usr/local/mysql/etc/my.cnf =&amp;gt; $HOME/.my.cnf&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;mysql-体系结构&#34;&gt;MySQL 体系结构&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;组成
+&lt;ul&gt;
+&lt;li&gt;连接池组建&lt;/li&gt;
+&lt;li&gt;管理服务和工具组建&lt;/li&gt;
+&lt;li&gt;SQL 接口组件&lt;/li&gt;
+&lt;li&gt;查询分析器组件&lt;/li&gt;
+&lt;li&gt;优化器组件&lt;/li&gt;
+&lt;li&gt;缓冲组件&lt;/li&gt;
+&lt;li&gt;插件式存储引擎&lt;/li&gt;
+&lt;li&gt;物理文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;存储引擎是基于表的，而不是数据库&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;存储引擎&#34;&gt;存储引擎&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;InnoDB 存储引擎
+&lt;ul&gt;
+&lt;li&gt;支持事务，面向 OLTP 应用&lt;/li&gt;
+&lt;li&gt;行锁，外键&lt;/li&gt;
+&lt;li&gt;支持裸设备&lt;/li&gt;
+&lt;li&gt;多版本并发控制，四种隔离级别&lt;/li&gt;
+&lt;li&gt;next-key locking 避免幻读&lt;/li&gt;
+&lt;li&gt;插入缓冲、二次写、自适应哈希索引、预读&lt;/li&gt;
+&lt;li&gt;采用索引组织表，每张表的存储都是按照转的顺序存放的&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;MyISAM 存储引擎
+&lt;ul&gt;
+&lt;li&gt;不支持事务&lt;/li&gt;
+&lt;li&gt;表锁设计&lt;/li&gt;
+&lt;li&gt;支持全文索引&lt;/li&gt;
+&lt;li&gt;面向 OLAP&lt;/li&gt;
+&lt;li&gt;只缓存索引文件&lt;/li&gt;
+&lt;li&gt;MyISAM 存储引擎表由 MYD 和 MYI 组成
+&lt;ul&gt;
+&lt;li&gt;MYD 存放数据文件&lt;/li&gt;
+&lt;li&gt;MYI 存放索引文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;NDB 存储引擎
+&lt;ul&gt;
+&lt;li&gt;集群存储引擎&lt;/li&gt;
+&lt;li&gt;share nothing 架构&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Memory 存储引擎
+&lt;ul&gt;
+&lt;li&gt;表数据放在内存&lt;/li&gt;
+&lt;li&gt;使用哈希索引&lt;/li&gt;
+&lt;li&gt;用于存放临时结果集&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Archive 存储引擎
+&lt;ul&gt;
+&lt;li&gt;只支持 INSERT 和 SELECT&lt;/li&gt;
+&lt;li&gt;使用 zlib 压缩数据，有较好的压缩率&lt;/li&gt;
+&lt;li&gt;适合归档数据&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Federated 存储引擎
+&lt;ul&gt;
+&lt;li&gt;指向一台远程 MySQL 数据库服务器上的表&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Maria 存储引擎
+&lt;ul&gt;
+&lt;li&gt;目标取代 MyISAM&lt;/li&gt;
+&lt;li&gt;特性同 InnoDB 存储引擎&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;其他存储引擎
+&lt;ul&gt;
+&lt;li&gt;Merge&lt;/li&gt;
+&lt;li&gt;CSV&lt;/li&gt;
+&lt;li&gt;Sphinx&lt;/li&gt;
+&lt;li&gt;Infobright&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;存储引擎比较&#34;&gt;存储引擎比较&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://dev.mysql.com/doc/refman/8.0/en/storage-engines.html&#34;&gt;MySQL :: MySQL 8.0 Reference Manual :: 16 Alternative Storage Engines&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;连接-mysql&#34;&gt;连接 MySQL&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;TCP/IP
+&lt;ul&gt;
+&lt;li&gt;不同机器之间&lt;/li&gt;
+&lt;li&gt;在客户端和服务器端连接&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;命名管道和共享内存
+&lt;ul&gt;
+&lt;li&gt;在同一台机器上&lt;/li&gt;
+&lt;li&gt;通过 &amp;ndash;enable-named-pipe 启用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;UNIX 域套接字
+&lt;ul&gt;
+&lt;li&gt;同一台机器上使用&lt;/li&gt;
+&lt;li&gt;通过 &amp;ndash;socket=/etc/mysql.sock 指定套接字文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&#34;innodb-存储引擎&#34;&gt;InnoDB 存储引擎&lt;/h2&gt;
 &lt;h2 id=&#34;文件&#34;&gt;文件&lt;/h2&gt;
 &lt;h2 id=&#34;表&#34;&gt;表&lt;/h2&gt;
