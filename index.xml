@@ -878,7 +878,11 @@
 &lt;li&gt;提交事务操作和开始下一个事务操作将合并成为一个院子操作&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;分布式事务&lt;/li&gt;
+&lt;li&gt;分布式事务
+&lt;ul&gt;
+&lt;li&gt;通常是一个分布式环境下运行的扁平事务，因此需要根据数据所在位置访问网络中的不同节点。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
