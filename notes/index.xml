@@ -608,10 +608,24 @@
 &lt;li&gt;带有保存点的扁平事务
 &lt;ul&gt;
 &lt;li&gt;在扁平事务的基础上，允许事务执行过程中会滚到同一个事务较早的一个状态&lt;/li&gt;
+&lt;li&gt;保存点在事务内部是递增的，ROLLBACK 不影响保存点的递增&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;嵌套事务&lt;/li&gt;
-&lt;li&gt;链事务&lt;/li&gt;
+&lt;li&gt;嵌套事务
+&lt;ul&gt;
+&lt;li&gt;是一个层次结构框架，由一个顶层事务控制着各个层次的事务，顶层事务之下嵌套的事务被称为子事务，其控制每一个局部的变换&lt;/li&gt;
+&lt;li&gt;可以用支持保存点的事务模拟&lt;/li&gt;
+&lt;li&gt;子事务可以时扁平事务也可以是嵌套事务&lt;/li&gt;
+&lt;li&gt;子事务既可以回滚也可以提交，但是它的提交要到父事务提交后才生效&lt;/li&gt;
+&lt;li&gt;任何一个事务回滚会引起它所有子事务一起回滚&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;链事务
+&lt;ul&gt;
+&lt;li&gt;在提交一个事务时，释放不需要的数据对象，将必要的处理上下文隐式地传递给下一个要开始的事务&lt;/li&gt;
+&lt;li&gt;提交事务操作和开始下一个事务操作将合并成为一个院子操作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;分布式事务&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
