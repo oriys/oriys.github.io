@@ -770,7 +770,31 @@
 &lt;h3 id=&#34;分区表&#34;&gt;分区表&lt;/h3&gt;
 &lt;h2 id=&#34;索引与算法&#34;&gt;索引与算法&lt;/h2&gt;
 &lt;h3 id=&#34;innodb-存储引擎索引概述&#34;&gt;InnoDB 存储引擎索引概述&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;InnoDB 存储引擎支持以下几种常见的索引
+&lt;ul&gt;
+&lt;li&gt;B+ 树索引&lt;/li&gt;
+&lt;li&gt;全文索引&lt;/li&gt;
+&lt;li&gt;哈希索引&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;人为不能干预存储引擎是否生成哈希索引&lt;/li&gt;
+&lt;li&gt;InnoDB 存储引擎以页为单位查找数据&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;数据结构与算法&#34;&gt;数据结构与算法&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;二分查找法
+&lt;ul&gt;
+&lt;li&gt;基本思想：将记录按有序化（递增或递减）排列，在查找过程中采用跳跃式方式查找，即先以有序数列的中点位置为比较对象，如果要找的元素值小于该中点元素，则将待杳序列缩小为左半部分，否则为右半部分。通过一次比较，将查找区间缩小一半。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;二叉查找树与平衡二叉树
+&lt;ul&gt;
+&lt;li&gt;二叉查找树：在二叉查找树中，左子树的键值总是小于根的键值，右子树的键值总是大于根的键值。&lt;/li&gt;
+&lt;li&gt;平衡二叉树：首先符合二叉树的定义，其次必须满足任何节点的两个子树的高度最大差为 1。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;b-树&#34;&gt;B+ 树&lt;/h3&gt;
 &lt;h3 id=&#34;b-树索引&#34;&gt;B+ 树索引&lt;/h3&gt;
 &lt;h3 id=&#34;cardinality-值&#34;&gt;Cardinality 值&lt;/h3&gt;
@@ -778,7 +802,16 @@
 &lt;h3 id=&#34;全文检索&#34;&gt;全文检索&lt;/h3&gt;
 &lt;h2 id=&#34;锁&#34;&gt;锁&lt;/h2&gt;
 &lt;h3 id=&#34;什么是锁&#34;&gt;什么是锁&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;锁机制用于管理对共享资源的并发访问&lt;/li&gt;
+&lt;li&gt;InnoDB 在数据库内部多处使用锁，从而允许对多种不同资源提供并发访问，提供数据的完整性和一致性。&lt;/li&gt;
+&lt;li&gt;不同的数据库系统实现锁的机制不同&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;lock-与-latch&#34;&gt;lock 与 latch&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;lock 的对象时事务，用来锁定的是数据库中的对象，如表、页、行。lock 多在事务 commit 或 rollback 后释放，有死锁检测机制。&lt;/li&gt;
+&lt;li&gt;latch 一般称为闩锁，持续时间非常短，在 InnoDB 引擎中，latch 又可分为 mutex 和 rwlock。其目的是用来保证并发线程操作临界资源的正确性，无死锁检测。&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;innodb-存储引擎中的锁&#34;&gt;InnoDB 存储引擎中的锁&lt;/h3&gt;
 &lt;h3 id=&#34;锁的算法&#34;&gt;锁的算法&lt;/h3&gt;
 &lt;h3 id=&#34;锁问题&#34;&gt;锁问题&lt;/h3&gt;
@@ -787,6 +820,56 @@
 &lt;h3 id=&#34;锁升级&#34;&gt;锁升级&lt;/h3&gt;
 &lt;h2 id=&#34;事务&#34;&gt;事务&lt;/h2&gt;
 &lt;h3 id=&#34;认识事务&#34;&gt;认识事务&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;概述
+&lt;ul&gt;
+&lt;li&gt;事务是访问并更新数据库中各种数据项的一个程序执行单元。在事务中的操作，要么都做修改，要么都不做，这就是事务的目的，也是事务模型区别与文件系统的重要特征之一&lt;/li&gt;
+&lt;li&gt;ACID
+&lt;ul&gt;
+&lt;li&gt;原子性(Atomicity)
+&lt;ul&gt;
+&lt;li&gt;原子性指整个数据库事务是不可分割的工作单位。只有使事务中所有的数据库操作都执行成功，才算整个事务成功。事务中任何一个 SQL 语句执行失败，已经执行成功的 SQL 语句也必须撤销，数据库状态应该退回到执行事务前的状态&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;一致性(Consistency)
+&lt;ul&gt;
+&lt;li&gt;一致性指事务将数据库从一种状态转变为下一种一致的状态。在事务开始之前和事务结束以后，数据库的完整性约束没有被破坏&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;隔离性(Isolation)
+&lt;ul&gt;
+&lt;li&gt;事务的隔离性要求诶个读写事务的对象对其他事物的操作对象能相互分离，即该事务提交前对其他事务都不可见。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;持久性(Durability)
+&lt;ul&gt;
+&lt;li&gt;事务一旦提交，其结果就是永久的。即使发生宕机等故障，数据库也能将数据恢复。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;分类
+&lt;ul&gt;
+&lt;li&gt;扁平事务
+&lt;ul&gt;
+&lt;li&gt;最简单的一种，其操作是原子性的，要么都执行要么都会滚&lt;/li&gt;
+&lt;li&gt;扁平事务时应用程序成为原子操作的基本组成模块&lt;/li&gt;
+&lt;li&gt;主要限制是不能提交和会滚事务的某一部分，或者分几个步骤提交&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;带有保存点的扁平事务
+&lt;ul&gt;
+&lt;li&gt;在扁平事务的基础上，允许事务执行过程中会滚到同一个事务较早的一个状态&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;嵌套事务&lt;/li&gt;
+&lt;li&gt;链事务&lt;/li&gt;
+&lt;li&gt;分布式事务&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;事务的实现&#34;&gt;事务的实现&lt;/h3&gt;
 &lt;h3 id=&#34;事务控制语句&#34;&gt;事务控制语句&lt;/h3&gt;
 &lt;h3 id=&#34;隐式提交的事务&#34;&gt;隐式提交的事务&lt;/h3&gt;
