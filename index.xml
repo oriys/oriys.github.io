@@ -640,8 +640,8 @@
 &lt;li&gt;记录了堆 MySQL 数据库执行更改的所有操作&lt;/li&gt;
 &lt;li&gt;作用
 &lt;ul&gt;
-&lt;li&gt;恢复〈recovery）:某些数据的恢复需要二进制日志，例如，在一个数据库全备文件恢复后，用户可以通过二进制日志进行 point-in-time 的恢复。&lt;/li&gt;
-&lt;li&gt;复制〈replication）:其原理与恢复类似，通过复制和执行二进制日志使一台远程的 MySQL 数据库〈一般称为 slave 或 standby) 与一台 MySQL 数据库〈一般称为 master 或 primary) 进行实时同步。&lt;/li&gt;
+&lt;li&gt;恢复(recovery):某些数据的恢复需要二进制日志，例如，在一个数据库全备文件恢复后，用户可以通过二进制日志进行 point-in-time 的恢复。&lt;/li&gt;
+&lt;li&gt;复制(replication):其原理与恢复类似，通过复制和执行二进制日志使一台远程的 MySQL 数据库(一般称为 slave 或 standby) 与一台 MySQL 数据库(一般称为 master 或 primary) 进行实时同步。&lt;/li&gt;
 &lt;li&gt;审计 (audit):用户可以通过二进制日志中的信息来进行审计，判断是否有对数据库进行注入的攻击&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -657,7 +657,7 @@
 &lt;li&gt;使用了 UUID()、USER()、CURRENT_USER()、FOUND_ROWS()、ROW_COUNT() 等不确定函数。&lt;/li&gt;
 &lt;li&gt;使用了 INSERT DELAY 语句。&lt;/li&gt;
 &lt;li&gt;使用了用户定义函数 (UDF)。&lt;/li&gt;
-&lt;li&gt;使用了临时表〈temporary table)。&lt;/li&gt;
+&lt;li&gt;使用了临时表(temporary table)。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;ROW 格式可以为数据库的恢复和复制带来更好的可靠性，但是会增加二进制的大小，复制的网络开销也会变大。&lt;/li&gt;
@@ -708,9 +708,93 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;表&#34;&gt;表&lt;/h2&gt;
-&lt;h2 id=&#34;索引和算法&#34;&gt;索引和算法&lt;/h2&gt;
+&lt;h3 id=&#34;索引组织表&#34;&gt;索引组织表&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;在 InnoDB 存储引擎中，表都是根据主键顺序组织存放的，这种存储方式的表称为索引组织表&lt;/li&gt;
+&lt;li&gt;在 InnoDB 存储引擎表中，每张表都有个主键，如果在创建表时没有显式地定义主键，InnoDB 会优先使用第一个定义的非空唯一索引，否则自动添加一个 6 字节大小的指针。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;innodb-逻辑存储结构&#34;&gt;InnoDB 逻辑存储结构&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;所有数据被存放在一个空间内，称之为表空间&lt;/li&gt;
+&lt;li&gt;表空间又由段、区、页、行组成&lt;/li&gt;
+&lt;li&gt;表空间
+&lt;ul&gt;
+&lt;li&gt;InnoDB 存储引擎结构的最高层&lt;/li&gt;
+&lt;li&gt;每张表的表空间只存放数据，其他信息存放在共享表空间&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;段
+&lt;ul&gt;
+&lt;li&gt;表空间是由各个段组成的&lt;/li&gt;
+&lt;li&gt;常见的段有数据段、索引段、回滚段、等&lt;/li&gt;
+&lt;li&gt;数据段为 B+ 树的非子节点&lt;/li&gt;
+&lt;li&gt;数据段即为 B+ 树的子节点&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;区
+&lt;ul&gt;
+&lt;li&gt;由连续的页组成，在任何情况下每个区的大小都是 1MB&lt;/li&gt;
+&lt;li&gt;InnoDB 一次性申请 4 到 5 个区&lt;/li&gt;
+&lt;li&gt;一般 InnoDB 引擎存储页的大小为 16KB，一个区有 64 个页，启用压缩页或者调小默认页大小也保持 1MB 总大小&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;页\块
+&lt;ul&gt;
+&lt;li&gt;页是 InnoDB 磁盘管理的最小单位&lt;/li&gt;
+&lt;li&gt;默认 16KB，可以调整为 4KB、8KB、16KB&lt;/li&gt;
+&lt;li&gt;常见类型
+&lt;ul&gt;
+&lt;li&gt;数据页 (B-tree Node)&lt;/li&gt;
+&lt;li&gt;undo 页 (undo Log Page)&lt;/li&gt;
+&lt;li&gt;系统页 (System Page)&lt;/li&gt;
+&lt;li&gt;事务数据页 (Transaction system Page)&lt;/li&gt;
+&lt;li&gt;插人缓冲位图页 (Insert Buffer Bitmap)&lt;/li&gt;
+&lt;li&gt;插入缓冲空闲列表页 (Insert Buffer Free List)&lt;/li&gt;
+&lt;li&gt;未压缩的二进制大对象页 (Uncompressed BLOB Page)&lt;/li&gt;
+&lt;li&gt;压缩的二进制大对象页 (compressed BLOB Page)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;行
+&lt;ul&gt;
+&lt;li&gt;InnoDB 数据是按行存放的&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;innodb-行记录格式&#34;&gt;InnoDB 行记录格式&lt;/h3&gt;
+&lt;h3 id=&#34;innodb-数据页结构&#34;&gt;InnoDB 数据页结构&lt;/h3&gt;
+&lt;h3 id=&#34;named-file-formats-机制&#34;&gt;Named File Formats 机制&lt;/h3&gt;
+&lt;h3 id=&#34;约束&#34;&gt;约束&lt;/h3&gt;
+&lt;h3 id=&#34;视图&#34;&gt;视图&lt;/h3&gt;
+&lt;h3 id=&#34;分区表&#34;&gt;分区表&lt;/h3&gt;
+&lt;h2 id=&#34;索引与算法&#34;&gt;索引与算法&lt;/h2&gt;
+&lt;h3 id=&#34;innodb-存储引擎索引概述&#34;&gt;InnoDB 存储引擎索引概述&lt;/h3&gt;
+&lt;h3 id=&#34;数据结构与算法&#34;&gt;数据结构与算法&lt;/h3&gt;
+&lt;h3 id=&#34;b-树&#34;&gt;B+ 树&lt;/h3&gt;
+&lt;h3 id=&#34;b-树索引&#34;&gt;B+ 树索引&lt;/h3&gt;
+&lt;h3 id=&#34;cardinality-值&#34;&gt;Cardinality 值&lt;/h3&gt;
+&lt;h3 id=&#34;哈希算法&#34;&gt;哈希算法&lt;/h3&gt;
+&lt;h3 id=&#34;全文检索&#34;&gt;全文检索&lt;/h3&gt;
 &lt;h2 id=&#34;锁&#34;&gt;锁&lt;/h2&gt;
+&lt;h3 id=&#34;什么是锁&#34;&gt;什么是锁&lt;/h3&gt;
+&lt;h3 id=&#34;lock-与-latch&#34;&gt;lock 与 latch&lt;/h3&gt;
+&lt;h3 id=&#34;innodb-存储引擎中的锁&#34;&gt;InnoDB 存储引擎中的锁&lt;/h3&gt;
+&lt;h3 id=&#34;锁的算法&#34;&gt;锁的算法&lt;/h3&gt;
+&lt;h3 id=&#34;锁问题&#34;&gt;锁问题&lt;/h3&gt;
+&lt;h3 id=&#34;阻塞&#34;&gt;阻塞&lt;/h3&gt;
+&lt;h3 id=&#34;死锁&#34;&gt;死锁&lt;/h3&gt;
+&lt;h3 id=&#34;锁升级&#34;&gt;锁升级&lt;/h3&gt;
 &lt;h2 id=&#34;事务&#34;&gt;事务&lt;/h2&gt;
+&lt;h3 id=&#34;认识事务&#34;&gt;认识事务&lt;/h3&gt;
+&lt;h3 id=&#34;事务的实现&#34;&gt;事务的实现&lt;/h3&gt;
+&lt;h3 id=&#34;事务控制语句&#34;&gt;事务控制语句&lt;/h3&gt;
+&lt;h3 id=&#34;隐式提交的事务&#34;&gt;隐式提交的事务&lt;/h3&gt;
+&lt;h3 id=&#34;对于事务操作的统计&#34;&gt;对于事务操作的统计&lt;/h3&gt;
+&lt;h3 id=&#34;事务的隔离级别&#34;&gt;事务的隔离级别&lt;/h3&gt;
+&lt;h3 id=&#34;分布式事务&#34;&gt;分布式事务&lt;/h3&gt;
+&lt;h3 id=&#34;不好的事务习惯&#34;&gt;不好的事务习惯&lt;/h3&gt;
+&lt;h3 id=&#34;长事务&#34;&gt;长事务&lt;/h3&gt;
 </description>
     </item>
     

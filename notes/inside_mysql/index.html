@@ -481,8 +481,8 @@ if (!doNotTrack) {
 <li>记录了堆 MySQL 数据库执行更改的所有操作</li>
 <li>作用
 <ul>
-<li>恢复〈recovery）:某些数据的恢复需要二进制日志，例如，在一个数据库全备文件恢复后，用户可以通过二进制日志进行 point-in-time 的恢复。</li>
-<li>复制〈replication）:其原理与恢复类似，通过复制和执行二进制日志使一台远程的 MySQL 数据库〈一般称为 slave 或 standby) 与一台 MySQL 数据库〈一般称为 master 或 primary) 进行实时同步。</li>
+<li>恢复(recovery):某些数据的恢复需要二进制日志，例如，在一个数据库全备文件恢复后，用户可以通过二进制日志进行 point-in-time 的恢复。</li>
+<li>复制(replication):其原理与恢复类似，通过复制和执行二进制日志使一台远程的 MySQL 数据库(一般称为 slave 或 standby) 与一台 MySQL 数据库(一般称为 master 或 primary) 进行实时同步。</li>
 <li>审计 (audit):用户可以通过二进制日志中的信息来进行审计，判断是否有对数据库进行注入的攻击</li>
 </ul>
 </li>
@@ -498,7 +498,7 @@ if (!doNotTrack) {
 <li>使用了 UUID()、USER()、CURRENT_USER()、FOUND_ROWS()、ROW_COUNT() 等不确定函数。</li>
 <li>使用了 INSERT DELAY 语句。</li>
 <li>使用了用户定义函数 (UDF)。</li>
-<li>使用了临时表〈temporary table)。</li>
+<li>使用了临时表(temporary table)。</li>
 </ul>
 </li>
 <li>ROW 格式可以为数据库的恢复和复制带来更好的可靠性，但是会增加二进制的大小，复制的网络开销也会变大。</li>
@@ -549,9 +549,93 @@ if (!doNotTrack) {
 </li>
 </ul>
 <h2 id="表">表</h2>
-<h2 id="索引和算法">索引和算法</h2>
+<h3 id="索引组织表">索引组织表</h3>
+<ul>
+<li>在 InnoDB 存储引擎中，表都是根据主键顺序组织存放的，这种存储方式的表称为索引组织表</li>
+<li>在 InnoDB 存储引擎表中，每张表都有个主键，如果在创建表时没有显式地定义主键，InnoDB 会优先使用第一个定义的非空唯一索引，否则自动添加一个 6 字节大小的指针。</li>
+</ul>
+<h3 id="innodb-逻辑存储结构">InnoDB 逻辑存储结构</h3>
+<ul>
+<li>所有数据被存放在一个空间内，称之为表空间</li>
+<li>表空间又由段、区、页、行组成</li>
+<li>表空间
+<ul>
+<li>InnoDB 存储引擎结构的最高层</li>
+<li>每张表的表空间只存放数据，其他信息存放在共享表空间</li>
+</ul>
+</li>
+<li>段
+<ul>
+<li>表空间是由各个段组成的</li>
+<li>常见的段有数据段、索引段、回滚段、等</li>
+<li>数据段为 B+ 树的非子节点</li>
+<li>数据段即为 B+ 树的子节点</li>
+</ul>
+</li>
+<li>区
+<ul>
+<li>由连续的页组成，在任何情况下每个区的大小都是 1MB</li>
+<li>InnoDB 一次性申请 4 到 5 个区</li>
+<li>一般 InnoDB 引擎存储页的大小为 16KB，一个区有 64 个页，启用压缩页或者调小默认页大小也保持 1MB 总大小</li>
+</ul>
+</li>
+<li>页\块
+<ul>
+<li>页是 InnoDB 磁盘管理的最小单位</li>
+<li>默认 16KB，可以调整为 4KB、8KB、16KB</li>
+<li>常见类型
+<ul>
+<li>数据页 (B-tree Node)</li>
+<li>undo 页 (undo Log Page)</li>
+<li>系统页 (System Page)</li>
+<li>事务数据页 (Transaction system Page)</li>
+<li>插人缓冲位图页 (Insert Buffer Bitmap)</li>
+<li>插入缓冲空闲列表页 (Insert Buffer Free List)</li>
+<li>未压缩的二进制大对象页 (Uncompressed BLOB Page)</li>
+<li>压缩的二进制大对象页 (compressed BLOB Page)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>行
+<ul>
+<li>InnoDB 数据是按行存放的</li>
+</ul>
+</li>
+</ul>
+<h3 id="innodb-行记录格式">InnoDB 行记录格式</h3>
+<h3 id="innodb-数据页结构">InnoDB 数据页结构</h3>
+<h3 id="named-file-formats-机制">Named File Formats 机制</h3>
+<h3 id="约束">约束</h3>
+<h3 id="视图">视图</h3>
+<h3 id="分区表">分区表</h3>
+<h2 id="索引与算法">索引与算法</h2>
+<h3 id="innodb-存储引擎索引概述">InnoDB 存储引擎索引概述</h3>
+<h3 id="数据结构与算法">数据结构与算法</h3>
+<h3 id="b-树">B+ 树</h3>
+<h3 id="b-树索引">B+ 树索引</h3>
+<h3 id="cardinality-值">Cardinality 值</h3>
+<h3 id="哈希算法">哈希算法</h3>
+<h3 id="全文检索">全文检索</h3>
 <h2 id="锁">锁</h2>
+<h3 id="什么是锁">什么是锁</h3>
+<h3 id="lock-与-latch">lock 与 latch</h3>
+<h3 id="innodb-存储引擎中的锁">InnoDB 存储引擎中的锁</h3>
+<h3 id="锁的算法">锁的算法</h3>
+<h3 id="锁问题">锁问题</h3>
+<h3 id="阻塞">阻塞</h3>
+<h3 id="死锁">死锁</h3>
+<h3 id="锁升级">锁升级</h3>
 <h2 id="事务">事务</h2>
+<h3 id="认识事务">认识事务</h3>
+<h3 id="事务的实现">事务的实现</h3>
+<h3 id="事务控制语句">事务控制语句</h3>
+<h3 id="隐式提交的事务">隐式提交的事务</h3>
+<h3 id="对于事务操作的统计">对于事务操作的统计</h3>
+<h3 id="事务的隔离级别">事务的隔离级别</h3>
+<h3 id="分布式事务">分布式事务</h3>
+<h3 id="不好的事务习惯">不好的事务习惯</h3>
+<h3 id="长事务">长事务</h3>
 
   
   </div>
