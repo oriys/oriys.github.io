@@ -912,19 +912,10 @@
     </item>
     
     <item>
-      <title>数据库系统概念::关系型语言</title>
-      <link>/notes/database_system_concepts_7th_relational_languages/</link>
-      <pubDate>Fri, 10 Sep 2021 22:07:43 +0800</pubDate>
-      <guid>/notes/database_system_concepts_7th_relational_languages/</guid>
-      <description>&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>分布式系统大纲</title>
-      <link>/outline/distsys_outline/</link>
+      <title>大纲::分布式系统</title>
+      <link>/notes/distsys_outline/</link>
       <pubDate>Fri, 10 Sep 2021 03:39:50 +0800</pubDate>
-      <guid>/outline/distsys_outline/</guid>
+      <guid>/notes/distsys_outline/</guid>
       <description>&lt;h1 id=&#34;分布式系统大纲&#34;&gt;分布式系统大纲&lt;/h1&gt;
 &lt;p&gt;介绍分布式系统基础。直观地了解关键的分布式系统术语，概述算法领域，并探索生产环境的问题。&lt;/p&gt;
 &lt;p&gt;转载 &lt;a href=&#34;https://iswade.github.io/translate/distsys/&#34;&gt;分布式系统大纲 - iswade&amp;rsquo;s blog&lt;/a&gt;，补充了落后的部分以及部分翻译和格式修正&lt;/p&gt;
