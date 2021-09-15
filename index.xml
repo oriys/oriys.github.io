@@ -615,7 +615,7 @@
 &lt;/li&gt;
 &lt;li&gt;刷新邻接页
 &lt;ul&gt;
-&lt;li&gt;IanoDB 存储引擎还提供了 Flush Neighbor Page （刷新邻接页）的特性。其工作原理为：当刷新一个脏页时，InnoDB 存储引擎会检测该页所在区 （extent）的所有页，如果是脏页，那么一起进行刷新。这样做的好处品而易见，通过 AIO 可以将多个 IO 操作合并为一个 IO 操作，故该工作机制在传统机械磁舟下有著显著的优势。&lt;/li&gt;
+&lt;li&gt;InnoDB 存储引擎还提供了 Flush Neighbor Page （刷新邻接页）的特性。其工作原理为：当刷新一个脏页时，InnoDB 存储引擎会检测该页所在区 （extent）的所有页，如果是脏页，那么一起进行刷新。这样做的好处品而易见，通过 AIO 可以将多个 IO 操作合并为一个 IO 操作，故该工作机制在传统机械磁舟下有著显著的优势。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -835,11 +835,120 @@
 &lt;li&gt;latch 一般称为闩锁，持续时间非常短，在 InnoDB 引擎中，latch 又可分为 mutex 和 rwlock。其目的是用来保证并发线程操作临界资源的正确性，无死锁检测。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;innodb-存储引擎中的锁&#34;&gt;InnoDB 存储引擎中的锁&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;锁的分类
+&lt;ul&gt;
+&lt;li&gt;共享锁（S 锁），允许事务读一行数据&lt;/li&gt;
+&lt;li&gt;排他锁（X 锁），允许事务删除或更新一行数据&lt;/li&gt;
+&lt;li&gt;只有 SS 是兼容的，兼容是指对同一行记录的锁的兼容性问题&lt;/li&gt;
+&lt;li&gt;InnoDB 支持多粒度锁定，允许事务在行级和表级上的锁同时存在&lt;/li&gt;
+&lt;li&gt;意向锁
+&lt;ul&gt;
+&lt;li&gt;在为数据行加共享 / 排他锁之前，InooDB 会先获取该数据行所在在数据表的对应意向锁(表级锁)&lt;/li&gt;
+&lt;li&gt;意向共享锁（IS Lock），事务想要获得一张表中某几行的共享锁&lt;/li&gt;
+&lt;li&gt;意向排他锁（IX Lock），事务想要获得一张表中某几行的排他锁&lt;/li&gt;
+&lt;li&gt;意向锁是表级锁，不会与行级锁发生冲突&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;一致性非锁定读
+&lt;ul&gt;
+&lt;li&gt;InnoDB 存储引擎通过多版本控制的方式来读取当前执行时间数据库中行的数据。如果读取的数据正在执行 DELETE 或者 UPDATE 操作，这时候 InnoDB 不会因此区等待行上的锁释放。相反，InnoDB 存储引擎会去读取行的一个快照数据。&lt;/li&gt;
+&lt;li&gt;快照数据读取通过 undo 段来实现。&lt;/li&gt;
+&lt;li&gt;一个行记录可能有多个版本&lt;/li&gt;
+&lt;li&gt;在 RC 和 RR 的隔离级别下，InnoDB 使用非锁定的一致性读。在 RR 下，读取历史快照，在 RC 下，读取最新的一份快照。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;一致性锁定读
+&lt;ul&gt;
+&lt;li&gt;用户需要显式地对数据库中的读取操作加锁保证数据逻辑的一致性，这需要数据库支持加锁语句
+&lt;ul&gt;
+&lt;li&gt;SELECT&amp;hellip;FOR UPDATE，其他事务不能对该行加锁&lt;/li&gt;
+&lt;li&gt;SELECT&amp;hellip;LOCK IN SHARE MODE，可以加 S 锁，不能加 X 锁&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;自增长与锁
+&lt;ul&gt;
+&lt;li&gt;自增操作会在执行语句后立即释放锁&lt;/li&gt;
+&lt;li&gt;自增的列必须是索引，必须是索引的第一列&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;外键与锁
+&lt;ul&gt;
+&lt;li&gt;InnoDB 会自动给外键列加索引，避免锁表&lt;/li&gt;
+&lt;li&gt;执行 SELECT 操作时，先给父表加 S 锁，避免数据不一致&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;锁的算法&#34;&gt;锁的算法&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;行锁的三种算法
+&lt;ul&gt;
+&lt;li&gt;Record Lock：单个行记录上的锁
+&lt;ul&gt;
+&lt;li&gt;Record Lock 总是会去锁住索引记录，如果 InnoDB 存储引擎表在建立的时候没有设置任何一个索引，那么这时 InnoDB 存储引擎会使用隐式的主键来进行锁定&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Gap Lock：间隙锁，锁定一个范围，但不包括记录本身&lt;/li&gt;
+&lt;li&gt;Next-Key Lock：Gap Lock + Record Lock，锁定一个范围，并且锁定记录本身
+&lt;ul&gt;
+&lt;li&gt;唯一索引，命中数据，Next-Key Lock 降级为 Record Lock&lt;/li&gt;
+&lt;li&gt;唯一索引，未命中数据，Next-Key Lock 退化成间隙锁&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;解决 Phantom Problem
+&lt;ul&gt;
+&lt;li&gt;Phantom Problem 是指在同一个事务下，连续执行两次同样的 SQL 语句可能导致不同的结果，第二次的 SQL 语句可能返回之前不存在的行。&lt;/li&gt;
+&lt;li&gt;InnoDB 存储引擎采用 Next-Key Locking 算法避免 Phantom Porblem&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;锁问题&#34;&gt;锁问题&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;脏读
+&lt;ul&gt;
+&lt;li&gt;一个事务读到了另一个事务未提交的数据&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;不可重复读
+&lt;ul&gt;
+&lt;li&gt;不可重复是一个事务在事务期间读到了其他事物提交的数据&lt;/li&gt;
+&lt;li&gt;InnoDB 中通过 Next-Key Lock 算法来避免不可重复读的问题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;丢失更新
+&lt;ul&gt;
+&lt;li&gt;通过 SELECT&amp;hellip;FOR UPDATE 避免该问题&lt;/li&gt;
+&lt;li&gt;加入版本号，通过乐观锁&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;阻塞&#34;&gt;阻塞&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;因为不同锁之间的兼容性关系，在有些时刻一个事务中的锁需要等待另一个事务中的锁释放它所占用的资源，这就是阻塞。阻塞并不是一件坏事，其是为了确保事务可以并发且正常地运行。&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;死锁&#34;&gt;死锁&lt;/h3&gt;
-&lt;h3 id=&#34;锁升级&#34;&gt;锁升级&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;死锁的概念
+&lt;ul&gt;
+&lt;li&gt;死锁是指两个或两个以上的事务在执行过程中，因争夺资源而造成的一种互相等待的现象&lt;/li&gt;
+&lt;li&gt;解决死锁最简单的方式是超时回滚&lt;/li&gt;
+&lt;li&gt;用等待图的方式来进行死锁检测，在每个事务请求锁并发生等待时都会判断是否存在回路，如果有死锁，InnoDB 通常选择回滚代价最小的事务进行回滚操作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;死锁概率
+&lt;ul&gt;
+&lt;li&gt;系统中事务的数量越多，发生死锁的概率越大&lt;/li&gt;
+&lt;li&gt;每个事务操作的数量越多，发生死锁的概率越大&lt;/li&gt;
+&lt;li&gt;操作数据的集合，越小则发生死锁的概率越大&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&#34;事务&#34;&gt;事务&lt;/h2&gt;
 &lt;h3 id=&#34;认识事务&#34;&gt;认识事务&lt;/h3&gt;
 &lt;ul&gt;
