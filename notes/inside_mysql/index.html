@@ -532,7 +532,7 @@ if (!doNotTrack) {
 <li>重做日志设置太大恢复需要很长时间，设置太小导致一个事务的日志需要多次切换重做日志文件，还会频繁发生 async checkpoint，造成性能的抖动。</li>
 <li>目录结构
 <ul>
-<li>redo_log_type | space | page_no | redo_log_type
+<li><code>redo_log_type | space | page_no | redo_log_type</code>
 <ul>
 <li>redo_log_type 占用 1 字节，表示重做日志的类型</li>
 <li>space 表示表空间的 ID，但采用压缩的方式，因此占用的空间可能小于 4 字节</li>
@@ -728,10 +728,137 @@ if (!doNotTrack) {
 </li>
 </ul>
 <h3 id="事务的实现">事务的实现</h3>
+<ul>
+<li>概述
+<ul>
+<li>原子性、一致性、持久性通过数据库的 redo log 和 undo log 来完成。redo log 称为重做日志，用来保证事务的原子性和持久性。undo log 用来保证事务的一致性。</li>
+</ul>
+</li>
+<li>redo
+<ul>
+<li>基本概念
+<ul>
+<li>用来实现事务的持久性</li>
+<li>由内存中的重做日志缓冲（易失）和重做日志文件（持久）组成</li>
+<li>当事务提交时，必须先将事务的所有日志写入到重做日志文件进行持久化，待事务的 commit 操作完成才算完成</li>
+<li>顺序写，使用 fsync 操作保证数据落盘，fsync 效率取决于磁盘性能，间接影响数据库的性能</li>
+<li>物理格式日志，记录针对每个页的修改</li>
+<li>binlog 在提交时写入，redo log 在整个事务执行过程中都在写入</li>
+</ul>
+</li>
+<li>log block
+<ul>
+<li>以 512 字节的块进行保存，与磁盘扇区大小一致，不需要 doublewrite</li>
+<li>由日志块头（12 字节），日志块内容（492 字节），日志块尾（8 字节）组成</li>
+</ul>
+</li>
+<li>log group
+<ul>
+<li>重做日志组，其中有多个重做日志文件</li>
+<li>存储的就是之前的 log buffer 中保存的 log block，块大小为 512 字节</li>
+<li>写盘时机
+<ul>
+<li>事务提交时</li>
+<li>当 log buffer 中有一半的内存空间已经被使用</li>
+<li>当 log checkpoint 时</li>
+</ul>
+</li>
+<li>通过 round-robin 的方式写入文件</li>
+<li>每个 log group 的第一个文件的前 2kb 保存文件的元信息，不写入内容</li>
+<li>log file header 的后面部分是 InnoDB 保存的 checkpoint 值，其设计是交替写入的，避免因为介质失败找不到可用的值</li>
+</ul>
+</li>
+<li>redo log 格式
+<ul>
+<li><code>redo_log_type | space | page_no | redo_log_type</code>
+<ul>
+<li>redo_log_type 占用 1 字节，表示重做日志的类型</li>
+<li>space 表示表空间的 ID，但采用压缩的方式，因此占用的空间可能小于 4 字节</li>
+<li>page_no 表示页的偏移量，同样采用压缩的方式</li>
+<li>redo_log_body 表示每个重做日志的数据部分，恢复时需要调用相应的函数进行解析，根据不同的类型会有不同的内容</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>LSN
+<ul>
+<li>Log Sequence Number 的缩写，代表日志序列号，单调递增</li>
+<li>含义
+<ul>
+<li>重做日志写入的总量
+<ul>
+<li>例如当前重做日志的 LSN 为 1000，有一个事务 T1 写入了 100 字节的重做日志，那么 LSN 就变为了 1100，若又有事务 7 写人入 200 字节的重做日志，那么 LSN 就变为了 1300。可见 LSN 记录的是重做日志的总量，其单位为字节。</li>
+</ul>
+</li>
+<li>checkpoint 的位置</li>
+<li>页的版本
+<ul>
+<li>页头部的 FIL_PAGE_LSN 记录了该页的 LSN</li>
+<li>用来判断是否需要进行恢复操作</li>
+<li>如果重做日志日志中的 LSN 大于页的 LSN，并且事务已经提交则需要进行恢复操作</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>恢复
+<ul>
+<li>由于 checkpoint 表示已经被刷到磁盘上的 LSN，因此在恢复过程中仅需恢复 checkpoint 开始的日志部分</li>
+<li>当数据库在 checkpoint 为 LSN 10000 时宕机器，只需恢复到 10000 到 13000 的数据</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>undo
+<ul>
+<li>基本概念
+<ul>
+<li>记录了事务的行为，用来把数据恢复回去</li>
+<li>当 InnoDB 存储引擎回滚时，它实际上做的是与先前相反的工作。对于每个 INSERT， InnoDB 存储引擎会完成一个 DELETE；对于每个 DELETE, InnoDB 都会执行一个 INSERT；对于每一个 UPDATE InnoDB 引擎会执行一个相反的 UPDATE，将修改前的行放回去</li>
+<li>undo 的另一个作用时 MVCC，InnoDB 存储引擎中的 MVCC 通过 undo 实现的</li>
+<li>undo log 也会产生 redo log，undo log 也需要持久化的保护</li>
+</ul>
+</li>
+<li>undo 存储管理</li>
+</ul>
+</li>
+</ul>
 <h3 id="事务控制语句">事务控制语句</h3>
+<ul>
+<li>STARTTRANSACTION |BEGIN: 显式地开启一个事务。</li>
+<li>COMMIT : 要想使用这个语句的最简形式，只需发出 COMMIT。也可以更详细一些，写为 COMMIT WORK，不过这二者几乎是等价的。COMMIT 会提交事务，并使得已对数据库做的所有修改成为永久性的。</li>
+<li>ROLLBACK : 要想使用这个语句的最简形式，只需发出 ROLLBACK。同样地，也可以写为 ROLLBACK WORK，但是二者几乎是等价的。回滚会结束用户的事务，并撤销正在进行的所有未提交的修改。</li>
+<li>SAVEPOINT identifier : SAVEPOINT 允许在事务中创建一个保存点，一个事务中可以有多个 SAVEPOINT。</li>
+<li>RELEASE SAVEPOINT identitier : 删除一个事务的保存点，当没有一个保存点执行这句语句时，会抛出一个异常。</li>
+<li>ROLLBACK TO [SAVEPOINT] identifier: 这个语句与 SAVEPOINT 命令一起使用。可以把事务回滚到标记点，而不回滚在此标记点之前的任何工作。例如可以发出两条 UPDATE 语句，后面跟一个 SAVEPOINT，然后又是两条 DELETE 语句。如果执行 DELETE 语句期间出现了某种异常情况，并且捕获到这个异常，同时发出了 ROLLBACK TO SAVEPOINT 命令，事务就会回滚到指定的 SAVEPOINT，撤销 DELETE 完成的所有工作，而 UPDATE 语句完成的工作不受影响。</li>
+<li>SET TRANSACTION : 这个语句用来设置事务的隔离级别。InnoDB 存储引你提供的事务隔离级别有: READ UNCOMMITTED、READ COMMITTED、REPEATABLE READ、SERIALIZABLE。</li>
+</ul>
 <h3 id="隐式提交的事务">隐式提交的事务</h3>
+<ul>
+<li>以下这些 SQL 语句会产生一个隐式的提交操作，即执行完这些语名后，会有一个隐式的 COMMIT 操作。
+<ul>
+<li>DDL 语句 : ALTER DATABASE&hellip;UPGRADE DATA DIRECTORY NAME，ALTER EVENT，ALTER PROCEDURE，ALTER TABLE，ALTER VIEW，CREATE DATABASE，CREATE EVENT，CREATE INDEX，CREATE PROCEDURE，CREATE TABLE，CREATE TRIGGER，CREATE VIEW，DROP DATABASE，DROP EVENT，DROP INDEX，DROP PROCEDURE，DROP TABLE，DROP TRIGGER，DROP VIEW，RENAME TABLE，TRUNCATE TABLE。</li>
+<li>用来隐式地修改 MySQL 架构的操作 : CREATE USER、DROP USER、GRANT、RENAME USER、REVOKE、SET PASSWORD。</li>
+<li>管理语句，ANALYZE TABLE、CACHE INDEX、CHECK TABLE、LOAD INDEX INTO CACHE、OPTIMIZE TABLE、REPAIR TABLE。</li>
+</ul>
+</li>
+</ul>
 <h3 id="对于事务操作的统计">对于事务操作的统计</h3>
+<ul>
+<li>TPS = (com_commit + com_rollback) / time</li>
+</ul>
 <h3 id="事务的隔离级别">事务的隔离级别</h3>
+<ul>
+<li>四个隔离级别
+<ul>
+<li>READ UNCOMMITTED</li>
+<li>READ COMMITTED</li>
+<li>REPEATABLE READ</li>
+<li>SERIALIZABLE</li>
+</ul>
+</li>
+</ul>
 <h3 id="分布式事务">分布式事务</h3>
 <h3 id="不好的事务习惯">不好的事务习惯</h3>
 <h3 id="长事务">长事务</h3>
