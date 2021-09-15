@@ -1022,7 +1022,15 @@
 &lt;/ul&gt;
 &lt;h3 id=&#34;分布式事务&#34;&gt;分布式事务&lt;/h3&gt;
 &lt;h3 id=&#34;不好的事务习惯&#34;&gt;不好的事务习惯&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;在循环中提交&lt;/li&gt;
+&lt;li&gt;使用自动提交&lt;/li&gt;
+&lt;li&gt;使用自动回滚&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;长事务&#34;&gt;长事务&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;对于长事务的问题，有时候可以转换为小批量的事务来进行&lt;/li&gt;
+&lt;/ul&gt;
 </description>
     </item>
     
