@@ -16,13 +16,13 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-180x180.png" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title> 多线程::按需打印 | Y.CH.Y</title>
+  <title> 多线程::LC1114 按需打印 | Y.CH.Y</title>
   <link rel = 'canonical' href = '/algo/1114/'>
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
-  <meta property="og:title" content="多线程::按需打印" />
+  <meta property="og:title" content="多线程::LC1114 按需打印" />
 <meta property="og:description" content="链接 1114. 按序打印 - 力扣（LeetCode）
 解法一：synchronized &#43; wait/notifyAll class Foo { final Object lock = new Object(); volatile int count = 1; public Foo() { } public void first(Runnable printFirst) throws InterruptedException { // printFirst.run() outputs &#34;first&#34;. Do not change or remove this line.  synchronized (lock) { while (count != 1) { lock.wait(); } printFirst.run(); count = 2; lock.notifyAll(); } } public void second(Runnable printSecond) throws InterruptedException { // printSecond." />
 <meta property="og:type" content="article" />
@@ -32,7 +32,7 @@
 
 
   <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="多线程::按需打印"/>
+<meta name="twitter:title" content="多线程::LC1114 按需打印"/>
 <meta name="twitter:description" content="链接 1114. 按序打印 - 力扣（LeetCode）
 解法一：synchronized &#43; wait/notifyAll class Foo { final Object lock = new Object(); volatile int count = 1; public Foo() { } public void first(Runnable printFirst) throws InterruptedException { // printFirst.run() outputs &#34;first&#34;. Do not change or remove this line.  synchronized (lock) { while (count != 1) { lock.wait(); } printFirst.run(); count = 2; lock.notifyAll(); } } public void second(Runnable printSecond) throws InterruptedException { // printSecond."/>
 

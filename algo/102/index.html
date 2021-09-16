@@ -16,13 +16,13 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-180x180.png" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title> 算法::二叉树的层序遍历 | Y.CH.Y</title>
+  <title> 算法::LC102 二叉树的层序遍历 | Y.CH.Y</title>
   <link rel = 'canonical' href = '/algo/102/'>
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
-  <meta property="og:title" content="算法::二叉树的层序遍历" />
+  <meta property="og:title" content="算法::LC102 二叉树的层序遍历" />
 <meta property="og:description" content="链接 102.二叉树的层序遍历 - 力扣（LeetCode）
 解法 class Solution: def levelOrder(self, root: TreeNode) -&gt; List[List[int]]: if not root: return [] q = [root] ans = [] while q: length = len(q) level = [] for _ in range(length): node = q.pop(0) level.append(node.val) if node.left: q.append(node.left) if node.right: q.append(node.right) ans.append(level) return ans " />
 <meta property="og:type" content="article" />
@@ -32,7 +32,7 @@
 
 
   <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="算法::二叉树的层序遍历"/>
+<meta name="twitter:title" content="算法::LC102 二叉树的层序遍历"/>
 <meta name="twitter:description" content="链接 102.二叉树的层序遍历 - 力扣（LeetCode）
 解法 class Solution: def levelOrder(self, root: TreeNode) -&gt; List[List[int]]: if not root: return [] q = [root] ans = [] while q: length = len(q) level = [] for _ in range(length): node = q.pop(0) level.append(node.val) if node.left: q.append(node.left) if node.right: q.append(node.right) ans.append(level) return ans "/>
 

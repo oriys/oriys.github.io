@@ -7,7 +7,7 @@
     <description>Algoes</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Tue, 31 Aug 2021 23:10:52 +0800</lastBuildDate>
     <item>
-      <title>算法::爬楼梯</title>
+      <title>算法::LC70 爬楼梯</title>
       <link>/algo/70/</link>
       <pubDate>Tue, 31 Aug 2021 23:10:52 +0800</pubDate>
       <guid>/algo/70/</guid>
@@ -24,7 +24,7 @@
     </item>
     
     <item>
-      <title>算法::二叉树的最近公共祖先</title>
+      <title>算法::LC236 二叉树的最近公共祖先</title>
       <link>/algo/236/</link>
       <pubDate>Sun, 29 Aug 2021 02:00:06 +0800</pubDate>
       <guid>/algo/236/</guid>
@@ -51,7 +51,7 @@
     </item>
     
     <item>
-      <title>算法::多数元素</title>
+      <title>算法::LC169 多数元素</title>
       <link>/algo/169/</link>
       <pubDate>Sun, 29 Aug 2021 01:51:23 +0800</pubDate>
       <guid>/algo/169/</guid>
@@ -65,7 +65,7 @@
     </item>
     
     <item>
-      <title>算法::合并两个有序链表</title>
+      <title>算法::LC21 合并两个有序链表</title>
       <link>/algo/21/</link>
       <pubDate>Sat, 28 Aug 2021 20:32:29 +0800</pubDate>
       <guid>/algo/21/</guid>
@@ -89,7 +89,7 @@
     </item>
     
     <item>
-      <title>算法::二叉树的层序遍历</title>
+      <title>算法::LC102 二叉树的层序遍历</title>
       <link>/algo/102/</link>
       <pubDate>Sat, 28 Aug 2021 19:43:12 +0800</pubDate>
       <guid>/algo/102/</guid>
@@ -118,7 +118,7 @@
     </item>
     
     <item>
-      <title>算法::删除链表的倒数第 N 个结点</title>
+      <title>算法::LC19 删除链表的倒数第 N 个结点</title>
       <link>/algo/19/</link>
       <pubDate>Sat, 28 Aug 2021 19:43:12 +0800</pubDate>
       <guid>/algo/19/</guid>
@@ -147,7 +147,7 @@
     </item>
     
     <item>
-      <title>算法::用栈实现队列</title>
+      <title>算法::LC232用栈实现队列</title>
       <link>/algo/232/</link>
       <pubDate>Sat, 28 Aug 2021 19:43:12 +0800</pubDate>
       <guid>/algo/232/</guid>
@@ -210,7 +210,7 @@
     </item>
     
     <item>
-      <title>算法::反转链表</title>
+      <title>算法::LC206 反转链表</title>
       <link>/algo/206/</link>
       <pubDate>Sat, 28 Aug 2021 17:21:38 +0800</pubDate>
       <guid>/algo/206/</guid>
@@ -229,7 +229,7 @@
     </item>
     
     <item>
-      <title>算法::LRU缓存机制</title>
+      <title>算法::LC146 LRU缓存机制</title>
       <link>/algo/146/</link>
       <pubDate>Sat, 28 Aug 2021 16:16:37 +0800</pubDate>
       <guid>/algo/146/</guid>
@@ -300,7 +300,7 @@
     </item>
     
     <item>
-      <title>算法::环形链表</title>
+      <title>算法::LC141 环形链表</title>
       <link>/algo/141/</link>
       <pubDate>Sat, 28 Aug 2021 16:02:41 +0800</pubDate>
       <guid>/algo/141/</guid>
@@ -322,23 +322,7 @@
     </item>
     
     <item>
-      <title>算法::排序数组</title>
-      <link>/algo/912/</link>
-      <pubDate>Sat, 28 Aug 2021 15:07:19 +0800</pubDate>
-      <guid>/algo/912/</guid>
-      <description>&lt;h2 id=&#34;链接&#34;&gt;链接&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;https://leetcode-cn.com/problems/sort-an-array/&#34;&gt;912. 排序数组 - 力扣（LeetCode）&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;解法一快速排序递归&#34;&gt;解法一：快速排序递归&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Solution&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
-    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;sortArray&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;List&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;])&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;List&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]:&lt;/span&gt;
-        &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;is&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;None&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;or&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;len&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
-            &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[]&lt;/span&gt;
-        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sortArray&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;list&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;filter&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;lambda&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;],&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:])))&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sortArray&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;list&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;filter&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;lambda&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;],&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:])))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>算法::路径总和</title>
+      <title>算法::LC112 路径总和</title>
       <link>/algo/112/</link>
       <pubDate>Sat, 28 Aug 2021 15:07:19 +0800</pubDate>
       <guid>/algo/112/</guid>
@@ -363,7 +347,23 @@
     </item>
     
     <item>
-      <title>多线程::哲学家就餐</title>
+      <title>算法::LC912 排序数组</title>
+      <link>/algo/912/</link>
+      <pubDate>Sat, 28 Aug 2021 15:07:19 +0800</pubDate>
+      <guid>/algo/912/</guid>
+      <description>&lt;h2 id=&#34;链接&#34;&gt;链接&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://leetcode-cn.com/problems/sort-an-array/&#34;&gt;912. 排序数组 - 力扣（LeetCode）&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;解法一快速排序递归&#34;&gt;解法一：快速排序递归&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Solution&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;sortArray&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;List&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;])&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;List&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]:&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;is&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;None&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;or&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;len&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+            &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[]&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sortArray&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;list&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;filter&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;lambda&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;],&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:])))&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sortArray&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;list&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;filter&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;lambda&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;],&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:])))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>多线程::LC1126 哲学家就餐</title>
       <link>/algo/1226/</link>
       <pubDate>Tue, 24 Aug 2021 19:36:59 +0800</pubDate>
       <guid>/algo/1226/</guid>
@@ -392,7 +392,7 @@
     </item>
     
     <item>
-      <title>多线程::H2O 生成</title>
+      <title>多线程::LC1117 H2O 生成</title>
       <link>/algo/1117/</link>
       <pubDate>Mon, 23 Aug 2021 02:23:00 +0800</pubDate>
       <guid>/algo/1117/</guid>
@@ -430,7 +430,7 @@
     </item>
     
     <item>
-      <title>多线程::交替打印字符串</title>
+      <title>多线程::LC1195 交替打印字符串</title>
       <link>/algo/1195/</link>
       <pubDate>Mon, 23 Aug 2021 02:23:00 +0800</pubDate>
       <guid>/algo/1195/</guid>
@@ -518,7 +518,7 @@
     </item>
     
     <item>
-      <title>多线程::打印零与奇偶数</title>
+      <title>多线程::LC1116 打印零与奇偶数</title>
       <link>/algo/1116/</link>
       <pubDate>Sun, 22 Aug 2021 17:13:46 +0800</pubDate>
       <guid>/algo/1116/</guid>
@@ -836,7 +836,7 @@
     </item>
     
     <item>
-      <title>多线程::交替打印FooBar</title>
+      <title>多线程::LC1115 交替打印FooBar</title>
       <link>/algo/1115/</link>
       <pubDate>Sun, 22 Aug 2021 13:40:26 +0800</pubDate>
       <guid>/algo/1115/</guid>
@@ -1091,7 +1091,7 @@
     </item>
     
     <item>
-      <title>算法::第一个错误的版本</title>
+      <title>算法::LC278 第一个错误的版本</title>
       <link>/algo/278/</link>
       <pubDate>Sat, 21 Aug 2021 09:59:43 +0800</pubDate>
       <guid>/algo/278/</guid>
@@ -1116,32 +1116,7 @@
     </item>
     
     <item>
-      <title>算法::二分查找</title>
-      <link>/algo/704/</link>
-      <pubDate>Sat, 21 Aug 2021 09:39:35 +0800</pubDate>
-      <guid>/algo/704/</guid>
-      <description>&lt;h2 id=&#34;链接&#34;&gt;链接&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;https://leetcode-cn.com/problems/binary-search/&#34;&gt;704. 二分查找 - 力扣（LeetCode）&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;解法&#34;&gt;解法&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;typing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;List&lt;/span&gt;
-
-&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Solution&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
-    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;search&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;List&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;],&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;target&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
-        &lt;span style=&#34;color:#111&#34;&gt;left&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;right&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;len&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
-        &lt;span style=&#34;color:#00a8c8&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;left&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;right&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
-            &lt;span style=&#34;color:#111&#34;&gt;mid&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;left&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;right&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;left&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;//&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
-            &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;mid&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;target&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
-                &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;mid&lt;/span&gt;
-            &lt;span style=&#34;color:#00a8c8&#34;&gt;elif&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;mid&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;target&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
-                &lt;span style=&#34;color:#111&#34;&gt;right&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;mid&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
-            &lt;span style=&#34;color:#00a8c8&#34;&gt;else&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
-                &lt;span style=&#34;color:#111&#34;&gt;left&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;mid&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
-        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>算法::搜索插入位置</title>
+      <title>算法::LC35 搜索插入位置</title>
       <link>/algo/35/</link>
       <pubDate>Sat, 21 Aug 2021 09:39:35 +0800</pubDate>
       <guid>/algo/35/</guid>
@@ -1166,7 +1141,32 @@
     </item>
     
     <item>
-      <title>多线程::按需打印</title>
+      <title>算法::LC704 二分查找</title>
+      <link>/algo/704/</link>
+      <pubDate>Sat, 21 Aug 2021 09:39:35 +0800</pubDate>
+      <guid>/algo/704/</guid>
+      <description>&lt;h2 id=&#34;链接&#34;&gt;链接&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://leetcode-cn.com/problems/binary-search/&#34;&gt;704. 二分查找 - 力扣（LeetCode）&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;解法&#34;&gt;解法&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;typing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;List&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Solution&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;search&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;List&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;],&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;target&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;left&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;right&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;len&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;left&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;right&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+            &lt;span style=&#34;color:#111&#34;&gt;mid&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;left&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;right&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;left&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;//&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+            &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;mid&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;target&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+                &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;mid&lt;/span&gt;
+            &lt;span style=&#34;color:#00a8c8&#34;&gt;elif&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;nums&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;mid&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;target&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+                &lt;span style=&#34;color:#111&#34;&gt;right&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;mid&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+            &lt;span style=&#34;color:#00a8c8&#34;&gt;else&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+                &lt;span style=&#34;color:#111&#34;&gt;left&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;mid&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>多线程::LC1114 按需打印</title>
       <link>/algo/1114/</link>
       <pubDate>Fri, 20 Aug 2021 22:48:32 +0800</pubDate>
       <guid>/algo/1114/</guid>

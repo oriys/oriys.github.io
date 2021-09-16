@@ -16,13 +16,13 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-180x180.png" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title> 算法::删除链表的倒数第 N 个结点 | Y.CH.Y</title>
+  <title> 算法::LC19 删除链表的倒数第 N 个结点 | Y.CH.Y</title>
   <link rel = 'canonical' href = '/algo/19/'>
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
-  <meta property="og:title" content="算法::删除链表的倒数第 N 个结点" />
+  <meta property="og:title" content="算法::LC19 删除链表的倒数第 N 个结点" />
 <meta property="og:description" content="链接 19. 删除链表的倒数第 N 个结点 - 力扣（LeetCode）
 解法 func removeNthFromEnd(head *ListNode, n int) *ListNode { num, temp := 0, head for temp != nil { num&#43;&#43; temp = temp.Next } if num-n == 0 { return head.Next } count := num - n - 1 temp = head for count != 0 { temp = temp.Next count-- } temp.Next = temp.Next.Next return head } " />
 <meta property="og:type" content="article" />
@@ -32,7 +32,7 @@
 
 
   <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="算法::删除链表的倒数第 N 个结点"/>
+<meta name="twitter:title" content="算法::LC19 删除链表的倒数第 N 个结点"/>
 <meta name="twitter:description" content="链接 19. 删除链表的倒数第 N 个结点 - 力扣（LeetCode）
 解法 func removeNthFromEnd(head *ListNode, n int) *ListNode { num, temp := 0, head for temp != nil { num&#43;&#43; temp = temp.Next } if num-n == 0 { return head.Next } count := num - n - 1 temp = head for count != 0 { temp = temp.Next count-- } temp.Next = temp.Next.Next return head } "/>
 
