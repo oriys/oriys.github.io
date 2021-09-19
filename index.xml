@@ -4353,11 +4353,11 @@ coordinator 启动最后几个任务的第二个副本。&lt;/li&gt;
     </item>
     
     <item>
-      <title>About</title>
-      <link>/about/</link>
+      <title>书影音</title>
+      <link>/entertainment/</link>
       <pubDate>Tue, 31 Aug 2021 17:12:59 +0800</pubDate>
-      <guid>/about/</guid>
-      <description>&lt;h2 id=&#34;2021-书影音&#34;&gt;2021 书影音&lt;/h2&gt;
+      <guid>/entertainment/</guid>
+      <description>&lt;h2 id=&#34;2021&#34;&gt;2021&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;../reading/understand_the_jvm&#34;&gt;编程::深入理解 Java 虚拟机&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;../reading/tao_of_programming&#34;&gt;编程::编程之道&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;../reading/modern_operating_systems&#34;&gt;编程::现代操作系统&lt;/a&gt;&lt;br&gt;
