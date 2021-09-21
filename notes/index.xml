@@ -5,7 +5,32 @@
     <link>/notes/</link>
       <atom:link href="/notes/index.xml" rel="self" type="application/rss+xml" />
     <description>Notes</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Sat, 11 Sep 2021 10:03:18 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Tue, 21 Sep 2021 18:04:51 +0800</lastBuildDate>
+    <item>
+      <title>Linux/UNIX系统编程手册::基础</title>
+      <link>/notes/tlpi_basic/</link>
+      <pubDate>Tue, 21 Sep 2021 18:04:51 +0800</pubDate>
+      <guid>/notes/tlpi_basic/</guid>
+      <description>&lt;h2 id=&#34;第-1-章&#34;&gt;第 1 章&lt;/h2&gt;
+&lt;h3 id=&#34;unix-和-c-语言简史&#34;&gt;UNIX 和 C 语言简史&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;1969 年，在 AT&amp;amp;T 电话公司下辖的 bell 实验室中， Ken Thompson 开发出了首个 UNIX 实现。&lt;/li&gt;
+&lt;li&gt;1970 年， AT&amp;amp;T 的工程师们又在刚购进的 Digital PDP-11 小型机上，以汇编语言重写了 UNIX。&lt;/li&gt;
+&lt;li&gt;1972 年，Dennis Ritchie（Thompson 在 bell 实验室的同事， UNIX 开发的早期合作者） 设计并实现出了 C 编程语言。&lt;/li&gt;
+&lt;li&gt;1973 年， C 语言步入了成熟期，人们能够使用这一新语言重写几乎整个 UNIX 内核。&lt;/li&gt;
+&lt;li&gt;1974 年的 UNIX 第五版开始， AT&amp;amp;T 准许高校在支付象征性的发布费用后使用 UNIX 系统，UNIX 开始在高校流行。&lt;/li&gt;
+&lt;li&gt;1979 年 1 月的 UNIX 第七版改善了系统的可靠性，配备了增强型的文件系统。从该版本起， UNIX 分裂为了两 大分支：BSD 和 System V。&lt;/li&gt;
+&lt;li&gt;1979 年 12 月，诞生了首个完整的 UNIX 发布版 3BSD。&lt;/li&gt;
+&lt;li&gt;1983 年，加州大学伯克利分校的计算机系统研究组（Computer Systems Research Group）发布 了 4.2BSD。 该版本的发布意义深远，因为其包含了完整的 TCP/IP 实现，其中包括套接字应用编程 接口（API）以及各种网络工具。&lt;/li&gt;
+&lt;li&gt;到 20 世纪 80 年代末，商业性质的 UNIX 实现在各种硬件架构上都有了广泛应用。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;linux-简史&#34;&gt;Linux 简史&lt;/h3&gt;
+&lt;h3 id=&#34;标准化&#34;&gt;标准化&lt;/h3&gt;
+&lt;h2 id=&#34;第-2-章&#34;&gt;第 2 章&lt;/h2&gt;
+&lt;h2 id=&#34;第-3-章&#34;&gt;第 3 章&lt;/h2&gt;
+</description>
+    </item>
+    
     <item>
       <title>MySQL技术内幕::InnoDB存储引擎</title>
       <link>/notes/inside_mysql/</link>
