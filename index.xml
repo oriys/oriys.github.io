@@ -277,8 +277,107 @@
 &lt;li&gt;到 20 世纪 80 年代末，商业性质的 UNIX 实现在各种硬件架构上都有了广泛应用。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;linux-简史&#34;&gt;Linux 简史&lt;/h3&gt;
+&lt;p&gt;1991 年，Linus Torvalds，一位芬兰赫尔辛基大学的学生，在外界的激励下为自己的 Intel 80386 PC 开发了一个操作系统。1991 年 10 月 5 日，为求得其他程序员的帮助，Torvalds 在 Usenet 新闻组 comp.os.minix 上发布了内核。Torvalds 做到了一呼百应。其他程序员与 Torvalds 一起加入到 Linux 的开发行列，添加了很多新特性，诸如：改进型的文件系统、对网络的支持、设备驱动程序以及对多处理器的支持等。到了 1994 年 3 月，开发者们发布了 Linux 1.0 版本。随之，Linux 1.2 发布于 1995 年 3 月，Linux 2.0 发布于 1996 年 6 月，Linux 2.2 发布于 1999 年 1 月，Linux 2.4 发布于 2001 年 1 月。对内核 2.5 版本的开发始于 2001 年 11 月，并最终于 2003 年 12 月发布了 Linux 内核 2.6。&lt;/p&gt;
 &lt;h3 id=&#34;标准化&#34;&gt;标准化&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;C 语言标准
+&lt;ul&gt;
+&lt;li&gt;1989 年，ANSI（美国国家标准委员会）C 语言标准（X3.159-1989）获批。这份标准在定义 C 语言语法和语义的同时，还对标准 C 语言库操作进行了描述， 这包括 stdio 函数、字符串处理函数、数学函数、各种头文件等等。通称为 C89。&lt;/li&gt;
+&lt;li&gt;1999 年，ISO 又正式批准了对 C 语言标准的修订版。通常将这一标准称为 C99，其中包括了对 C 语言及其标准库的一系列修改，诸如，增加了 long long 和布尔数据类型、C++风格的注释（//）、受限指针以及可变长数组等。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;POSIX 标准
+&lt;ul&gt;
+&lt;li&gt;术语“POSIX（可移植操作系统 Portable Operating System Interface 的缩写）”是指在 IEEE（电 器及电子工程师协会），确切地说是其下属的可移植应用标准委员会（PASC, &lt;a href=&#34;http://www.pasc.org/&#34;&gt;http://www.pasc.org/&lt;/a&gt;） 赞助下所开发的一系列标准。PASC 标准的目标是提升应用程序在源码级别的可移植性。&lt;/li&gt;
+&lt;li&gt;FIPS 是 Federal Information Processing Standard（联邦信息处理标准）的缩写， 这套标准由美 国政府为规范其对计算机系统的采购而制定。基于 POSIX 标准和 ANSI C 语言标准。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;X/Open 公司和 The Open Group
+&lt;ul&gt;
+&lt;li&gt;X/Open 公司是由多家国际计算机厂商所组成的联盟，致力于采纳和改进现有标准，以制定出一套全面而又一致的开放系统标准。该公司编纂的《X/Open 可移植性指南》是一套基于 POSIX 标准的可移植性指导丛书。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;SUSv3 和 POSIX.1-2001
+&lt;ul&gt;
+&lt;li&gt;始于 1999 年，出于修订并加强 POSIX 标准和 SUS 规范的目的，IEEE、Open 集团以及 ISO/ IEC 联合技术委员会共同成立了奥斯丁公共标准修订工作组。&lt;/li&gt;
+&lt;li&gt;2001 年 12 月，该工作组正式批准了 POSIX 1003.1-2001，有时简称为 POSIX.1-2001。POSIX 1003.1-2001 取代了 SUSv2、POSIX.1、POSIX.2 以及大批的早期 POSIX 标准。有时，人们也将该标准称为 Single Unix Specification 版本 3，本书在后续内容中将称其为 SUSv3。&lt;/li&gt;
+&lt;li&gt;SUS（和 XPG）标准顺应了相应 POSIX 标准，并被组织为 POSIX 的功能超集。除了对许多额外接口作出规范外，SUS 标准还将诸多被 POSIX 视为可选的接口和行为规范作为必备项。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;SUSv4 和 POSIX.1-2008
+&lt;ul&gt;
+&lt;li&gt;2008 年，奥斯丁工作组完成了对已合并的 POSIX 和 SUS 规范的修订工作。较之于之先前版本，该标准包含了基本规范以及 XSI 扩展。人们将这一修订版本称为 SUSv4。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&#34;第-2-章&#34;&gt;第 2 章&lt;/h2&gt;
+&lt;h3 id=&#34;内核&#34;&gt;内核&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;职责
+&lt;ul&gt;
+&lt;li&gt;进程调度&lt;/li&gt;
+&lt;li&gt;内存管理&lt;/li&gt;
+&lt;li&gt;提供文件系统&lt;/li&gt;
+&lt;li&gt;创建和中止进程&lt;/li&gt;
+&lt;li&gt;对设备的访问&lt;/li&gt;
+&lt;li&gt;联网&lt;/li&gt;
+&lt;li&gt;提供系统调用应用程序接口&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;内核态和用户态
+&lt;ul&gt;
+&lt;li&gt;执行硬件指令可使 CPU 在两种状态间来回切换。与之对应，可将虚拟内存区域划分为用户空间部分或内核空间部分。在用户态下运行时，CPU 只能访问被标记为用户空间的内存，试图访问属于内核空间的内存会引发硬件异常。当运行于核心态时，CPU 既能访问用户空间内存，也能访问内核空间内存。仅当处理器在核心态运行时，才能执行某些特定操作，确保了用户进程既不能访问内核指令和数据结构，也无法执行不利于系统运行的操作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;shell&#34;&gt;shell&lt;/h3&gt;
+&lt;p&gt;shell 是一种具有特殊用途的程序，主要用于读取用户输入的命令，并执行相应的程序以响应命令。有时，人们也称之为命令解释器。&lt;br&gt;
+尽管某些操作系统将命令解释器集成于内核中，而对 UNIX 系统而言， shell 只是一个用户进程。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;几种重要的 shell
+&lt;ul&gt;
+&lt;li&gt;Bourne shell&lt;/li&gt;
+&lt;li&gt;C shell&lt;/li&gt;
+&lt;li&gt;Korn shell&lt;/li&gt;
+&lt;li&gt;Bourne again shell&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;用户和组&#34;&gt;用户和组&lt;/h3&gt;
+&lt;p&gt;系统会对每个用户的身份做唯一标识，用户可隶属于多个组。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;用户
+&lt;ul&gt;
+&lt;li&gt;系统的每个用户都拥有唯一的登录名（用户名）和与之相对应的整数型用户 ID（UID）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;组
+&lt;ul&gt;
+&lt;li&gt;出于管理目的，尤其是为了控制对文件和其他资源的访问，将多个用户分组是非常实用的做法。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;超级用户
+&lt;ul&gt;
+&lt;li&gt;超级用户在系统中享有特权。超级用户账号的用户 ID 为 0，通常登录名为 root。 在一般 的 UNIX 系统上，超级用户凌驾于系统的权限检查之上。系统管理员可以使用超级用户账号来执行各种系统管理任务。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;单根目录层级目录链接及文件&#34;&gt;单根目录层级、目录、链接及文件&lt;/h3&gt;
+&lt;h3 id=&#34;文件-io-模型&#34;&gt;文件 I/O 模型&lt;/h3&gt;
+&lt;h3 id=&#34;程序&#34;&gt;程序&lt;/h3&gt;
+&lt;h3 id=&#34;进程&#34;&gt;进程&lt;/h3&gt;
+&lt;h3 id=&#34;内存映射&#34;&gt;内存映射&lt;/h3&gt;
+&lt;h3 id=&#34;静态库和共享库&#34;&gt;静态库和共享库&lt;/h3&gt;
+&lt;h3 id=&#34;进程间通信及同步&#34;&gt;进程间通信及同步&lt;/h3&gt;
+&lt;h3 id=&#34;信号&#34;&gt;信号&lt;/h3&gt;
+&lt;h3 id=&#34;线程&#34;&gt;线程&lt;/h3&gt;
+&lt;h3 id=&#34;进程组和-shell-任务控制&#34;&gt;进程组和 shell 任务控制&lt;/h3&gt;
+&lt;h3 id=&#34;会话控制终端和控制进程&#34;&gt;会话、控制终端和控制进程&lt;/h3&gt;
+&lt;h3 id=&#34;伪终端&#34;&gt;伪终端&lt;/h3&gt;
+&lt;h3 id=&#34;日期和时间&#34;&gt;日期和时间&lt;/h3&gt;
+&lt;h3 id=&#34;客户端服务器架构&#34;&gt;客户端/服务器架构&lt;/h3&gt;
+&lt;h3 id=&#34;实时性&#34;&gt;实时性&lt;/h3&gt;
+&lt;h3 id=&#34;proc-文件系统&#34;&gt;/proc 文件系统&lt;/h3&gt;
 &lt;h2 id=&#34;第-3-章&#34;&gt;第 3 章&lt;/h2&gt;
 </description>
     </item>
