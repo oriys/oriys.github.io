@@ -4784,13 +4784,14 @@ coordinator 启动最后几个任务的第二个副本。&lt;/li&gt;
     
     <item>
       <title>书影音</title>
-      <link>/entertainment/</link>
+      <link>/about/</link>
       <pubDate>Tue, 31 Aug 2021 17:12:59 +0800</pubDate>
-      <guid>/entertainment/</guid>
+      <guid>/about/</guid>
       <description>&lt;h2 id=&#34;2021&#34;&gt;2021&lt;/h2&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;&lt;/th&gt;
 &lt;th style=&#34;text-align:center&#34;&gt;&lt;/th&gt;
 &lt;th style=&#34;text-align:center&#34;&gt;&lt;/th&gt;
 &lt;th style=&#34;text-align:center&#34;&gt;&lt;/th&gt;
@@ -4809,6 +4810,7 @@ coordinator 启动最后几个任务的第二个副本。&lt;/li&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://book.douban.com/subject/35390390&#34;&gt;&lt;img src=&#34;../../douban/35390390.png&#34; alt=&#34;字母表谜案&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://book.douban.com/subject/35296788&#34;&gt;&lt;img src=&#34;../../douban/35296788.png&#34; alt=&#34;心灵侦探城塚翡翠&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://book.douban.com/subject/35016085&#34;&gt;&lt;img src=&#34;../../douban/35016085.png&#34; alt=&#34;诡计博物馆&#34;&gt;&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://book.douban.com/subject/33404959&#34;&gt;&lt;img src=&#34;../../douban/33404959.png&#34; alt=&#34;金色麦田&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://book.douban.com/subject/3211779&#34;&gt;&lt;img src=&#34;../../douban/3211779.png&#34; alt=&#34;嫌疑人 X 的献身&#34;&gt;&lt;/a&gt;&lt;/td&gt;
@@ -4818,6 +4820,7 @@ coordinator 启动最后几个任务的第二个副本。&lt;/li&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://book.douban.com/subject/30264678&#34;&gt;&lt;img src=&#34;../../douban/30264678.png&#34; alt=&#34;尸体变化图鉴&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://book.douban.com/subject/26348596&#34;&gt;&lt;img src=&#34;../../douban/26348596.png&#34; alt=&#34;密室收藏家&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://book.douban.com/subject/30329536&#34;&gt;&lt;img src=&#34;../../douban/30329536.png&#34; alt=&#34;数据密集型应用系统设计&#34;&gt;&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://book.douban.com/subject/4913064&#34;&gt;&lt;img src=&#34;../../douban/4913064.png&#34; alt=&#34;活着&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://book.douban.com/subject/1029791&#34;&gt;&lt;img src=&#34;../../douban/1029791.png&#34; alt=&#34;许三观卖血记&#34;&gt;&lt;/a&gt;&lt;/td&gt;
@@ -4825,26 +4828,39 @@ coordinator 启动最后几个任务的第二个副本。&lt;/li&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://book.douban.com/subject/26369699&#34;&gt;&lt;img src=&#34;../../douban/26369699.png&#34; alt=&#34;被讨厌的勇气&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://book.douban.com/subject/30280001&#34;&gt;&lt;img src=&#34;../../douban/30280001.png&#34; alt=&#34;计算机网络自顶向下方法&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://book.douban.com/subject/26877752&#34;&gt;&lt;img src=&#34;../../douban/26877752.png&#34; alt=&#34;恶意&#34;&gt;&lt;/a&gt;&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://movie.douban.com/subject/26774749&#34;&gt;&lt;img src=&#34;../../douban/26774749.webp&#34; alt=&#34;不正经的魔术讲师与禁忌教典 ロクでなし魔術講師と禁忌教典 (2017)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://movie.douban.com/subject/26720121&#34;&gt;&lt;img src=&#34;../../douban/26720121.webp&#34; alt=&#34;幼女战记 幼女戦記 (2017)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://movie.douban.com/subject/4851891&#34;&gt;&lt;img src=&#34;../../douban/4851891.webp&#34; alt=&#34;暗金丑岛君 第一季 闇金ウシジマくん (2010)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://movie.douban.com/subject/4851891&#34;&gt;&lt;img src=&#34;../../douban/4851891.webp&#34; alt=&#34;暗金丑岛君 第一季 闇金ウシジマくん (2010)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://movie.douban.com/subject/30458820&#34;&gt;&lt;img src=&#34;../../douban/30458820.webp&#34; alt=&#34;经济机器是如何运行的（2008）&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://movie.douban.com/subject/34812928&#34;&gt;&lt;img src=&#34;../../douban/34812928.webp&#34; alt=&#34;鱿鱼游戏 오징어 게임 (2021)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://movie.douban.com/subject/30337388&#34;&gt;&lt;img src=&#34;../../douban/30337388.webp&#34; alt=&#34;失控玩家 Free Guy (2021)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://movie.douban.com/subject/35576386&#34;&gt;&lt;img src=&#34;../../douban/35576386.webp&#34; alt=&#34;911：总统作战室 9/11: Inside the President’s War Room (2021)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://movie.douban.com/subject/27138615&#34;&gt;&lt;img src=&#34;../../douban/27138615.webp&#34; alt=&#34;自卫的艺术 The Art of Self-Defense (2019)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://movie.douban.com/subject/26741632&#34;&gt;&lt;img src=&#34;../../douban/26741632.webp&#34; alt=&#34;X 特遣队：全员集结 The Suicide Squad (2021)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://movie.douban.com/subject/30331432&#34;&gt;&lt;img src=&#34;../../douban/30331432.webp&#34; alt=&#34;洛基 第一季 Loki Season 1 (2021)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://movie.douban.com/subject/30367642&#34;&gt;&lt;img src=&#34;../../douban/30367642.webp&#34; alt=&#34;猎鹰与冬兵 The Falcon and the Winter Soldier (2021)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://movie.douban.com/subject/30367642&#34;&gt;&lt;img src=&#34;../../douban/30367642.webp&#34; alt=&#34;猎鹰与冬兵 The Falcon and the Winter Soldier (2021)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://movie.douban.com/subject/26613692&#34;&gt;&lt;img src=&#34;../../douban/26613692.webp&#34; alt=&#34;哥斯拉大战金刚 Godzilla vs Kong (2021)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://movie.douban.com/subject/34953711&#34;&gt;&lt;img src=&#34;../../douban/34953711.webp&#34; alt=&#34;不眠 Vigil (2021)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://movie.douban.com/subject/6748086&#34;&gt;&lt;img src=&#34;../../douban/6748086.webp&#34; alt=&#34;全职猎人 2011 HUNTER×HUNTER (2011)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://movie.douban.com/subject/27186493&#34;&gt;&lt;img src=&#34;../../douban/27186493.webp&#34; alt=&#34;关于我转生变成史莱姆这档事 第二季 (2021)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://movie.douban.com/subject/35076714&#34;&gt;&lt;img src=&#34;../../douban/35076714.webp&#34; alt=&#34;扎克·施奈德版正义联盟 Zack Snyder&amp;rsquo;s Justice League (2021)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://movie.douban.com/subject/30513783&#34;&gt;&lt;img src=&#34;../../douban/30513783.webp&#34; alt=&#34;无职转生：到了异世界就拿出真本事 (2021)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
 &lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://movie.douban.com/subject/35161255&#34;&gt;&lt;img src=&#34;../../douban/35161255.webp&#34; alt=&#34;伍六七之玄武国篇 (2021)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://movie.douban.com/subject/35235594&#34;&gt;&lt;img src=&#34;../../douban/35235594.webp&#34; alt=&#34;我的英雄学院 第 5 季 (2021)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://movie.douban.com/subject/35235594&#34;&gt;&lt;img src=&#34;../../douban/35235594.webp&#34; alt=&#34;我的英雄学院 第 5 季 (2021)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;&lt;a href=&#34;https://movie.douban.com/subject/34845781&#34;&gt;&lt;img src=&#34;../../douban/34845781.webp&#34; alt=&#34;鬼灭之刃 剧场版 无限列车篇 (2020)&#34;&gt;&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;

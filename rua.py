@@ -19,6 +19,7 @@ urls = ["[深入理解 Java 虚拟机](https://book.douban.com/subject/34907497)
         "[被讨厌的勇气](https://book.douban.com/subject/26369699)",
         "[计算机网络自顶向下方法](https://book.douban.com/subject/30280001)",
         "[恶意](https://book.douban.com/subject/26877752)",
+        "[不正经的魔术讲师与禁忌教典 ロクでなし魔術講師と禁忌教典 (2017)](https://movie.douban.com/subject/26774749/)",
         "[幼女战记 幼女戦記 (2017)](https://movie.douban.com/subject/26720121)",
         "[暗金丑岛君 第一季 闇金ウシジマくん (2010)](https://movie.douban.com/subject/4851891)",
         "[经济机器是如何运行的（2008）](https://movie.douban.com/subject/30458820)",
