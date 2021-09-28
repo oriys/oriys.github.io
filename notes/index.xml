@@ -4140,6 +4140,328 @@
     </item>
     
     <item>
+      <title>APUE::Threads</title>
+      <link>/notes/advanced_programming_in_the_unix_environment_threads/</link>
+      <pubDate>Wed, 11 Aug 2021 00:43:37 +0800</pubDate>
+      <guid>/notes/advanced_programming_in_the_unix_environment_threads/</guid>
+      <description>&lt;h2 id=&#34;threads&#34;&gt;Threads&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Thread Concepts
+&lt;ul&gt;
+&lt;li&gt;simplify code that deals with asynchronous events by assigning a separate thread to handle each event type&lt;/li&gt;
+&lt;li&gt;Threads automatically have access to the same memory address space and file descriptors&lt;/li&gt;
+&lt;li&gt;Some problems can be partitioned so that overall program throughput can be improved&lt;/li&gt;
+&lt;li&gt;interactive programs can realize improved response time by using multiple threads&lt;/li&gt;
+&lt;li&gt;The benefits of a multithreaded programming model can be realized even if your program is running on a uniprocessor&lt;/li&gt;
+&lt;li&gt;A thread consists of the information necessary to represent an execution context within a process
+&lt;ul&gt;
+&lt;li&gt;a thread ID that identifies the thread within a process&lt;/li&gt;
+&lt;li&gt;a set of register values&lt;/li&gt;
+&lt;li&gt;a stack&lt;/li&gt;
+&lt;li&gt;a scheduling priority and policy&lt;/li&gt;
+&lt;li&gt;a signal mask&lt;/li&gt;
+&lt;li&gt;an errno variable&lt;/li&gt;
+&lt;li&gt;thread-specific data&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Everything within a process is sharable among the threads in a process
+&lt;ul&gt;
+&lt;li&gt;text of the executable program&lt;/li&gt;
+&lt;li&gt;the program’s global and heap memory, the stacks&lt;/li&gt;
+&lt;li&gt;the file descriptors&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Thread Identification
+&lt;ul&gt;
+&lt;li&gt;every thread has a thread ID&lt;/li&gt;
+&lt;li&gt;the thread ID has significance only within the context of the process to which it belongs&lt;/li&gt;
+&lt;li&gt;A thread ID is represented by the pthread_t data type&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Thread Creation
+&lt;ul&gt;
+&lt;li&gt;When a thread is created, there is no guarantee which will run first: the newly created thread or the calling thread&lt;/li&gt;
+&lt;li&gt;The memory location pointed to by tidp is set to the thread ID of the newly created thread when pthread_create returns successfully&lt;/li&gt;
+&lt;li&gt;pthread functions usually return an error code when they fail. They don’t set errno like the other POSIX functions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Thread Termination
+&lt;ul&gt;
+&lt;li&gt;If any thread within a process calls exit, _Exit, or _exit, then the entire process terminates&lt;/li&gt;
+&lt;li&gt;the default action is to terminate the process, a signal sent to a thread will terminate the entire process&lt;/li&gt;
+&lt;li&gt;A single thread can exit in three ways, thereby stopping its flow of control, without terminating the entire process
+&lt;ul&gt;
+&lt;li&gt;The thread can simply return from the start routine. The return value is the thread’s exit code&lt;/li&gt;
+&lt;li&gt;The thread can be canceled by another thread in the same process&lt;/li&gt;
+&lt;li&gt;The thread can call pthread_exit&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;One thread can request that another in the same process be canceled by calling the pthread_cancel function
+&lt;ul&gt;
+&lt;li&gt;However, a thread can elect to ignore or otherwise control how it is canceled&lt;/li&gt;
+&lt;li&gt;thread_cancel doesn’t wait for the thread to terminate; it merely makes the request&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;A thread can arrange for functions to be called when it exits pthread_cleanup_push
+&lt;ul&gt;
+&lt;li&gt;Makes a call to pthread_exit&lt;/li&gt;
+&lt;li&gt;Responds to a cancellation request&lt;/li&gt;
+&lt;li&gt;Makes a call to pthread_cleanup_pop with a nonzero execute argument&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Thread Synchronization
+&lt;ul&gt;
+&lt;li&gt;When multiple threads of control share the same memory, we need to make sure that each thread sees a consistent view of its data&lt;/li&gt;
+&lt;li&gt;Mutexes
+&lt;ul&gt;
+&lt;li&gt;A mutex is basically a lock that we set (lock) before accessing a shared resource and release (unlock) when we’re done&lt;/li&gt;
+&lt;li&gt;we must first initialize it by either setting it to the constant PTHREAD_MUTEX_INITIALIZER (for statically allocated mutexes only) or calling pthread_mutex_init&lt;/li&gt;
+&lt;li&gt;To lock a mutex, we call pthread_mutex_lock&lt;/li&gt;
+&lt;li&gt;To unlock a mutex, we call pthread_mutex_unlock&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Deadlock Avoidance
+&lt;ul&gt;
+&lt;li&gt;Deadlocks can be avoided by carefully controlling the order in which mutexes are locked&lt;/li&gt;
+&lt;li&gt;assume that you have two mutexes, A and B, that you need to lock at the same time. If all threads always lock mutex A before mutex B, no deadlock can occur from the use of the two mutexes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;pthread_mutex_timedlock
+&lt;ul&gt;
+&lt;li&gt;The timeout specifies how long we are willing to wait in terms of absolute time (as opposed to relative time; we specify that we are willing to block until time X instead of saying that we are willing to block for Y seconds)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Reader–writer locks
+&lt;ul&gt;
+&lt;li&gt;Only one thread at a time can hold a reader–writer lock in write mode, but multiple threads can hold a reader–writer lock in read mode at the same time&lt;/li&gt;
+&lt;li&gt;Reader–writer locks are well suited for situations in which data structures are read more often than they are modified&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Reader–Writer Locking with Timeouts
+&lt;ul&gt;
+&lt;li&gt;pthread_rwlock_timedwrlock&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Condition Variables
+&lt;ul&gt;
+&lt;li&gt;When used with mutexes, condition variables allow threads to wait in a race-free way for arbitrary conditions to occur&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Spin Locks
+&lt;ul&gt;
+&lt;li&gt;the process is blocked by busy-waiting (spinning) until the lock can be acquired
+&lt;ul&gt;
+&lt;li&gt;A spin lock could be used in situations where locks are held for short periods of times and threads don’t want to incur the cost of being descheduled&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Many mutex implementations are so efficient that the performance of applications using mutex locks is equivalent to their performance if they had used spin locks&lt;/li&gt;
+&lt;li&gt;The interfaces for spin locks are similar to those for mutexes, making it relatively easy to replace one with the other&lt;/li&gt;
+&lt;li&gt;if a spin lock is currently unlocked, then the pthread_spin_lock function can lock it without spinning. If the thread already has it locked, the results are undefined. The call to pthread_spin_lock could fail with the EDEADLK error (or some other error), or the call could spin indefinitely. The behavior depends on the implementation. If we try to unlock a spin lock that is not locked, the results are also undefined&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Barriers
+&lt;ul&gt;
+&lt;li&gt;Barriers are a synchronization mechanism that can be used to coordinate multiple threads working in parallel&lt;/li&gt;
+&lt;li&gt;A barrier allows each thread to wait until all cooperating threads have reached the same point, and then continue executing from there&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>APUE::UNIX System Overview</title>
+      <link>/notes/advanced_programming_in_the_unix_environment_overview/</link>
+      <pubDate>Sun, 01 Aug 2021 00:43:37 +0800</pubDate>
+      <guid>/notes/advanced_programming_in_the_unix_environment_overview/</guid>
+      <description>&lt;h2 id=&#34;unix-system-overview&#34;&gt;UNIX System Overview&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;an operating system can be defined as the software that controls the hardware resources of the computer and provides an environment under which programs can run
+&lt;ul&gt;
+&lt;li&gt;Kernel is relatively small and resides at the core of the environment&lt;/li&gt;
+&lt;li&gt;The interface to the kernel is a layer of software called the system calls&lt;/li&gt;
+&lt;li&gt;Libraries of common functions are built on top of the system call interface, but applications are free to use both&lt;/li&gt;
+&lt;li&gt;The shell is a special application that provides an interface for running other applications&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;In a broad sense, an operating system consists of the kernel and all the other software that makes a computer useful and gives the computer its personality. This other software includes system utilities, applications, shells, libraries of common functions, and so on&lt;/li&gt;
+&lt;li&gt;shell
+&lt;ul&gt;
+&lt;li&gt;Bourne shell&lt;/li&gt;
+&lt;li&gt;C shell&lt;/li&gt;
+&lt;li&gt;Korn shell&lt;/li&gt;
+&lt;li&gt;Bourne-again shell&lt;/li&gt;
+&lt;li&gt;TENEX C shell&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;File System
+&lt;ul&gt;
+&lt;li&gt;The UNIX file system is a hierarchical arrangement of directories and files&lt;/li&gt;
+&lt;li&gt;Everything starts in the directory called root, whose name is the single character /&lt;/li&gt;
+&lt;li&gt;A directory is a file that contains directory entries&lt;/li&gt;
+&lt;li&gt;The stat and fstat functions return a structure of information containing all the attributes of a file&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Filename
+&lt;ul&gt;
+&lt;li&gt;The names in a directory are called filenames&lt;/li&gt;
+&lt;li&gt;The only two characters that cannot appear in a filename are the slash character (/) and the null character.&lt;/li&gt;
+&lt;li&gt;POSIX.1 recommends restricting filenames to consist of the following characters: letters (a-z, A-Z), numbers (0-9), period (.), dash (-), and underscore (_)&lt;/li&gt;
+&lt;li&gt;Two filenames are automatically created whenever a new directory is created: . (called dot) and .. (called dot-dot). Dot refers to the current directory, and dot-dot refers to the parent directory. In the root directory, dot-dot is the same as dot.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Pathname
+&lt;ul&gt;
+&lt;li&gt;A sequence of one or more filenames, separated by slashes and optionally starting with a slash, forms a pathname&lt;/li&gt;
+&lt;li&gt;absolute pathname&lt;/li&gt;
+&lt;li&gt;relative pathname&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Working Directory
+&lt;ul&gt;
+&lt;li&gt;the directory from which all relative pathnames are interpreted&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Home Directory
+&lt;ul&gt;
+&lt;li&gt;when we log in, the working directory is set to our home directory&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;File Descriptors
+&lt;ul&gt;
+&lt;li&gt;File descriptors are normally small non-negative integers that the kernel uses to identify the files accessed by a process.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Standard Input, Standard Output, and Standard Error
+&lt;ul&gt;
+&lt;li&gt;all shells open three descriptors whenever a new program is run&lt;/li&gt;
+&lt;li&gt;then all three are connected to the terminal&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Unbuffered I/O
+&lt;ul&gt;
+&lt;li&gt;Unbuffered I/O is provided by the functions open, read, write, lseek, and close&lt;/li&gt;
+&lt;li&gt;These functions all work with file descriptors&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Programs and Processes
+&lt;ul&gt;
+&lt;li&gt;Programs
+&lt;ul&gt;
+&lt;li&gt;A program is an executable file residing on disk in a directory&lt;/li&gt;
+&lt;li&gt;A program is read into memory and is executed by the kernel as a result of one of the seven exec functions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Processes and Process ID
+&lt;ul&gt;
+&lt;li&gt;An executing instance of a program is called a process&lt;/li&gt;
+&lt;li&gt;The UNIX System guarantees that every process has a unique numeric identifier called the process ID&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Process Control
+&lt;ul&gt;
+&lt;li&gt;fork&lt;/li&gt;
+&lt;li&gt;exec&lt;/li&gt;
+&lt;li&gt;waitpid&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Threads and Thread IDs
+&lt;ul&gt;
+&lt;li&gt;All threads within a process share the same address space, file descriptors, stacks, and process-related attributes&lt;/li&gt;
+&lt;li&gt;Each thread executes on its own stack&lt;/li&gt;
+&lt;li&gt;threads are identified by IDs - Thread IDs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Error Handling
+&lt;ul&gt;
+&lt;li&gt;When an error occurs in one of the UNIX System functions, a negative value is often returned, and the integer errno is usually set to a value that tells why&lt;/li&gt;
+&lt;li&gt;The errors defined in &amp;lt;errno.h&amp;gt; can be divided into two categories: fatal and nonfatal&lt;/li&gt;
+&lt;li&gt;A fatal error has no recovery action. The best we can do is print an error message on the user’s screen or to a log file, and then exit.&lt;/li&gt;
+&lt;li&gt;Nonfatal errors, on the other hand, can sometimes be dealt with more robustly. Most nonfatal errors are temporary, such as a resource shortage, and might not occur when there is less activity on the system.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;User Identification
+&lt;ul&gt;
+&lt;li&gt;User ID
+&lt;ul&gt;
+&lt;li&gt;This user ID is assigned by the system administrator when our login name is assigned, and we cannot change it&lt;/li&gt;
+&lt;li&gt;The user ID is normally assigned to be unique for every user&lt;/li&gt;
+&lt;li&gt;the kernel uses the user ID to check whether we have the appropriate permissions to perform certain operations&lt;/li&gt;
+&lt;li&gt;We call the user whose user ID is 0 either root or the superuser&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Group ID
+&lt;ul&gt;
+&lt;li&gt;Groups are normally used to collect users together into projects or departments. This allows the sharing of resources, such as files, among members of the same group.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Signals
+&lt;ul&gt;
+&lt;li&gt;Signals are a technique used to notify a process that some condition has occurred&lt;/li&gt;
+&lt;li&gt;The process has three choices for dealing with the signal
+&lt;ul&gt;
+&lt;li&gt;Ignore the signal&lt;/li&gt;
+&lt;li&gt;Let the default action occur&lt;/li&gt;
+&lt;li&gt;Provide a function that is called when the signal occurs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Time Values
+&lt;ul&gt;
+&lt;li&gt;Calendar time
+&lt;ul&gt;
+&lt;li&gt;This value counts the number of seconds since the Epoch: 00:00:00 January 1, 1970&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Process time
+&lt;ul&gt;
+&lt;li&gt;This is also called CPU time and measures the central processor resources used by a process. Process time is measured in clock ticks, which have historically been 50, 60, or 100 ticks per second&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;UNIX System maintains three values for a process:
+&lt;ul&gt;
+&lt;li&gt;Clock time
+&lt;ul&gt;
+&lt;li&gt;amount of time the process takes to run&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;User CPU time
+&lt;ul&gt;
+&lt;li&gt;CPU time attributed to user instructions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;system CPU
+&lt;ul&gt;
+&lt;li&gt;CPU time attributed to the kernel when it executes on behalf of the process&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;System Calls and Library Functions
+&lt;ul&gt;
+&lt;li&gt;All implementations of the UNIX System provide a well-defined, limited number of entry points directly into the kernel called system calls&lt;/li&gt;
+&lt;li&gt;Its definition is in the C language&lt;/li&gt;
+&lt;li&gt;The technique used on UNIX systems is for each system call to have a function of the same name in the standard C library&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
       <title>现代操作系统::操作系统设计</title>
       <link>/notes/modern_operating_systems_operating_system_design/</link>
       <pubDate>Fri, 23 Jul 2021 02:11:01 +0800</pubDate>
