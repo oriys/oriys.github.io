@@ -22,7 +22,7 @@ books = list(set([
     "https://book.douban.com/subject/1029791",
     "https://book.douban.com/subject/24708143",
     "https://book.douban.com/subject/26369699",
-    "https://book.douban.com/subject/34998167"
+    "https://book.douban.com/subject/34998167",
     "https://book.douban.com/subject/30280001",
     "https://book.douban.com/subject/26877752",
     "https://book.douban.com/subject/35016085",
@@ -77,7 +77,21 @@ def download(img, url):
                   '/Users/ezra/oriys/static/douban/'+img)
 
 
+def printHeader():
+    print('---')
+    print('title: "书影音"')
+    print('date: 2021-08-31T17:12:59+08:00')
+    print('draft: false')
+    print('---')
+    print()
+    print()
+    print('## 2021')
+    print()
+    print()
+
+
 if __name__ == '__main__':
+    printHeader()
     col = 8
     print('|'*(col-0))
     print(*['|' for i in range(col)], sep=':-:')
