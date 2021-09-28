@@ -22,6 +22,7 @@ books = list(set([
     "https://book.douban.com/subject/1029791",
     "https://book.douban.com/subject/24708143",
     "https://book.douban.com/subject/26369699",
+    "https://book.douban.com/subject/25900403",
     "https://book.douban.com/subject/34998167",
     "https://book.douban.com/subject/30280001",
     "https://book.douban.com/subject/26877752",
