@@ -1,80 +1,131 @@
-<!doctype html><html lang=en-us>
+<!DOCTYPE html>
+<html lang="en-us">
 <head>
-<link rel=preload href=/lib/font-awesome/webfonts/fa-brands-400.woff2 as=font type=font/woff2 crossorigin=anonymous>
-<link rel=preload href=/lib/font-awesome/webfonts/fa-regular-400.woff2 as=font type=font/woff2 crossorigin=anonymous>
-<link rel=preload href=/lib/font-awesome/webfonts/fa-solid-900.woff2 as=font type=font/woff2 crossorigin=anonymous>
-<link rel=preload href=/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2 as=font type=font/woff2 crossorigin=anonymous>
-<link rel=apple-touch-icon href=/images/apple-touch-icon.png>
-<link rel=apple-touch-icon sizes=57x57 href=/images/apple-touch-icon-57x57.png>
-<link rel=apple-touch-icon sizes=72x72 href=/images/apple-touch-icon-72x72.png>
-<link rel=apple-touch-icon sizes=76x76 href=/images/apple-touch-icon-76x76.png>
-<link rel=apple-touch-icon sizes=114x114 href=/images/apple-touch-icon-114x114.png>
-<link rel=apple-touch-icon sizes=120x120 href=/images/apple-touch-icon-120x120.png>
-<link rel=apple-touch-icon sizes=144x144 href=/images/apple-touch-icon-144x144.png>
-<link rel=apple-touch-icon sizes=152x152 href=/images/apple-touch-icon-152x152.png>
-<link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon-180x180.png>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="IE=edge">
-<title> CMU::15-445/645::Database Storage 笔记 | Y.CH.Y</title>
-<link rel=canonical href=/oc/cmu_15_445_03_note/>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=robots content="all,follow">
-<meta name=googlebot content="index,follow,snippet,archive">
-<meta property="og:title" content="CMU::15-445/645::Database Storage 笔记">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/apple-touch-icon-57x57.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon-76x76.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/apple-touch-icon-120x120.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/apple-touch-icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/apple-touch-icon-152x152.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-180x180.png" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> CMU::15-445/645::Database Storage 笔记 | Y.CH.Y</title>
+  <link rel = 'canonical' href = '/notes/cmu_15_445_03_note/'>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="CMU::15-445/645::Database Storage 笔记" />
 <meta property="og:description" content="数据库存储第一部分 存储 我们将关注一个 &ldquo;面向磁盘 &ldquo;的 DBMS 架构，它假定数据库的主要存储位置是在非易失性磁盘上。
 数据库的主要存储位置是在非易失性磁盘上。
 在存储层次结构的顶端，最接近 CPU 的位置，这是最快的但它也是容量小和最昂贵的存储。离 CPU 越远，存储设备的容量就越大。设备有更大的容量，但速度更慢，离 CPU 更远。这些设备每 GB 的价格也越来越便宜。
  易失性设备。  易失性意味着如果你从机器上拔掉电源，那么数据就会丢失。 易失性存储支持快速的随机访问，具有字节寻址的位置。这意味着程序可以跳转到任何字节地址，并获得其中的数据。 为了我们的目的，我们将始终把这种存储类别称为 &ldquo;存储器&rdquo;。   非易失性设备。  非易失性意味着存储设备不需要持续供电，以便以保留它所存储的比特。 它也是块/页可寻址的。这意味着，为了读取一个特定偏移量的数值，程序首先要加载 4KB 的页面加载到内存中，以提供程序想要读取的值。 非易失性存储在传统上更擅长顺序访问（同时读取多块数据）。 我们将把它称为 &ldquo;磁盘&rdquo;。我们将不对固态硬盘或机械硬盘进行区分。 (SSD)或旋转式硬盘(HDD)。    还有一类新的存储设备即将问世，称为非易失存储器，定位介于 DRAM 于 SSD 之间。它几乎和 DRAM 一样快，但具有磁盘的持久性。(英特尔傲腾)
  对非易失性存储的随机访问通常比顺序访问要慢得多。  算法试图减少对随机页的写入次数，以便将数据存储在连续的块中。 程序在再一次调用中分配多个页面。    由于系统假设数据库存储在磁盘上，DBMS 的组件负责找出如何在非易失性磁盘和易失性存储器之间来回移动数据。DBMS 的组件负责找出如何在非易失性磁盘和易失性存储器之间来回移动数据，因为系统不能直接对磁盘上的数据进行操作。
 数据库存储在磁盘上，系统不能直接在磁盘上操作数据，DBMS 的组件负责找出如何在非易失性磁盘和易失性存储器之间来回移动数据。
-我们将专注于如何隐藏磁盘的延迟，而不是专注于用寄存器和缓存进行优化，因为从磁盘获取数据的速度非常慢。如果从 L1 缓存引用中读取数据需要半秒，那么从 SSD 中读取数据需要 1.7 天，从 HDD 中读取需要 16.5 周。">
-<meta property="og:type" content="article">
-<meta property="og:url" content="/oc/cmu_15_445_03_note/"><meta property="article:section" content="oc">
-<meta property="article:published_time" content="2021-08-02T09:07:42+08:00">
-<meta property="article:modified_time" content="2021-08-02T09:07:42+08:00">
-<meta name=twitter:card content="summary">
-<meta name=twitter:title content="CMU::15-445/645::Database Storage 笔记">
-<meta name=twitter:description content="数据库存储第一部分 存储 我们将关注一个 &ldquo;面向磁盘 &ldquo;的 DBMS 架构，它假定数据库的主要存储位置是在非易失性磁盘上。
+我们将专注于如何隐藏磁盘的延迟，而不是专注于用寄存器和缓存进行优化，因为从磁盘获取数据的速度非常慢。如果从 L1 缓存引用中读取数据需要半秒，那么从 SSD 中读取数据需要 1.7 天，从 HDD 中读取需要 16.5 周。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/notes/cmu_15_445_03_note/" /><meta property="article:section" content="notes" />
+<meta property="article:published_time" content="2021-09-08T09:07:42+08:00" />
+<meta property="article:modified_time" content="2021-09-08T09:07:42+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CMU::15-445/645::Database Storage 笔记"/>
+<meta name="twitter:description" content="数据库存储第一部分 存储 我们将关注一个 &ldquo;面向磁盘 &ldquo;的 DBMS 架构，它假定数据库的主要存储位置是在非易失性磁盘上。
 数据库的主要存储位置是在非易失性磁盘上。
 在存储层次结构的顶端，最接近 CPU 的位置，这是最快的但它也是容量小和最昂贵的存储。离 CPU 越远，存储设备的容量就越大。设备有更大的容量，但速度更慢，离 CPU 更远。这些设备每 GB 的价格也越来越便宜。
  易失性设备。  易失性意味着如果你从机器上拔掉电源，那么数据就会丢失。 易失性存储支持快速的随机访问，具有字节寻址的位置。这意味着程序可以跳转到任何字节地址，并获得其中的数据。 为了我们的目的，我们将始终把这种存储类别称为 &ldquo;存储器&rdquo;。   非易失性设备。  非易失性意味着存储设备不需要持续供电，以便以保留它所存储的比特。 它也是块/页可寻址的。这意味着，为了读取一个特定偏移量的数值，程序首先要加载 4KB 的页面加载到内存中，以提供程序想要读取的值。 非易失性存储在传统上更擅长顺序访问（同时读取多块数据）。 我们将把它称为 &ldquo;磁盘&rdquo;。我们将不对固态硬盘或机械硬盘进行区分。 (SSD)或旋转式硬盘(HDD)。    还有一类新的存储设备即将问世，称为非易失存储器，定位介于 DRAM 于 SSD 之间。它几乎和 DRAM 一样快，但具有磁盘的持久性。(英特尔傲腾)
  对非易失性存储的随机访问通常比顺序访问要慢得多。  算法试图减少对随机页的写入次数，以便将数据存储在连续的块中。 程序在再一次调用中分配多个页面。    由于系统假设数据库存储在磁盘上，DBMS 的组件负责找出如何在非易失性磁盘和易失性存储器之间来回移动数据。DBMS 的组件负责找出如何在非易失性磁盘和易失性存储器之间来回移动数据，因为系统不能直接对磁盘上的数据进行操作。
 数据库存储在磁盘上，系统不能直接在磁盘上操作数据，DBMS 的组件负责找出如何在非易失性磁盘和易失性存储器之间来回移动数据。
-我们将专注于如何隐藏磁盘的延迟，而不是专注于用寄存器和缓存进行优化，因为从磁盘获取数据的速度非常慢。如果从 L1 缓存引用中读取数据需要半秒，那么从 SSD 中读取数据需要 1.7 天，从 HDD 中读取需要 16.5 周。">
-<link rel=stylesheet href=/css/styles.799e452986b367cc888ea5995bc8cc4c4fb66d5b504c0a16cb0fdf4b1bb86b68090b3a1fc8d9eb26985d905c306e7bc2eefe764f17ebdf7156e1873bba2e07e1.css integrity="sha512-eZ5FKYazZ8yIjqWZW8jMTE+2bVtQTAoWyw/fSxu4a2gJCzofyNnrJphdkFwwbnvC7v52Txfr33FW4Yc7ui4H4Q=="><!--[if lt IE 9]><script src=https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js></script>
-<script src=https://oss.maxcdn.com/respond/1.4.2/respond.min.js></script><![endif]-->
-<link rel=icon type=image/png href=/images/favicon.ico>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-X1L70M4MM0','auto'),ga('send','pageview'))</script>
-<script async src=https://www.google-analytics.com/analytics.js></script>
+我们将专注于如何隐藏磁盘的延迟，而不是专注于用寄存器和缓存进行优化，因为从磁盘获取数据的速度非常慢。如果从 L1 缓存引用中读取数据需要半秒，那么从 SSD 中读取数据需要 1.7 天，从 HDD 中读取需要 16.5 周。"/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="/css/styles.799e452986b367cc888ea5995bc8cc4c4fb66d5b504c0a16cb0fdf4b1bb86b68090b3a1fc8d9eb26985d905c306e7bc2eefe764f17ebdf7156e1873bba2e07e1.css" integrity="sha512-eZ5FKYazZ8yIjqWZW8jMTE&#43;2bVtQTAoWyw/fSxu4a2gJCzofyNnrJphdkFwwbnvC7v52Txfr33FW4Yc7ui4H4Q=="> 
+
+  
+  
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="/images/favicon.ico" />
+
+  
+  
+  
+  
+  
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-X1L70M4MM0', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+  
 </head>
+
 <body class="max-width mx-auto px3 ltr">
-<div class="content index py4">
-<header id=header>
-<a href=/>
-<div id=logo style=background-image:url(/images/logo.png)></div>
-<div id=title>
-<h1>Y.CH.Y</h1>
-</div>
-</a>
-<div id=nav>
-<ul>
-<li class=icon>
-<a href=# aria-label=Menu><i class="fas fa-bars fa-2x" aria-hidden=true></i></a>
-</li>
-<li><a href=/>首页</a></li>
-<li><a href=/about>关于</a></li>
-</ul>
-</div>
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="/">
+  
+    <div id="logo" style="background-image: url(/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Y.CH.Y</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
+      </li>
+      
+        <li><a href="/">首页</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+    </ul>
+  </div>
 </header>
-<article class=post itemscope itemtype=http://schema.org/BlogPosting>
-<div class=content itemprop=articleBody>
-<h2 id=数据库存储第一部分>数据库存储第一部分</h2>
-<p><img src=https://i.imgur.com/qhTvXK1.png alt=img></p>
-<h3 id=存储>存储</h3>
+
+
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <h2 id="数据库存储第一部分">数据库存储第一部分</h2>
+<p><img src="https://i.imgur.com/qhTvXK1.png" alt="img"></p>
+<h3 id="存储">存储</h3>
 <p>我们将关注一个 &ldquo;面向磁盘 &ldquo;的 DBMS 架构，它假定数据库的主要存储位置是在非易失性磁盘上。</p>
 <p>数据库的主要存储位置是在非易失性磁盘上。</p>
 <p>在存储层次结构的顶端，最接近 CPU 的位置，这是最快的但它也是容量小和最昂贵的存储。离 CPU 越远，存储设备的容量就越大。设备有更大的容量，但速度更慢，离 CPU 更远。这些设备每 GB 的价格也越来越便宜。</p>
-<p><img src=https://i.imgur.com/S473W6q.png alt=img></p>
+<p><img src="https://i.imgur.com/S473W6q.png" alt="img"></p>
 <ul>
 <li>易失性设备。
 <ul>
@@ -105,11 +156,11 @@
 <p>由于系统假设数据库存储在磁盘上，DBMS 的组件负责找出如何在非易失性磁盘和易失性存储器之间来回移动数据。DBMS 的组件负责找出如何在非易失性磁盘和易失性存储器之间来回移动数据，因为系统不能直接对磁盘上的数据进行操作。</p>
 <p>数据库存储在磁盘上，系统不能直接在磁盘上操作数据，DBMS 的组件负责找出如何在非易失性磁盘和易失性存储器之间来回移动数据。</p>
 <p>我们将专注于如何隐藏磁盘的延迟，而不是专注于用寄存器和缓存进行优化，因为从磁盘获取数据的速度非常慢。如果从 L1 缓存引用中读取数据需要半秒，那么从 SSD 中读取数据需要 1.7 天，从 HDD 中读取需要 16.5 周。</p>
-<p><img src=https://i.imgur.com/v63l8oN.png alt=img></p>
-<h3 id=面向磁盘的-dbms-总览>面向磁盘的 DBMS 总览</h3>
+<p><img src="https://i.imgur.com/v63l8oN.png" alt="img"></p>
+<h3 id="面向磁盘的-dbms-总览">面向磁盘的 DBMS 总览</h3>
 <p>数据库都在磁盘上，数据库文件中的数据被组织成页，第一页是目录页。为了对数据进行操作，DBMS 需要将数据带入内存。它通过拥有一个缓冲池来管理磁盘和内存之间的来回移动。DBMS 也有一个执行引擎，可以执行查询。执行引擎将要求缓冲池提供一个特定的页面，而缓冲池将负责把该页面带入内存，并给执行引擎一个指向内存中该页面的指针。缓冲池管理器将确保在执行引擎对该内存进行操作时，该页是存在的。</p>
-<p><img src=https://i.imgur.com/3MilQUm.png alt=img></p>
-<h3 id=dbms-对比-os>DBMS 对比 OS</h3>
+<p><img src="https://i.imgur.com/3MilQUm.png" alt="img"></p>
+<h3 id="dbms-对比-os">DBMS 对比 OS</h3>
 <p>DBMS 的一个高层次设计目标是支持超过可用内存量的数据库。由于对磁盘的读/写是昂贵的，所以必须小心管理。我们不希望在从磁盘上获取东西时出现大的停顿，从而拖慢其他一切。因此，我们希望 DBMS 能够在等待从磁盘获取数据时处理其他查询。它就像虚拟内存一样，有一个大的地址空间和一个供操作系统从磁盘引入页面的地方。</p>
 <p>实现这种虚拟内存的一种方法是使用 mmap 来映射进程地址空间中的文件内容，这使得操作系统能够在磁盘和内存之间来回移动页面。
 不幸的是，这意味着如果 mmap 遇到了页面故障，将阻塞进程。</p>
@@ -139,11 +190,11 @@
 </li>
 </ul>
 <p>出于正确性和性能的考虑，我们不建议在 DBMS 中使用 mmap。即使系统会有一些看起来像操作系统可以提供的功能，但让 DBMS 自己实现这些程序会使它有更好的控制能力和性能。</p>
-<h3 id=文件存储>文件存储</h3>
+<h3 id="文件存储">文件存储</h3>
 <p>在其最基本的形式中，DBMS 将数据库存储为磁盘上的文件。有些可能使用一个文件层次结构，有些则可能使用单个文件（例如，SQLite）。</p>
 <p>操作系统对这些文件的内容一无所知。只有 DBMS 知道如何解码它们的内容，因为它是以 DBMS 特有的方式编码的。</p>
 <p>DBMS 的存储管理器负责管理数据库的文件。它将这些文件表示为一个页的集合。它还跟踪哪些数据被读和写到了页面上，以及页面上有多少可用空间。以及页面中还有多少可用空间。</p>
-<h3 id=数据库页>数据库页</h3>
+<h3 id="数据库页">数据库页</h3>
 <p>DBMS 将数据库组织在一个或多个文件中的固定大小的数据块，称为页。页面可以包含不同种类的数据（元组、索引、日志等）。大多数系统不会在页中混合这些类型。有些系统会要求它是自包含的，也就是说，读取每个页面所需的所有信息都在页面本身。虽然定义和数据分离可以减少体积，如果缺失了一部分定义数据，会导致数据失去意义，并且恢复难度比较大。</p>
 <p>每个页面都有一个唯一的标识符。如果数据库是一个单一的文件，那么页面标识可以只是文件的偏移量。大多数数据库管理系统有一个中介层，将页面 ID 映射到文件路径和偏移量。系统的上层会要求一个特定的页号，然后存储管理程序必须把这个页号变成一个文件和一个偏移量来找到这个页。</p>
 <p>大多数 DBMS 使用固定大小的页面来避免支持可变大小页面所需的工程开销。例如，在可变大小的页面中，删除一个页面可能会在文件中产生一个洞，而 DBMS 不能轻易用新的页面来填补。</p>
@@ -157,19 +208,19 @@
 </li>
 </ul>
 <p>存储设备保证对硬件页的大小进行原子写入。如果硬件页是 4KB，那么当系统试图将 4KB 写入磁盘时，要么所有的 4KB 都被写入，要么都不写入。这意味着，如果我们的数据库页大于硬件页，DBMS 将不得不采取额外的措施来确保数据被安全地写出来，因为程序可能在将数据库页的一部分写到磁盘的过程中崩溃。</p>
-<h3 id=数据库堆文件>数据库堆文件</h3>
+<h3 id="数据库堆文件">数据库堆文件</h3>
 <p>有几种方法可以找到 DBMS 想要的页面在磁盘上的位置，而堆文件组织就是其中一种方法。</p>
 <p>堆文件是一个无序的页面集合，其中的元组是以随机顺序存储的。</p>
 <p>DBMS 可以通过使用页面的链接列表或页面目录来找到磁盘上给定的页面 ID。</p>
-<p><img src=https://i.imgur.com/eB4bj1N.png alt=img></p>
+<p><img src="https://i.imgur.com/eB4bj1N.png" alt="img"></p>
 <p>两种方式可以表示数据库堆文件</p>
-<h4 id=文件目录>文件目录</h4>
+<h4 id="文件目录">文件目录</h4>
 <p>DBMS 维护特殊页面，上面记录跟踪数据页面的位置以及每个页面上的空闲空间数量</p>
-<p><img src=https://i.imgur.com/AIpKCZg.png alt=img></p>
-<h4 id=链表>链表</h4>
+<p><img src="https://i.imgur.com/AIpKCZg.png" alt="img"></p>
+<h4 id="链表">链表</h4>
 <p>头页持有指向空闲页列表和数据页列表的指针。然而，如果 DBMS 正在寻找一个特定的页面，它必须对数据页列表进行顺序遍历，直到找到它要寻找的页面。链表同样支持反向遍历。</p>
-<p><img src=https://i.imgur.com/NgjaAPh.png alt=img></p>
-<h3 id=页布局>页布局</h3>
+<p><img src="https://i.imgur.com/NgjaAPh.png" alt="img"></p>
+<h3 id="页布局">页布局</h3>
 <ul>
 <li>每个页面都包括一个页头，记录了关于页面内容的元数据。
 <ul>
@@ -182,38 +233,38 @@
 </ul>
 </li>
 </ul>
-<p><img src=https://i.imgur.com/vt7VkcX.png alt=img></p>
+<p><img src="https://i.imgur.com/vt7VkcX.png" alt="img"></p>
 <p>存放数据的一个原始方法是跟踪 DBMS 在一个页面中存储了多少个元组，然后每次增加一个新的元组时，它就把元组附加到最后。然而，当它删除一个元组或元组有可变长度的属性时，问题就出现了。</p>
-<h4 id=元组式页面>元组式页面</h4>
+<h4 id="元组式页面">元组式页面</h4>
 <p>先看以下按照元组方式组织的页面，当三条数据按照顺序存放在页面中</p>
-<p><img src=https://i.imgur.com/3ihvtT4.png alt=img></p>
+<p><img src="https://i.imgur.com/3ihvtT4.png" alt="img"></p>
 <p>删除一条数据会发生什么？</p>
 <p>对应位置的记录被删除，留下一个空白，同步文件头中关于元组数量的记录</p>
-<p><img src=https://i.imgur.com/pnSzxC9.png alt=img></p>
+<p><img src="https://i.imgur.com/pnSzxC9.png" alt="img"></p>
 <p>继续存入一条数据会发生什么？</p>
 <p>如果数据是定长的，那么它可以存入刚刚被删除的位置或者页面中的空白位置，如果是变长的数据，它需要向后扫描直到找到满足要求的位置。</p>
-<p><img src=https://i.imgur.com/KclWvZQ.png alt=img></p>
+<p><img src="https://i.imgur.com/KclWvZQ.png" alt="img"></p>
 <p>有两种主要的方法来布置页面中的数据。</p>
-<h4 id=插槽式页面>插槽式页面</h4>
+<h4 id="插槽式页面">插槽式页面</h4>
 <ul>
 <li>目前 DBMS 中使用的最常见的方法。</li>
 <li>头部跟踪已使用的槽的数量和最后使用的槽的起始位置的偏移量，以及一个槽数组，它跟踪每个元组的起始位置。</li>
 <li>要增加一个元组，槽数组将从头到尾增长，元组的数据将从尾到头增长。当槽阵列和元组数据相遇。</li>
 </ul>
-<p><img src=https://i.imgur.com/5I6XPw6.png alt=img></p>
-<h4 id=日志式结构>日志式结构</h4>
+<p><img src="https://i.imgur.com/5I6XPw6.png" alt="img"></p>
+<h4 id="日志式结构">日志式结构</h4>
 <ul>
 <li>DBMS 不存储元组，而只存储日志记录。</li>
 <li>将数据库如何被修改（插入、更新、删除）的记录存入文件。</li>
-<li>要读取一条记录，DBMS 会逆向扫描日志文件并"重新创建"元组。</li>
+<li>要读取一条记录，DBMS 会逆向扫描日志文件并&quot;重新创建&quot;元组。</li>
 <li>写的快，读的可能慢。</li>
 <li>在仅有追加写入的存储上工作得很好，因为 DBMS 不能往回更新数据。</li>
 <li>为了避免长时间的读取，DBMS 可以有索引，允许它跳到日志中的特定位置。它还可以定期压缩日志，压缩的问题是 DBMS 最终会出现写入放大（它一次又一次地重写相同的数据）。</li>
 </ul>
-<h4 id=日志压缩>日志压缩</h4>
+<h4 id="日志压缩">日志压缩</h4>
 <p>通过删除不必要的记录，压缩将较大的日志文件凝聚成较小的文件。</p>
-<p><img src=https://i.imgur.com/1lGJXAs.png alt=img></p>
-<h3 id=元组布局>元组布局</h3>
+<p><img src="https://i.imgur.com/1lGJXAs.png" alt="img"></p>
+<h3 id="元组布局">元组布局</h3>
 <p>元组本质上是一个字节序列。DBMS 的工作是将这些字节解释为属性类型和值。</p>
 <ul>
 <li>元组标头。包含关于元组的元数据。
@@ -237,62 +288,62 @@
 </ul>
 </li>
 </ul>
-<p><img src=https://i.imgur.com/yMtXbAt.png alt=img></p>
-<h3 id=非规格化数据>非规格化数据</h3>
-<p>如果两个表是相关的，DBMS 可以"预连接"它们，所以这些表最终会在同一个页面上。这使得读取速度加快，因为 DBMS 只需要加载一个页面，而不是两个独立的页面。然而，这使得更新更加昂贵，因为 DBMS 需要更多的空间给每个元组。</p>
-<p><img src=https://i.imgur.com/2WJMghW.png alt=img></p>
-<h3 id=总结>总结</h3>
+<p><img src="https://i.imgur.com/yMtXbAt.png" alt="img"></p>
+<h3 id="非规格化数据">非规格化数据</h3>
+<p>如果两个表是相关的，DBMS 可以&quot;预连接&quot;它们，所以这些表最终会在同一个页面上。这使得读取速度加快，因为 DBMS 只需要加载一个页面，而不是两个独立的页面。然而，这使得更新更加昂贵，因为 DBMS 需要更多的空间给每个元组。</p>
+<p><img src="https://i.imgur.com/2WJMghW.png" alt="img"></p>
+<h3 id="总结">总结</h3>
 <ul>
 <li>数据库是以页为单位组织的。</li>
 <li>跟踪页面有不同方式。</li>
 <li>存储页面有不同方式。</li>
 <li>存储元组有不同方式</li>
 </ul>
-<h2 id=数据库存储第二部分>数据库存储第二部分</h2>
-<p><img src=https://i.imgur.com/anyphM7.png alt=img></p>
-<h3 id=数据表示>数据表示</h3>
+<h2 id="数据库存储第二部分">数据库存储第二部分</h2>
+<p><img src="https://i.imgur.com/anyphM7.png" alt="img"></p>
+<h3 id="数据表示">数据表示</h3>
 <p>元组中的数据本质上只是字节数组。DBMS 要知道如何解释这些字节以得出属性的值。数据表示方案是 DBMS 如何为一个值存储字节。</p>
 <p>有五大类数据类型可以存储在元组中：整数、浮点数、定点精度数、可变长度值和日期/时间。</p>
-<h4 id=整数>整数</h4>
+<h4 id="整数">整数</h4>
 <p>大多数 DBMS 使用 IEEE-754 标准规定的本地 C/C++ 类型来存储整数。这些值是固定长度的。</p>
 <p>例如。INTEGER, BIGINT, SMALLINT, TINYINT.</p>
-<h4 id=可变精度数字>可变精度数字</h4>
+<h4 id="可变精度数字">可变精度数字</h4>
 <p>这些是不精确的、可变精度的数字类型，使用 IEEE-754 标准规定的 C/C++ 类型。这些值也是固定长度的。</p>
 <p>对可变精度数字的操作比任意精度数字的计算更快，因为 CPU 可以直接对它们执行指令。然而，由于有些数字不能精确表示，在进行计算时可能会出现四舍五入的错误。</p>
 <p>举例来说。FLOAT，REAL。</p>
-<p><img src=https://i.imgur.com/3pzeQZv.png alt=img></p>
-<h4 id=固定点精度数>固定点精度数</h4>
+<p><img src="https://i.imgur.com/3pzeQZv.png" alt="img"></p>
+<h4 id="固定点精度数">固定点精度数</h4>
 <p>这些是具有任意精度和比例的数字数据类型。它们通常以精确的、可变长度的二进制表示法（几乎像一个字符串）来存储，带有额外的元数据，这些元数据会告诉系统一些事情，如数据的长度和小数点应该在哪里。</p>
 <p>当四舍五入的误差不可接受时，就会使用这些数据类型，但是 DBMS 为了获得这种准确性而付出了一定的性能代价。来获得这种准确性。</p>
 <p>例子: NUMERIC, DECIMAL.</p>
-<h5 id=pg-中的数字表示>PG 中的数字表示</h5>
-<p><img src=https://i.imgur.com/fyKLmOu.png alt=img></p>
-<h5 id=mysql-中的数字表示>MySQL 中的数字表示</h5>
-<p><img src=https://i.imgur.com/FFg3nxV.png alt=img></p>
-<h4 id=可变长度的数据>可变长度的数据</h4>
+<h5 id="pg-中的数字表示">PG 中的数字表示</h5>
+<p><img src="https://i.imgur.com/fyKLmOu.png" alt="img"></p>
+<h5 id="mysql-中的数字表示">MySQL 中的数字表示</h5>
+<p><img src="https://i.imgur.com/FFg3nxV.png" alt="img"></p>
+<h4 id="可变长度的数据">可变长度的数据</h4>
 <p>这些数据代表任意长度的数据类型。它们通常是用一个头来存储的，这个头可以追踪到追踪字符串的长度，以便于跳转到下一个值。它还可能包含一个数据的校验和。</p>
 <p>大多数 DBMS 不允许一个元组超过单页的大小。那些允许的系统将数据存储在一个特殊的 Overflow Page，并让元组包含对该页的引用。这些溢出页可以这些 Overflow Page 可以包含指向其他 Overflow Page 的指针，直到所有的数据都能被存储。</p>
 <p>有些系统会让你把这些大的数值存储在一个外部文件中，然后元组会包含一个指向该文件的指针。例如，如果数据库存储的是照片信息，DBMS 可以将照片存储在外部文件中，而不是让它们在 DBMS 中占用大量的空间。这样做的一个缺点是，DBMS 不能对这个文件的内容进行操作。因此，没有持久化或事务保护。</p>
 <p>例子: VARCHAR, VARBINARY, TEXT, BLOB.</p>
-<p><img src=https://i.imgur.com/zDOU8Gy.png alt=img></p>
-<h4 id=日期和时间>日期和时间</h4>
+<p><img src="https://i.imgur.com/zDOU8Gy.png" alt="img"></p>
+<h4 id="日期和时间">日期和时间</h4>
 <p>不同的系统对日期/时间的表示方法各不相同。通常情况下，它们被表示为从 unix 纪元开始的一些单位时间微秒或毫秒。</p>
 <p>例子。TIME、DATE、TIMESTAMP。</p>
-<h4 id=系统目录>系统目录</h4>
+<h4 id="系统目录">系统目录</h4>
 <p>为了使 DBMS 能够解码元组的内容，它维护了一个内部目录来告诉它关于数据库的元数据。元数据将包含关于数据库有哪些表和列的信息，以及它们的类型和值的顺序。大多数 DBMS 以它们用于表的格式在自己内部存储目录。他们使用特殊的代码来访问这些目录表。DBMS 没有标准的方式来检索这些信息。</p>
-<p><img src=https://i.imgur.com/weMyy99.png alt=img></p>
-<h3 id=工作负载>工作负载</h3>
+<p><img src="https://i.imgur.com/weMyy99.png" alt="img"></p>
+<h3 id="工作负载">工作负载</h3>
 <p>数据库系统有许多不同的工作负载。我们所说的工作负载，是指一个系统要处理的请求的一般性质。本课程将重点讨论两种类型。在线事务处理和在线分析处理。</p>
-<h4 id=oltp在线事务处理>OLTP：在线事务处理</h4>
+<h4 id="oltp在线事务处理">OLTP：在线事务处理</h4>
 <p>快速操作，每次只读取/更新少量的的快速操作，每次只读/更新少量的数据。</p>
-<h4 id=olap在线分析处理>OLAP：在线分析处理</h4>
+<h4 id="olap在线分析处理">OLAP：在线分析处理</h4>
 <p>读取大量数据的复杂查询，以计算聚合结果。</p>
-<h4 id=htap混合事务分析处理>HTAP：混合事务/分析处理</h4>
+<h4 id="htap混合事务分析处理">HTAP：混合事务/分析处理</h4>
 <p>在同一个数据库中同时进行 OLTP 和 OLAP。</p>
-<p><img src=https://i.imgur.com/zzz4jgR.png alt=img></p>
-<h3 id=存储模型>存储模型</h3>
+<p><img src="https://i.imgur.com/zzz4jgR.png" alt="img"></p>
+<h3 id="存储模型">存储模型</h3>
 <p>DBMS 可以用不同的方式存储元组，这些方式更适合 OLTP 或 OLAP 工作负载。</p>
-<h4 id=n-ary-存储模型nsm>N-Ary 存储模型（NSM）</h4>
+<h4 id="n-ary-存储模型nsm">N-Ary 存储模型（NSM）</h4>
 <p>在 n-ary 存储模型中，DBMS 将一个元组的所有属性连续地存储在一个单一的页，所以 NSM 也被称为 &ldquo;行存储&rdquo;。这种方法是 OLTP 工作负载的理想选择，在这种工作负载中，要求这种方法是 OLTP 工作负载的理想选择，在这种工作负载中，请求是大量插入的，并且事务往往只操作一个单独的实体。它是理想的，因为它只可以一次性获取一个元组的所有属性。</p>
 <ul>
 <li>优点。
@@ -307,8 +358,8 @@
 </ul>
 </li>
 </ul>
-<p><img src=https://i.imgur.com/z5zRhf6.png alt=img></p>
-<h4 id=分解存储模型>分解存储模型</h4>
+<p><img src="https://i.imgur.com/z5zRhf6.png" alt="img"></p>
+<h4 id="分解存储模型">分解存储模型</h4>
 <p>在分解存储模型中，DBMS 为所有元组连续地存储一个单一的属性（列）。在一个数据块中。因此，它也被称为 &ldquo;列存储&rdquo;。这种模式是 OLAP 工作负载的理想选择，用来执行只读查询，在表的属性子集上进行大量扫描。</p>
 <ul>
 <li>优点。
@@ -326,27 +377,39 @@
 <p>在使用列存储时，要把元组重新组合起来，有两种常见的方法。</p>
 <p>最常用的方法是固定长度的偏移量。假设属性都是固定长度的，DBMS 可以计算每个元组的属性的偏移量。然后，当系统想要某个特定元组的属性时，它知道如何从偏移量跳到文件中的那个位置。为了适应可变长度的字段，系统可以填充字段，使它们都是相同的长度，或者使用一个字典，接受一个固定大小的整数，将整数映射到值。</p>
 <p>一个不太常见的方法是使用嵌入式元组 ID。在这里，对于列中的每个属性，DBMS 都会用它来存储一个元组 ID（例如：主键）。然后，系统还将存储一个映射，告诉它如何跳转到具有该 ID 的每个属性。请注意，这种方法有很大的存储开销，因为它需要为每个属性条目存储一个元组 ID。为每个属性条目存储一个元组 ID</p>
-<p><img src=https://i.imgur.com/4l9etYt.png alt=img></p>
-</div>
+<p><img src="https://i.imgur.com/4l9etYt.png" alt="img"></p>
+
+  
+  </div>
 </article>
-<footer id=footer>
-<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
-<div class=footer-left>
-Copyright &copy; 2021 Y.CH.Y
-</div>
-<div class=footer-right>
-<nav>
-<ul>
-<li><a href=/>首页</a></li>
-<li><a href=/about>关于</a></li>
-</ul>
-</nav>
-</div>
+
+
+    <footer id="footer">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+  <div class="footer-left">
+    Copyright  &copy; 2021  Y.CH.Y 
+    
+    
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">首页</a></li>
+         
+        <li><a href="/about">关于</a></li>
+        
+      </ul>
+    </nav>
+  </div>
 </footer>
-</div>
+
+
+  </div>
 </body>
-<link rel=stylesheet href=/lib/font-awesome/css/all.min.css>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
 <script src=/lib/jquery/jquery.min.js></script>
 <script src=/js/main.js></script>
 </html>
