@@ -10,7 +10,6 @@ books = list(set([
     "https://book.douban.com/subject/35390390",
     "https://book.douban.com/subject/35296788",
     "https://book.douban.com/subject/35016085",
-    "https://book.douban.com/subject/25809330",
     "https://book.douban.com/subject/33404959",
     "https://book.douban.com/subject/3211779",
     "https://book.douban.com/subject/34994608",
