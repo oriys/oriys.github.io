@@ -1,1250 +1,1179 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Ocs | Y.CH.Y</title>
-    <link>/oc/</link>
-      <atom:link href="/oc/index.xml" rel="self" type="application/rss+xml" />
-    <description>Ocs</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Thu, 16 Sep 2021 09:06:25 +0800</lastBuildDate>
-    <item>
-      <title>MIT::6.824::Introduction</title>
-      <link>/oc/mit_6_824_introduction/</link>
-      <pubDate>Thu, 16 Sep 2021 09:06:25 +0800</pubDate>
-      <guid>/oc/mit_6_824_introduction/</guid>
-      <description>&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;什么是分布式系统
-&lt;ul&gt;
-&lt;li&gt;多台通过网络交互的主机&lt;/li&gt;
-&lt;li&gt;大型网站的存储、MapReduce、点对点共享等&lt;/li&gt;
-&lt;li&gt;许多关键基础设施是分布式的&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;为什么要构建分布式系统
-&lt;ul&gt;
-&lt;li&gt;连接在物理上隔离的主机，实现数据共享、文件共享&lt;/li&gt;
-&lt;li&gt;通过并行增加容量&lt;/li&gt;
-&lt;li&gt;通过复制加强容错&lt;/li&gt;
-&lt;li&gt;通过隔离实现数据安全(对外提供一个有限的接口)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;历史背景
-&lt;ul&gt;
-&lt;li&gt;局域网(1980s)
-&lt;ul&gt;
-&lt;li&gt;DNS，email，AFS&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;数据中心、大型网站(1990s)
-&lt;ul&gt;
-&lt;li&gt;网页搜索、购物&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;云计算(2000s)
-&lt;ul&gt;
-&lt;li&gt;大数据、机器学习&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;依然是活跃的领域(当前)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;挑战
-&lt;ul&gt;
-&lt;li&gt;并发部分多，交互复杂&lt;/li&gt;
-&lt;li&gt;必须应对部分失败&lt;/li&gt;
-&lt;li&gt;难以实现性能潜力&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;为什么要上 6.824
-&lt;ul&gt;
-&lt;li&gt;有趣 —— 难题，强大的解决方案&lt;/li&gt;
-&lt;li&gt;被真实系统使用 —— 由大型网站的兴起驱动&lt;/li&gt;
-&lt;li&gt;活跃的研究领域 —— 重要的未解决问题&lt;/li&gt;
-&lt;li&gt;动手实践 —— 在实验中构建真正的系统&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;焦点：这是一门关于应用程序基础设施的课程。
-&lt;ul&gt;
-&lt;li&gt;存储&lt;/li&gt;
-&lt;li&gt;计算&lt;/li&gt;
-&lt;li&gt;通信&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;重要目标
-&lt;ul&gt;
-&lt;li&gt;利用抽象隐匿分布式系统的复杂性&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;容错
-&lt;ul&gt;
-&lt;li&gt;可用性:尽管失败，应用程序仍能取得进展
-&lt;ul&gt;
-&lt;li&gt;复制&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;故障恢复:恢复故障后应用程序将正常运行
-&lt;ul&gt;
-&lt;li&gt;日志记录&lt;/li&gt;
-&lt;li&gt;故障转移&lt;/li&gt;
-&lt;li&gt;持久化存储&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;一致性：通用基础设施需要明确定义的行为
-&lt;ul&gt;
-&lt;li&gt;写后读一致性&lt;/li&gt;
-&lt;li&gt;副本之间的数据延迟&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;性能：可扩展的吞吐量
-&lt;ul&gt;
-&lt;li&gt;N x 服务器 -&amp;gt; 通过并行 CPU、磁盘、网络的 N x 总吞吐量。&lt;/li&gt;
-&lt;li&gt;随着 N 的增长，扩展越来越难&lt;/li&gt;
-&lt;li&gt;长尾效应&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;容错、一致性和性能是敌人
-&lt;ul&gt;
-&lt;li&gt;强大的容错能力需要通信
-&lt;ul&gt;
-&lt;li&gt;例如，将数据发送到备份&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;强一致性需要通信
-&lt;ul&gt;
-&lt;li&gt;例如，Get() 必须检查最近的 Put()。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;许多设计仅提供弱一致性以提高速度。
-&lt;ul&gt;
-&lt;li&gt;例如 Get() 不返回最新的 Put()&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;许多设计点在一致性/性能范围内是可能的！&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;MapReduce
-&lt;ul&gt;
-&lt;li&gt;Google 经常需要在 TB 数据集上的进行几个小时的计算，例如建立搜索索引，或排序，或分析网络结构&lt;/li&gt;
-&lt;li&gt;方便非专家编写程序构建分布式系统&lt;/li&gt;
-&lt;li&gt;程序员只是定义了 Map 和 Reduce 函数 ，编写通常相当简单的顺序代码&lt;/li&gt;
-&lt;li&gt;MR 负责并隐藏分发的各个方面&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;MapReduce 的抽象视图
-&lt;ul&gt;
-&lt;li&gt;输入(已经)分成 M 个文件&lt;/li&gt;
-&lt;li&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-txt&#34; data-lang=&#34;txt&#34;&gt;Input1 -&amp;gt; Map -&amp;gt; a,1 b,1
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ocs | Y.CH.Y</title><link>/oc/</link><atom:link href="/oc/index.xml" rel="self" type="application/rss+xml"/><description>Ocs</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Thu, 16 Sep 2021 09:06:25 +0800</lastBuildDate><item><title>MIT::6.824::Introduction</title><link>/oc/mit_6_824_introduction/</link><pubDate>Thu, 16 Sep 2021 09:06:25 +0800</pubDate><guid>/oc/mit_6_824_introduction/</guid><description>&lt;h2 id="介绍">介绍&lt;/h2>
+&lt;ul>
+&lt;li>什么是分布式系统
+&lt;ul>
+&lt;li>多台通过网络交互的主机&lt;/li>
+&lt;li>大型网站的存储、MapReduce、点对点共享等&lt;/li>
+&lt;li>许多关键基础设施是分布式的&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>为什么要构建分布式系统
+&lt;ul>
+&lt;li>连接在物理上隔离的主机，实现数据共享、文件共享&lt;/li>
+&lt;li>通过并行增加容量&lt;/li>
+&lt;li>通过复制加强容错&lt;/li>
+&lt;li>通过隔离实现数据安全(对外提供一个有限的接口)&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>历史背景
+&lt;ul>
+&lt;li>局域网(1980s)
+&lt;ul>
+&lt;li>DNS，email，AFS&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>数据中心、大型网站(1990s)
+&lt;ul>
+&lt;li>网页搜索、购物&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>云计算(2000s)
+&lt;ul>
+&lt;li>大数据、机器学习&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>依然是活跃的领域(当前)&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>挑战
+&lt;ul>
+&lt;li>并发部分多，交互复杂&lt;/li>
+&lt;li>必须应对部分失败&lt;/li>
+&lt;li>难以实现性能潜力&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>为什么要上 6.824
+&lt;ul>
+&lt;li>有趣 —— 难题，强大的解决方案&lt;/li>
+&lt;li>被真实系统使用 —— 由大型网站的兴起驱动&lt;/li>
+&lt;li>活跃的研究领域 —— 重要的未解决问题&lt;/li>
+&lt;li>动手实践 —— 在实验中构建真正的系统&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>焦点：这是一门关于应用程序基础设施的课程。
+&lt;ul>
+&lt;li>存储&lt;/li>
+&lt;li>计算&lt;/li>
+&lt;li>通信&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>重要目标
+&lt;ul>
+&lt;li>利用抽象隐匿分布式系统的复杂性&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>容错
+&lt;ul>
+&lt;li>可用性:尽管失败，应用程序仍能取得进展
+&lt;ul>
+&lt;li>复制&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>故障恢复:恢复故障后应用程序将正常运行
+&lt;ul>
+&lt;li>日志记录&lt;/li>
+&lt;li>故障转移&lt;/li>
+&lt;li>持久化存储&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>一致性：通用基础设施需要明确定义的行为
+&lt;ul>
+&lt;li>写后读一致性&lt;/li>
+&lt;li>副本之间的数据延迟&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>性能：可扩展的吞吐量
+&lt;ul>
+&lt;li>N x 服务器 -&amp;gt; 通过并行 CPU、磁盘、网络的 N x 总吞吐量。&lt;/li>
+&lt;li>随着 N 的增长，扩展越来越难&lt;/li>
+&lt;li>长尾效应&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>容错、一致性和性能是敌人
+&lt;ul>
+&lt;li>强大的容错能力需要通信
+&lt;ul>
+&lt;li>例如，将数据发送到备份&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>强一致性需要通信
+&lt;ul>
+&lt;li>例如，Get() 必须检查最近的 Put()。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>许多设计仅提供弱一致性以提高速度。
+&lt;ul>
+&lt;li>例如 Get() 不返回最新的 Put()&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>许多设计点在一致性/性能范围内是可能的！&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>MapReduce
+&lt;ul>
+&lt;li>Google 经常需要在 TB 数据集上的进行几个小时的计算，例如建立搜索索引，或排序，或分析网络结构&lt;/li>
+&lt;li>方便非专家编写程序构建分布式系统&lt;/li>
+&lt;li>程序员只是定义了 Map 和 Reduce 函数 ，编写通常相当简单的顺序代码&lt;/li>
+&lt;li>MR 负责并隐藏分发的各个方面&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>MapReduce 的抽象视图
+&lt;ul>
+&lt;li>输入(已经)分成 M 个文件&lt;/li>
+&lt;li>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-txt" data-lang="txt">Input1 -&amp;gt; Map -&amp;gt; a,1 b,1
 Input2 -&amp;gt; Map -&amp;gt; b,1
 Input3 -&amp;gt; Map -&amp;gt; a,1 c,1
 | | |
 | | -&amp;gt; Reduce -&amp;gt; c,1
 | -----&amp;gt; Reduce -&amp;gt; b,2
 ---------&amp;gt; Reduce -&amp;gt; a,2
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;MR 为每个输入文件调用 Map()，生成一组 k2,v2 “中间”数据，每个 Map() 调用都是一个“任务”，MR 收集给定 k2 的所有中间 v2，并将每个键 + 值传递给 Reduce 调用最终输出是一组来自 Reduce()s 的 &amp;lt;k2,v3&amp;gt; 对&lt;/li&gt;
-&lt;li&gt;统计单词
-&lt;ul&gt;
-&lt;li&gt;输入是数千个文本文件&lt;/li&gt;
-&lt;li&gt;Map(k, v)
-&lt;ul&gt;
-&lt;li&gt;把 v 拆分成单词 word&lt;/li&gt;
-&lt;li&gt;对每个 word w
-&lt;ul&gt;
-&lt;li&gt;emit(w,&amp;ldquo;1&amp;rdquo;)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Reduce(k，v)
-&lt;ul&gt;
-&lt;li&gt;emit(len(v))&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;MapReduce 扩展良好：
-&lt;ul&gt;
-&lt;li&gt;N 台&amp;rsquo;worker&amp;rsquo;计算机提供 N x 吞吐量。&lt;/li&gt;
-&lt;li&gt;Map()s 可以并行运行，因为它们不交互。&lt;/li&gt;
-&lt;li&gt;Reduce()s 也是如此。&lt;/li&gt;
-&lt;li&gt;因此，您可以通过购买更多计算机来获得更多吞吐量。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;MapReduce 隐藏了很多细节
-&lt;ul&gt;
-&lt;li&gt;将应用程序代码发送到服务器&lt;/li&gt;
-&lt;li&gt;跟踪完成了哪些任务&lt;/li&gt;
-&lt;li&gt;将数据从 Maps 移动到 Reduces&lt;/li&gt;
-&lt;li&gt;平衡服务器负载&lt;/li&gt;
-&lt;li&gt;从故障中恢复&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;MapReduce 的限制
-&lt;ul&gt;
-&lt;li&gt;没有交互或状态(除了通过中间输出)&lt;/li&gt;
-&lt;li&gt;没有迭代，没有多阶段流水线&lt;/li&gt;
-&lt;li&gt;没有实时或流处理。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;输入和输出存储在 GFS 集群文件系统上
-&lt;ul&gt;
-&lt;li&gt;MR 需要巨大的并行输入和输出吞吐量。&lt;/li&gt;
-&lt;li&gt;GFS 将文件拆分到多个服务器上，大小为 64 MB
-&lt;ul&gt;
-&lt;li&gt;Map()并行读取&lt;/li&gt;
-&lt;li&gt;Reduce()并行写入&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;GFS 还会在 2 或 3 个服务器上复制每个文件&lt;/li&gt;
-&lt;li&gt;拥有 GFS 是 MapReduce 的一大胜利&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;什么可能会限制性能？
-&lt;ul&gt;
-&lt;li&gt;我们关心，因为这是优化的事情。&lt;/li&gt;
-&lt;li&gt;中央处理器？记忆？磁盘？网络？&lt;/li&gt;
-&lt;li&gt;2004 年，作者受到网络容量的限制。
-&lt;ul&gt;
-&lt;li&gt;MR 通过网络发送什么？
-&lt;ul&gt;
-&lt;li&gt;Map 从 GFS 读取输入。&lt;/li&gt;
-&lt;li&gt;Reduce 读取 Map 输出。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;可以和输入一样大，例如用于排序。&lt;/li&gt;
-&lt;li&gt;reduce 将输出文件写入 GFS。&lt;/li&gt;
-&lt;li&gt;在 MR 的 all-to-all shuffle 中，一半的流量通过根交换机。&lt;/li&gt;
-&lt;li&gt;论文中的根交换机：100 到 200 吉比特/秒，总计
-&lt;ul&gt;
-&lt;li&gt;1800 台机器，所以 55 兆/秒/机器。&lt;/li&gt;
-&lt;li&gt;55 很小，例如远低于磁盘或 RAM 速度。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;今天：网络和根交换机相对于 CPU/磁盘要快得多。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;一些细节&lt;/li&gt;
-&lt;li&gt;一个 coordinator，负责向 worker 分发任务并记住进度。&lt;/li&gt;
-&lt;li&gt;coordinator 将 Map 任务交给 worker，直到所有 Maps 完成
-&lt;ul&gt;
-&lt;li&gt;将输出(中间数据)映射到本地磁盘&lt;/li&gt;
-&lt;li&gt;将每个 Reduce 任务的输出按散列映射到一个文件中&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;所有 Maps 完成后，coordinator 下发 Reduce 任务
-&lt;ul&gt;
-&lt;li&gt;每个 Reduce 从(所有)Map worker 获取其中间输出&lt;/li&gt;
-&lt;li&gt;每个 Reduce 任务在 GFS 上写入一个单独的输出文件&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;MR 如何最大限度地 reduce 网络使用？
-&lt;ul&gt;
-&lt;li&gt;Coordinator 尝试在存储其输入的 GFS 服务器上运行每个 Map 任务。
-&lt;ul&gt;
-&lt;li&gt;所有计算机都运行 GFS 和 MR 工作线程&lt;/li&gt;
-&lt;li&gt;所以输入是从本地磁盘(通过 GFS)读取的，而不是通过网络读取。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;中间数据仅通过网络一次。
-&lt;ul&gt;
-&lt;li&gt;Map worker 写入本地磁盘。&lt;/li&gt;
-&lt;li&gt;Reduce worker 直接从 Map workers 读取，而不是通过 GFS。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;将中间数据分区为包含许多键的文件。
-&lt;ul&gt;
-&lt;li&gt;R 远小于键的数量。&lt;/li&gt;
-&lt;li&gt;大型网络传输效率更高。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;MR 如何获得良好的负载平衡？
-&lt;ul&gt;
-&lt;li&gt;如果 N-1 个服务器必须等待 1 个慢速服务器完成，则既浪费又慢。&lt;/li&gt;
-&lt;li&gt;但有些任务可能需要比其他任务更长的时间。&lt;/li&gt;
-&lt;li&gt;解决方案：任务比 worker 多得多。
-&lt;ul&gt;
-&lt;li&gt;coordinator 向完成先前任务的 worker 分发新任务。&lt;/li&gt;
-&lt;li&gt;因此，没有任何任务如此之大，以至于会影响完成时间(希望如此)。&lt;/li&gt;
-&lt;li&gt;因此，较快的服务器比较慢的服务器完成更多的任务，同时完成。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;容错呢
-&lt;ul&gt;
-&lt;li&gt;即如果 worker 在 MR 工作期间崩溃怎么办？&lt;/li&gt;
-&lt;li&gt;我们希望对应用程序员完全隐藏故障！&lt;/li&gt;
-&lt;li&gt;MR 是否必须从头开始重新运行整个工作？
-&lt;ul&gt;
-&lt;li&gt;为什么不？&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;MR 只重新运行失败的 Map()s 和 Reduce()s。
-&lt;ul&gt;
-&lt;li&gt;假设 MR 运行 Map 两次，其中一个 Reduce 看到第一次运行的输出，
-&lt;ul&gt;
-&lt;li&gt;另一个 Reduce 看到第二次运行的输出？&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;正确性需要重新执行以产生完全相同的输出。&lt;/li&gt;
-&lt;li&gt;所以 Map 和 Reduce 必须是纯函数：
-&lt;ul&gt;
-&lt;li&gt;他们只被允许查看他们的参数&lt;/li&gt;
-&lt;li&gt;无状态，无文件 I/O，无交互，无外部通信。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;如果你想允许非功能性的 Map 或 Reduce 怎么办？
-&lt;ul&gt;
-&lt;li&gt;worker 失败将需要重新执行整个工作，
-&lt;ul&gt;
-&lt;li&gt;或者您需要创建同步的全局检查点。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;worker 崩溃恢复的详细信息
-&lt;ul&gt;
-&lt;li&gt;Map worker 崩溃
+&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>MR 为每个输入文件调用 Map()，生成一组 k2,v2 “中间”数据，每个 Map() 调用都是一个“任务”，MR 收集给定 k2 的所有中间 v2，并将每个键 + 值传递给 Reduce 调用最终输出是一组来自 Reduce()s 的 &amp;lt;k2,v3&amp;gt; 对&lt;/li>
+&lt;li>统计单词
+&lt;ul>
+&lt;li>输入是数千个文本文件&lt;/li>
+&lt;li>Map(k, v)
+&lt;ul>
+&lt;li>把 v 拆分成单词 word&lt;/li>
+&lt;li>对每个 word w
+&lt;ul>
+&lt;li>emit(w,&amp;ldquo;1&amp;rdquo;)&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Reduce(k，v)
+&lt;ul>
+&lt;li>emit(len(v))&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>MapReduce 扩展良好：
+&lt;ul>
+&lt;li>N 台&amp;rsquo;worker&amp;rsquo;计算机提供 N x 吞吐量。&lt;/li>
+&lt;li>Map()s 可以并行运行，因为它们不交互。&lt;/li>
+&lt;li>Reduce()s 也是如此。&lt;/li>
+&lt;li>因此，您可以通过购买更多计算机来获得更多吞吐量。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>MapReduce 隐藏了很多细节
+&lt;ul>
+&lt;li>将应用程序代码发送到服务器&lt;/li>
+&lt;li>跟踪完成了哪些任务&lt;/li>
+&lt;li>将数据从 Maps 移动到 Reduces&lt;/li>
+&lt;li>平衡服务器负载&lt;/li>
+&lt;li>从故障中恢复&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>MapReduce 的限制
+&lt;ul>
+&lt;li>没有交互或状态(除了通过中间输出)&lt;/li>
+&lt;li>没有迭代，没有多阶段流水线&lt;/li>
+&lt;li>没有实时或流处理。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>输入和输出存储在 GFS 集群文件系统上
+&lt;ul>
+&lt;li>MR 需要巨大的并行输入和输出吞吐量。&lt;/li>
+&lt;li>GFS 将文件拆分到多个服务器上，大小为 64 MB
+&lt;ul>
+&lt;li>Map()并行读取&lt;/li>
+&lt;li>Reduce()并行写入&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>GFS 还会在 2 或 3 个服务器上复制每个文件&lt;/li>
+&lt;li>拥有 GFS 是 MapReduce 的一大胜利&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>什么可能会限制性能？
+&lt;ul>
+&lt;li>我们关心，因为这是优化的事情。&lt;/li>
+&lt;li>中央处理器？记忆？磁盘？网络？&lt;/li>
+&lt;li>2004 年，作者受到网络容量的限制。
+&lt;ul>
+&lt;li>MR 通过网络发送什么？
+&lt;ul>
+&lt;li>Map 从 GFS 读取输入。&lt;/li>
+&lt;li>Reduce 读取 Map 输出。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>可以和输入一样大，例如用于排序。&lt;/li>
+&lt;li>reduce 将输出文件写入 GFS。&lt;/li>
+&lt;li>在 MR 的 all-to-all shuffle 中，一半的流量通过根交换机。&lt;/li>
+&lt;li>论文中的根交换机：100 到 200 吉比特/秒，总计
+&lt;ul>
+&lt;li>1800 台机器，所以 55 兆/秒/机器。&lt;/li>
+&lt;li>55 很小，例如远低于磁盘或 RAM 速度。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>今天：网络和根交换机相对于 CPU/磁盘要快得多。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>一些细节&lt;/li>
+&lt;li>一个 coordinator，负责向 worker 分发任务并记住进度。&lt;/li>
+&lt;li>coordinator 将 Map 任务交给 worker，直到所有 Maps 完成
+&lt;ul>
+&lt;li>将输出(中间数据)映射到本地磁盘&lt;/li>
+&lt;li>将每个 Reduce 任务的输出按散列映射到一个文件中&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>所有 Maps 完成后，coordinator 下发 Reduce 任务
+&lt;ul>
+&lt;li>每个 Reduce 从(所有)Map worker 获取其中间输出&lt;/li>
+&lt;li>每个 Reduce 任务在 GFS 上写入一个单独的输出文件&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>MR 如何最大限度地 reduce 网络使用？
+&lt;ul>
+&lt;li>Coordinator 尝试在存储其输入的 GFS 服务器上运行每个 Map 任务。
+&lt;ul>
+&lt;li>所有计算机都运行 GFS 和 MR 工作线程&lt;/li>
+&lt;li>所以输入是从本地磁盘(通过 GFS)读取的，而不是通过网络读取。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>中间数据仅通过网络一次。
+&lt;ul>
+&lt;li>Map worker 写入本地磁盘。&lt;/li>
+&lt;li>Reduce worker 直接从 Map workers 读取，而不是通过 GFS。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>将中间数据分区为包含许多键的文件。
+&lt;ul>
+&lt;li>R 远小于键的数量。&lt;/li>
+&lt;li>大型网络传输效率更高。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>MR 如何获得良好的负载平衡？
+&lt;ul>
+&lt;li>如果 N-1 个服务器必须等待 1 个慢速服务器完成，则既浪费又慢。&lt;/li>
+&lt;li>但有些任务可能需要比其他任务更长的时间。&lt;/li>
+&lt;li>解决方案：任务比 worker 多得多。
+&lt;ul>
+&lt;li>coordinator 向完成先前任务的 worker 分发新任务。&lt;/li>
+&lt;li>因此，没有任何任务如此之大，以至于会影响完成时间(希望如此)。&lt;/li>
+&lt;li>因此，较快的服务器比较慢的服务器完成更多的任务，同时完成。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>容错呢
+&lt;ul>
+&lt;li>即如果 worker 在 MR 工作期间崩溃怎么办？&lt;/li>
+&lt;li>我们希望对应用程序员完全隐藏故障！&lt;/li>
+&lt;li>MR 是否必须从头开始重新运行整个工作？
+&lt;ul>
+&lt;li>为什么不？&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>MR 只重新运行失败的 Map()s 和 Reduce()s。
+&lt;ul>
+&lt;li>假设 MR 运行 Map 两次，其中一个 Reduce 看到第一次运行的输出，
+&lt;ul>
+&lt;li>另一个 Reduce 看到第二次运行的输出？&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>正确性需要重新执行以产生完全相同的输出。&lt;/li>
+&lt;li>所以 Map 和 Reduce 必须是纯函数：
+&lt;ul>
+&lt;li>他们只被允许查看他们的参数&lt;/li>
+&lt;li>无状态，无文件 I/O，无交互，无外部通信。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>如果你想允许非功能性的 Map 或 Reduce 怎么办？
+&lt;ul>
+&lt;li>worker 失败将需要重新执行整个工作，
+&lt;ul>
+&lt;li>或者您需要创建同步的全局检查点。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>worker 崩溃恢复的详细信息
+&lt;ul>
+&lt;li>Map worker 崩溃
 coordinator 通知 worker 不再响应 ping
 coordinator 知道它在那个 worker 上运行了哪些 Map 任务
 这些任务的中间输出现在丢失了，必须重新创建
 coordinator 告诉其他 worker 运行这些任务
-如果 Reduces 已经获取了中间数据，则可以省略重新运行&lt;/li&gt;
-&lt;li&gt;reduce worker 崩溃。
+如果 Reduces 已经获取了中间数据，则可以省略重新运行&lt;/li>
+&lt;li>reduce worker 崩溃。
 完成的任务没问题——存储在 GFS 中，带有副本。
-coordinator 重新启动其他 worker 的 worker 未完成的任务。&lt;/li&gt;
-&lt;li&gt;其他故障/问题：
-&lt;ul&gt;
-&lt;li&gt;如果 coordinator 给两个 worker 相同的 Map() 任务怎么办？
+coordinator 重新启动其他 worker 的 worker 未完成的任务。&lt;/li>
+&lt;li>其他故障/问题：
+&lt;ul>
+&lt;li>如果 coordinator 给两个 worker 相同的 Map() 任务怎么办？
 也许 coordinator 错误地认为一名 worker 死亡。
-它只会告诉 Reduce worker 其中之一。&lt;/li&gt;
-&lt;li&gt;如果 coordinator 给两个 worker 相同的 Reduce() 任务怎么办？
+它只会告诉 Reduce worker 其中之一。&lt;/li>
+&lt;li>如果 coordinator 给两个 worker 相同的 Reduce() 任务怎么办？
 他们都会尝试在 GFS 上写入相同的输出文件！
-原子 GFS 重命名可防止混合；一个完整的文件将可见。&lt;/li&gt;
-&lt;li&gt;如果一个 worker 很慢——一个“落后者”怎么办？
+原子 GFS 重命名可防止混合；一个完整的文件将可见。&lt;/li>
+&lt;li>如果一个 worker 很慢——一个“落后者”怎么办？
 也许是由于 flakey 硬件。
-coordinator 启动最后几个任务的第二个副本。&lt;/li&gt;
-&lt;li&gt;如果 worker 由于硬件或软件损坏而计算出错误的输出怎么办？
-太糟糕了！MR 假设“故障停止”CPU 和软件。&lt;/li&gt;
-&lt;li&gt;如果 coordinator 崩溃怎么办？
-&lt;ul&gt;
-&lt;li&gt;重跑整个任务&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;当前状态
-&lt;ul&gt;
-&lt;li&gt;极具影响力(Hadoop、Spark 等)。&lt;/li&gt;
-&lt;li&gt;可能不再在 Google 使用。&lt;/li&gt;
-&lt;li&gt;被 Flume / FlumeJava 取代(参见 Chambers 等人的论文)。&lt;/li&gt;
-&lt;li&gt;GFS 替换为 Colossus(没有很好的描述)和 BigTable。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;结论
-&lt;ul&gt;
-&lt;li&gt;MapReduce 一手让大集群计算流行起来。&lt;/li&gt;
-&lt;li&gt;不是最有效或最灵活的。&lt;/li&gt;
-&lt;li&gt;缩放良好。&lt;/li&gt;
-&lt;li&gt;易于编程——隐藏故障和数据移动。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>CMU::15-445/645::Tree Indexes 笔记</title>
-      <link>/oc/cmu_15_445_06_note/</link>
-      <pubDate>Thu, 05 Aug 2021 08:41:54 +0800</pubDate>
-      <guid>/oc/cmu_15_445_06_note/</guid>
-      <description>&lt;h2 id=&#34;树形索引第一部分&#34;&gt;树形索引第一部分&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/RK21nhh.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;表索引&#34;&gt;表索引&lt;/h3&gt;
-&lt;p&gt;在数据库系统中，有许多不同的数据结构，可以用于内部元数据、核心数据存储、临时数据结构或表索引等目的。对于表索引，可能涉及到带有范围扫描的查询。&lt;/p&gt;
-&lt;p&gt;表索引是一个表的列的子集的副本，它被组织和(或)排序，以使用这些属性的子集进行有效的访问。因此，DBMS 可以查询表索引的辅助数据结构，而不是进行顺序扫描，以更快地找到元组。DBMS 确保表和索引的内容在逻辑上总是同步的。&lt;/p&gt;
-&lt;p&gt;在每个数据库要创建的索引数量之间存在着一个权衡。尽管更多的索引使得查询速度更快，但索引也会使用存储空间并需要维护。DBMS 的工作是找出用于执行查询的最佳索引。&lt;/p&gt;
-&lt;h3 id=&#34;b树&#34;&gt;B+树&lt;/h3&gt;
-&lt;p&gt;B+Tree 是一种自平衡的树形数据结构，它可以保持数据的分类，并允许在 O(log(n))中进行搜索、顺序访问、插入和删除。它为面向磁盘的 DBMS 的读/写大型数据块而优化。&lt;/p&gt;
-&lt;p&gt;几乎所有支持保序索引的现代 DBMS 都使用 B+Tree。有一种特定的数据结构叫做 B-Tree，但是人们也用这个词来泛指一类数据结构。原始的 B-Tree 和 B+Tree 之间的主要区别是，B-Tree 在所有节点中存储键和值，而 B+Tree 只在叶节点中存储值。现代 B+Tree 的实现结合了其他 B-Tree 变体的特征，例如 B\(^{link}\)-Tree 中使用的兄弟姐妹指针。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/W8jH3GU.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;p&gt;从形式上看，B+树是一棵具有以下特性的 M-way 搜索树。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;它是完全平衡的（即，每个叶子节点都在相同的深度）。&lt;/li&gt;
-&lt;li&gt;除根以外的每个内部节点至少有一半是满的（M/2 - 1 &amp;lt;= 键的数量 &amp;lt;= M - 1）。&lt;/li&gt;
-&lt;li&gt;每个有 k 个键的内部节点都有 k+1 个非空子节点。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;B+Tree 中的每个节点都包含一个键/值对数组。这些对中的键是由索引所基于的属性派生的。这些值将根据一个节点是内部节点还是叶子节点而有所不同。对于内部节点，值数组将包含指向其他节点的指针。叶子节点值的两种方法是记录 ID 和元组数据。记录 ID 指的是一个指向元组位置的指针。有元组数据的叶子节点在每个节点中存储元组的实际内容。&lt;/p&gt;
-&lt;p&gt;每个节点的数组都（几乎）是按键排序的。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/gerdPnT.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;p&gt;实践中节点中键和值是分开存储的&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/qa9zakg.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;插入&#34;&gt;插入&lt;/h4&gt;
-&lt;p&gt;要在 B+树中插入一个新的条目，必须沿着树向下遍历，并使用内部节点来确定将值插入哪个叶子节点。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;找到正确的叶子 L。&lt;/li&gt;
-&lt;li&gt;按排序顺序将新条目添加到 L 中。
-&lt;ul&gt;
-&lt;li&gt;如果 L 有足够的空间，操作就完成了。&lt;/li&gt;
-&lt;li&gt;否则将 L 分成两个结点 L 和 L2。均匀地重新分配条目，并将中间的键复制上去。 将指向 L2 的索引条目插入 L 的父节点中。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;要分割一个内部节点，均匀地重新分配条目，但要把中间的键向上推。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.cs.usfca.edu/~galles/visualization/BPlusTree.html&#34;&gt;可视化演示网址&lt;/a&gt;&lt;/p&gt;
-&lt;h4 id=&#34;删除&#34;&gt;删除&lt;/h4&gt;
-&lt;p&gt;在插入过程中，当树变得太满时，我们偶尔不得不分割叶子，而如果删除导致树少于半满，我们必须进行合并，以重新平衡树。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;找到正确的叶子 L。&lt;/li&gt;
-&lt;li&gt;删除条目。
-&lt;ul&gt;
-&lt;li&gt;如果 L 至少有一半是满的，那么操作就完成了。&lt;/li&gt;
-&lt;li&gt;否则，你可以尝试重新分配，从兄弟姐妹那里借用。&lt;/li&gt;
-&lt;li&gt;如果重新分配失败，则合并 L 和同胞。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;如果合并发生了，你必须删除父类中指向 L 的条目。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.cs.usfca.edu/~galles/visualization/BPlusTree.html&#34;&gt;可视化演示网址&lt;/a&gt;&lt;/p&gt;
-&lt;h4 id=&#34;条件选择&#34;&gt;条件选择&lt;/h4&gt;
-&lt;p&gt;因为 B+Tree 是按排序的，查找时遍历速度很快，也不需要整个键。如果查询提供了搜索键的任何属性，DBMS 可以使用 B+Tree 索引。这与散列索引不同，散列索引需要搜索键中的所有属性。&lt;/p&gt;
-&lt;h4 id=&#34;非唯一索引&#34;&gt;非唯一索引&lt;/h4&gt;
-&lt;p&gt;像散列表一样，B+Trees 可以通过重复键或存储值列表来处理非唯一的索引。在重复键的方法中，使用相同的叶子节点布局，但重复的键被多次存储。 在值列表的方法中，每个键只存储一次，并保持一个唯一值的链接列表。&lt;/p&gt;
-&lt;h4 id=&#34;重复键&#34;&gt;重复键&lt;/h4&gt;
-&lt;p&gt;在 B+Tree 中，有两种方法来重复键。&lt;/p&gt;
-&lt;p&gt;第一种方法是将记录 ID 作为键的一部分来附加。由于每个元组的记录 ID 是唯一的，这将确保所有的键都是可识别的。DBMS 可以根据部分键来查找元组。&lt;/p&gt;
-&lt;p&gt;第二种方法是允许叶子节点溢出到包含重复键的溢出节点。 虽然没有多余的信息被存储，但这种方法的维护和修改更加复杂。&lt;/p&gt;
-&lt;h4 id=&#34;聚簇索引&#34;&gt;聚簇索引&lt;/h4&gt;
-&lt;p&gt;表按照主键指定的排序顺序存储，作为堆组织的或索引组织的存储。 由于一些 DBMS 总是使用聚簇索引，如果一个表没有明确的主键，它们会自动地将隐藏的行 ID 作为主键，但是其他的 DBMS 根本就不能使用它们。&lt;/p&gt;
-&lt;h4 id=&#34;堆聚簇&#34;&gt;堆聚簇&lt;/h4&gt;
-&lt;p&gt;元组在堆的页面中使用聚簇索引指定的顺序进行排序。如果聚类索引的属性被用来访问元组，DBMS 可以直接跳到这些页面。&lt;/p&gt;
-&lt;h4 id=&#34;索引扫描页排序&#34;&gt;索引扫描页排序&lt;/h4&gt;
-&lt;p&gt;由于直接从非聚簇索引中检索元组的效率很低，DBMS 可以首先找出它所需要的所有元组，然后根据它们的页面 id 进行排序。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>CMU::15-445/645::Hash Tables 笔记</title>
-      <link>/oc/cmu_15_445_05_note/</link>
-      <pubDate>Wed, 04 Aug 2021 16:20:16 +0800</pubDate>
-      <guid>/oc/cmu_15_445_05_note/</guid>
-      <description>&lt;h2 id=&#34;散列表&#34;&gt;散列表&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/4jDQyjR.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;数据结构&#34;&gt;数据结构&lt;/h3&gt;
-&lt;p&gt;DBMS 为系统内部的许多不同部分使用各种数据结构。一些例子包括。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;内部元数据。这是对数据库和系统状态信息进行跟踪的数据。&lt;/li&gt;
-&lt;li&gt;核心数据存储。数据结构被用来作为数据库中元组的基础存储。&lt;/li&gt;
-&lt;li&gt;临时数据结构。DBMS 可以在处理查询的过程中即时建立数据结构，以加快执行速度（例如，用于连接的哈希表）。&lt;/li&gt;
-&lt;li&gt;表索引。可以使用辅助数据结构来使其更容易找到特定的元组。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;在实现 DBMS 的数据结构时，有两个主要的设计决定需要考虑。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;数据组织。我们需要弄清楚如何布局内存，以及在数据结构内存储哪些信息以支持有效的访问。&lt;/li&gt;
-&lt;li&gt;并发。我们还需要考虑如何使多个线程访问数据结构而不造成问题。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;散列表-hash-tables&#34;&gt;散列表 Hash Tables&lt;/h3&gt;
-&lt;p&gt;哈希表实现了一个关联数组的抽象数据类型，它将键映射到值。它提供了平均 O(1) 的操作复杂度（最坏情况下为 O(n)）和 O(n)的存储复杂度。请注意，即使平均操作复杂度为 O(1)，也有一些常数系数的优化这在现实实践中需要考虑，这些很重要的。&lt;/p&gt;
-&lt;h4 id=&#34;哈希函数&#34;&gt;哈希函数&lt;/h4&gt;
-&lt;p&gt;这告诉我们如何将一个大的键空间映射到一个较小的领域。它被用来计算进入一个桶或槽阵列的索引。我们需要考虑快速执行和碰撞率之间的权衡。在一个极端，我们有一个总是返回一个常数的哈希函数（非常快，但一切都会发生碰撞）。在另一个极端，我们有一个&amp;quot;完美&amp;quot;的散列函数，其中没有碰撞，但需要极长的时间来计算。理想的设计是介于两者之间。&lt;/p&gt;
-&lt;h4 id=&#34;散列方案&#34;&gt;散列方案&lt;/h4&gt;
-&lt;p&gt;这告诉我们如何处理散列后的键值冲突。在这里，我们需要考虑分配一个大的哈希表以减少碰撞和在发生碰撞时必须执行额外的指令之间的权衡。&lt;/p&gt;
-&lt;h3 id=&#34;散列函数&#34;&gt;散列函数&lt;/h3&gt;
-&lt;p&gt;散列函数接受任何键作为其输入。然后它返回该键的整数表示（即&amp;quot;哈希&amp;quot;）。该函数的输出是确定的（即，相同的键值应该总是产生相同的哈希输出）。&lt;/p&gt;
-&lt;p&gt;DBMS 不需要使用加密安全的哈希函数（例如 SHA-256），因为我们不需要担心保护键值的内容。这些哈希函数主要由 DBMS 内部使用，因此信息不会被泄露。&lt;/p&gt;
-&lt;p&gt;一般来说，我们只关心哈希函数的速度和碰撞率。 目前最先进的哈希函数是 Facebook XXHash3。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/2nim4p4.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;静态散列方案&#34;&gt;静态散列方案&lt;/h4&gt;
-&lt;p&gt;静态散列方案是指散列表的大小是固定的。这意味着如果 DBMS 在哈希表中的存储空间用完了，那么它就必须从头开始重建一个更大的哈希表，这非常昂贵。通常，新的哈希表是原始哈希表的两倍。&lt;/p&gt;
-&lt;p&gt;为了减少浪费的比较次数，避免哈希键的碰撞很重要。通常情况下，我们使用两倍于预期元素数量的槽位。&lt;/p&gt;
-&lt;p&gt;以下假设在现实中通常是不成立的。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;元素的数量是提前知道的。&lt;/li&gt;
-&lt;li&gt;键值是唯一的。&lt;/li&gt;
-&lt;li&gt;存在一个完美的哈希函数。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;因此，我们需要适当地选择散列函数和散列模式。&lt;/p&gt;
-&lt;h4 id=&#34;线性探测散列&#34;&gt;线性探测散列&lt;/h4&gt;
-&lt;p&gt;这是最基本的散列方案。它通常也是最快的。它使用一个数组槽的循环缓冲区。 散列函数将键映射到槽。当发生碰撞时，我们线性地搜索相邻的槽，直到找到一个开放的槽。对于查找，我们可以检查键的哈希值，然后线性搜索，直到找到所需的条目（或一个空槽，在这种情况下，键不在表中）。请注意，这意味着我们必须在槽中存储密钥，以便我们能够检查一个条目是否是所需的。删除是比较棘手的。我们必须小心翼翼地从槽中删除条目，因为这可能会阻止未来的查询找到被放在现在空槽下面的条目。这个问题有两个解决方案。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;最常见的方法是使用 &amp;ldquo;墓碑&amp;rdquo;。我们不删除这个条目，而是用一个 &amp;ldquo;墓碑 &amp;ldquo;条目取代它，告诉未来的查找要继续扫描。&lt;/li&gt;
-&lt;li&gt;另一种方法是在删除一个条目后移动相邻的数据以填补现在的空槽。然而，我们必须注意只移动最初被移位的条目。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;非唯一键。在同一个键可能与多个不同的值或元组相关的情况下，有两种方法。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;单独的链表。我们不将数值与键一起存储，而是将一个指针指向一个单独的存储区域，该区域包含所有数值的链接列表。&lt;/li&gt;
-&lt;li&gt;冗余的键。更常见的方法是简单地在表中多次存储相同的键。即使我们这样做，所有具有线性探测功能的东西仍然可以工作。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;插入&#34;&gt;插入&lt;/h4&gt;
-&lt;p&gt;有 A B C D E F 六个值和一个缓冲区&lt;/p&gt;
-&lt;p&gt;计算 A 的散列值，落在第三个槽&lt;/p&gt;
-&lt;p&gt;计算 B 的散列值，落在第一个槽&lt;/p&gt;
-&lt;p&gt;计算 C 的散列值，落在第 3 个槽，被占用，向下继续寻找找到第一个空闲的槽插入&lt;/p&gt;
-&lt;p&gt;计算 D 的散列值，落在第三个槽，已经被占用，向下寻找第四个槽，也被占用，继续向下找，找到空闲的，插入&lt;/p&gt;
-&lt;p&gt;E F 的散列冲突以此类推，如果，对应位置后面的槽都被占用，那么从头开始找，缓冲区是环形的。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/NZasO4X.gif&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;删除&#34;&gt;删除&lt;/h4&gt;
-&lt;p&gt;把第四个槽的数据删除后出现了一个空位&lt;/p&gt;
-&lt;p&gt;一个做法是把那个位置标记为“墓碑”，当后面的散列值对应到这个位置的时候，就会继续向后寻找。&lt;/p&gt;
-&lt;p&gt;另一个做法是，把删除位后面的数据往前移动一格。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/zMnGdSa.gif&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;罗宾霍德散列&#34;&gt;罗宾霍德散列&lt;/h3&gt;
-&lt;p&gt;这是线性探测散列的一个扩展，旨在减少每个键值在散列表中的最佳位置（即它们被散列到的原始槽）的最大距离。这种策略从 &amp;ldquo;富 &amp;ldquo;键中窃取槽位，并把它们给 &amp;ldquo;穷 &amp;ldquo;键。
-在这个变体中，每个条目也记录了它们与最佳位置的 &amp;ldquo;距离&amp;rdquo;。然后，在每次插入时，如果被插入的钥匙与它们在当前槽的最佳位置的距离比当前条目的距离更远，我们就替换当前条目，并继续尝试在表中更远的位置插入旧条目。&lt;/p&gt;
-&lt;h4 id=&#34;插入-1&#34;&gt;插入&lt;/h4&gt;
-&lt;p&gt;插入 A 在第三个槽&lt;/p&gt;
-&lt;p&gt;插入 B 在第一个槽&lt;/p&gt;
-&lt;p&gt;插入 C 到第三个槽，此时与 A 冲突，往后一个，记录最佳位置的距离为 1&lt;/p&gt;
-&lt;p&gt;插入 D 到第四个槽，与 C 冲突，比较两个的最佳距离都是 1，D 继续往后，插入，记录最佳距离为 1。&lt;/p&gt;
-&lt;p&gt;插入 E 到第三个槽，冲突，往后继续，到第五个槽，此时最佳位置 2，比 D 的最佳位置更大，E 插入到第五个槽，记录最佳位置 2，D 往后移动一个位置，记录最佳位置 2&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/H2CC5Ot.gif&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;cuckoo-散列&#34;&gt;Cuckoo 散列&lt;/h3&gt;
-&lt;p&gt;这种方法不是使用单一的哈希表，而是用不同的哈希函数维护多个哈希表。 这些哈希函数是相同的算法（例如，XXHash，CityHash）；它们通过使用不同的种子值为同一个键生成不同的哈希值。
+coordinator 启动最后几个任务的第二个副本。&lt;/li>
+&lt;li>如果 worker 由于硬件或软件损坏而计算出错误的输出怎么办？
+太糟糕了！MR 假设“故障停止”CPU 和软件。&lt;/li>
+&lt;li>如果 coordinator 崩溃怎么办？
+&lt;ul>
+&lt;li>重跑整个任务&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>当前状态
+&lt;ul>
+&lt;li>极具影响力(Hadoop、Spark 等)。&lt;/li>
+&lt;li>可能不再在 Google 使用。&lt;/li>
+&lt;li>被 Flume / FlumeJava 取代(参见 Chambers 等人的论文)。&lt;/li>
+&lt;li>GFS 替换为 Colossus(没有很好的描述)和 BigTable。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>结论
+&lt;ul>
+&lt;li>MapReduce 一手让大集群计算流行起来。&lt;/li>
+&lt;li>不是最有效或最灵活的。&lt;/li>
+&lt;li>缩放良好。&lt;/li>
+&lt;li>易于编程——隐藏故障和数据移动。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul></description></item><item><title>CMU::15-445/645::Tree Indexes 笔记</title><link>/oc/cmu_15_445_06_note/</link><pubDate>Thu, 05 Aug 2021 08:41:54 +0800</pubDate><guid>/oc/cmu_15_445_06_note/</guid><description>&lt;h2 id="树形索引第一部分">树形索引第一部分&lt;/h2>
+&lt;p>&lt;img src="https://i.imgur.com/RK21nhh.png" alt="img">&lt;/p>
+&lt;h3 id="表索引">表索引&lt;/h3>
+&lt;p>在数据库系统中，有许多不同的数据结构，可以用于内部元数据、核心数据存储、临时数据结构或表索引等目的。对于表索引，可能涉及到带有范围扫描的查询。&lt;/p>
+&lt;p>表索引是一个表的列的子集的副本，它被组织和(或)排序，以使用这些属性的子集进行有效的访问。因此，DBMS 可以查询表索引的辅助数据结构，而不是进行顺序扫描，以更快地找到元组。DBMS 确保表和索引的内容在逻辑上总是同步的。&lt;/p>
+&lt;p>在每个数据库要创建的索引数量之间存在着一个权衡。尽管更多的索引使得查询速度更快，但索引也会使用存储空间并需要维护。DBMS 的工作是找出用于执行查询的最佳索引。&lt;/p>
+&lt;h3 id="b树">B+树&lt;/h3>
+&lt;p>B+Tree 是一种自平衡的树形数据结构，它可以保持数据的分类，并允许在 O(log(n))中进行搜索、顺序访问、插入和删除。它为面向磁盘的 DBMS 的读/写大型数据块而优化。&lt;/p>
+&lt;p>几乎所有支持保序索引的现代 DBMS 都使用 B+Tree。有一种特定的数据结构叫做 B-Tree，但是人们也用这个词来泛指一类数据结构。原始的 B-Tree 和 B+Tree 之间的主要区别是，B-Tree 在所有节点中存储键和值，而 B+Tree 只在叶节点中存储值。现代 B+Tree 的实现结合了其他 B-Tree 变体的特征，例如 B\(^{link}\)-Tree 中使用的兄弟姐妹指针。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/W8jH3GU.png" alt="img">&lt;/p>
+&lt;p>从形式上看，B+树是一棵具有以下特性的 M-way 搜索树。&lt;/p>
+&lt;ul>
+&lt;li>它是完全平衡的（即，每个叶子节点都在相同的深度）。&lt;/li>
+&lt;li>除根以外的每个内部节点至少有一半是满的（M/2 - 1 &amp;lt;= 键的数量 &amp;lt;= M - 1）。&lt;/li>
+&lt;li>每个有 k 个键的内部节点都有 k+1 个非空子节点。&lt;/li>
+&lt;/ul>
+&lt;p>B+Tree 中的每个节点都包含一个键/值对数组。这些对中的键是由索引所基于的属性派生的。这些值将根据一个节点是内部节点还是叶子节点而有所不同。对于内部节点，值数组将包含指向其他节点的指针。叶子节点值的两种方法是记录 ID 和元组数据。记录 ID 指的是一个指向元组位置的指针。有元组数据的叶子节点在每个节点中存储元组的实际内容。&lt;/p>
+&lt;p>每个节点的数组都（几乎）是按键排序的。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/gerdPnT.png" alt="img">&lt;/p>
+&lt;p>实践中节点中键和值是分开存储的&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/qa9zakg.png" alt="img">&lt;/p>
+&lt;h4 id="插入">插入&lt;/h4>
+&lt;p>要在 B+树中插入一个新的条目，必须沿着树向下遍历，并使用内部节点来确定将值插入哪个叶子节点。&lt;/p>
+&lt;ul>
+&lt;li>找到正确的叶子 L。&lt;/li>
+&lt;li>按排序顺序将新条目添加到 L 中。
+&lt;ul>
+&lt;li>如果 L 有足够的空间，操作就完成了。&lt;/li>
+&lt;li>否则将 L 分成两个结点 L 和 L2。均匀地重新分配条目，并将中间的键复制上去。 将指向 L2 的索引条目插入 L 的父节点中。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>要分割一个内部节点，均匀地重新分配条目，但要把中间的键向上推。&lt;/li>
+&lt;/ul>
+&lt;p>&lt;a href="https://www.cs.usfca.edu/~galles/visualization/BPlusTree.html">可视化演示网址&lt;/a>&lt;/p>
+&lt;h4 id="删除">删除&lt;/h4>
+&lt;p>在插入过程中，当树变得太满时，我们偶尔不得不分割叶子，而如果删除导致树少于半满，我们必须进行合并，以重新平衡树。&lt;/p>
+&lt;ul>
+&lt;li>找到正确的叶子 L。&lt;/li>
+&lt;li>删除条目。
+&lt;ul>
+&lt;li>如果 L 至少有一半是满的，那么操作就完成了。&lt;/li>
+&lt;li>否则，你可以尝试重新分配，从兄弟姐妹那里借用。&lt;/li>
+&lt;li>如果重新分配失败，则合并 L 和同胞。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>如果合并发生了，你必须删除父类中指向 L 的条目。&lt;/li>
+&lt;/ul>
+&lt;p>&lt;a href="https://www.cs.usfca.edu/~galles/visualization/BPlusTree.html">可视化演示网址&lt;/a>&lt;/p>
+&lt;h4 id="条件选择">条件选择&lt;/h4>
+&lt;p>因为 B+Tree 是按排序的，查找时遍历速度很快，也不需要整个键。如果查询提供了搜索键的任何属性，DBMS 可以使用 B+Tree 索引。这与散列索引不同，散列索引需要搜索键中的所有属性。&lt;/p>
+&lt;h4 id="非唯一索引">非唯一索引&lt;/h4>
+&lt;p>像散列表一样，B+Trees 可以通过重复键或存储值列表来处理非唯一的索引。在重复键的方法中，使用相同的叶子节点布局，但重复的键被多次存储。 在值列表的方法中，每个键只存储一次，并保持一个唯一值的链接列表。&lt;/p>
+&lt;h4 id="重复键">重复键&lt;/h4>
+&lt;p>在 B+Tree 中，有两种方法来重复键。&lt;/p>
+&lt;p>第一种方法是将记录 ID 作为键的一部分来附加。由于每个元组的记录 ID 是唯一的，这将确保所有的键都是可识别的。DBMS 可以根据部分键来查找元组。&lt;/p>
+&lt;p>第二种方法是允许叶子节点溢出到包含重复键的溢出节点。 虽然没有多余的信息被存储，但这种方法的维护和修改更加复杂。&lt;/p>
+&lt;h4 id="聚簇索引">聚簇索引&lt;/h4>
+&lt;p>表按照主键指定的排序顺序存储，作为堆组织的或索引组织的存储。 由于一些 DBMS 总是使用聚簇索引，如果一个表没有明确的主键，它们会自动地将隐藏的行 ID 作为主键，但是其他的 DBMS 根本就不能使用它们。&lt;/p>
+&lt;h4 id="堆聚簇">堆聚簇&lt;/h4>
+&lt;p>元组在堆的页面中使用聚簇索引指定的顺序进行排序。如果聚类索引的属性被用来访问元组，DBMS 可以直接跳到这些页面。&lt;/p>
+&lt;h4 id="索引扫描页排序">索引扫描页排序&lt;/h4>
+&lt;p>由于直接从非聚簇索引中检索元组的效率很低，DBMS 可以首先找出它所需要的所有元组，然后根据它们的页面 id 进行排序。&lt;/p></description></item><item><title>CMU::15-445/645::Hash Tables 笔记</title><link>/oc/cmu_15_445_05_note/</link><pubDate>Wed, 04 Aug 2021 16:20:16 +0800</pubDate><guid>/oc/cmu_15_445_05_note/</guid><description>&lt;h2 id="散列表">散列表&lt;/h2>
+&lt;p>&lt;img src="https://i.imgur.com/4jDQyjR.png" alt="img">&lt;/p>
+&lt;h3 id="数据结构">数据结构&lt;/h3>
+&lt;p>DBMS 为系统内部的许多不同部分使用各种数据结构。一些例子包括。&lt;/p>
+&lt;ul>
+&lt;li>内部元数据。这是对数据库和系统状态信息进行跟踪的数据。&lt;/li>
+&lt;li>核心数据存储。数据结构被用来作为数据库中元组的基础存储。&lt;/li>
+&lt;li>临时数据结构。DBMS 可以在处理查询的过程中即时建立数据结构，以加快执行速度（例如，用于连接的哈希表）。&lt;/li>
+&lt;li>表索引。可以使用辅助数据结构来使其更容易找到特定的元组。&lt;/li>
+&lt;/ul>
+&lt;p>在实现 DBMS 的数据结构时，有两个主要的设计决定需要考虑。&lt;/p>
+&lt;ul>
+&lt;li>数据组织。我们需要弄清楚如何布局内存，以及在数据结构内存储哪些信息以支持有效的访问。&lt;/li>
+&lt;li>并发。我们还需要考虑如何使多个线程访问数据结构而不造成问题。&lt;/li>
+&lt;/ul>
+&lt;h3 id="散列表-hash-tables">散列表 Hash Tables&lt;/h3>
+&lt;p>哈希表实现了一个关联数组的抽象数据类型，它将键映射到值。它提供了平均 O(1) 的操作复杂度（最坏情况下为 O(n)）和 O(n)的存储复杂度。请注意，即使平均操作复杂度为 O(1)，也有一些常数系数的优化这在现实实践中需要考虑，这些很重要的。&lt;/p>
+&lt;h4 id="哈希函数">哈希函数&lt;/h4>
+&lt;p>这告诉我们如何将一个大的键空间映射到一个较小的领域。它被用来计算进入一个桶或槽阵列的索引。我们需要考虑快速执行和碰撞率之间的权衡。在一个极端，我们有一个总是返回一个常数的哈希函数（非常快，但一切都会发生碰撞）。在另一个极端，我们有一个&amp;quot;完美&amp;quot;的散列函数，其中没有碰撞，但需要极长的时间来计算。理想的设计是介于两者之间。&lt;/p>
+&lt;h4 id="散列方案">散列方案&lt;/h4>
+&lt;p>这告诉我们如何处理散列后的键值冲突。在这里，我们需要考虑分配一个大的哈希表以减少碰撞和在发生碰撞时必须执行额外的指令之间的权衡。&lt;/p>
+&lt;h3 id="散列函数">散列函数&lt;/h3>
+&lt;p>散列函数接受任何键作为其输入。然后它返回该键的整数表示（即&amp;quot;哈希&amp;quot;）。该函数的输出是确定的（即，相同的键值应该总是产生相同的哈希输出）。&lt;/p>
+&lt;p>DBMS 不需要使用加密安全的哈希函数（例如 SHA-256），因为我们不需要担心保护键值的内容。这些哈希函数主要由 DBMS 内部使用，因此信息不会被泄露。&lt;/p>
+&lt;p>一般来说，我们只关心哈希函数的速度和碰撞率。 目前最先进的哈希函数是 Facebook XXHash3。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/2nim4p4.png" alt="img">&lt;/p>
+&lt;h4 id="静态散列方案">静态散列方案&lt;/h4>
+&lt;p>静态散列方案是指散列表的大小是固定的。这意味着如果 DBMS 在哈希表中的存储空间用完了，那么它就必须从头开始重建一个更大的哈希表，这非常昂贵。通常，新的哈希表是原始哈希表的两倍。&lt;/p>
+&lt;p>为了减少浪费的比较次数，避免哈希键的碰撞很重要。通常情况下，我们使用两倍于预期元素数量的槽位。&lt;/p>
+&lt;p>以下假设在现实中通常是不成立的。&lt;/p>
+&lt;ul>
+&lt;li>元素的数量是提前知道的。&lt;/li>
+&lt;li>键值是唯一的。&lt;/li>
+&lt;li>存在一个完美的哈希函数。&lt;/li>
+&lt;/ul>
+&lt;p>因此，我们需要适当地选择散列函数和散列模式。&lt;/p>
+&lt;h4 id="线性探测散列">线性探测散列&lt;/h4>
+&lt;p>这是最基本的散列方案。它通常也是最快的。它使用一个数组槽的循环缓冲区。 散列函数将键映射到槽。当发生碰撞时，我们线性地搜索相邻的槽，直到找到一个开放的槽。对于查找，我们可以检查键的哈希值，然后线性搜索，直到找到所需的条目（或一个空槽，在这种情况下，键不在表中）。请注意，这意味着我们必须在槽中存储密钥，以便我们能够检查一个条目是否是所需的。删除是比较棘手的。我们必须小心翼翼地从槽中删除条目，因为这可能会阻止未来的查询找到被放在现在空槽下面的条目。这个问题有两个解决方案。&lt;/p>
+&lt;ul>
+&lt;li>最常见的方法是使用 &amp;ldquo;墓碑&amp;rdquo;。我们不删除这个条目，而是用一个 &amp;ldquo;墓碑 &amp;ldquo;条目取代它，告诉未来的查找要继续扫描。&lt;/li>
+&lt;li>另一种方法是在删除一个条目后移动相邻的数据以填补现在的空槽。然而，我们必须注意只移动最初被移位的条目。&lt;/li>
+&lt;/ul>
+&lt;p>非唯一键。在同一个键可能与多个不同的值或元组相关的情况下，有两种方法。&lt;/p>
+&lt;ul>
+&lt;li>单独的链表。我们不将数值与键一起存储，而是将一个指针指向一个单独的存储区域，该区域包含所有数值的链接列表。&lt;/li>
+&lt;li>冗余的键。更常见的方法是简单地在表中多次存储相同的键。即使我们这样做，所有具有线性探测功能的东西仍然可以工作。&lt;/li>
+&lt;/ul>
+&lt;h4 id="插入">插入&lt;/h4>
+&lt;p>有 A B C D E F 六个值和一个缓冲区&lt;/p>
+&lt;p>计算 A 的散列值，落在第三个槽&lt;/p>
+&lt;p>计算 B 的散列值，落在第一个槽&lt;/p>
+&lt;p>计算 C 的散列值，落在第 3 个槽，被占用，向下继续寻找找到第一个空闲的槽插入&lt;/p>
+&lt;p>计算 D 的散列值，落在第三个槽，已经被占用，向下寻找第四个槽，也被占用，继续向下找，找到空闲的，插入&lt;/p>
+&lt;p>E F 的散列冲突以此类推，如果，对应位置后面的槽都被占用，那么从头开始找，缓冲区是环形的。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/NZasO4X.gif" alt="img">&lt;/p>
+&lt;h4 id="删除">删除&lt;/h4>
+&lt;p>把第四个槽的数据删除后出现了一个空位&lt;/p>
+&lt;p>一个做法是把那个位置标记为“墓碑”，当后面的散列值对应到这个位置的时候，就会继续向后寻找。&lt;/p>
+&lt;p>另一个做法是，把删除位后面的数据往前移动一格。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/zMnGdSa.gif" alt="img">&lt;/p>
+&lt;h3 id="罗宾霍德散列">罗宾霍德散列&lt;/h3>
+&lt;p>这是线性探测散列的一个扩展，旨在减少每个键值在散列表中的最佳位置（即它们被散列到的原始槽）的最大距离。这种策略从 &amp;ldquo;富 &amp;ldquo;键中窃取槽位，并把它们给 &amp;ldquo;穷 &amp;ldquo;键。
+在这个变体中，每个条目也记录了它们与最佳位置的 &amp;ldquo;距离&amp;rdquo;。然后，在每次插入时，如果被插入的钥匙与它们在当前槽的最佳位置的距离比当前条目的距离更远，我们就替换当前条目，并继续尝试在表中更远的位置插入旧条目。&lt;/p>
+&lt;h4 id="插入-1">插入&lt;/h4>
+&lt;p>插入 A 在第三个槽&lt;/p>
+&lt;p>插入 B 在第一个槽&lt;/p>
+&lt;p>插入 C 到第三个槽，此时与 A 冲突，往后一个，记录最佳位置的距离为 1&lt;/p>
+&lt;p>插入 D 到第四个槽，与 C 冲突，比较两个的最佳距离都是 1，D 继续往后，插入，记录最佳距离为 1。&lt;/p>
+&lt;p>插入 E 到第三个槽，冲突，往后继续，到第五个槽，此时最佳位置 2，比 D 的最佳位置更大，E 插入到第五个槽，记录最佳位置 2，D 往后移动一个位置，记录最佳位置 2&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/H2CC5Ot.gif" alt="img">&lt;/p>
+&lt;h3 id="cuckoo-散列">Cuckoo 散列&lt;/h3>
+&lt;p>这种方法不是使用单一的哈希表，而是用不同的哈希函数维护多个哈希表。 这些哈希函数是相同的算法（例如，XXHash，CityHash）；它们通过使用不同的种子值为同一个键生成不同的哈希值。
 当我们插入时，我们检查每一个表，并选择一个有空闲槽的表（如果多个表都有空闲槽，我们可以比较诸如负载率之类的东西，或者更常见的，只是选择一个随机表）。如果没有表有空闲的槽，我们就选择（通常是随机的）并驱逐旧条目。然后，我们将旧的条目重新洗牌到一个不同的表中。在极少数情况下，我们可能会在一个循环中结束。如果发生这种情况，我们可以用新的哈希函数种子重建所有的哈希表（不太常见）或者用更大的表重建哈希表（更常见）。
-Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/chHAKD6.gif&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;动态散列方案&#34;&gt;动态散列方案&lt;/h3&gt;
-&lt;p&gt;静态散列方案要求 DBMS 知道它要存储的元素的数量。否则，如果需要增加/缩小表的大小，它就必须重建表。&lt;/p&gt;
-&lt;p&gt;动态散列方案能够根据需要调整散列表的大小，而不需要重建整个表。这些方案以不同的方式执行这种大小调整，可以最大限度地提高读取或写入。&lt;/p&gt;
-&lt;h3 id=&#34;链式散列&#34;&gt;链式散列&lt;/h3&gt;
-&lt;p&gt;这是最常见的动态散列方案。DBMS 为哈希表中的每个槽维护一个桶的链接列表。对同一槽位进行散列的键被简单地插入到该槽位的链表中。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/fE0Io5h.gif&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;可扩展散列&#34;&gt;可扩展散列&lt;/h3&gt;
-&lt;p&gt;链式散列的改进版本，它将桶拆分，而不是让链永远增长。这种方法允许哈希表中的多个槽位指向同一个桶链。&lt;/p&gt;
-&lt;p&gt;重新平衡哈希表的核心思想是在分割时移动桶的条目，并增加检查的位数来寻找哈希表中的条目。这意味着 DBMS 只需要在分割链的桶内移动数据，其他所有的桶都不需要动。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;DBMS 维护着一个全局和局部的深度位数，决定了在槽阵列中寻找桶所需的位数。&lt;/li&gt;
-&lt;li&gt;当一个 bucket 满了，DBMS 会分割 bucket 并重新排列其元素。如果分割后的水桶的本地深度小于全局深度，那么新的 bucket 就只是添加到现有的槽阵列中。否则，DBMS 将槽阵列的大小增加一倍以容纳新的槽，并增加全局深度计数器。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/d8ajBM0.gif&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;线性散列&#34;&gt;线性散列&lt;/h3&gt;
-&lt;p&gt;当一个桶溢出时，这个方案并不立即分割，而是保持一个分割指针，跟踪下一个要分割的桶。无论这个指针是否指向一个溢出的桶，DBMS 都会进行分割。溢出的标准是由实现者决定的。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;当任何一个桶溢出时，通过添加一个新的槽项来分割指针位置的桶，并创建一个新的哈希函数。&lt;/li&gt;
-&lt;li&gt;如果哈希函数映射到以前被指针指向的槽，则应用新的哈希函数。&lt;/li&gt;
-&lt;li&gt;当指针到达最后一个槽时，删除原来的哈希函数，用新的哈希函数替换它。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;查找 6，hash1 计算结果是 2，对应找到 2 指向的阵列&lt;/p&gt;
-&lt;p&gt;插入 17，hash1 计算结果是 1，插入到 1 指向的阵列，此时，1 的阵列满了，所以 17 通过溢出的方式跟在后面，并看是否需要分裂指针指向的阵列&lt;/p&gt;
-&lt;p&gt;对于被分类的阵列，在哈希表的键值部分生成一个 n+1 的键值，然后把这个陈列的值用 hash2 重新分布&lt;/p&gt;
-&lt;p&gt;当我们要查找 20 的时候，首先用 hash1 计算出结果，发现落到了 0，0 此时在指针指向的分割线上面，所以要应用 hash2，再次查找，当指针遍历完第一轮之后，删除 hash1 函数&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/1aLp0Dw.gif&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>CMU::15-445/645::Buffer Pools 笔记</title>
-      <link>/oc/cmu_15_445_04_note/</link>
-      <pubDate>Tue, 03 Aug 2021 23:17:58 +0800</pubDate>
-      <guid>/oc/cmu_15_445_04_note/</guid>
-      <description>&lt;h2 id=&#34;缓冲池和内存管理&#34;&gt;缓冲池和内存管理&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/whxG5l3.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
-&lt;p&gt;DBMS 负责管理其内存并从磁盘上来回移动数据。由于在大多数情况下，数据不能直接在磁盘上操作，任何数据库都必须能够有效地将其磁盘上以文件形式表示的数据移动到内存中，以便能够使用。DBMS 面临的一个障碍是尽量减少移动数据的速度问题。理想情况下，数据应该&amp;quot;看起来&amp;quot;是已经在内存中了。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/DZFIdeg.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;p&gt;从空间控制和时间控制的角度来思考这个问题。&lt;/p&gt;
-&lt;p&gt;空间控制是指页面在磁盘上的物理写入位置，目标是使经常一起使用的页面在磁盘上尽可能地保持物理上的接近。&lt;/p&gt;
-&lt;p&gt;时间控制是指何时将页面读入内存，何时将其写入磁盘，目的是尽量减少从磁盘上读取数据的停顿次数。&lt;/p&gt;
-&lt;h3 id=&#34;locks-vs-latches&#34;&gt;Locks vs. Latches&lt;/h3&gt;
-&lt;p&gt;Locks: Locks 是一个更高层次的逻辑元语，它保护数据库的内容（如元组、表、数据库）不受其他事务的影响。事务将在整个持续时间内持有一个 Locks。数据库系统可以在运行查询时向用户披露哪些 Locks 正在被持有。Locks 需要能够回滚。概念上接近于操作系统中的 Latches。&lt;/p&gt;
-&lt;p&gt;Latches: Latches 是一种底层的保护元语，DBMS 将其用于内部数据结构的关键部分（例如，哈希表，内存区域）。Latches 只在所进行的操作的时间内保持。Latches 不需要支持回滚。概念上接近与操作系统的 Mutex。&lt;/p&gt;
-&lt;h3 id=&#34;缓冲池&#34;&gt;缓冲池&lt;/h3&gt;
-&lt;p&gt;缓冲池是一个从磁盘上读取页面的内存缓存。它本质上是在数据库内部分配的一个大的内存区域，用来存储从磁盘获取的页面。&lt;/p&gt;
-&lt;p&gt;缓冲池的内存区域被组织成一个固定大小的页面阵列。每个数组条目被称为一个帧。当 DBMS 请求一个页面时，一个精确的副本被放置到缓冲池的一个帧中。然后，当一个页面被请求时，数据库系统可以首先搜索缓冲池。如果没有找到该页，那么系统就会从磁盘上获取该页的副本。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/pxyMuES.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;缓冲池元数据&#34;&gt;缓冲池元数据&lt;/h4&gt;
-&lt;p&gt;缓冲池必须维护某些元数据，以便有效和正确地使用。首先，页表是一个内存中的哈希表，用于跟踪当前内存中的页面。它将页面 ID 映射到缓冲池中的帧位置。由于缓冲池中的页面顺序不一定反映磁盘上的顺序，这个额外的中介层允许识别缓冲池中的页面位置。请注意，页面表不能与页面目录混淆，后者是从页面 ID 到数据库文件中的页面位置的映射。&lt;/p&gt;
-&lt;p&gt;页面表还维护着每个页面的额外元数据，一个脏页标志和一个固定/引用计数器。&lt;/p&gt;
-&lt;p&gt;每当一个线程修改一个页面时，就会设置脏页标记。这表明存储管理程序必须将该页写回磁盘。&lt;/p&gt;
-&lt;p&gt;固定/引用计数器跟踪当前访问该页的线程数量（无论是读取还是修改）。一个线程在访问该页之前必须递增该计数器。如果一个页面的计数大于零，那么存储管理器就不允许将该页面从内存中替换出去。&lt;/p&gt;
-&lt;h4 id=&#34;内存分配策略&#34;&gt;内存分配策略&lt;/h4&gt;
-&lt;p&gt;数据库中的内存是根据两个策略分配给缓冲池的。&lt;/p&gt;
-&lt;p&gt;全局策略处理 DBMS 应该做出的决定，以有利于正在执行的整个工作负载。 它考虑所有活动的事务，以找到分配内存的最佳决策。&lt;/p&gt;
-&lt;p&gt;另一个选择是局部策略，它做出的决定将使单个查询或事务运行得更快，即使它对整个工作负载不利。对整个工作负载有利。局部策略将帧分配给特定的事务，而不考虑并发事务的行为。并发事务的行为。但是需要考虑共享页面。&lt;/p&gt;
-&lt;p&gt;大多数系统使用全局策略和局部策略的组合。&lt;/p&gt;
-&lt;h3 id=&#34;缓冲池优化&#34;&gt;缓冲池优化&lt;/h3&gt;
-&lt;h4 id=&#34;多个缓冲池&#34;&gt;多个缓冲池&lt;/h4&gt;
-&lt;p&gt;DBMS 可以为不同的目的维护多个缓冲池（即每个数据库缓冲池、每个页面类型的缓冲池）。然后，每个缓冲池可以采用为其内部存储的数据定制的本地策略。这种方法可以帮助减少锁的竞争，并提高定位性。&lt;/p&gt;
-&lt;p&gt;将所需页面映射到缓冲池的两种方法是对象 ID 和散列。&lt;/p&gt;
-&lt;p&gt;对象 ID 涉及到扩展记录 ID，以包括关于每个缓冲池管理的数据库对象的元数据。然后通过对象标识符，可以维护对象到特定缓冲池的映射。&lt;/p&gt;
-&lt;p&gt;另一种方法是散列，DBMS 对页面 ID 进行散列，以选择访问哪个缓冲池。&lt;/p&gt;
-&lt;h4 id=&#34;预取&#34;&gt;预取&lt;/h4&gt;
-&lt;p&gt;DBMS 也可以通过基于查询计划的预取页面来进行优化。然后，当第一组页面被处理时，第二组可以被预取到缓冲池中。这种方法是 DBMS 在连续访问许多页面时常用的。&lt;/p&gt;
-&lt;h4 id=&#34;扫描共享&#34;&gt;扫描共享&lt;/h4&gt;
-&lt;p&gt;查询游标可以重复使用从存储或操作计算中获取的数据。这允许多个查询附加到一个扫描表的游标上。如果一个查询开始扫描，如果已经有一个在做这个，那么 DBMS 会跟踪第二个查询与第一个查询的连接位置，这样它就可以在到达数据结构的末端时完成扫描。第二个查询还可以复用第一个查询的结果或者中间结果。&lt;/p&gt;
-&lt;h4 id=&#34;缓冲池旁路&#34;&gt;缓冲池旁路&lt;/h4&gt;
-&lt;p&gt;顺序扫描操作不将获取的页面存储在缓冲池中来避免开销。如果操作需要读取磁盘上连续的大序列页面，这就很好用，在后面不需要用到这些原始数据，可以在内存中计算完成后就可以丢掉。缓冲池旁路也可用于临时数据（排序、连接）。&lt;/p&gt;
-&lt;h3 id=&#34;操作系统页面缓存&#34;&gt;操作系统页面缓存&lt;/h3&gt;
-&lt;p&gt;大多数磁盘操作是通过操作系统的 API 进行的。除非被明确告知，操作系统会维护自己的文件系统缓存。&lt;/p&gt;
-&lt;p&gt;大多数 DBMS 使用 direct I/O 来绕过操作系统的缓存，以避免页面的冗余拷贝和不得不管理不同的驱逐策略。&lt;/p&gt;
-&lt;h3 id=&#34;缓冲替换策略&#34;&gt;缓冲替换策略&lt;/h3&gt;
-&lt;p&gt;当 DBMS 需要释放一个帧来为一个新的页面腾出空间时，它必须决定从缓冲池中驱逐哪个页面。&lt;/p&gt;
-&lt;p&gt;替换策略是 DBMS 实现的一种当它需要空间时决定从缓冲池中驱逐哪些页面的算法。&lt;/p&gt;
-&lt;p&gt;替换策略的实现目标是提高正确性、准确性、速度和元数据的开销。&lt;/p&gt;
-&lt;h4 id=&#34;最近使用最少lru&#34;&gt;最近使用最少（LRU）&lt;/h4&gt;
-&lt;p&gt;最近最少使用的替换策略保留了每个页面最后被访问的时间戳。这个时间戳可以存储在一个单独的数据结构中，比如一个队列，以便进行排序和提高效率。该 DBMS 会选择驱逐具有最古老时间戳的页面。此外，页面被保存在排序的顺序中，以减少排序驱逐的时间。&lt;/p&gt;
-&lt;h4 id=&#34;时钟算法&#34;&gt;时钟算法&lt;/h4&gt;
-&lt;p&gt;CLOCK 策略是 LRU 的一个近似值，不需要每页有单独的时间戳。在 CLOCK 策略中，每个页面被赋予一个引用位。当一个页面被访问时，设置为 1。&lt;/p&gt;
-&lt;p&gt;为了直观地了解这一点，可以将页面组织在一个带有&amp;quot;时钟指针&amp;quot;的圆形缓冲区中。当扫到一个页面，参考位如果是 1，则设置为 0，如果不是，则驱逐它。通过这种方式，时钟指针通过驱逐操作记住了位置。&lt;/p&gt;
-&lt;p&gt;然而，LRU 和 CLOCK 很容易受到顺序泛滥的影响，即缓冲池的内容由于顺序扫描而被破坏。由于顺序扫描会读取每一页，所以读取的页面的时间戳可能并不反映我们真正想要的页面。换句话说，最近使用的页面实际上可能是最不需要的页面。&lt;/p&gt;
-&lt;p&gt;有三种解决方案可以解决 LRU 和 CLOCK 策略的缺点。&lt;/p&gt;
-&lt;p&gt;一种解决方案是 LRU-K，它以时间戳的形式跟踪最后 K 个引用的历史，并计算出后续访问的间隔时间。这个历史记录被用来预测一个页面下次被访问的时间。&lt;/p&gt;
-&lt;p&gt;另一个优化是局部化每个查询。通过持续跟踪被查询读取过的页面，DBMS 在每个事务/查询的基础上选择哪些页面要被驱逐。这使得每次查询对缓冲池的污染最小化。&lt;/p&gt;
-&lt;p&gt;最后，优先级提示允许事务在查询执行过程中根据每个页面的上下文告诉缓冲池页面是否重要。&lt;/p&gt;
-&lt;h3 id=&#34;脏页&#34;&gt;脏页&lt;/h3&gt;
-&lt;p&gt;有两种方法来处理有脏位的页面。最快的方法是丢弃缓冲池中任何不脏的页面。一个较慢的方法是将脏页写回磁盘，以确保其变化被持久化。&lt;/p&gt;
-&lt;p&gt;这两种方法说明了快速驱逐与脏写页之间的权衡，脏写页在未来不会被再次读取。&lt;/p&gt;
-&lt;p&gt;避免不必要地写页面的问题的一种方法是后台写入。通过后台写入，DBMS 可以周期性地走过页表并将脏页写入磁盘。当一个脏页被安全地写入时，DBMS 可以驱逐该页或者直接取消脏页标志。&lt;/p&gt;
-&lt;h3 id=&#34;其他内存池&#34;&gt;其他内存池&lt;/h3&gt;
-&lt;p&gt;DBMS 需要内存来处理元组和索引以外的事情。这些其他的内存池可能并不总是由磁盘支持，这取决于实现。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Sorting + Join Buffers&lt;/li&gt;
-&lt;li&gt;Query Caches&lt;/li&gt;
-&lt;li&gt;Maintenance Buffers&lt;/li&gt;
-&lt;li&gt;Log Buffers&lt;/li&gt;
-&lt;li&gt;Dictionary Caches&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>CMU::15-445/645::Database Storage 笔记</title>
-      <link>/oc/cmu_15_445_03_note/</link>
-      <pubDate>Mon, 02 Aug 2021 09:07:42 +0800</pubDate>
-      <guid>/oc/cmu_15_445_03_note/</guid>
-      <description>&lt;h2 id=&#34;数据库存储第一部分&#34;&gt;数据库存储第一部分&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/qhTvXK1.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;存储&#34;&gt;存储&lt;/h3&gt;
-&lt;p&gt;我们将关注一个 &amp;ldquo;面向磁盘 &amp;ldquo;的 DBMS 架构，它假定数据库的主要存储位置是在非易失性磁盘上。&lt;/p&gt;
-&lt;p&gt;数据库的主要存储位置是在非易失性磁盘上。&lt;/p&gt;
-&lt;p&gt;在存储层次结构的顶端，最接近 CPU 的位置，这是最快的但它也是容量小和最昂贵的存储。离 CPU 越远，存储设备的容量就越大。设备有更大的容量，但速度更慢，离 CPU 更远。这些设备每 GB 的价格也越来越便宜。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/S473W6q.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;易失性设备。
-&lt;ul&gt;
-&lt;li&gt;易失性意味着如果你从机器上拔掉电源，那么数据就会丢失。&lt;/li&gt;
-&lt;li&gt;易失性存储支持快速的随机访问，具有字节寻址的位置。这意味着程序可以跳转到任何字节地址，并获得其中的数据。&lt;/li&gt;
-&lt;li&gt;为了我们的目的，我们将始终把这种存储类别称为 &amp;ldquo;存储器&amp;rdquo;。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;非易失性设备。
-&lt;ul&gt;
-&lt;li&gt;非易失性意味着存储设备不需要持续供电，以便以保留它所存储的比特。&lt;/li&gt;
-&lt;li&gt;它也是块/页可寻址的。这意味着，为了读取一个特定偏移量的数值，程序首先要加载 4KB 的页面加载到内存中，以提供程序想要读取的值。&lt;/li&gt;
-&lt;li&gt;非易失性存储在传统上更擅长顺序访问（同时读取多块数据）。&lt;/li&gt;
-&lt;li&gt;我们将把它称为 &amp;ldquo;磁盘&amp;rdquo;。我们将不对固态硬盘或机械硬盘进行区分。
-(SSD)或旋转式硬盘(HDD)。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;还有一类新的存储设备即将问世，称为非易失存储器，定位介于 DRAM 于 SSD 之间。它几乎和 DRAM 一样快，但具有磁盘的持久性。(英特尔傲腾)&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;对非易失性存储的随机访问通常比顺序访问要慢得多。
-&lt;ul&gt;
-&lt;li&gt;算法试图减少对随机页的写入次数，以便将数据存储在连续的块中。&lt;/li&gt;
-&lt;li&gt;程序在再一次调用中分配多个页面。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;由于系统假设数据库存储在磁盘上，DBMS 的组件负责找出如何在非易失性磁盘和易失性存储器之间来回移动数据。DBMS 的组件负责找出如何在非易失性磁盘和易失性存储器之间来回移动数据，因为系统不能直接对磁盘上的数据进行操作。&lt;/p&gt;
-&lt;p&gt;数据库存储在磁盘上，系统不能直接在磁盘上操作数据，DBMS 的组件负责找出如何在非易失性磁盘和易失性存储器之间来回移动数据。&lt;/p&gt;
-&lt;p&gt;我们将专注于如何隐藏磁盘的延迟，而不是专注于用寄存器和缓存进行优化，因为从磁盘获取数据的速度非常慢。如果从 L1 缓存引用中读取数据需要半秒，那么从 SSD 中读取数据需要 1.7 天，从 HDD 中读取需要 16.5 周。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/v63l8oN.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;面向磁盘的-dbms-总览&#34;&gt;面向磁盘的 DBMS 总览&lt;/h3&gt;
-&lt;p&gt;数据库都在磁盘上，数据库文件中的数据被组织成页，第一页是目录页。为了对数据进行操作，DBMS 需要将数据带入内存。它通过拥有一个缓冲池来管理磁盘和内存之间的来回移动。DBMS 也有一个执行引擎，可以执行查询。执行引擎将要求缓冲池提供一个特定的页面，而缓冲池将负责把该页面带入内存，并给执行引擎一个指向内存中该页面的指针。缓冲池管理器将确保在执行引擎对该内存进行操作时，该页是存在的。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/3MilQUm.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;dbms-对比-os&#34;&gt;DBMS 对比 OS&lt;/h3&gt;
-&lt;p&gt;DBMS 的一个高层次设计目标是支持超过可用内存量的数据库。由于对磁盘的读/写是昂贵的，所以必须小心管理。我们不希望在从磁盘上获取东西时出现大的停顿，从而拖慢其他一切。因此，我们希望 DBMS 能够在等待从磁盘获取数据时处理其他查询。它就像虚拟内存一样，有一个大的地址空间和一个供操作系统从磁盘引入页面的地方。&lt;/p&gt;
-&lt;p&gt;实现这种虚拟内存的一种方法是使用 mmap 来映射进程地址空间中的文件内容，这使得操作系统能够在磁盘和内存之间来回移动页面。
-不幸的是，这意味着如果 mmap 遇到了页面故障，将阻塞进程。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;如果你需要写东西，你永远不想在你的 DBMS 中使用 &lt;code&gt;mmap&lt;/code&gt;。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;DBMS（几乎）总是想自己控制事情，而且可以做得更好，因为它知道更多关于被访问的数据和被处理的查询。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;以正确的顺序将脏页刷入磁盘。&lt;/li&gt;
-&lt;li&gt;专门的预取。&lt;/li&gt;
-&lt;li&gt;更有效的缓冲区替换策略。&lt;/li&gt;
-&lt;li&gt;线程/进程调度&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;操作系统不是你的朋友。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;通过操作系统控制内存也是可能的。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;madvise&lt;/code&gt;。通知操作系统知道你打算什么时候阅读某些页面。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;mlock&lt;/code&gt;: 通知操作系统不要把内存的范围内的数据交换到磁盘上。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;msync&lt;/code&gt;: 通知操作系统将内存范围内的数据刷到磁盘上。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;出于正确性和性能的考虑，我们不建议在 DBMS 中使用 mmap。即使系统会有一些看起来像操作系统可以提供的功能，但让 DBMS 自己实现这些程序会使它有更好的控制能力和性能。&lt;/p&gt;
-&lt;h3 id=&#34;文件存储&#34;&gt;文件存储&lt;/h3&gt;
-&lt;p&gt;在其最基本的形式中，DBMS 将数据库存储为磁盘上的文件。有些可能使用一个文件层次结构，有些则可能使用单个文件（例如，SQLite）。&lt;/p&gt;
-&lt;p&gt;操作系统对这些文件的内容一无所知。只有 DBMS 知道如何解码它们的内容，因为它是以 DBMS 特有的方式编码的。&lt;/p&gt;
-&lt;p&gt;DBMS 的存储管理器负责管理数据库的文件。它将这些文件表示为一个页的集合。它还跟踪哪些数据被读和写到了页面上，以及页面上有多少可用空间。以及页面中还有多少可用空间。&lt;/p&gt;
-&lt;h3 id=&#34;数据库页&#34;&gt;数据库页&lt;/h3&gt;
-&lt;p&gt;DBMS 将数据库组织在一个或多个文件中的固定大小的数据块，称为页。页面可以包含不同种类的数据（元组、索引、日志等）。大多数系统不会在页中混合这些类型。有些系统会要求它是自包含的，也就是说，读取每个页面所需的所有信息都在页面本身。虽然定义和数据分离可以减少体积，如果缺失了一部分定义数据，会导致数据失去意义，并且恢复难度比较大。&lt;/p&gt;
-&lt;p&gt;每个页面都有一个唯一的标识符。如果数据库是一个单一的文件，那么页面标识可以只是文件的偏移量。大多数数据库管理系统有一个中介层，将页面 ID 映射到文件路径和偏移量。系统的上层会要求一个特定的页号，然后存储管理程序必须把这个页号变成一个文件和一个偏移量来找到这个页。&lt;/p&gt;
-&lt;p&gt;大多数 DBMS 使用固定大小的页面来避免支持可变大小页面所需的工程开销。例如，在可变大小的页面中，删除一个页面可能会在文件中产生一个洞，而 DBMS 不能轻易用新的页面来填补。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;在 DBMS 中，有三种不同的 &amp;ldquo;页 &amp;ldquo;概念。
-&lt;ul&gt;
-&lt;li&gt;硬件页 (通常 4 KB).&lt;/li&gt;
-&lt;li&gt;操作系统 (通常 4 KB).&lt;/li&gt;
-&lt;li&gt;数据库页 (512B - 16 KB)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;存储设备保证对硬件页的大小进行原子写入。如果硬件页是 4KB，那么当系统试图将 4KB 写入磁盘时，要么所有的 4KB 都被写入，要么都不写入。这意味着，如果我们的数据库页大于硬件页，DBMS 将不得不采取额外的措施来确保数据被安全地写出来，因为程序可能在将数据库页的一部分写到磁盘的过程中崩溃。&lt;/p&gt;
-&lt;h3 id=&#34;数据库堆文件&#34;&gt;数据库堆文件&lt;/h3&gt;
-&lt;p&gt;有几种方法可以找到 DBMS 想要的页面在磁盘上的位置，而堆文件组织就是其中一种方法。&lt;/p&gt;
-&lt;p&gt;堆文件是一个无序的页面集合，其中的元组是以随机顺序存储的。&lt;/p&gt;
-&lt;p&gt;DBMS 可以通过使用页面的链接列表或页面目录来找到磁盘上给定的页面 ID。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/eB4bj1N.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;p&gt;两种方式可以表示数据库堆文件&lt;/p&gt;
-&lt;h4 id=&#34;文件目录&#34;&gt;文件目录&lt;/h4&gt;
-&lt;p&gt;DBMS 维护特殊页面，上面记录跟踪数据页面的位置以及每个页面上的空闲空间数量&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/AIpKCZg.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;链表&#34;&gt;链表&lt;/h4&gt;
-&lt;p&gt;头页持有指向空闲页列表和数据页列表的指针。然而，如果 DBMS 正在寻找一个特定的页面，它必须对数据页列表进行顺序遍历，直到找到它要寻找的页面。链表同样支持反向遍历。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/NgjaAPh.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;页布局&#34;&gt;页布局&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;每个页面都包括一个页头，记录了关于页面内容的元数据。
-&lt;ul&gt;
-&lt;li&gt;页面大小。&lt;/li&gt;
-&lt;li&gt;校验和。&lt;/li&gt;
-&lt;li&gt;DBMS 版本。&lt;/li&gt;
-&lt;li&gt;事务的可见性。&lt;/li&gt;
-&lt;li&gt;压缩信息&lt;/li&gt;
-&lt;li&gt;一些系统要求页面是字包含的（如 oracle）。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/vt7VkcX.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;p&gt;存放数据的一个原始方法是跟踪 DBMS 在一个页面中存储了多少个元组，然后每次增加一个新的元组时，它就把元组附加到最后。然而，当它删除一个元组或元组有可变长度的属性时，问题就出现了。&lt;/p&gt;
-&lt;h4 id=&#34;元组式页面&#34;&gt;元组式页面&lt;/h4&gt;
-&lt;p&gt;先看以下按照元组方式组织的页面，当三条数据按照顺序存放在页面中&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/3ihvtT4.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;p&gt;删除一条数据会发生什么？&lt;/p&gt;
-&lt;p&gt;对应位置的记录被删除，留下一个空白，同步文件头中关于元组数量的记录&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/pnSzxC9.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;p&gt;继续存入一条数据会发生什么？&lt;/p&gt;
-&lt;p&gt;如果数据是定长的，那么它可以存入刚刚被删除的位置或者页面中的空白位置，如果是变长的数据，它需要向后扫描直到找到满足要求的位置。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/KclWvZQ.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;p&gt;有两种主要的方法来布置页面中的数据。&lt;/p&gt;
-&lt;h4 id=&#34;插槽式页面&#34;&gt;插槽式页面&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;目前 DBMS 中使用的最常见的方法。&lt;/li&gt;
-&lt;li&gt;头部跟踪已使用的槽的数量和最后使用的槽的起始位置的偏移量，以及一个槽数组，它跟踪每个元组的起始位置。&lt;/li&gt;
-&lt;li&gt;要增加一个元组，槽数组将从头到尾增长，元组的数据将从尾到头增长。当槽阵列和元组数据相遇。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/5I6XPw6.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;日志式结构&#34;&gt;日志式结构&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;DBMS 不存储元组，而只存储日志记录。&lt;/li&gt;
-&lt;li&gt;将数据库如何被修改（插入、更新、删除）的记录存入文件。&lt;/li&gt;
-&lt;li&gt;要读取一条记录，DBMS 会逆向扫描日志文件并&amp;quot;重新创建&amp;quot;元组。&lt;/li&gt;
-&lt;li&gt;写的快，读的可能慢。&lt;/li&gt;
-&lt;li&gt;在仅有追加写入的存储上工作得很好，因为 DBMS 不能往回更新数据。&lt;/li&gt;
-&lt;li&gt;为了避免长时间的读取，DBMS 可以有索引，允许它跳到日志中的特定位置。它还可以定期压缩日志，压缩的问题是 DBMS 最终会出现写入放大（它一次又一次地重写相同的数据）。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;日志压缩&#34;&gt;日志压缩&lt;/h4&gt;
-&lt;p&gt;通过删除不必要的记录，压缩将较大的日志文件凝聚成较小的文件。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/1lGJXAs.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;元组布局&#34;&gt;元组布局&lt;/h3&gt;
-&lt;p&gt;元组本质上是一个字节序列。DBMS 的工作是将这些字节解释为属性类型和值。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;元组标头。包含关于元组的元数据。
-&lt;ul&gt;
-&lt;li&gt;DBMS 的并发控制协议的可见性信息&lt;/li&gt;
-&lt;li&gt;NULL 值的位图。&lt;/li&gt;
-&lt;li&gt;注意，DBMS 不需要在这里存储关于数据库模式的元数据。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;元组数据。属性的实际数据。
-&lt;ul&gt;
-&lt;li&gt;属性通常按照你创建表时指定的顺序存储。&lt;/li&gt;
-&lt;li&gt;大多数 DBMS 不允许一个元组超过一个页面的大小。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;唯一标识符。
-&lt;ul&gt;
-&lt;li&gt;数据库中的每个元组都被分配一个唯一的标识符。&lt;/li&gt;
-&lt;li&gt;最常见的是：页面 ID +（偏移量或槽）。&lt;/li&gt;
-&lt;li&gt;一个应用程序不能依赖这些 ID 来表示任何东西。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/yMtXbAt.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;非规格化数据&#34;&gt;非规格化数据&lt;/h3&gt;
-&lt;p&gt;如果两个表是相关的，DBMS 可以&amp;quot;预连接&amp;quot;它们，所以这些表最终会在同一个页面上。这使得读取速度加快，因为 DBMS 只需要加载一个页面，而不是两个独立的页面。然而，这使得更新更加昂贵，因为 DBMS 需要更多的空间给每个元组。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/2WJMghW.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;总结&#34;&gt;总结&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;数据库是以页为单位组织的。&lt;/li&gt;
-&lt;li&gt;跟踪页面有不同方式。&lt;/li&gt;
-&lt;li&gt;存储页面有不同方式。&lt;/li&gt;
-&lt;li&gt;存储元组有不同方式&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;数据库存储第二部分&#34;&gt;数据库存储第二部分&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/anyphM7.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;数据表示&#34;&gt;数据表示&lt;/h3&gt;
-&lt;p&gt;元组中的数据本质上只是字节数组。DBMS 要知道如何解释这些字节以得出属性的值。数据表示方案是 DBMS 如何为一个值存储字节。&lt;/p&gt;
-&lt;p&gt;有五大类数据类型可以存储在元组中：整数、浮点数、定点精度数、可变长度值和日期/时间。&lt;/p&gt;
-&lt;h4 id=&#34;整数&#34;&gt;整数&lt;/h4&gt;
-&lt;p&gt;大多数 DBMS 使用 IEEE-754 标准规定的本地 C/C++ 类型来存储整数。这些值是固定长度的。&lt;/p&gt;
-&lt;p&gt;例如。INTEGER, BIGINT, SMALLINT, TINYINT.&lt;/p&gt;
-&lt;h4 id=&#34;可变精度数字&#34;&gt;可变精度数字&lt;/h4&gt;
-&lt;p&gt;这些是不精确的、可变精度的数字类型，使用 IEEE-754 标准规定的 C/C++ 类型。这些值也是固定长度的。&lt;/p&gt;
-&lt;p&gt;对可变精度数字的操作比任意精度数字的计算更快，因为 CPU 可以直接对它们执行指令。然而，由于有些数字不能精确表示，在进行计算时可能会出现四舍五入的错误。&lt;/p&gt;
-&lt;p&gt;举例来说。FLOAT，REAL。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/3pzeQZv.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;固定点精度数&#34;&gt;固定点精度数&lt;/h4&gt;
-&lt;p&gt;这些是具有任意精度和比例的数字数据类型。它们通常以精确的、可变长度的二进制表示法（几乎像一个字符串）来存储，带有额外的元数据，这些元数据会告诉系统一些事情，如数据的长度和小数点应该在哪里。&lt;/p&gt;
-&lt;p&gt;当四舍五入的误差不可接受时，就会使用这些数据类型，但是 DBMS 为了获得这种准确性而付出了一定的性能代价。来获得这种准确性。&lt;/p&gt;
-&lt;p&gt;例子: NUMERIC, DECIMAL.&lt;/p&gt;
-&lt;h5 id=&#34;pg-中的数字表示&#34;&gt;PG 中的数字表示&lt;/h5&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/fyKLmOu.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h5 id=&#34;mysql-中的数字表示&#34;&gt;MySQL 中的数字表示&lt;/h5&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/FFg3nxV.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;可变长度的数据&#34;&gt;可变长度的数据&lt;/h4&gt;
-&lt;p&gt;这些数据代表任意长度的数据类型。它们通常是用一个头来存储的，这个头可以追踪到追踪字符串的长度，以便于跳转到下一个值。它还可能包含一个数据的校验和。&lt;/p&gt;
-&lt;p&gt;大多数 DBMS 不允许一个元组超过单页的大小。那些允许的系统将数据存储在一个特殊的 Overflow Page，并让元组包含对该页的引用。这些溢出页可以这些 Overflow Page 可以包含指向其他 Overflow Page 的指针，直到所有的数据都能被存储。&lt;/p&gt;
-&lt;p&gt;有些系统会让你把这些大的数值存储在一个外部文件中，然后元组会包含一个指向该文件的指针。例如，如果数据库存储的是照片信息，DBMS 可以将照片存储在外部文件中，而不是让它们在 DBMS 中占用大量的空间。这样做的一个缺点是，DBMS 不能对这个文件的内容进行操作。因此，没有持久化或事务保护。&lt;/p&gt;
-&lt;p&gt;例子: VARCHAR, VARBINARY, TEXT, BLOB.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/zDOU8Gy.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;日期和时间&#34;&gt;日期和时间&lt;/h4&gt;
-&lt;p&gt;不同的系统对日期/时间的表示方法各不相同。通常情况下，它们被表示为从 unix 纪元开始的一些单位时间微秒或毫秒。&lt;/p&gt;
-&lt;p&gt;例子。TIME、DATE、TIMESTAMP。&lt;/p&gt;
-&lt;h4 id=&#34;系统目录&#34;&gt;系统目录&lt;/h4&gt;
-&lt;p&gt;为了使 DBMS 能够解码元组的内容，它维护了一个内部目录来告诉它关于数据库的元数据。元数据将包含关于数据库有哪些表和列的信息，以及它们的类型和值的顺序。大多数 DBMS 以它们用于表的格式在自己内部存储目录。他们使用特殊的代码来访问这些目录表。DBMS 没有标准的方式来检索这些信息。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/weMyy99.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;工作负载&#34;&gt;工作负载&lt;/h3&gt;
-&lt;p&gt;数据库系统有许多不同的工作负载。我们所说的工作负载，是指一个系统要处理的请求的一般性质。本课程将重点讨论两种类型。在线事务处理和在线分析处理。&lt;/p&gt;
-&lt;h4 id=&#34;oltp在线事务处理&#34;&gt;OLTP：在线事务处理&lt;/h4&gt;
-&lt;p&gt;快速操作，每次只读取/更新少量的的快速操作，每次只读/更新少量的数据。&lt;/p&gt;
-&lt;h4 id=&#34;olap在线分析处理&#34;&gt;OLAP：在线分析处理&lt;/h4&gt;
-&lt;p&gt;读取大量数据的复杂查询，以计算聚合结果。&lt;/p&gt;
-&lt;h4 id=&#34;htap混合事务分析处理&#34;&gt;HTAP：混合事务/分析处理&lt;/h4&gt;
-&lt;p&gt;在同一个数据库中同时进行 OLTP 和 OLAP。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/zzz4jgR.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;存储模型&#34;&gt;存储模型&lt;/h3&gt;
-&lt;p&gt;DBMS 可以用不同的方式存储元组，这些方式更适合 OLTP 或 OLAP 工作负载。&lt;/p&gt;
-&lt;h4 id=&#34;n-ary-存储模型nsm&#34;&gt;N-Ary 存储模型（NSM）&lt;/h4&gt;
-&lt;p&gt;在 n-ary 存储模型中，DBMS 将一个元组的所有属性连续地存储在一个单一的页，所以 NSM 也被称为 &amp;ldquo;行存储&amp;rdquo;。这种方法是 OLTP 工作负载的理想选择，在这种工作负载中，要求这种方法是 OLTP 工作负载的理想选择，在这种工作负载中，请求是大量插入的，并且事务往往只操作一个单独的实体。它是理想的，因为它只可以一次性获取一个元组的所有属性。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;优点。
-&lt;ul&gt;
-&lt;li&gt;快速插入、更新和删除。&lt;/li&gt;
-&lt;li&gt;适合于需要单个元组的查询。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;缺点。
-&lt;ul&gt;
-&lt;li&gt;不利于扫描表的大部分和/或属性的一个子集，这是因为它查询出来的不需要处理的数据污染了缓冲池。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/z5zRhf6.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;分解存储模型&#34;&gt;分解存储模型&lt;/h4&gt;
-&lt;p&gt;在分解存储模型中，DBMS 为所有元组连续地存储一个单一的属性（列）。在一个数据块中。因此，它也被称为 &amp;ldquo;列存储&amp;rdquo;。这种模式是 OLAP 工作负载的理想选择，用来执行只读查询，在表的属性子集上进行大量扫描。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;优点。
-&lt;ul&gt;
-&lt;li&gt;减少了查询执行过程中的浪费，因为 DBMS 只读取查询所需的数据。&lt;/li&gt;
-&lt;li&gt;能够更好地压缩，因为同一属性的所有值都是连续存储的。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;缺点。
-&lt;ul&gt;
-&lt;li&gt;由于元组的分割/缝合，点查询、插入、更新和删除的速度很慢。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;在使用列存储时，要把元组重新组合起来，有两种常见的方法。&lt;/p&gt;
-&lt;p&gt;最常用的方法是固定长度的偏移量。假设属性都是固定长度的，DBMS 可以计算每个元组的属性的偏移量。然后，当系统想要某个特定元组的属性时，它知道如何从偏移量跳到文件中的那个位置。为了适应可变长度的字段，系统可以填充字段，使它们都是相同的长度，或者使用一个字典，接受一个固定大小的整数，将整数映射到值。&lt;/p&gt;
-&lt;p&gt;一个不太常见的方法是使用嵌入式元组 ID。在这里，对于列中的每个属性，DBMS 都会用它来存储一个元组 ID（例如：主键）。然后，系统还将存储一个映射，告诉它如何跳转到具有该 ID 的每个属性。请注意，这种方法有很大的存储开销，因为它需要为每个属性条目存储一个元组 ID。为每个属性条目存储一个元组 ID&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/4l9etYt.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>CMU::15-445/645::Advanced SQL 笔记</title>
-      <link>/oc/cmu_15_445_02_note/</link>
-      <pubDate>Sun, 01 Aug 2021 09:07:42 +0800</pubDate>
-      <guid>/oc/cmu_15_445_02_note/</guid>
-      <description>&lt;h2 id=&#34;高级-sql&#34;&gt;高级 SQL&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/flXoQVk.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;关系语言&#34;&gt;关系语言&lt;/h3&gt;
-&lt;p&gt;Edgar Codd 在 20 世纪 70 年代初发表了关于关系模型的主要论文。他最初只定义了 DBMS 如何在关系模型 DBMS 上执行查询的数学符号。&lt;/p&gt;
-&lt;p&gt;用户只需要使用声明性语言（即 SQL）来指定他们想要的结果。DBMS 负责通过使用查询优化器重新组合操作确定产生该答案的最有效计划。&lt;/p&gt;
-&lt;p&gt;关系代数是基于 &lt;code&gt;sets&lt;/code&gt;（无序的，没有重复的）。SQL 是基于 &lt;code&gt;bags&lt;/code&gt;（无序的，允许重复）&lt;/p&gt;
-&lt;h3 id=&#34;sql-历史&#34;&gt;SQL 历史&lt;/h3&gt;
-&lt;p&gt;SQL。结构化查询语言&lt;/p&gt;
-&lt;p&gt;IBM 最初称其为 &lt;code&gt;SEQUEL&lt;/code&gt; (Structured English Query Language)&lt;/p&gt;
-&lt;p&gt;由不同类别的命令组成。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;数据操作语言（DML）。&lt;code&gt;SELECT&lt;/code&gt;,&lt;code&gt;INSERT&lt;/code&gt;,&lt;code&gt;UPDATE&lt;/code&gt;,&lt;code&gt;DELETE&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;数据定义语言（DDL）。模式定义。&lt;/li&gt;
-&lt;li&gt;数据控制语言（DCL）。安全，访问控制。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;目前的 SQL 标准是 SQL:2016&lt;/p&gt;
-&lt;p&gt;各阶段引入的特性&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;SQL:2016 → JSON, Polymorphic tables&lt;/li&gt;
-&lt;li&gt;SQL:2011 → Temporal DBs, Pipelined DML&lt;/li&gt;
-&lt;li&gt;SQL:2008 → TRUNCATE, Fancy sorting&lt;/li&gt;
-&lt;li&gt;SQL:2003 → XML, windows, sequences, auto-gen IDs.&lt;/li&gt;
-&lt;li&gt;SQL:1999 → Regex, triggers, OO&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;SQL 并没有死。它每隔几年就会有新的功能被更新。SQL-92 是一个 DBMS 必须支持的最低版本，以便声称他们支持 SQL。每个供应商都在一定程度上遵循该标准，但也有许多专有的扩展。&lt;/p&gt;
-&lt;h3 id=&#34;数据库例子&#34;&gt;数据库例子&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/ADQaxYv.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;聚合&#34;&gt;聚合&lt;/h3&gt;
-&lt;p&gt;聚合函数接收一组元组作为其输入，然后产生一个单一的标量值作为其输出。只能在 SELECT 输出列表中使用。&lt;/p&gt;
-&lt;p&gt;举例：获取使用&#39;@cs&amp;rsquo;登录的学生某个信息。以下三个查询是等价的。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;select&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;where&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;login&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;like&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;%@cs&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#00a8c8&#34;&gt;select&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;login&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;where&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;login&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;like&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;%@cs&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#00a8c8&#34;&gt;select&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;where&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;login&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;like&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;%@cs&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;count(1)&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;3&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;获取用&#39;@cs&amp;rsquo;登录的学生数量和他们的平均 GPA。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;select&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;avg&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;gpa&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;where&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;login&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;like&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;%@cs&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;avg(gpa)&lt;/th&gt;
-&lt;th&gt;count(sid)&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;3.25&lt;/td&gt;
-&lt;td&gt;12&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;部分函数支持&lt;code&gt;DISTINCT&lt;/code&gt;关键字&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;COUNT&lt;/code&gt;, &lt;code&gt;SUM&lt;/code&gt;, &lt;code&gt;AVG&lt;/code&gt; 支持 &lt;code&gt;DISTINCT&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;select&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;distinct&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;login&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;where&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;login&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;like&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;%@cs&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;COUNT(DISTINCT login)&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;10&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;聚合列之外的其他列的输出是未定义的（e.cid 在下面未定义）。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;select&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;avg&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;s&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;gpa&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;cid&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;enrolled&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;s&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;where&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;s&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;AVG(s.gpa)&lt;/th&gt;
-&lt;th&gt;e.cid&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;3.5&lt;/td&gt;
-&lt;td&gt;???&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;因此，聚合列之外的其他列必须被聚合或用于 GROUP BY 命令中。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;select&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;avg&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;s&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;gpa&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;cid&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;enrolled&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;s&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;where&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;s&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;group&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;by&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;cid&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;HAVING&lt;/code&gt;：过滤聚合后的输出结果。就像一个&lt;code&gt;GROUP BY&lt;/code&gt;的&lt;code&gt;WHERE&lt;/code&gt;子句&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;AVG&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;s&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;gpa&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;AS&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;avg_gpa&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;cid&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;enrolled&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;AS&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;AS&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;s&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;s&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;GROUP&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;BY&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;cid&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;HAVING&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;avg_gpa&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;9&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;字符串操作&#34;&gt;字符串操作&lt;/h3&gt;
-&lt;p&gt;SQL 标准规定，字符串区分大小写，而且只能是单引号&lt;/p&gt;
-&lt;p&gt;事实上&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;SQL-92&lt;/th&gt;
-&lt;th&gt;Sensitive&lt;/th&gt;
-&lt;th&gt;Single Only&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;Postgres&lt;/td&gt;
-&lt;td&gt;Sensitive&lt;/td&gt;
-&lt;td&gt;Single Only&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;MySQL&lt;/td&gt;
-&lt;td&gt;Insensitive&lt;/td&gt;
-&lt;td&gt;Single/Double&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;SQLite&lt;/td&gt;
-&lt;td&gt;Sensitive&lt;/td&gt;
-&lt;td&gt;Single/Double&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;DB2&lt;/td&gt;
-&lt;td&gt;Sensitive&lt;/td&gt;
-&lt;td&gt;Single Only&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Oracle&lt;/td&gt;
-&lt;td&gt;Sensitive&lt;/td&gt;
-&lt;td&gt;Single Only&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;有一些函数可以处理字符串，可以在查询的任何部分使用&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;select&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;substring&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;abbrv_name&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;where&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;53688&lt;/span&gt;
-&lt;span style=&#34;color:#00a8c8&#34;&gt;select&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;s&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;where&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;upper&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;like&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;kan%&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;substring&lt;/li&gt;
-&lt;li&gt;upper&lt;/li&gt;
-&lt;li&gt;lower&lt;/li&gt;
-&lt;li&gt;concat&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;模式匹配&lt;/p&gt;
-&lt;p&gt;LIKE 关键字用于谓词中的字符串匹配&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&amp;ldquo;%&amp;rdquo; 匹配任何子字符串（包括空）&lt;/li&gt;
-&lt;li&gt;&amp;ldquo;_&amp;rdquo; 匹配任何一个字符&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;串联&lt;/p&gt;
-&lt;p&gt;两个竖条（&amp;quot;||&amp;quot;）将两个或多个字符串连接成一个单一的字符串&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;SQL-92&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;login&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;LOWER&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;||&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;@cs&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;MSSQL&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;login&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;LOWER&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;@cs&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;MySQL&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;login&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;CONCAT&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;LOWER&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;@cs&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;时间日期操作&#34;&gt;时间日期操作&lt;/h3&gt;
-&lt;p&gt;处理和修改日期/时间属性&lt;/p&gt;
-&lt;p&gt;可以在输出和谓词中使用&lt;/p&gt;
-&lt;p&gt;支持/语法有很大的不同&lt;/p&gt;
-&lt;p&gt;例子:获取一年中的第几天&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;pgsql&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;select&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;date&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;2019-08-23&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;date&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;2019-01-01&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;days&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;mysql&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;select&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;datediff&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;date&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;2019-08-23&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;date&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;2019-01-01&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;days&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;sqlite&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;not&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;supprt&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;输出重定向&#34;&gt;输出重定向&lt;/h3&gt;
-&lt;p&gt;把查询结果存入另一张表&lt;/p&gt;
-&lt;p&gt;新表:将查询的输出存储到一个新的表中。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;DISTINCT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cid&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;INTO&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;CourseIds&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;enrolled&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;现有的表:将查询的输出存储到数据库中已经存在的表中。该表目标表必须有与目标表相同数量和相同类型的列，但输出查询中的列名不需要匹配。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;INSERT&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;INTO&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;CourseIds&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;DISTINCT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cid&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;enrolled&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;输出控制&#34;&gt;输出控制&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;ORDER BY&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;由于 SQL 的结果是无序的，你必须使用&lt;code&gt;ORDER BY&lt;/code&gt;子句来对元组进行排序。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;enrolled&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cid&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;15-721&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;ORDER&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;BY&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;grade&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;DESC&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你可以使用多个&lt;code&gt;ORDER BY&lt;/code&gt;子句来更复杂的排序。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;enrolled&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cid&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;15-721&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;ORDER&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;BY&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;grade&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;DESC&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;ASC&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你也可以在&lt;code&gt;ORDER BY&lt;/code&gt;子句中使用任何任意的表达式。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;enrolled&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cid&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;15-721&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;ORDER&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;BY&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;UPPER&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;grade&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;DESC&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;ASC&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;LIMIT&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;默认情况下，DBMS 将返回由查询产生的所有元组。你可以使用 &lt;code&gt;LIMIT&lt;/code&gt; 子句来限制结果元组的数量&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;login&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;LIKE&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;%@cs&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;LIMIT&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;也可以提供一个偏移量来返回结果中的一个范围&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;login&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;LIKE&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;%@cs&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;LIMIT&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;OFFSET&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;除非你使用带有&lt;code&gt;LIMIT&lt;/code&gt;的&lt;code&gt;ORDER BY&lt;/code&gt;子句，否则每次调用的结果中的元组可能是不同的。&lt;/p&gt;
-&lt;h3 id=&#34;嵌套查询&#34;&gt;嵌套查询&lt;/h3&gt;
-&lt;p&gt;在其他查询中调用查询，以在单个查询中执行更复杂的逻辑。外部查询的范围包括在内部查询中（即内部查询可以访问外部查询的属性），但不能反过来。&lt;/p&gt;
-&lt;p&gt;内部查询几乎可以出现在查询的任何地方&lt;/p&gt;
-&lt;p&gt;从输出结果&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;AS&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;one&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;从子句&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;AS&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;s&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;enrolled&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;AS&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;e&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;s&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;从 WHERE 子句&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;IN&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;enrolled&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;嵌套查询结果表达式&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;ALL: 必须满足子查询中所有记录的表达式。&lt;/li&gt;
-&lt;li&gt;ANY: 必须满足子查询中至少一条记录的表达式。&lt;/li&gt;
-&lt;li&gt;IN: 相当于 ANY()&lt;/li&gt;
-&lt;li&gt;EXISTS: 至少有一条记录被返回。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;窗口函数&#34;&gt;窗口函数&lt;/h3&gt;
-&lt;p&gt;在一组元组中执行 &amp;ldquo;移动 &amp;ldquo;计算。像聚合操作，但它仍然返回原始元组&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Functions&lt;/code&gt; 可以是我们上面讨论的任何一个聚合函数。也可以是一个特殊的窗口函数。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;ROW NUMBER：当前行的编号。&lt;/li&gt;
-&lt;li&gt;RANK：当前行的顺序位置。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;Grouping&lt;/code&gt; The &lt;code&gt;OVER&lt;/code&gt; clause specifies how to group together tuples when computing the window function. Use &lt;code&gt;PARTITION BY&lt;/code&gt; to specify group.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cid&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ROW_NUMBER&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;OVER&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;PARTITION&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;BY&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cid&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;enrolled&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;ORDER&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;BY&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cid&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你也可以在&lt;code&gt;OVER&lt;/code&gt;中放一个&lt;code&gt;ORDER BY&lt;/code&gt;，以确保即使数据库内部发生变化，结果的排序也是确定不变的。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ROW_NUMBER&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;OVER&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;ORDER&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;BY&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cid&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;enrolled&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;ORDER&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;BY&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cid&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;重要提示：DBMS 在窗口函数排序后计算 &lt;code&gt;RANK&lt;/code&gt;，而在排序前计算 &lt;code&gt;ROW_NUMBER&lt;/code&gt;&lt;/p&gt;
-&lt;h3 id=&#34;公共表表达式&#34;&gt;公共表表达式&lt;/h3&gt;
-&lt;p&gt;公共表表达式（CTE）是窗口或嵌套查询的一种替代方法，可以用来编写更复杂的查询。我们可以把 CTE 看作是一个临时表，只用于一个查询。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;WITH&lt;/code&gt; 子句将内部查询的输出与具有该名称的临时结果结合起来。生成一个名为 &amp;ldquo;cteName&amp;quot;的 CTE，它包含一个单一属性设置为 &amp;ldquo;1&amp;rdquo; 的元组。然后底部的查询只是返回 &amp;ldquo;cteName &amp;ldquo;的所有属性。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;WITH&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cteName&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;AS&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cteName&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你可以在 AS 之前将输出列与名称绑定。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;WITH&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cteName&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;col1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;col2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;AS&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;col1&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;col2&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cteName&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;一个查询可以包含多个 CTE 声明。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;WITH&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cte1&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;col1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;AS&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cte2&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;col2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;AS&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cte1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cte2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在&lt;code&gt;WITH&lt;/code&gt;后面添加&lt;code&gt;RECURSIVE&lt;/code&gt;关键字允许 CTE 引用自己。&lt;/p&gt;
-&lt;p&gt;例子。打印从 1 到 10 的数字序列。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;WITH&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;RECURSIVE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cteSource&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;counter&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;AS&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;((&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;UNION&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;counter&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cteSource&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;counter&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cteSource&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>CMU::15-445/645::Relational Model 笔记</title>
-      <link>/oc/cmu_15_445_01_note/</link>
-      <pubDate>Sat, 31 Jul 2021 01:51:13 +0800</pubDate>
-      <guid>/oc/cmu_15_445_01_note/</guid>
-      <description>&lt;h2 id=&#34;关系模型和关系代数&#34;&gt;关系模型和关系代数&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/0W1wSYn.png&#34; alt=&#34;0W1wSYn&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;数据库&#34;&gt;数据库&lt;/h3&gt;
-&lt;p&gt;数据库是一个有组织的相互关联的数据集合，它对现实世界的某些方面进行建模。数据库是很多计算机应用的核心部分。人们经常将&lt;code&gt;数据库&lt;/code&gt;与&lt;code&gt;数据库管理系统&lt;/code&gt;(比如 MyQSL，Oracle，MongoDB)相混淆，数据库管理系统是指管理数据库的软件。&lt;/p&gt;
-&lt;h3 id=&#34;文本文件稻草人&#34;&gt;文本文件稻草人&lt;/h3&gt;
-&lt;p&gt;数据库被存储为 DBMS 管理的逗号分隔值（CSV）文件。每个实体将被存储在它自己的文件中。应用程序每次要读取或更新记录时，都必须解析文件。每个每个实体都有自己的属性集，所以在每个文件中，不同的记录都用新的行来分隔，而记录中的每个而记录中的每个相应的属性都用逗号隔开。继续沿用数字音乐商店的例子，会有两个文件：一个是艺术家文件，另一个是专辑。一个艺术家可以有一个名字、年份和国家属性，而一张专辑有名字、艺术家和年份属性&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/J7czXgM.png&#34; alt=&#34;J7czXgM&#34;&gt;&lt;/p&gt;
-&lt;p&gt;查询 Ice Cube 解散的年份&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/CFu6bLL.png&#34; alt=&#34;ICFu6bL&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;无格式文件的问题&#34;&gt;无格式文件的问题&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;数据完整性
-&lt;ul&gt;
-&lt;li&gt;我们如何确保每个专辑条目中的艺术家是相同的？&lt;/li&gt;
-&lt;li&gt;如果有人用一个无效的字符串覆盖了专辑年份怎么办？&lt;/li&gt;
-&lt;li&gt;我们如何存储一张专辑中有多个艺术家的情况？&lt;/li&gt;
-&lt;li&gt;如果我们删除了一个有专辑的艺术家会发生什么？&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;实现
-&lt;ul&gt;
-&lt;li&gt;你如何找到一个特定的记录？&lt;/li&gt;
-&lt;li&gt;如果我们现在想创建一个使用相同数据库的新应用程序，该怎么办？&lt;/li&gt;
-&lt;li&gt;如果两个线程试图同时写到同一个文件怎么办？&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;持久性
-&lt;ul&gt;
-&lt;li&gt;如果我们的程序在更新一条记录时机器崩溃了怎么办？&lt;/li&gt;
-&lt;li&gt;如果我们想在多台机器上复制数据库以获得高可用性怎么办？&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;数据库管理系统&#34;&gt;数据库管理系统&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;DBMS 是一种允许应用程序在数据库中存储和分析信息的软件&lt;/li&gt;
-&lt;li&gt;通用的 DBMS 被能够定义、创建、查询、更新和管理数据库&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;早期数据库&#34;&gt;早期数据库&lt;/h4&gt;
-&lt;p&gt;数据库应用很难建立和维护，因为逻辑层和物理层之间存在着紧密的耦合。&lt;/p&gt;
-&lt;p&gt;逻辑层是指数据库有哪些实体和属性，而物理层是指这些实体和属性是如何被存储的。&lt;/p&gt;
-&lt;p&gt;早期，物理层是在应用程序代码中定义的，所以如果我们想改变应用程序正在使用的物理层，我们就必须改变所有的代码来匹配新的物理层。&lt;/p&gt;
-&lt;p&gt;随着人工成本超过物理成本，这种做法逐渐不可接受，Codd 发布了关于数据关系模型的&lt;a href=&#34;http://dl.acm.org/citation.cfm?id=1558336&#34;&gt;论文&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/N5XTGyo.png&#34; alt=&#34;N5XTGyo&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;关系模型&#34;&gt;关系模型&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;关系模型三个关键点
-&lt;ul&gt;
-&lt;li&gt;以简单的数据结构（关系）存储数据库&lt;/li&gt;
-&lt;li&gt;通过高级语言访问数据&lt;/li&gt;
-&lt;li&gt;物理存储由实现决定&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;数据模型是描述数据库中数据的概念的集合。关系模型是一个数据模型的例子&lt;/p&gt;
-&lt;p&gt;模式是对一个特定的数据集合的描述，使用一个给定的数据模型&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/OCpfN5r.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;p&gt;关系型数据库定了三个概念&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;结构。关系的定义和它们的内容。这就是关系所具有的属性和这些属性可以持有的值&lt;/li&gt;
-&lt;li&gt;完整性。确保数据库的内容满足约束。一个约束的例子是年份属性的任何值都必须是一个数字&lt;/li&gt;
-&lt;li&gt;操作性。如何访问和修改数据库的内容&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;关系是一个无序的集合，包含代表实体的属性关系。由于关系是无序的，DBMS 可以以任何方式存储它们，允许进行优化&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;元组&lt;/code&gt;是关系中的一组属性值（也被称为它的域）。最初，值必须是原子或标量，现在值也可以是列表或嵌套数据结构。每个属性都可以是一个特殊的值 &lt;code&gt;NULL&lt;/code&gt;，即属性是未定义的&lt;/p&gt;
-&lt;p&gt;一个有 n 个属性的关系被称为 &lt;code&gt;n-ary&lt;/code&gt; 关系&lt;/p&gt;
-&lt;h4 id=&#34;键值&#34;&gt;键值&lt;/h4&gt;
-&lt;p&gt;一个关系的&lt;code&gt;主键&lt;/code&gt;唯一地标识了一个单一的元组。如果你没有定义一个主键，一些 DBMS 会自动创建一个内部主键。很多 DBMS 都支持自动生成的键，所以应用程序不必手动增加键&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/4QOAVXN.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;外键&lt;/code&gt;指定了一个关系中的属性必须映射到另一个关系中的元组&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/L1ywqjO.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;数据操作语言-dml&#34;&gt;数据操作语言 DML&lt;/h3&gt;
-&lt;p&gt;一种从数据库中存储和检索信息的语言。在这方面有两类语言可选择&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;过程式。查询指定 DBMS 应该使用的策略来寻找所需的结果&lt;/li&gt;
-&lt;li&gt;声明式。查询只指定想要什么数据，而不是如何找到它&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;关系代数&#34;&gt;关系代数&lt;/h3&gt;
-&lt;p&gt;关系代数是一组基本操作，用于检索和操作关系中的元组。每个运算符接受一个或多个关系作为输入，并输出一个新的关系。为了编写查询，我们可以将这些运算符连接起来，以创建更复杂的运算&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/fUnCphL.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;选择-sigma&#34;&gt;选择 \(\sigma\)&lt;/h4&gt;
-&lt;p&gt;接收一个关系，并从该关系中输出一个满足选择谓词的元组的子集。谓词的作用就像一个过滤器，我们可以使用连接词和非连接词来组合多个谓词&lt;/p&gt;
-&lt;p&gt;语法: \(\sigma_{predicate}(R)\)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/Bb398KD.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;投影-pi&#34;&gt;投影 \(\pi\)&lt;/h4&gt;
-&lt;p&gt;接收一个关系并输出一个只包含指定属性的元组的关系。你可以在输入的关系中重新安排属性的顺序，也可以操作这些值&lt;/p&gt;
-&lt;p&gt;语法: \(\pi_{A1,A2,. . . ,An}(R)\)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/N0hT53f.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;并集-cup&#34;&gt;并集 \(\cup\)&lt;/h4&gt;
-&lt;p&gt;接收两个关系并输出一个关系，该关系包含至少出现在一个关系中的所有元组。这两个输入关系必须具有完全相同的属性&lt;/p&gt;
-&lt;p&gt;语法: (R \(\cup\) S)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/7ZpqLxR.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;交集-cap&#34;&gt;交集 \(\cap\)&lt;/h4&gt;
-&lt;p&gt;接收两个关系，并输出一个包含所有在输入关系中出现的元组的关系。这两个输入关系必须具有完全相同的属性&lt;/p&gt;
-&lt;p&gt;语法: (R \(\cap\) S)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/Gos9rey.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;差集--&#34;&gt;差集 -&lt;/h4&gt;
-&lt;p&gt;接收两个关系并输出一个关系，该关系包含出现在第一个关系中的所有元组但不在第二个关系中。注意：两个输入关系必须有完全相同的属性&lt;/p&gt;
-&lt;p&gt;语法: (R - S)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/GBXU512.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;叉积-times&#34;&gt;叉积 \(\times\)&lt;/h4&gt;
-&lt;p&gt;接收两个关系，并输出一个关系，该关系包含了所有可能的元组组合，这些元组来自输入关系的所有可能组合&lt;/p&gt;
-&lt;p&gt;语法: (R \(\times\) S)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/qCz8Yxw.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;连接-bowtie&#34;&gt;连接 \(\bowtie\)&lt;/h4&gt;
-&lt;p&gt;接收两个关系，并输出一个关系，该关系包含两个元组的所有组合。其中对于两个关系共享的每个属性，两个元组的属性的值都是相同&lt;/p&gt;
-&lt;p&gt;语法: (R \(\bowtie\) S)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/BpiLSYm.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;其他关系代数&#34;&gt;其他关系代数&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/MNmTNR5.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;观察&#34;&gt;观察&lt;/h3&gt;
-&lt;p&gt;关系代数是一种过程式语言，因为它定义了如何计算一个查询的高级步骤。例如，\(\sigma_{b\_id=102}(R \bowtie S)\)是说先做 R 和 S 的连接，然后再做选择，而\((R \bowtie (\sigma_{b\_id=102}(S))\)会先对 S 做选择，然后再做连接。这两个语句实际上会产生相同的答案，但是如果在 10 亿个元组中，S 中只有 1 个 b_id=102 的元组那么的连接，然后再做选择，而\((R \bowtie (\sigma_{b\_id=102}(S))\) 将明显快于 \(\sigma_{b\_id=102}(R \bowtie S)\)。&lt;/p&gt;
-&lt;p&gt;一个更好的方法是说出你想要的结果，并让 DBMS 决定它要采取的步骤来计算这个查询。SQL 正是这样做的，它是在关系模型数据库上编写查询的事实上的标准。&lt;/p&gt;
-</description>
-    </item>
-    
-  </channel>
-</rss>
+Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/chHAKD6.gif" alt="img">&lt;/p>
+&lt;h3 id="动态散列方案">动态散列方案&lt;/h3>
+&lt;p>静态散列方案要求 DBMS 知道它要存储的元素的数量。否则，如果需要增加/缩小表的大小，它就必须重建表。&lt;/p>
+&lt;p>动态散列方案能够根据需要调整散列表的大小，而不需要重建整个表。这些方案以不同的方式执行这种大小调整，可以最大限度地提高读取或写入。&lt;/p>
+&lt;h3 id="链式散列">链式散列&lt;/h3>
+&lt;p>这是最常见的动态散列方案。DBMS 为哈希表中的每个槽维护一个桶的链接列表。对同一槽位进行散列的键被简单地插入到该槽位的链表中。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/fE0Io5h.gif" alt="img">&lt;/p>
+&lt;h3 id="可扩展散列">可扩展散列&lt;/h3>
+&lt;p>链式散列的改进版本，它将桶拆分，而不是让链永远增长。这种方法允许哈希表中的多个槽位指向同一个桶链。&lt;/p>
+&lt;p>重新平衡哈希表的核心思想是在分割时移动桶的条目，并增加检查的位数来寻找哈希表中的条目。这意味着 DBMS 只需要在分割链的桶内移动数据，其他所有的桶都不需要动。&lt;/p>
+&lt;ul>
+&lt;li>DBMS 维护着一个全局和局部的深度位数，决定了在槽阵列中寻找桶所需的位数。&lt;/li>
+&lt;li>当一个 bucket 满了，DBMS 会分割 bucket 并重新排列其元素。如果分割后的水桶的本地深度小于全局深度，那么新的 bucket 就只是添加到现有的槽阵列中。否则，DBMS 将槽阵列的大小增加一倍以容纳新的槽，并增加全局深度计数器。&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://i.imgur.com/d8ajBM0.gif" alt="img">&lt;/p>
+&lt;h3 id="线性散列">线性散列&lt;/h3>
+&lt;p>当一个桶溢出时，这个方案并不立即分割，而是保持一个分割指针，跟踪下一个要分割的桶。无论这个指针是否指向一个溢出的桶，DBMS 都会进行分割。溢出的标准是由实现者决定的。&lt;/p>
+&lt;ul>
+&lt;li>当任何一个桶溢出时，通过添加一个新的槽项来分割指针位置的桶，并创建一个新的哈希函数。&lt;/li>
+&lt;li>如果哈希函数映射到以前被指针指向的槽，则应用新的哈希函数。&lt;/li>
+&lt;li>当指针到达最后一个槽时，删除原来的哈希函数，用新的哈希函数替换它。&lt;/li>
+&lt;/ul>
+&lt;p>查找 6，hash1 计算结果是 2，对应找到 2 指向的阵列&lt;/p>
+&lt;p>插入 17，hash1 计算结果是 1，插入到 1 指向的阵列，此时，1 的阵列满了，所以 17 通过溢出的方式跟在后面，并看是否需要分裂指针指向的阵列&lt;/p>
+&lt;p>对于被分类的阵列，在哈希表的键值部分生成一个 n+1 的键值，然后把这个陈列的值用 hash2 重新分布&lt;/p>
+&lt;p>当我们要查找 20 的时候，首先用 hash1 计算出结果，发现落到了 0，0 此时在指针指向的分割线上面，所以要应用 hash2，再次查找，当指针遍历完第一轮之后，删除 hash1 函数&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/1aLp0Dw.gif" alt="img">&lt;/p></description></item><item><title>CMU::15-445/645::Buffer Pools 笔记</title><link>/oc/cmu_15_445_04_note/</link><pubDate>Tue, 03 Aug 2021 23:17:58 +0800</pubDate><guid>/oc/cmu_15_445_04_note/</guid><description>&lt;h2 id="缓冲池和内存管理">缓冲池和内存管理&lt;/h2>
+&lt;p>&lt;img src="https://i.imgur.com/whxG5l3.png" alt="img">&lt;/p>
+&lt;h3 id="介绍">介绍&lt;/h3>
+&lt;p>DBMS 负责管理其内存并从磁盘上来回移动数据。由于在大多数情况下，数据不能直接在磁盘上操作，任何数据库都必须能够有效地将其磁盘上以文件形式表示的数据移动到内存中，以便能够使用。DBMS 面临的一个障碍是尽量减少移动数据的速度问题。理想情况下，数据应该&amp;quot;看起来&amp;quot;是已经在内存中了。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/DZFIdeg.png" alt="img">&lt;/p>
+&lt;p>从空间控制和时间控制的角度来思考这个问题。&lt;/p>
+&lt;p>空间控制是指页面在磁盘上的物理写入位置，目标是使经常一起使用的页面在磁盘上尽可能地保持物理上的接近。&lt;/p>
+&lt;p>时间控制是指何时将页面读入内存，何时将其写入磁盘，目的是尽量减少从磁盘上读取数据的停顿次数。&lt;/p>
+&lt;h3 id="locks-vs-latches">Locks vs. Latches&lt;/h3>
+&lt;p>Locks: Locks 是一个更高层次的逻辑元语，它保护数据库的内容（如元组、表、数据库）不受其他事务的影响。事务将在整个持续时间内持有一个 Locks。数据库系统可以在运行查询时向用户披露哪些 Locks 正在被持有。Locks 需要能够回滚。概念上接近于操作系统中的 Latches。&lt;/p>
+&lt;p>Latches: Latches 是一种底层的保护元语，DBMS 将其用于内部数据结构的关键部分（例如，哈希表，内存区域）。Latches 只在所进行的操作的时间内保持。Latches 不需要支持回滚。概念上接近与操作系统的 Mutex。&lt;/p>
+&lt;h3 id="缓冲池">缓冲池&lt;/h3>
+&lt;p>缓冲池是一个从磁盘上读取页面的内存缓存。它本质上是在数据库内部分配的一个大的内存区域，用来存储从磁盘获取的页面。&lt;/p>
+&lt;p>缓冲池的内存区域被组织成一个固定大小的页面阵列。每个数组条目被称为一个帧。当 DBMS 请求一个页面时，一个精确的副本被放置到缓冲池的一个帧中。然后，当一个页面被请求时，数据库系统可以首先搜索缓冲池。如果没有找到该页，那么系统就会从磁盘上获取该页的副本。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/pxyMuES.png" alt="img">&lt;/p>
+&lt;h4 id="缓冲池元数据">缓冲池元数据&lt;/h4>
+&lt;p>缓冲池必须维护某些元数据，以便有效和正确地使用。首先，页表是一个内存中的哈希表，用于跟踪当前内存中的页面。它将页面 ID 映射到缓冲池中的帧位置。由于缓冲池中的页面顺序不一定反映磁盘上的顺序，这个额外的中介层允许识别缓冲池中的页面位置。请注意，页面表不能与页面目录混淆，后者是从页面 ID 到数据库文件中的页面位置的映射。&lt;/p>
+&lt;p>页面表还维护着每个页面的额外元数据，一个脏页标志和一个固定/引用计数器。&lt;/p>
+&lt;p>每当一个线程修改一个页面时，就会设置脏页标记。这表明存储管理程序必须将该页写回磁盘。&lt;/p>
+&lt;p>固定/引用计数器跟踪当前访问该页的线程数量（无论是读取还是修改）。一个线程在访问该页之前必须递增该计数器。如果一个页面的计数大于零，那么存储管理器就不允许将该页面从内存中替换出去。&lt;/p>
+&lt;h4 id="内存分配策略">内存分配策略&lt;/h4>
+&lt;p>数据库中的内存是根据两个策略分配给缓冲池的。&lt;/p>
+&lt;p>全局策略处理 DBMS 应该做出的决定，以有利于正在执行的整个工作负载。 它考虑所有活动的事务，以找到分配内存的最佳决策。&lt;/p>
+&lt;p>另一个选择是局部策略，它做出的决定将使单个查询或事务运行得更快，即使它对整个工作负载不利。对整个工作负载有利。局部策略将帧分配给特定的事务，而不考虑并发事务的行为。并发事务的行为。但是需要考虑共享页面。&lt;/p>
+&lt;p>大多数系统使用全局策略和局部策略的组合。&lt;/p>
+&lt;h3 id="缓冲池优化">缓冲池优化&lt;/h3>
+&lt;h4 id="多个缓冲池">多个缓冲池&lt;/h4>
+&lt;p>DBMS 可以为不同的目的维护多个缓冲池（即每个数据库缓冲池、每个页面类型的缓冲池）。然后，每个缓冲池可以采用为其内部存储的数据定制的本地策略。这种方法可以帮助减少锁的竞争，并提高定位性。&lt;/p>
+&lt;p>将所需页面映射到缓冲池的两种方法是对象 ID 和散列。&lt;/p>
+&lt;p>对象 ID 涉及到扩展记录 ID，以包括关于每个缓冲池管理的数据库对象的元数据。然后通过对象标识符，可以维护对象到特定缓冲池的映射。&lt;/p>
+&lt;p>另一种方法是散列，DBMS 对页面 ID 进行散列，以选择访问哪个缓冲池。&lt;/p>
+&lt;h4 id="预取">预取&lt;/h4>
+&lt;p>DBMS 也可以通过基于查询计划的预取页面来进行优化。然后，当第一组页面被处理时，第二组可以被预取到缓冲池中。这种方法是 DBMS 在连续访问许多页面时常用的。&lt;/p>
+&lt;h4 id="扫描共享">扫描共享&lt;/h4>
+&lt;p>查询游标可以重复使用从存储或操作计算中获取的数据。这允许多个查询附加到一个扫描表的游标上。如果一个查询开始扫描，如果已经有一个在做这个，那么 DBMS 会跟踪第二个查询与第一个查询的连接位置，这样它就可以在到达数据结构的末端时完成扫描。第二个查询还可以复用第一个查询的结果或者中间结果。&lt;/p>
+&lt;h4 id="缓冲池旁路">缓冲池旁路&lt;/h4>
+&lt;p>顺序扫描操作不将获取的页面存储在缓冲池中来避免开销。如果操作需要读取磁盘上连续的大序列页面，这就很好用，在后面不需要用到这些原始数据，可以在内存中计算完成后就可以丢掉。缓冲池旁路也可用于临时数据（排序、连接）。&lt;/p>
+&lt;h3 id="操作系统页面缓存">操作系统页面缓存&lt;/h3>
+&lt;p>大多数磁盘操作是通过操作系统的 API 进行的。除非被明确告知，操作系统会维护自己的文件系统缓存。&lt;/p>
+&lt;p>大多数 DBMS 使用 direct I/O 来绕过操作系统的缓存，以避免页面的冗余拷贝和不得不管理不同的驱逐策略。&lt;/p>
+&lt;h3 id="缓冲替换策略">缓冲替换策略&lt;/h3>
+&lt;p>当 DBMS 需要释放一个帧来为一个新的页面腾出空间时，它必须决定从缓冲池中驱逐哪个页面。&lt;/p>
+&lt;p>替换策略是 DBMS 实现的一种当它需要空间时决定从缓冲池中驱逐哪些页面的算法。&lt;/p>
+&lt;p>替换策略的实现目标是提高正确性、准确性、速度和元数据的开销。&lt;/p>
+&lt;h4 id="最近使用最少lru">最近使用最少（LRU）&lt;/h4>
+&lt;p>最近最少使用的替换策略保留了每个页面最后被访问的时间戳。这个时间戳可以存储在一个单独的数据结构中，比如一个队列，以便进行排序和提高效率。该 DBMS 会选择驱逐具有最古老时间戳的页面。此外，页面被保存在排序的顺序中，以减少排序驱逐的时间。&lt;/p>
+&lt;h4 id="时钟算法">时钟算法&lt;/h4>
+&lt;p>CLOCK 策略是 LRU 的一个近似值，不需要每页有单独的时间戳。在 CLOCK 策略中，每个页面被赋予一个引用位。当一个页面被访问时，设置为 1。&lt;/p>
+&lt;p>为了直观地了解这一点，可以将页面组织在一个带有&amp;quot;时钟指针&amp;quot;的圆形缓冲区中。当扫到一个页面，参考位如果是 1，则设置为 0，如果不是，则驱逐它。通过这种方式，时钟指针通过驱逐操作记住了位置。&lt;/p>
+&lt;p>然而，LRU 和 CLOCK 很容易受到顺序泛滥的影响，即缓冲池的内容由于顺序扫描而被破坏。由于顺序扫描会读取每一页，所以读取的页面的时间戳可能并不反映我们真正想要的页面。换句话说，最近使用的页面实际上可能是最不需要的页面。&lt;/p>
+&lt;p>有三种解决方案可以解决 LRU 和 CLOCK 策略的缺点。&lt;/p>
+&lt;p>一种解决方案是 LRU-K，它以时间戳的形式跟踪最后 K 个引用的历史，并计算出后续访问的间隔时间。这个历史记录被用来预测一个页面下次被访问的时间。&lt;/p>
+&lt;p>另一个优化是局部化每个查询。通过持续跟踪被查询读取过的页面，DBMS 在每个事务/查询的基础上选择哪些页面要被驱逐。这使得每次查询对缓冲池的污染最小化。&lt;/p>
+&lt;p>最后，优先级提示允许事务在查询执行过程中根据每个页面的上下文告诉缓冲池页面是否重要。&lt;/p>
+&lt;h3 id="脏页">脏页&lt;/h3>
+&lt;p>有两种方法来处理有脏位的页面。最快的方法是丢弃缓冲池中任何不脏的页面。一个较慢的方法是将脏页写回磁盘，以确保其变化被持久化。&lt;/p>
+&lt;p>这两种方法说明了快速驱逐与脏写页之间的权衡，脏写页在未来不会被再次读取。&lt;/p>
+&lt;p>避免不必要地写页面的问题的一种方法是后台写入。通过后台写入，DBMS 可以周期性地走过页表并将脏页写入磁盘。当一个脏页被安全地写入时，DBMS 可以驱逐该页或者直接取消脏页标志。&lt;/p>
+&lt;h3 id="其他内存池">其他内存池&lt;/h3>
+&lt;p>DBMS 需要内存来处理元组和索引以外的事情。这些其他的内存池可能并不总是由磁盘支持，这取决于实现。&lt;/p>
+&lt;ul>
+&lt;li>Sorting + Join Buffers&lt;/li>
+&lt;li>Query Caches&lt;/li>
+&lt;li>Maintenance Buffers&lt;/li>
+&lt;li>Log Buffers&lt;/li>
+&lt;li>Dictionary Caches&lt;/li>
+&lt;/ul></description></item><item><title>CMU::15-445/645::Database Storage 笔记</title><link>/oc/cmu_15_445_03_note/</link><pubDate>Mon, 02 Aug 2021 09:07:42 +0800</pubDate><guid>/oc/cmu_15_445_03_note/</guid><description>&lt;h2 id="数据库存储第一部分">数据库存储第一部分&lt;/h2>
+&lt;p>&lt;img src="https://i.imgur.com/qhTvXK1.png" alt="img">&lt;/p>
+&lt;h3 id="存储">存储&lt;/h3>
+&lt;p>我们将关注一个 &amp;ldquo;面向磁盘 &amp;ldquo;的 DBMS 架构，它假定数据库的主要存储位置是在非易失性磁盘上。&lt;/p>
+&lt;p>数据库的主要存储位置是在非易失性磁盘上。&lt;/p>
+&lt;p>在存储层次结构的顶端，最接近 CPU 的位置，这是最快的但它也是容量小和最昂贵的存储。离 CPU 越远，存储设备的容量就越大。设备有更大的容量，但速度更慢，离 CPU 更远。这些设备每 GB 的价格也越来越便宜。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/S473W6q.png" alt="img">&lt;/p>
+&lt;ul>
+&lt;li>易失性设备。
+&lt;ul>
+&lt;li>易失性意味着如果你从机器上拔掉电源，那么数据就会丢失。&lt;/li>
+&lt;li>易失性存储支持快速的随机访问，具有字节寻址的位置。这意味着程序可以跳转到任何字节地址，并获得其中的数据。&lt;/li>
+&lt;li>为了我们的目的，我们将始终把这种存储类别称为 &amp;ldquo;存储器&amp;rdquo;。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>非易失性设备。
+&lt;ul>
+&lt;li>非易失性意味着存储设备不需要持续供电，以便以保留它所存储的比特。&lt;/li>
+&lt;li>它也是块/页可寻址的。这意味着，为了读取一个特定偏移量的数值，程序首先要加载 4KB 的页面加载到内存中，以提供程序想要读取的值。&lt;/li>
+&lt;li>非易失性存储在传统上更擅长顺序访问（同时读取多块数据）。&lt;/li>
+&lt;li>我们将把它称为 &amp;ldquo;磁盘&amp;rdquo;。我们将不对固态硬盘或机械硬盘进行区分。
+(SSD)或旋转式硬盘(HDD)。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>还有一类新的存储设备即将问世，称为非易失存储器，定位介于 DRAM 于 SSD 之间。它几乎和 DRAM 一样快，但具有磁盘的持久性。(英特尔傲腾)&lt;/p>
+&lt;ul>
+&lt;li>对非易失性存储的随机访问通常比顺序访问要慢得多。
+&lt;ul>
+&lt;li>算法试图减少对随机页的写入次数，以便将数据存储在连续的块中。&lt;/li>
+&lt;li>程序在再一次调用中分配多个页面。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>由于系统假设数据库存储在磁盘上，DBMS 的组件负责找出如何在非易失性磁盘和易失性存储器之间来回移动数据。DBMS 的组件负责找出如何在非易失性磁盘和易失性存储器之间来回移动数据，因为系统不能直接对磁盘上的数据进行操作。&lt;/p>
+&lt;p>数据库存储在磁盘上，系统不能直接在磁盘上操作数据，DBMS 的组件负责找出如何在非易失性磁盘和易失性存储器之间来回移动数据。&lt;/p>
+&lt;p>我们将专注于如何隐藏磁盘的延迟，而不是专注于用寄存器和缓存进行优化，因为从磁盘获取数据的速度非常慢。如果从 L1 缓存引用中读取数据需要半秒，那么从 SSD 中读取数据需要 1.7 天，从 HDD 中读取需要 16.5 周。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/v63l8oN.png" alt="img">&lt;/p>
+&lt;h3 id="面向磁盘的-dbms-总览">面向磁盘的 DBMS 总览&lt;/h3>
+&lt;p>数据库都在磁盘上，数据库文件中的数据被组织成页，第一页是目录页。为了对数据进行操作，DBMS 需要将数据带入内存。它通过拥有一个缓冲池来管理磁盘和内存之间的来回移动。DBMS 也有一个执行引擎，可以执行查询。执行引擎将要求缓冲池提供一个特定的页面，而缓冲池将负责把该页面带入内存，并给执行引擎一个指向内存中该页面的指针。缓冲池管理器将确保在执行引擎对该内存进行操作时，该页是存在的。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/3MilQUm.png" alt="img">&lt;/p>
+&lt;h3 id="dbms-对比-os">DBMS 对比 OS&lt;/h3>
+&lt;p>DBMS 的一个高层次设计目标是支持超过可用内存量的数据库。由于对磁盘的读/写是昂贵的，所以必须小心管理。我们不希望在从磁盘上获取东西时出现大的停顿，从而拖慢其他一切。因此，我们希望 DBMS 能够在等待从磁盘获取数据时处理其他查询。它就像虚拟内存一样，有一个大的地址空间和一个供操作系统从磁盘引入页面的地方。&lt;/p>
+&lt;p>实现这种虚拟内存的一种方法是使用 mmap 来映射进程地址空间中的文件内容，这使得操作系统能够在磁盘和内存之间来回移动页面。
+不幸的是，这意味着如果 mmap 遇到了页面故障，将阻塞进程。&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>如果你需要写东西，你永远不想在你的 DBMS 中使用 &lt;code>mmap&lt;/code>。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>DBMS（几乎）总是想自己控制事情，而且可以做得更好，因为它知道更多关于被访问的数据和被处理的查询。&lt;/p>
+&lt;ul>
+&lt;li>以正确的顺序将脏页刷入磁盘。&lt;/li>
+&lt;li>专门的预取。&lt;/li>
+&lt;li>更有效的缓冲区替换策略。&lt;/li>
+&lt;li>线程/进程调度&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>操作系统不是你的朋友。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>通过操作系统控制内存也是可能的。&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>madvise&lt;/code>。通知操作系统知道你打算什么时候阅读某些页面。&lt;/li>
+&lt;li>&lt;code>mlock&lt;/code>: 通知操作系统不要把内存的范围内的数据交换到磁盘上。&lt;/li>
+&lt;li>&lt;code>msync&lt;/code>: 通知操作系统将内存范围内的数据刷到磁盘上。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>出于正确性和性能的考虑，我们不建议在 DBMS 中使用 mmap。即使系统会有一些看起来像操作系统可以提供的功能，但让 DBMS 自己实现这些程序会使它有更好的控制能力和性能。&lt;/p>
+&lt;h3 id="文件存储">文件存储&lt;/h3>
+&lt;p>在其最基本的形式中，DBMS 将数据库存储为磁盘上的文件。有些可能使用一个文件层次结构，有些则可能使用单个文件（例如，SQLite）。&lt;/p>
+&lt;p>操作系统对这些文件的内容一无所知。只有 DBMS 知道如何解码它们的内容，因为它是以 DBMS 特有的方式编码的。&lt;/p>
+&lt;p>DBMS 的存储管理器负责管理数据库的文件。它将这些文件表示为一个页的集合。它还跟踪哪些数据被读和写到了页面上，以及页面上有多少可用空间。以及页面中还有多少可用空间。&lt;/p>
+&lt;h3 id="数据库页">数据库页&lt;/h3>
+&lt;p>DBMS 将数据库组织在一个或多个文件中的固定大小的数据块，称为页。页面可以包含不同种类的数据（元组、索引、日志等）。大多数系统不会在页中混合这些类型。有些系统会要求它是自包含的，也就是说，读取每个页面所需的所有信息都在页面本身。虽然定义和数据分离可以减少体积，如果缺失了一部分定义数据，会导致数据失去意义，并且恢复难度比较大。&lt;/p>
+&lt;p>每个页面都有一个唯一的标识符。如果数据库是一个单一的文件，那么页面标识可以只是文件的偏移量。大多数数据库管理系统有一个中介层，将页面 ID 映射到文件路径和偏移量。系统的上层会要求一个特定的页号，然后存储管理程序必须把这个页号变成一个文件和一个偏移量来找到这个页。&lt;/p>
+&lt;p>大多数 DBMS 使用固定大小的页面来避免支持可变大小页面所需的工程开销。例如，在可变大小的页面中，删除一个页面可能会在文件中产生一个洞，而 DBMS 不能轻易用新的页面来填补。&lt;/p>
+&lt;ul>
+&lt;li>在 DBMS 中，有三种不同的 &amp;ldquo;页 &amp;ldquo;概念。
+&lt;ul>
+&lt;li>硬件页 (通常 4 KB).&lt;/li>
+&lt;li>操作系统 (通常 4 KB).&lt;/li>
+&lt;li>数据库页 (512B - 16 KB)&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>存储设备保证对硬件页的大小进行原子写入。如果硬件页是 4KB，那么当系统试图将 4KB 写入磁盘时，要么所有的 4KB 都被写入，要么都不写入。这意味着，如果我们的数据库页大于硬件页，DBMS 将不得不采取额外的措施来确保数据被安全地写出来，因为程序可能在将数据库页的一部分写到磁盘的过程中崩溃。&lt;/p>
+&lt;h3 id="数据库堆文件">数据库堆文件&lt;/h3>
+&lt;p>有几种方法可以找到 DBMS 想要的页面在磁盘上的位置，而堆文件组织就是其中一种方法。&lt;/p>
+&lt;p>堆文件是一个无序的页面集合，其中的元组是以随机顺序存储的。&lt;/p>
+&lt;p>DBMS 可以通过使用页面的链接列表或页面目录来找到磁盘上给定的页面 ID。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/eB4bj1N.png" alt="img">&lt;/p>
+&lt;p>两种方式可以表示数据库堆文件&lt;/p>
+&lt;h4 id="文件目录">文件目录&lt;/h4>
+&lt;p>DBMS 维护特殊页面，上面记录跟踪数据页面的位置以及每个页面上的空闲空间数量&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/AIpKCZg.png" alt="img">&lt;/p>
+&lt;h4 id="链表">链表&lt;/h4>
+&lt;p>头页持有指向空闲页列表和数据页列表的指针。然而，如果 DBMS 正在寻找一个特定的页面，它必须对数据页列表进行顺序遍历，直到找到它要寻找的页面。链表同样支持反向遍历。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/NgjaAPh.png" alt="img">&lt;/p>
+&lt;h3 id="页布局">页布局&lt;/h3>
+&lt;ul>
+&lt;li>每个页面都包括一个页头，记录了关于页面内容的元数据。
+&lt;ul>
+&lt;li>页面大小。&lt;/li>
+&lt;li>校验和。&lt;/li>
+&lt;li>DBMS 版本。&lt;/li>
+&lt;li>事务的可见性。&lt;/li>
+&lt;li>压缩信息&lt;/li>
+&lt;li>一些系统要求页面是字包含的（如 oracle）。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://i.imgur.com/vt7VkcX.png" alt="img">&lt;/p>
+&lt;p>存放数据的一个原始方法是跟踪 DBMS 在一个页面中存储了多少个元组，然后每次增加一个新的元组时，它就把元组附加到最后。然而，当它删除一个元组或元组有可变长度的属性时，问题就出现了。&lt;/p>
+&lt;h4 id="元组式页面">元组式页面&lt;/h4>
+&lt;p>先看以下按照元组方式组织的页面，当三条数据按照顺序存放在页面中&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/3ihvtT4.png" alt="img">&lt;/p>
+&lt;p>删除一条数据会发生什么？&lt;/p>
+&lt;p>对应位置的记录被删除，留下一个空白，同步文件头中关于元组数量的记录&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/pnSzxC9.png" alt="img">&lt;/p>
+&lt;p>继续存入一条数据会发生什么？&lt;/p>
+&lt;p>如果数据是定长的，那么它可以存入刚刚被删除的位置或者页面中的空白位置，如果是变长的数据，它需要向后扫描直到找到满足要求的位置。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/KclWvZQ.png" alt="img">&lt;/p>
+&lt;p>有两种主要的方法来布置页面中的数据。&lt;/p>
+&lt;h4 id="插槽式页面">插槽式页面&lt;/h4>
+&lt;ul>
+&lt;li>目前 DBMS 中使用的最常见的方法。&lt;/li>
+&lt;li>头部跟踪已使用的槽的数量和最后使用的槽的起始位置的偏移量，以及一个槽数组，它跟踪每个元组的起始位置。&lt;/li>
+&lt;li>要增加一个元组，槽数组将从头到尾增长，元组的数据将从尾到头增长。当槽阵列和元组数据相遇。&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://i.imgur.com/5I6XPw6.png" alt="img">&lt;/p>
+&lt;h4 id="日志式结构">日志式结构&lt;/h4>
+&lt;ul>
+&lt;li>DBMS 不存储元组，而只存储日志记录。&lt;/li>
+&lt;li>将数据库如何被修改（插入、更新、删除）的记录存入文件。&lt;/li>
+&lt;li>要读取一条记录，DBMS 会逆向扫描日志文件并&amp;quot;重新创建&amp;quot;元组。&lt;/li>
+&lt;li>写的快，读的可能慢。&lt;/li>
+&lt;li>在仅有追加写入的存储上工作得很好，因为 DBMS 不能往回更新数据。&lt;/li>
+&lt;li>为了避免长时间的读取，DBMS 可以有索引，允许它跳到日志中的特定位置。它还可以定期压缩日志，压缩的问题是 DBMS 最终会出现写入放大（它一次又一次地重写相同的数据）。&lt;/li>
+&lt;/ul>
+&lt;h4 id="日志压缩">日志压缩&lt;/h4>
+&lt;p>通过删除不必要的记录，压缩将较大的日志文件凝聚成较小的文件。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/1lGJXAs.png" alt="img">&lt;/p>
+&lt;h3 id="元组布局">元组布局&lt;/h3>
+&lt;p>元组本质上是一个字节序列。DBMS 的工作是将这些字节解释为属性类型和值。&lt;/p>
+&lt;ul>
+&lt;li>元组标头。包含关于元组的元数据。
+&lt;ul>
+&lt;li>DBMS 的并发控制协议的可见性信息&lt;/li>
+&lt;li>NULL 值的位图。&lt;/li>
+&lt;li>注意，DBMS 不需要在这里存储关于数据库模式的元数据。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>元组数据。属性的实际数据。
+&lt;ul>
+&lt;li>属性通常按照你创建表时指定的顺序存储。&lt;/li>
+&lt;li>大多数 DBMS 不允许一个元组超过一个页面的大小。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>唯一标识符。
+&lt;ul>
+&lt;li>数据库中的每个元组都被分配一个唯一的标识符。&lt;/li>
+&lt;li>最常见的是：页面 ID +（偏移量或槽）。&lt;/li>
+&lt;li>一个应用程序不能依赖这些 ID 来表示任何东西。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://i.imgur.com/yMtXbAt.png" alt="img">&lt;/p>
+&lt;h3 id="非规格化数据">非规格化数据&lt;/h3>
+&lt;p>如果两个表是相关的，DBMS 可以&amp;quot;预连接&amp;quot;它们，所以这些表最终会在同一个页面上。这使得读取速度加快，因为 DBMS 只需要加载一个页面，而不是两个独立的页面。然而，这使得更新更加昂贵，因为 DBMS 需要更多的空间给每个元组。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/2WJMghW.png" alt="img">&lt;/p>
+&lt;h3 id="总结">总结&lt;/h3>
+&lt;ul>
+&lt;li>数据库是以页为单位组织的。&lt;/li>
+&lt;li>跟踪页面有不同方式。&lt;/li>
+&lt;li>存储页面有不同方式。&lt;/li>
+&lt;li>存储元组有不同方式&lt;/li>
+&lt;/ul>
+&lt;h2 id="数据库存储第二部分">数据库存储第二部分&lt;/h2>
+&lt;p>&lt;img src="https://i.imgur.com/anyphM7.png" alt="img">&lt;/p>
+&lt;h3 id="数据表示">数据表示&lt;/h3>
+&lt;p>元组中的数据本质上只是字节数组。DBMS 要知道如何解释这些字节以得出属性的值。数据表示方案是 DBMS 如何为一个值存储字节。&lt;/p>
+&lt;p>有五大类数据类型可以存储在元组中：整数、浮点数、定点精度数、可变长度值和日期/时间。&lt;/p>
+&lt;h4 id="整数">整数&lt;/h4>
+&lt;p>大多数 DBMS 使用 IEEE-754 标准规定的本地 C/C++ 类型来存储整数。这些值是固定长度的。&lt;/p>
+&lt;p>例如。INTEGER, BIGINT, SMALLINT, TINYINT.&lt;/p>
+&lt;h4 id="可变精度数字">可变精度数字&lt;/h4>
+&lt;p>这些是不精确的、可变精度的数字类型，使用 IEEE-754 标准规定的 C/C++ 类型。这些值也是固定长度的。&lt;/p>
+&lt;p>对可变精度数字的操作比任意精度数字的计算更快，因为 CPU 可以直接对它们执行指令。然而，由于有些数字不能精确表示，在进行计算时可能会出现四舍五入的错误。&lt;/p>
+&lt;p>举例来说。FLOAT，REAL。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/3pzeQZv.png" alt="img">&lt;/p>
+&lt;h4 id="固定点精度数">固定点精度数&lt;/h4>
+&lt;p>这些是具有任意精度和比例的数字数据类型。它们通常以精确的、可变长度的二进制表示法（几乎像一个字符串）来存储，带有额外的元数据，这些元数据会告诉系统一些事情，如数据的长度和小数点应该在哪里。&lt;/p>
+&lt;p>当四舍五入的误差不可接受时，就会使用这些数据类型，但是 DBMS 为了获得这种准确性而付出了一定的性能代价。来获得这种准确性。&lt;/p>
+&lt;p>例子: NUMERIC, DECIMAL.&lt;/p>
+&lt;h5 id="pg-中的数字表示">PG 中的数字表示&lt;/h5>
+&lt;p>&lt;img src="https://i.imgur.com/fyKLmOu.png" alt="img">&lt;/p>
+&lt;h5 id="mysql-中的数字表示">MySQL 中的数字表示&lt;/h5>
+&lt;p>&lt;img src="https://i.imgur.com/FFg3nxV.png" alt="img">&lt;/p>
+&lt;h4 id="可变长度的数据">可变长度的数据&lt;/h4>
+&lt;p>这些数据代表任意长度的数据类型。它们通常是用一个头来存储的，这个头可以追踪到追踪字符串的长度，以便于跳转到下一个值。它还可能包含一个数据的校验和。&lt;/p>
+&lt;p>大多数 DBMS 不允许一个元组超过单页的大小。那些允许的系统将数据存储在一个特殊的 Overflow Page，并让元组包含对该页的引用。这些溢出页可以这些 Overflow Page 可以包含指向其他 Overflow Page 的指针，直到所有的数据都能被存储。&lt;/p>
+&lt;p>有些系统会让你把这些大的数值存储在一个外部文件中，然后元组会包含一个指向该文件的指针。例如，如果数据库存储的是照片信息，DBMS 可以将照片存储在外部文件中，而不是让它们在 DBMS 中占用大量的空间。这样做的一个缺点是，DBMS 不能对这个文件的内容进行操作。因此，没有持久化或事务保护。&lt;/p>
+&lt;p>例子: VARCHAR, VARBINARY, TEXT, BLOB.&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/zDOU8Gy.png" alt="img">&lt;/p>
+&lt;h4 id="日期和时间">日期和时间&lt;/h4>
+&lt;p>不同的系统对日期/时间的表示方法各不相同。通常情况下，它们被表示为从 unix 纪元开始的一些单位时间微秒或毫秒。&lt;/p>
+&lt;p>例子。TIME、DATE、TIMESTAMP。&lt;/p>
+&lt;h4 id="系统目录">系统目录&lt;/h4>
+&lt;p>为了使 DBMS 能够解码元组的内容，它维护了一个内部目录来告诉它关于数据库的元数据。元数据将包含关于数据库有哪些表和列的信息，以及它们的类型和值的顺序。大多数 DBMS 以它们用于表的格式在自己内部存储目录。他们使用特殊的代码来访问这些目录表。DBMS 没有标准的方式来检索这些信息。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/weMyy99.png" alt="img">&lt;/p>
+&lt;h3 id="工作负载">工作负载&lt;/h3>
+&lt;p>数据库系统有许多不同的工作负载。我们所说的工作负载，是指一个系统要处理的请求的一般性质。本课程将重点讨论两种类型。在线事务处理和在线分析处理。&lt;/p>
+&lt;h4 id="oltp在线事务处理">OLTP：在线事务处理&lt;/h4>
+&lt;p>快速操作，每次只读取/更新少量的的快速操作，每次只读/更新少量的数据。&lt;/p>
+&lt;h4 id="olap在线分析处理">OLAP：在线分析处理&lt;/h4>
+&lt;p>读取大量数据的复杂查询，以计算聚合结果。&lt;/p>
+&lt;h4 id="htap混合事务分析处理">HTAP：混合事务/分析处理&lt;/h4>
+&lt;p>在同一个数据库中同时进行 OLTP 和 OLAP。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/zzz4jgR.png" alt="img">&lt;/p>
+&lt;h3 id="存储模型">存储模型&lt;/h3>
+&lt;p>DBMS 可以用不同的方式存储元组，这些方式更适合 OLTP 或 OLAP 工作负载。&lt;/p>
+&lt;h4 id="n-ary-存储模型nsm">N-Ary 存储模型（NSM）&lt;/h4>
+&lt;p>在 n-ary 存储模型中，DBMS 将一个元组的所有属性连续地存储在一个单一的页，所以 NSM 也被称为 &amp;ldquo;行存储&amp;rdquo;。这种方法是 OLTP 工作负载的理想选择，在这种工作负载中，要求这种方法是 OLTP 工作负载的理想选择，在这种工作负载中，请求是大量插入的，并且事务往往只操作一个单独的实体。它是理想的，因为它只可以一次性获取一个元组的所有属性。&lt;/p>
+&lt;ul>
+&lt;li>优点。
+&lt;ul>
+&lt;li>快速插入、更新和删除。&lt;/li>
+&lt;li>适合于需要单个元组的查询。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>缺点。
+&lt;ul>
+&lt;li>不利于扫描表的大部分和/或属性的一个子集，这是因为它查询出来的不需要处理的数据污染了缓冲池。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://i.imgur.com/z5zRhf6.png" alt="img">&lt;/p>
+&lt;h4 id="分解存储模型">分解存储模型&lt;/h4>
+&lt;p>在分解存储模型中，DBMS 为所有元组连续地存储一个单一的属性（列）。在一个数据块中。因此，它也被称为 &amp;ldquo;列存储&amp;rdquo;。这种模式是 OLAP 工作负载的理想选择，用来执行只读查询，在表的属性子集上进行大量扫描。&lt;/p>
+&lt;ul>
+&lt;li>优点。
+&lt;ul>
+&lt;li>减少了查询执行过程中的浪费，因为 DBMS 只读取查询所需的数据。&lt;/li>
+&lt;li>能够更好地压缩，因为同一属性的所有值都是连续存储的。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>缺点。
+&lt;ul>
+&lt;li>由于元组的分割/缝合，点查询、插入、更新和删除的速度很慢。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>在使用列存储时，要把元组重新组合起来，有两种常见的方法。&lt;/p>
+&lt;p>最常用的方法是固定长度的偏移量。假设属性都是固定长度的，DBMS 可以计算每个元组的属性的偏移量。然后，当系统想要某个特定元组的属性时，它知道如何从偏移量跳到文件中的那个位置。为了适应可变长度的字段，系统可以填充字段，使它们都是相同的长度，或者使用一个字典，接受一个固定大小的整数，将整数映射到值。&lt;/p>
+&lt;p>一个不太常见的方法是使用嵌入式元组 ID。在这里，对于列中的每个属性，DBMS 都会用它来存储一个元组 ID（例如：主键）。然后，系统还将存储一个映射，告诉它如何跳转到具有该 ID 的每个属性。请注意，这种方法有很大的存储开销，因为它需要为每个属性条目存储一个元组 ID。为每个属性条目存储一个元组 ID&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/4l9etYt.png" alt="img">&lt;/p></description></item><item><title>CMU::15-445/645::Advanced SQL 笔记</title><link>/oc/cmu_15_445_02_note/</link><pubDate>Sun, 01 Aug 2021 09:07:42 +0800</pubDate><guid>/oc/cmu_15_445_02_note/</guid><description>&lt;h2 id="高级-sql">高级 SQL&lt;/h2>
+&lt;p>&lt;img src="https://i.imgur.com/flXoQVk.png" alt="img">&lt;/p>
+&lt;h3 id="关系语言">关系语言&lt;/h3>
+&lt;p>Edgar Codd 在 20 世纪 70 年代初发表了关于关系模型的主要论文。他最初只定义了 DBMS 如何在关系模型 DBMS 上执行查询的数学符号。&lt;/p>
+&lt;p>用户只需要使用声明性语言（即 SQL）来指定他们想要的结果。DBMS 负责通过使用查询优化器重新组合操作确定产生该答案的最有效计划。&lt;/p>
+&lt;p>关系代数是基于 &lt;code>sets&lt;/code>（无序的，没有重复的）。SQL 是基于 &lt;code>bags&lt;/code>（无序的，允许重复）&lt;/p>
+&lt;h3 id="sql-历史">SQL 历史&lt;/h3>
+&lt;p>SQL。结构化查询语言&lt;/p>
+&lt;p>IBM 最初称其为 &lt;code>SEQUEL&lt;/code> (Structured English Query Language)&lt;/p>
+&lt;p>由不同类别的命令组成。&lt;/p>
+&lt;ul>
+&lt;li>数据操作语言（DML）。&lt;code>SELECT&lt;/code>,&lt;code>INSERT&lt;/code>,&lt;code>UPDATE&lt;/code>,&lt;code>DELETE&lt;/code>&lt;/li>
+&lt;li>数据定义语言（DDL）。模式定义。&lt;/li>
+&lt;li>数据控制语言（DCL）。安全，访问控制。&lt;/li>
+&lt;/ul>
+&lt;p>目前的 SQL 标准是 SQL:2016&lt;/p>
+&lt;p>各阶段引入的特性&lt;/p>
+&lt;ul>
+&lt;li>SQL:2016 → JSON, Polymorphic tables&lt;/li>
+&lt;li>SQL:2011 → Temporal DBs, Pipelined DML&lt;/li>
+&lt;li>SQL:2008 → TRUNCATE, Fancy sorting&lt;/li>
+&lt;li>SQL:2003 → XML, windows, sequences, auto-gen IDs.&lt;/li>
+&lt;li>SQL:1999 → Regex, triggers, OO&lt;/li>
+&lt;/ul>
+&lt;p>SQL 并没有死。它每隔几年就会有新的功能被更新。SQL-92 是一个 DBMS 必须支持的最低版本，以便声称他们支持 SQL。每个供应商都在一定程度上遵循该标准，但也有许多专有的扩展。&lt;/p>
+&lt;h3 id="数据库例子">数据库例子&lt;/h3>
+&lt;p>&lt;img src="https://i.imgur.com/ADQaxYv.png" alt="img">&lt;/p>
+&lt;h3 id="聚合">聚合&lt;/h3>
+&lt;p>聚合函数接收一组元组作为其输入，然后产生一个单一的标量值作为其输出。只能在 SELECT 输出列表中使用。&lt;/p>
+&lt;p>举例：获取使用'@cs&amp;rsquo;登录的学生某个信息。以下三个查询是等价的。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">select&lt;/span> &lt;span style="color:#00a8c8">count&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">from&lt;/span> &lt;span style="color:#111">student&lt;/span> &lt;span style="color:#00a8c8">where&lt;/span> &lt;span style="color:#111">login&lt;/span> &lt;span style="color:#00a8c8">like&lt;/span> &lt;span style="color:#d88200">&amp;#39;%@cs&amp;#39;&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;span style="color:#00a8c8">select&lt;/span> &lt;span style="color:#00a8c8">count&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">login&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">from&lt;/span> &lt;span style="color:#111">student&lt;/span> &lt;span style="color:#00a8c8">where&lt;/span> &lt;span style="color:#111">login&lt;/span> &lt;span style="color:#00a8c8">like&lt;/span> &lt;span style="color:#d88200">&amp;#39;%@cs&amp;#39;&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;span style="color:#00a8c8">select&lt;/span> &lt;span style="color:#00a8c8">count&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">from&lt;/span> &lt;span style="color:#111">student&lt;/span> &lt;span style="color:#00a8c8">where&lt;/span> &lt;span style="color:#111">login&lt;/span> &lt;span style="color:#00a8c8">like&lt;/span> &lt;span style="color:#d88200">&amp;#39;%@cs&amp;#39;&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>count(1)&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>3&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>获取用'@cs&amp;rsquo;登录的学生数量和他们的平均 GPA。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">select&lt;/span> &lt;span style="color:#00a8c8">avg&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">gpa&lt;/span>&lt;span style="color:#111">),&lt;/span> &lt;span style="color:#00a8c8">count&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">sid&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">from&lt;/span> &lt;span style="color:#111">student&lt;/span> &lt;span style="color:#00a8c8">where&lt;/span> &lt;span style="color:#111">login&lt;/span> &lt;span style="color:#00a8c8">like&lt;/span> &lt;span style="color:#d88200">&amp;#39;%@cs&amp;#39;&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>avg(gpa)&lt;/th>
+&lt;th>count(sid)&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>3.25&lt;/td>
+&lt;td>12&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>部分函数支持&lt;code>DISTINCT&lt;/code>关键字&lt;/p>
+&lt;p>&lt;code>COUNT&lt;/code>, &lt;code>SUM&lt;/code>, &lt;code>AVG&lt;/code> 支持 &lt;code>DISTINCT&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">select&lt;/span> &lt;span style="color:#00a8c8">count&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">distinct&lt;/span> &lt;span style="color:#111">login&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">from&lt;/span> &lt;span style="color:#111">student&lt;/span> &lt;span style="color:#00a8c8">where&lt;/span> &lt;span style="color:#111">login&lt;/span> &lt;span style="color:#00a8c8">like&lt;/span> &lt;span style="color:#d88200">&amp;#39;%@cs&amp;#39;&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>COUNT(DISTINCT login)&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>10&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>聚合列之外的其他列的输出是未定义的（e.cid 在下面未定义）。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">select&lt;/span> &lt;span style="color:#00a8c8">avg&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">s&lt;/span>&lt;span style="color:#111">.&lt;/span>&lt;span style="color:#111">gpa&lt;/span>&lt;span style="color:#111">),&lt;/span> &lt;span style="color:#111">e&lt;/span>&lt;span style="color:#111">.&lt;/span>&lt;span style="color:#111">cid&lt;/span> &lt;span style="color:#00a8c8">from&lt;/span> &lt;span style="color:#111">enrolled&lt;/span> &lt;span style="color:#00a8c8">as&lt;/span> &lt;span style="color:#111">e&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">student&lt;/span> &lt;span style="color:#00a8c8">as&lt;/span> &lt;span style="color:#111">s&lt;/span> &lt;span style="color:#00a8c8">where&lt;/span> &lt;span style="color:#111">e&lt;/span>&lt;span style="color:#111">.&lt;/span>&lt;span style="color:#111">sid&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">s&lt;/span>&lt;span style="color:#111">.&lt;/span>&lt;span style="color:#111">sid&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>AVG(s.gpa)&lt;/th>
+&lt;th>e.cid&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>3.5&lt;/td>
+&lt;td>???&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>因此，聚合列之外的其他列必须被聚合或用于 GROUP BY 命令中。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">select&lt;/span> &lt;span style="color:#00a8c8">avg&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">s&lt;/span>&lt;span style="color:#111">.&lt;/span>&lt;span style="color:#111">gpa&lt;/span>&lt;span style="color:#111">),&lt;/span> &lt;span style="color:#111">e&lt;/span>&lt;span style="color:#111">.&lt;/span>&lt;span style="color:#111">cid&lt;/span> &lt;span style="color:#00a8c8">from&lt;/span> &lt;span style="color:#111">enrolled&lt;/span> &lt;span style="color:#00a8c8">as&lt;/span> &lt;span style="color:#111">e&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">student&lt;/span> &lt;span style="color:#00a8c8">as&lt;/span> &lt;span style="color:#111">s&lt;/span> &lt;span style="color:#00a8c8">where&lt;/span> &lt;span style="color:#111">e&lt;/span>&lt;span style="color:#111">.&lt;/span>&lt;span style="color:#111">sid&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">s&lt;/span>&lt;span style="color:#111">.&lt;/span>&lt;span style="color:#111">sid&lt;/span> &lt;span style="color:#00a8c8">group&lt;/span> &lt;span style="color:#00a8c8">by&lt;/span> &lt;span style="color:#111">e&lt;/span>&lt;span style="color:#111">.&lt;/span>&lt;span style="color:#111">cid&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>HAVING&lt;/code>：过滤聚合后的输出结果。就像一个&lt;code>GROUP BY&lt;/code>的&lt;code>WHERE&lt;/code>子句&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#00a8c8">AVG&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">s&lt;/span>&lt;span style="color:#111">.&lt;/span>&lt;span style="color:#111">gpa&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">AS&lt;/span> &lt;span style="color:#111">avg_gpa&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">e&lt;/span>&lt;span style="color:#111">.&lt;/span>&lt;span style="color:#111">cid&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">enrolled&lt;/span> &lt;span style="color:#00a8c8">AS&lt;/span> &lt;span style="color:#111">e&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">student&lt;/span> &lt;span style="color:#00a8c8">AS&lt;/span> &lt;span style="color:#111">s&lt;/span> &lt;span style="color:#00a8c8">WHERE&lt;/span> &lt;span style="color:#111">e&lt;/span>&lt;span style="color:#111">.&lt;/span>&lt;span style="color:#111">sid&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">s&lt;/span>&lt;span style="color:#111">.&lt;/span>&lt;span style="color:#111">sid&lt;/span> &lt;span style="color:#00a8c8">GROUP&lt;/span> &lt;span style="color:#00a8c8">BY&lt;/span> &lt;span style="color:#111">e&lt;/span>&lt;span style="color:#111">.&lt;/span>&lt;span style="color:#111">cid&lt;/span> &lt;span style="color:#00a8c8">HAVING&lt;/span> &lt;span style="color:#111">avg_gpa&lt;/span> &lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#ae81ff">3&lt;/span>&lt;span style="color:#111">.&lt;/span>&lt;span style="color:#ae81ff">9&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="字符串操作">字符串操作&lt;/h3>
+&lt;p>SQL 标准规定，字符串区分大小写，而且只能是单引号&lt;/p>
+&lt;p>事实上&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>SQL-92&lt;/th>
+&lt;th>Sensitive&lt;/th>
+&lt;th>Single Only&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Postgres&lt;/td>
+&lt;td>Sensitive&lt;/td>
+&lt;td>Single Only&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>MySQL&lt;/td>
+&lt;td>Insensitive&lt;/td>
+&lt;td>Single/Double&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>SQLite&lt;/td>
+&lt;td>Sensitive&lt;/td>
+&lt;td>Single/Double&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>DB2&lt;/td>
+&lt;td>Sensitive&lt;/td>
+&lt;td>Single Only&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Oracle&lt;/td>
+&lt;td>Sensitive&lt;/td>
+&lt;td>Single Only&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>有一些函数可以处理字符串，可以在查询的任何部分使用&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">select&lt;/span> &lt;span style="color:#00a8c8">substring&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">name&lt;/span>&lt;span style="color:#111">,&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#111">,&lt;/span>&lt;span style="color:#ae81ff">5&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">as&lt;/span> &lt;span style="color:#111">abbrv_name&lt;/span> &lt;span style="color:#00a8c8">from&lt;/span> &lt;span style="color:#111">student&lt;/span> &lt;span style="color:#00a8c8">where&lt;/span> &lt;span style="color:#111">sid&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">53688&lt;/span>
+&lt;span style="color:#00a8c8">select&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#00a8c8">from&lt;/span> &lt;span style="color:#111">student&lt;/span> &lt;span style="color:#00a8c8">as&lt;/span> &lt;span style="color:#111">s&lt;/span> &lt;span style="color:#00a8c8">where&lt;/span> &lt;span style="color:#00a8c8">upper&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">e&lt;/span>&lt;span style="color:#111">.&lt;/span>&lt;span style="color:#111">name&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">like&lt;/span> &lt;span style="color:#d88200">&amp;#39;kan%&amp;#39;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>substring&lt;/li>
+&lt;li>upper&lt;/li>
+&lt;li>lower&lt;/li>
+&lt;li>concat&lt;/li>
+&lt;/ul>
+&lt;p>模式匹配&lt;/p>
+&lt;p>LIKE 关键字用于谓词中的字符串匹配&lt;/p>
+&lt;ul>
+&lt;li>&amp;ldquo;%&amp;rdquo; 匹配任何子字符串（包括空）&lt;/li>
+&lt;li>&amp;ldquo;_&amp;rdquo; 匹配任何一个字符&lt;/li>
+&lt;/ul>
+&lt;p>串联&lt;/p>
+&lt;p>两个竖条（&amp;quot;||&amp;quot;）将两个或多个字符串连接成一个单一的字符串&lt;/p>
+&lt;p>&lt;code>SQL-92&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#111">name&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">student&lt;/span> &lt;span style="color:#00a8c8">WHERE&lt;/span> &lt;span style="color:#111">login&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#00a8c8">LOWER&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">name&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#f92672">||&lt;/span> &lt;span style="color:#d88200">&amp;#39;@cs&amp;#39;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>MSSQL&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#111">name&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">student&lt;/span> &lt;span style="color:#00a8c8">WHERE&lt;/span> &lt;span style="color:#111">login&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#00a8c8">LOWER&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">name&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#d88200">&amp;#39;@cs&amp;#39;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>MySQL&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#111">name&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">student&lt;/span> &lt;span style="color:#00a8c8">WHERE&lt;/span> &lt;span style="color:#111">login&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">CONCAT&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">LOWER&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">name&lt;/span>&lt;span style="color:#111">),&lt;/span> &lt;span style="color:#d88200">&amp;#39;@cs&amp;#39;&lt;/span>&lt;span style="color:#111">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="时间日期操作">时间日期操作&lt;/h3>
+&lt;p>处理和修改日期/时间属性&lt;/p>
+&lt;p>可以在输出和谓词中使用&lt;/p>
+&lt;p>支持/语法有很大的不同&lt;/p>
+&lt;p>例子:获取一年中的第几天&lt;/p>
+&lt;p>&lt;code>pgsql&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">select&lt;/span> &lt;span style="color:#111">date&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#d88200">&amp;#39;2019-08-23&amp;#39;&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#111">date&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#d88200">&amp;#39;2019-01-01&amp;#39;&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">as&lt;/span> &lt;span style="color:#111">days&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>mysql&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">select&lt;/span> &lt;span style="color:#111">datediff&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">date&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#d88200">&amp;#39;2019-08-23&amp;#39;&lt;/span>&lt;span style="color:#111">)&lt;/span>&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#111">date&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#d88200">&amp;#39;2019-01-01&amp;#39;&lt;/span>&lt;span style="color:#111">))&lt;/span> &lt;span style="color:#00a8c8">as&lt;/span> &lt;span style="color:#111">days&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>sqlite&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">not&lt;/span> &lt;span style="color:#111">supprt&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="输出重定向">输出重定向&lt;/h3>
+&lt;p>把查询结果存入另一张表&lt;/p>
+&lt;p>新表:将查询的输出存储到一个新的表中。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#00a8c8">DISTINCT&lt;/span> &lt;span style="color:#111">cid&lt;/span> &lt;span style="color:#00a8c8">INTO&lt;/span> &lt;span style="color:#111">CourseIds&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">enrolled&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>现有的表:将查询的输出存储到数据库中已经存在的表中。该表目标表必须有与目标表相同数量和相同类型的列，但输出查询中的列名不需要匹配。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">INSERT&lt;/span> &lt;span style="color:#00a8c8">INTO&lt;/span> &lt;span style="color:#111">CourseIds&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#00a8c8">DISTINCT&lt;/span> &lt;span style="color:#111">cid&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">enrolled&lt;/span>&lt;span style="color:#111">);&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="输出控制">输出控制&lt;/h3>
+&lt;p>&lt;code>ORDER BY&lt;/code>&lt;/p>
+&lt;p>由于 SQL 的结果是无序的，你必须使用&lt;code>ORDER BY&lt;/code>子句来对元组进行排序。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#111">sid&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">enrolled&lt;/span> &lt;span style="color:#00a8c8">WHERE&lt;/span> &lt;span style="color:#111">cid&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#d88200">&amp;#39;15-721&amp;#39;&lt;/span> &lt;span style="color:#00a8c8">ORDER&lt;/span> &lt;span style="color:#00a8c8">BY&lt;/span> &lt;span style="color:#111">grade&lt;/span> &lt;span style="color:#00a8c8">DESC&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>你可以使用多个&lt;code>ORDER BY&lt;/code>子句来更复杂的排序。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#111">sid&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">enrolled&lt;/span> &lt;span style="color:#00a8c8">WHERE&lt;/span> &lt;span style="color:#111">cid&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#d88200">&amp;#39;15-721&amp;#39;&lt;/span> &lt;span style="color:#00a8c8">ORDER&lt;/span> &lt;span style="color:#00a8c8">BY&lt;/span> &lt;span style="color:#111">grade&lt;/span> &lt;span style="color:#00a8c8">DESC&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">sid&lt;/span> &lt;span style="color:#00a8c8">ASC&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>你也可以在&lt;code>ORDER BY&lt;/code>子句中使用任何任意的表达式。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#111">sid&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">enrolled&lt;/span> &lt;span style="color:#00a8c8">WHERE&lt;/span> &lt;span style="color:#111">cid&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#d88200">&amp;#39;15-721&amp;#39;&lt;/span> &lt;span style="color:#00a8c8">ORDER&lt;/span> &lt;span style="color:#00a8c8">BY&lt;/span> &lt;span style="color:#00a8c8">UPPER&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">grade&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">DESC&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">sid&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#00a8c8">ASC&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>LIMIT&lt;/code>&lt;/p>
+&lt;p>默认情况下，DBMS 将返回由查询产生的所有元组。你可以使用 &lt;code>LIMIT&lt;/code> 子句来限制结果元组的数量&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#111">sid&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">name&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">student&lt;/span> &lt;span style="color:#00a8c8">WHERE&lt;/span> &lt;span style="color:#111">login&lt;/span> &lt;span style="color:#00a8c8">LIKE&lt;/span> &lt;span style="color:#d88200">&amp;#39;%@cs&amp;#39;&lt;/span> &lt;span style="color:#00a8c8">LIMIT&lt;/span> &lt;span style="color:#ae81ff">10&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>也可以提供一个偏移量来返回结果中的一个范围&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#111">sid&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">name&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">student&lt;/span> &lt;span style="color:#00a8c8">WHERE&lt;/span> &lt;span style="color:#111">login&lt;/span> &lt;span style="color:#00a8c8">LIKE&lt;/span> &lt;span style="color:#d88200">&amp;#39;%@cs&amp;#39;&lt;/span> &lt;span style="color:#00a8c8">LIMIT&lt;/span> &lt;span style="color:#ae81ff">10&lt;/span> &lt;span style="color:#00a8c8">OFFSET&lt;/span> &lt;span style="color:#ae81ff">20&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>除非你使用带有&lt;code>LIMIT&lt;/code>的&lt;code>ORDER BY&lt;/code>子句，否则每次调用的结果中的元组可能是不同的。&lt;/p>
+&lt;h3 id="嵌套查询">嵌套查询&lt;/h3>
+&lt;p>在其他查询中调用查询，以在单个查询中执行更复杂的逻辑。外部查询的范围包括在内部查询中（即内部查询可以访问外部查询的属性），但不能反过来。&lt;/p>
+&lt;p>内部查询几乎可以出现在查询的任何地方&lt;/p>
+&lt;p>从输出结果&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">AS&lt;/span> &lt;span style="color:#111">one&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">student&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>从子句&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#111">name&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">student&lt;/span> &lt;span style="color:#00a8c8">AS&lt;/span> &lt;span style="color:#111">s&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#111">sid&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">enrolled&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">AS&lt;/span> &lt;span style="color:#111">e&lt;/span> &lt;span style="color:#00a8c8">WHERE&lt;/span> &lt;span style="color:#111">s&lt;/span>&lt;span style="color:#111">.&lt;/span>&lt;span style="color:#111">sid&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">e&lt;/span>&lt;span style="color:#111">.&lt;/span>&lt;span style="color:#111">sid&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>从 WHERE 子句&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#111">name&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">student&lt;/span> &lt;span style="color:#00a8c8">WHERE&lt;/span> &lt;span style="color:#111">sid&lt;/span> &lt;span style="color:#00a8c8">IN&lt;/span> &lt;span style="color:#111">(&lt;/span> &lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#111">sid&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">enrolled&lt;/span> &lt;span style="color:#111">);&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>嵌套查询结果表达式&lt;/p>
+&lt;ul>
+&lt;li>ALL: 必须满足子查询中所有记录的表达式。&lt;/li>
+&lt;li>ANY: 必须满足子查询中至少一条记录的表达式。&lt;/li>
+&lt;li>IN: 相当于 ANY()&lt;/li>
+&lt;li>EXISTS: 至少有一条记录被返回。&lt;/li>
+&lt;/ul>
+&lt;h3 id="窗口函数">窗口函数&lt;/h3>
+&lt;p>在一组元组中执行 &amp;ldquo;移动 &amp;ldquo;计算。像聚合操作，但它仍然返回原始元组&lt;/p>
+&lt;p>&lt;code>Functions&lt;/code> 可以是我们上面讨论的任何一个聚合函数。也可以是一个特殊的窗口函数。&lt;/p>
+&lt;ul>
+&lt;li>ROW NUMBER：当前行的编号。&lt;/li>
+&lt;li>RANK：当前行的顺序位置。&lt;/li>
+&lt;/ul>
+&lt;p>&lt;code>Grouping&lt;/code> The &lt;code>OVER&lt;/code> clause specifies how to group together tuples when computing the window function. Use &lt;code>PARTITION BY&lt;/code> to specify group.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#111">cid&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">sid&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">ROW_NUMBER&lt;/span>&lt;span style="color:#111">()&lt;/span> &lt;span style="color:#111">OVER&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">PARTITION&lt;/span> &lt;span style="color:#00a8c8">BY&lt;/span> &lt;span style="color:#111">cid&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">enrolled&lt;/span> &lt;span style="color:#00a8c8">ORDER&lt;/span> &lt;span style="color:#00a8c8">BY&lt;/span> &lt;span style="color:#111">cid&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>你也可以在&lt;code>OVER&lt;/code>中放一个&lt;code>ORDER BY&lt;/code>，以确保即使数据库内部发生变化，结果的排序也是确定不变的。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">ROW_NUMBER&lt;/span>&lt;span style="color:#111">()&lt;/span> &lt;span style="color:#111">OVER&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">ORDER&lt;/span> &lt;span style="color:#00a8c8">BY&lt;/span> &lt;span style="color:#111">cid&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">enrolled&lt;/span> &lt;span style="color:#00a8c8">ORDER&lt;/span> &lt;span style="color:#00a8c8">BY&lt;/span> &lt;span style="color:#111">cid&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>重要提示：DBMS 在窗口函数排序后计算 &lt;code>RANK&lt;/code>，而在排序前计算 &lt;code>ROW_NUMBER&lt;/code>&lt;/p>
+&lt;h3 id="公共表表达式">公共表表达式&lt;/h3>
+&lt;p>公共表表达式（CTE）是窗口或嵌套查询的一种替代方法，可以用来编写更复杂的查询。我们可以把 CTE 看作是一个临时表，只用于一个查询。&lt;/p>
+&lt;p>&lt;code>WITH&lt;/code> 子句将内部查询的输出与具有该名称的临时结果结合起来。生成一个名为 &amp;ldquo;cteName&amp;quot;的 CTE，它包含一个单一属性设置为 &amp;ldquo;1&amp;rdquo; 的元组。然后底部的查询只是返回 &amp;ldquo;cteName &amp;ldquo;的所有属性。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">WITH&lt;/span> &lt;span style="color:#111">cteName&lt;/span> &lt;span style="color:#00a8c8">AS&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">cteName&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>你可以在 AS 之前将输出列与名称绑定。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">WITH&lt;/span> &lt;span style="color:#111">cteName&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">col1&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">col2&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">AS&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#111">col1&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#111">col2&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">cteName&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>一个查询可以包含多个 CTE 声明。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">WITH&lt;/span> &lt;span style="color:#111">cte1&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">col1&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">AS&lt;/span> &lt;span style="color:#111">(&lt;/span> &lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>&lt;span style="color:#111">),&lt;/span> &lt;span style="color:#111">cte2&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">col2&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">AS&lt;/span> &lt;span style="color:#111">(&lt;/span> &lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">cte1&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">cte2&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>在&lt;code>WITH&lt;/code>后面添加&lt;code>RECURSIVE&lt;/code>关键字允许 CTE 引用自己。&lt;/p>
+&lt;p>例子。打印从 1 到 10 的数字序列。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-sql" data-lang="sql">&lt;span style="color:#00a8c8">WITH&lt;/span> &lt;span style="color:#00a8c8">RECURSIVE&lt;/span> &lt;span style="color:#111">cteSource&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">counter&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">AS&lt;/span> &lt;span style="color:#111">((&lt;/span>&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>&lt;span style="color:#111">)&lt;/span> &lt;span style="color:#00a8c8">UNION&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#111">counter&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">cteSource&lt;/span> &lt;span style="color:#00a8c8">WHERE&lt;/span> &lt;span style="color:#111">counter&lt;/span> &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">10&lt;/span>&lt;span style="color:#111">))&lt;/span> &lt;span style="color:#00a8c8">SELECT&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#00a8c8">FROM&lt;/span> &lt;span style="color:#111">cteSource&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>CMU::15-445/645::Relational Model 笔记</title><link>/oc/cmu_15_445_01_note/</link><pubDate>Sat, 31 Jul 2021 01:51:13 +0800</pubDate><guid>/oc/cmu_15_445_01_note/</guid><description>&lt;h2 id="关系模型和关系代数">关系模型和关系代数&lt;/h2>
+&lt;p>&lt;img src="https://i.imgur.com/0W1wSYn.png" alt="0W1wSYn">&lt;/p>
+&lt;h3 id="数据库">数据库&lt;/h3>
+&lt;p>数据库是一个有组织的相互关联的数据集合，它对现实世界的某些方面进行建模。数据库是很多计算机应用的核心部分。人们经常将&lt;code>数据库&lt;/code>与&lt;code>数据库管理系统&lt;/code>(比如 MyQSL，Oracle，MongoDB)相混淆，数据库管理系统是指管理数据库的软件。&lt;/p>
+&lt;h3 id="文本文件稻草人">文本文件稻草人&lt;/h3>
+&lt;p>数据库被存储为 DBMS 管理的逗号分隔值（CSV）文件。每个实体将被存储在它自己的文件中。应用程序每次要读取或更新记录时，都必须解析文件。每个每个实体都有自己的属性集，所以在每个文件中，不同的记录都用新的行来分隔，而记录中的每个而记录中的每个相应的属性都用逗号隔开。继续沿用数字音乐商店的例子，会有两个文件：一个是艺术家文件，另一个是专辑。一个艺术家可以有一个名字、年份和国家属性，而一张专辑有名字、艺术家和年份属性&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/J7czXgM.png" alt="J7czXgM">&lt;/p>
+&lt;p>查询 Ice Cube 解散的年份&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/CFu6bLL.png" alt="ICFu6bL">&lt;/p>
+&lt;h3 id="无格式文件的问题">无格式文件的问题&lt;/h3>
+&lt;ul>
+&lt;li>数据完整性
+&lt;ul>
+&lt;li>我们如何确保每个专辑条目中的艺术家是相同的？&lt;/li>
+&lt;li>如果有人用一个无效的字符串覆盖了专辑年份怎么办？&lt;/li>
+&lt;li>我们如何存储一张专辑中有多个艺术家的情况？&lt;/li>
+&lt;li>如果我们删除了一个有专辑的艺术家会发生什么？&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>实现
+&lt;ul>
+&lt;li>你如何找到一个特定的记录？&lt;/li>
+&lt;li>如果我们现在想创建一个使用相同数据库的新应用程序，该怎么办？&lt;/li>
+&lt;li>如果两个线程试图同时写到同一个文件怎么办？&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>持久性
+&lt;ul>
+&lt;li>如果我们的程序在更新一条记录时机器崩溃了怎么办？&lt;/li>
+&lt;li>如果我们想在多台机器上复制数据库以获得高可用性怎么办？&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="数据库管理系统">数据库管理系统&lt;/h3>
+&lt;ul>
+&lt;li>DBMS 是一种允许应用程序在数据库中存储和分析信息的软件&lt;/li>
+&lt;li>通用的 DBMS 被能够定义、创建、查询、更新和管理数据库&lt;/li>
+&lt;/ul>
+&lt;h4 id="早期数据库">早期数据库&lt;/h4>
+&lt;p>数据库应用很难建立和维护，因为逻辑层和物理层之间存在着紧密的耦合。&lt;/p>
+&lt;p>逻辑层是指数据库有哪些实体和属性，而物理层是指这些实体和属性是如何被存储的。&lt;/p>
+&lt;p>早期，物理层是在应用程序代码中定义的，所以如果我们想改变应用程序正在使用的物理层，我们就必须改变所有的代码来匹配新的物理层。&lt;/p>
+&lt;p>随着人工成本超过物理成本，这种做法逐渐不可接受，Codd 发布了关于数据关系模型的&lt;a href="http://dl.acm.org/citation.cfm?id=1558336">论文&lt;/a>。&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/N5XTGyo.png" alt="N5XTGyo">&lt;/p>
+&lt;h3 id="关系模型">关系模型&lt;/h3>
+&lt;ul>
+&lt;li>关系模型三个关键点
+&lt;ul>
+&lt;li>以简单的数据结构（关系）存储数据库&lt;/li>
+&lt;li>通过高级语言访问数据&lt;/li>
+&lt;li>物理存储由实现决定&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>数据模型是描述数据库中数据的概念的集合。关系模型是一个数据模型的例子&lt;/p>
+&lt;p>模式是对一个特定的数据集合的描述，使用一个给定的数据模型&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/OCpfN5r.png" alt="img">&lt;/p>
+&lt;p>关系型数据库定了三个概念&lt;/p>
+&lt;ul>
+&lt;li>结构。关系的定义和它们的内容。这就是关系所具有的属性和这些属性可以持有的值&lt;/li>
+&lt;li>完整性。确保数据库的内容满足约束。一个约束的例子是年份属性的任何值都必须是一个数字&lt;/li>
+&lt;li>操作性。如何访问和修改数据库的内容&lt;/li>
+&lt;/ul>
+&lt;p>关系是一个无序的集合，包含代表实体的属性关系。由于关系是无序的，DBMS 可以以任何方式存储它们，允许进行优化&lt;/p>
+&lt;p>&lt;code>元组&lt;/code>是关系中的一组属性值（也被称为它的域）。最初，值必须是原子或标量，现在值也可以是列表或嵌套数据结构。每个属性都可以是一个特殊的值 &lt;code>NULL&lt;/code>，即属性是未定义的&lt;/p>
+&lt;p>一个有 n 个属性的关系被称为 &lt;code>n-ary&lt;/code> 关系&lt;/p>
+&lt;h4 id="键值">键值&lt;/h4>
+&lt;p>一个关系的&lt;code>主键&lt;/code>唯一地标识了一个单一的元组。如果你没有定义一个主键，一些 DBMS 会自动创建一个内部主键。很多 DBMS 都支持自动生成的键，所以应用程序不必手动增加键&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/4QOAVXN.png" alt="img">&lt;/p>
+&lt;p>&lt;code>外键&lt;/code>指定了一个关系中的属性必须映射到另一个关系中的元组&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/L1ywqjO.png" alt="img">&lt;/p>
+&lt;h3 id="数据操作语言-dml">数据操作语言 DML&lt;/h3>
+&lt;p>一种从数据库中存储和检索信息的语言。在这方面有两类语言可选择&lt;/p>
+&lt;ul>
+&lt;li>过程式。查询指定 DBMS 应该使用的策略来寻找所需的结果&lt;/li>
+&lt;li>声明式。查询只指定想要什么数据，而不是如何找到它&lt;/li>
+&lt;/ul>
+&lt;h3 id="关系代数">关系代数&lt;/h3>
+&lt;p>关系代数是一组基本操作，用于检索和操作关系中的元组。每个运算符接受一个或多个关系作为输入，并输出一个新的关系。为了编写查询，我们可以将这些运算符连接起来，以创建更复杂的运算&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/fUnCphL.png" alt="img">&lt;/p>
+&lt;h4 id="选择-sigma">选择 \(\sigma\)&lt;/h4>
+&lt;p>接收一个关系，并从该关系中输出一个满足选择谓词的元组的子集。谓词的作用就像一个过滤器，我们可以使用连接词和非连接词来组合多个谓词&lt;/p>
+&lt;p>语法: \(\sigma_{predicate}(R)\)&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/Bb398KD.png" alt="img">&lt;/p>
+&lt;h4 id="投影-pi">投影 \(\pi\)&lt;/h4>
+&lt;p>接收一个关系并输出一个只包含指定属性的元组的关系。你可以在输入的关系中重新安排属性的顺序，也可以操作这些值&lt;/p>
+&lt;p>语法: \(\pi_{A1,A2,. . . ,An}(R)\)&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/N0hT53f.png" alt="img">&lt;/p>
+&lt;h4 id="并集-cup">并集 \(\cup\)&lt;/h4>
+&lt;p>接收两个关系并输出一个关系，该关系包含至少出现在一个关系中的所有元组。这两个输入关系必须具有完全相同的属性&lt;/p>
+&lt;p>语法: (R \(\cup\) S)&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/7ZpqLxR.png" alt="img">&lt;/p>
+&lt;h4 id="交集-cap">交集 \(\cap\)&lt;/h4>
+&lt;p>接收两个关系，并输出一个包含所有在输入关系中出现的元组的关系。这两个输入关系必须具有完全相同的属性&lt;/p>
+&lt;p>语法: (R \(\cap\) S)&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/Gos9rey.png" alt="img">&lt;/p>
+&lt;h4 id="差集--">差集 -&lt;/h4>
+&lt;p>接收两个关系并输出一个关系，该关系包含出现在第一个关系中的所有元组但不在第二个关系中。注意：两个输入关系必须有完全相同的属性&lt;/p>
+&lt;p>语法: (R - S)&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/GBXU512.png" alt="img">&lt;/p>
+&lt;h4 id="叉积-times">叉积 \(\times\)&lt;/h4>
+&lt;p>接收两个关系，并输出一个关系，该关系包含了所有可能的元组组合，这些元组来自输入关系的所有可能组合&lt;/p>
+&lt;p>语法: (R \(\times\) S)&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/qCz8Yxw.png" alt="img">&lt;/p>
+&lt;h4 id="连接-bowtie">连接 \(\bowtie\)&lt;/h4>
+&lt;p>接收两个关系，并输出一个关系，该关系包含两个元组的所有组合。其中对于两个关系共享的每个属性，两个元组的属性的值都是相同&lt;/p>
+&lt;p>语法: (R \(\bowtie\) S)&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/BpiLSYm.png" alt="img">&lt;/p>
+&lt;h4 id="其他关系代数">其他关系代数&lt;/h4>
+&lt;p>&lt;img src="https://i.imgur.com/MNmTNR5.png" alt="img">&lt;/p>
+&lt;h3 id="观察">观察&lt;/h3>
+&lt;p>关系代数是一种过程式语言，因为它定义了如何计算一个查询的高级步骤。例如，\(\sigma_{b\_id=102}(R \bowtie S)\)是说先做 R 和 S 的连接，然后再做选择，而\((R \bowtie (\sigma_{b\_id=102}(S))\)会先对 S 做选择，然后再做连接。这两个语句实际上会产生相同的答案，但是如果在 10 亿个元组中，S 中只有 1 个 b_id=102 的元组那么的连接，然后再做选择，而\((R \bowtie (\sigma_{b\_id=102}(S))\) 将明显快于 \(\sigma_{b\_id=102}(R \bowtie S)\)。&lt;/p>
+&lt;p>一个更好的方法是说出你想要的结果，并让 DBMS 决定它要采取的步骤来计算这个查询。SQL 正是这样做的，它是在关系模型数据库上编写查询的事实上的标准。&lt;/p></description></item></channel></rss>
