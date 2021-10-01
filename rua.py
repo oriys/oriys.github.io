@@ -35,6 +35,8 @@ movies = list(set(
      "https://movie.douban.com/subject/30167509",
      "https://movie.douban.com/subject/33440021",
      "https://movie.douban.com/subject/35185752",
+     "https://movie.douban.com/subject/30170448",
+     "https://movie.douban.com/subject/27107756",
      "https://movie.douban.com/subject/4851891",
      "https://movie.douban.com/subject/35044518",
      "https://movie.douban.com/subject/25790761",
