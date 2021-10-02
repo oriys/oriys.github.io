@@ -181,11 +181,11 @@ if (!doNotTrack) {
 <li>客户端实现。一般来说，客户端是执行限流的一个不可靠的地方，因为客户端的请求很容易被恶意的人伪造。此外，我们可能无法控制客户端的实现。</li>
 <li>服务器端的实现。图 4-1 显示了一个放在服务器端的限流器。</li>
 </ul>
-<p><img src="../../system_design_interview/index-53_1.jpg" alt="4-1"></p>
+<img src="../../system_design_interview/index-53_1.jpg" width="50%"/>
 <p>除了客户端和服务器端的实现，还有一种替代方法。我们不在 API 服务器上设置限流器，而是创建一个限流器中间件，它可以节制对你的 API 的请求，如图 4-2 所示。</p>
-<p><img src="../../system_design_interview/index-53_2.jpg" alt="4-2"></p>
+<img src="../../system_design_interview/index-53_2.jpg" width="50%"/>
 <p>让我们用图 4-3 中的一个例子来说明限流在这个设计中的作用。假设我们的 API 允许每秒 2 个请求，而一个客户在一秒钟内向服务器发送了 3 个请求。前两个请求被路由到 API 服务器。然而，限流器中间件会对第三个请求进行节流，并返回一个 HTTP 状态代码 429。HTTP 429 响应状态代码表明用户发送了太多的请求。</p>
-<p><img src="../../system_design_interview/index-54_1.jpg" alt="4-3"></p>
+<img src="../../system_design_interview/index-54_1.jpg" width="50%"/>
 <p>云微服务已经广泛流行，限流通常在一个叫做 API 网关的组件中实现。API 网关是一个完全可管理的服务，支持限流、SSL 终止、认证、IP 白名单、服务静态内容等。现在，我们只需要知道，API 网关是一个支持限流的中间件。</p>
 <p>在设计限流器时，要问自己的一个重要问题是：限流器应该在哪里实现，在服务器端还是在网关中？这没有绝对的答案。这取决于你公司目前的技术栈、工程资源、优先级、目标等。这里有一些一般的指导方针。</p>
 <ul>
@@ -210,15 +210,15 @@ if (!doNotTrack) {
 <ul>
 <li>Token bucket 是一个有预先定义的容量的容器。Token 以预设的速度定期放入桶中。一旦桶满了，就不再添加 Token。如图 4-4 所示，Token bucket 的容量为 4，补给者每秒钟向桶中投入 2 个 Token。一旦桶满了，多余的 Token 就会溢出。</li>
 </ul>
-<p><img src="../../system_design_interview/index-55_1.jpg" alt="4-4"></p>
+<img src="../../system_design_interview/index-55_1.jpg" width="50%"/>
 <p>每个请求都会消耗一个 Token。当一个请求到达时，我们检查桶中是否有足够的 Token。图 4-5 解释了它是如何工作的。</p>
 <ul>
 <li>如果有足够的 Token，我们为每个请求取出一个 Token，然后请求就会通过。</li>
 <li>如果没有足够的 Token，则请求被放弃。</li>
 </ul>
-<p><img src="../../system_design_interview/index-56_1.jpg" alt="4-5"></p>
+<img src="../../system_design_interview/index-56_1.jpg" width="50%"/>
 <p>图 4-6 说明了 Token 消耗、再填充和限流逻辑是如何工作的。在这个例子中，Token bucket 的大小是 4，补给率是每 1 分钟 4 个。</p>
-<p><img src="../../system_design_interview/index-57_1.jpg" alt="4-6"></p>
+<img src="../../system_design_interview/index-57_1.jpg" width="50%"/>
 <p>Token bucket 算法需要两个参数。</p>
 <ul>
 <li>桶的大小：桶中允许的最大 Token 数量</li>
@@ -248,7 +248,7 @@ if (!doNotTrack) {
 <li>请求被从队列中拉出并定期处理。</li>
 </ul>
 <p>图 4-7 解释了该算法的工作原理。</p>
-<p><img src="../../system_design_interview/index-58_1.jpg" alt="4-7"></p>
+<img src="../../system_design_interview/index-58_1.jpg" width="66%"/>
 <ul>
 <li>Leaking bucket 算法需要以下两个参数。
 <ul>
@@ -283,9 +283,9 @@ if (!doNotTrack) {
 </li>
 </ul>
 <p>让我们用一个具体的例子来看看它是如何工作的。在图 4-8 中，时间单位是 1 秒，系统允许每秒钟最多有 3 个请求。在每个时间窗口中，如果收到的请求超过 3 个，额外的请求会被丢弃，如图 4-8 所示。</p>
-<p><img src="../../system_design_interview/index-59_1.jpg" alt="4-8"></p>
+<img src="../../system_design_interview/index-59_1.jpg" width="50%"/>
 <p>这种算法的一个主要问题是，在时间窗口边缘的流量突发可能导致超过允许配额的请求通过。考虑以下情况。</p>
-<p><img src="../../system_design_interview/index-59_2.jpg" alt="4-9"></p>
+<img src="../../system_design_interview/index-59_2.jpg" width="50%"/>
 <p>在图 4-9 中，系统允许每分钟最多有 5 个请求，可用配额在对人友好的整时重置。正如所见，在 2:00:00 和 2:01:00 之间有 5 个请求，在 2:01:00 和 2:02:00 之间还有 5 个请求。在 2:00:30 和 2:01:30 之间的 1 分钟窗口，有 10 个请求通过。这是允许的请求数的两倍。</p>
 <ul>
 <li>优点。
@@ -310,7 +310,7 @@ if (!doNotTrack) {
 <li>如果日志的大小与允许的计数相同或更低，则接受请求。否则，它被拒绝。</li>
 </ul>
 <p>我们用图 4-10 所示的一个例子来解释该算法。</p>
-<p><img src="../../system_design_interview/index-60_1.jpg" alt="4-10"></p>
+<img src="../../system_design_interview/index-60_1.jpg" width="50%"/>
 <p>在这个例子中，限流器允许每分钟 2 个请求。通常情况下，Linux 的时间戳会存储在日志中。然而，在我们的例子中，为了提高可读性，使用了人类可读的时间表示。</p>
 <ul>
 <li>
@@ -340,7 +340,7 @@ if (!doNotTrack) {
 </ul>
 <p>Sliding window counter 算法</p>
 <p>Sliding window counter 算法是一种混合方法，结合了 Fixed window counter 和 Sliding window log。该算法可以通过两种不同的方法来实现。我们将在本节中解释一种实现方法，并在本节末尾提供另一种实现方法的参考。图 4-11 说明了这种算法的工作原理。</p>
-<p><img src="../../system_design_interview/index-61_1.jpg" alt="4-11"></p>
+<img src="../../system_design_interview/index-61_1.jpg" width="50%"/>
 <p>假设限流器允许每分钟最多 7 个请求，上一分钟有 5 个请求，当前一分钟有 3 个请求。对于一个在当前分钟内到达 30%位置的新请求，滚动窗口中的请求数用以下公式计算。</p>
 <ul>
 <li>当前窗口中的请求+前一个窗口中的请求*滚动窗口和前一个窗口的重叠百分比 - 使用这个公式，我们得到 3 + 5 * 0.7% = 6.5 个请求。根据不同的使用情况，这个数字可以向上或向下取整。在我们的例子中，它被向下四舍五入为 6。</li>
@@ -368,7 +368,7 @@ if (!doNotTrack) {
 <li>EXPIRE：它为计数器设置一个超时。如果超时过后，计数器会被自动删除。</li>
 </ul>
 <p>图 4-12 显示了限流的高层结构，其工作原理如下。</p>
-<p><img src="../../system_design_interview/index-62_1.jpg" alt="4-12"></p>
+<img src="../../system_design_interview/index-62_1.jpg" width="50%"/>
 <ul>
 <li>客户端向限流中间件发送一个请求。</li>
 <li>限流中间件从 Redis 的相应桶中获取计数器，并检查是否达到限制。</li>
@@ -409,7 +409,7 @@ X-Ratelimit-Retry-After：等待的秒数，直到可以再次发出请求而不
 <p>当用户发送了太多的请求时，会向客户端返回一个 429 太多请求的错误和 X-Ratelimit- Retry-After 标头。</p>
 <p>详细设计</p>
 <p>图 4-13 展示了系统的详细设计。</p>
-<p><img src="../../system_design_interview/index-65_1.jpg" alt="4-13"></p>
+<img src="../../system_design_interview/index-65_1.jpg" width="66%"/>
 <ul>
 <li>规则被存储在磁盘上。工作者经常从磁盘中提取规则并将其存储在缓存中。</li>
 <li>当客户端向服务器发送请求时，该请求首先被发送到限流器中间件。</li>
@@ -434,17 +434,17 @@ X-Ratelimit-Retry-After：等待的秒数，直到可以再次发出请求而不
 <li>如果没有，在 Redis 中把计数器的值增加 1。</li>
 </ul>
 <p>如图 4-14 所示，在一个高度并发的环境中可能会发生竞态条件。</p>
-<p><img src="../../system_design_interview/index-66_1.jpg" alt="4-14"></p>
+<img src="../../system_design_interview/index-66_1.jpg" width="66%"/>
 <p>假设 Redis 中的计数器值是 3。如果两个请求在其中一个写回计数器值之前同时读取该值，每个请求都会将计数器增量为 1，然后写回，而不检查其他线程。两个请求（线程）都认为他们有正确的计数器值 4。然而，正确的计数器值应该是 5。</p>
 <p>锁是解决竞赛条件的最明显的解决方案。然而，锁将大大降低系统的速度。有两种策略通常被用来解决这个问题：Lua 脚本和 Redis 中的排序集数据结构。对这些策略感兴趣的读者可以参考相应的参考资料。</p>
 <p>同步问题 同步是分布式环境中需要考虑的另一个重要因素。为了支持数以百万计的用户，一个限流器服务器可能不足以处理这些流量。当使用多个限流器服务器时，需要进行同步。例如，在图 4-15 的左边，客户 1 向限流器 1 发送请求，客户 2 向限流器 2 发送请求。由于网络层是无状态的，客户可以向不同的限流器发送请求，如图 4-15 的右侧所示。如果没有发生同步，限流器 1 不包含任何关于客户端 2 的数据。因此，限流器不能正常工作。</p>
-<p><img src="../../system_design_interview/index-67_1.jpg" alt="4-15">
+<img src="../../system_design_interview/index-67_1.jpg" width="66%"/>
 一个可能的解决方案是使用粘性会话，允许客户发送流量到同一个限流器。这种解决方案是不可取的，因为它既不具备可扩展性，也不具备灵活性。一个更好的方法是使用集中式数据存储，如 Redis。该设计如图 4-16 所示。
-<img src="../../system_design_interview/index-67_2.jpg" alt="4-16"></p>
+<img src="../../system_design_interview/index-67_2.jpg" width="50%"/>
 <p>性能优化</p>
 <p>性能优化是系统设计访谈中的一个常见话题。我们将涉及两个方面的改进。</p>
 <p>首先，多数据中心的设置对于限流器来说是至关重要的，因为对于远离数据中心的用户来说，延迟很高。大多数云服务提供商在世界各地建立了许多边缘服务器位置。例如，截至 2020 年 5 月 20 日，Cloudflare 有 194 个地理上分布的边缘服务器。流量被自动路由到最近的边缘服务器以减少延迟。</p>
-<p><img src="../../system_design_interview/index-68_1.jpg" alt="4-17"></p>
+<img src="../../system_design_interview/index-68_1.jpg" width="50%"/>
 <p>第二，用最终的一致性模型来同步数据。如果你不清楚最终的一致性模型，请参考 &ldquo;第 6 章：设计键值存储 &ldquo;中的 &ldquo;一致性 &ldquo;部分。</p>
 <p>监控</p>
 <p>限流器投入使用后，收集分析数据以检查限流器是否有效是很重要的。主要的是，我们要确保</p>

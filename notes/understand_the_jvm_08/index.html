@@ -188,7 +188,7 @@ if (!doNotTrack) {
 <li>在 Java 虚拟机支持以下 5 条方法调用字节码指令，分别是:
 <ul>
 <li>invokestatic。用于调用静态方法。</li>
-<li>invokespecial。用于调用实例构造器<!-- raw HTML omitted -->()方法、私有方法和父类中的方法。</li>
+<li>invokespecial。用于调用实例构造器<init>()方法、私有方法和父类中的方法。</li>
 <li>invokevirtual。用于调用所有的虚方法。</li>
 <li>invokeinterface。用于调用接口方法，会在运行时再确定一个实现该接口的对象。</li>
 <li>invokedynamic。先在运行时动态解析出调用点限定符所引用的方法，然后再执行该方法。前面 4 条调用指令，分派逻辑都固化在 Java 虚拟机内部，而 invokedynamic 指令的分派逻辑是由用户设定的引导方法来决定的。</li>
