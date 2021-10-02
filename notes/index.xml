@@ -16863,7 +16863,7 @@ Subject: Searching for the meaning of life.
     <item>
       <title>系统设计::在分布式系统中设计一个唯一ID生成器</title>
       <link>/notes/system_design_interview_07/</link>
-      <pubDate>Sat, 06 Feb 2021 22:20:24 +0800</pubDate>
+      <pubDate>Sun, 07 Feb 2021 22:20:24 +0800</pubDate>
       <guid>/notes/system_design_interview_07/</guid>
       <description>&lt;h2 id=&#34;在分布式系统中设计一个唯一-id-生成器&#34;&gt;在分布式系统中设计一个唯一 ID 生成器&lt;/h2&gt;
 &lt;p&gt;在本章中，你被要求设计一个分布式系统中的唯一 ID 生成器。你的第一个想法可能是在传统的数据库中使用一个带有自动增加属性的主键。然而，auto_increment 在分布式环境中不起作用，因为单个数据库服务器不够大，以最小的延迟在多个数据库中生成唯一的 ID 是具有挑战性的。&lt;/p&gt;
