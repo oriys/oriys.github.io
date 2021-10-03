@@ -1,0 +1,1356 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Interviews | Y.CH.Y</title>
+    <link>/interview/</link>
+      <atom:link href="/interview/index.xml" rel="self" type="application/rss+xml" />
+    <description>Interviews</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Sun, 22 Aug 2021 21:51:33 +0800</lastBuildDate>
+    <item>
+      <title>八股文::数据库</title>
+      <link>/interview/interview_questions_db/</link>
+      <pubDate>Sun, 22 Aug 2021 21:51:33 +0800</pubDate>
+      <guid>/interview/interview_questions_db/</guid>
+      <description>&lt;h2 id=&#34;数据库&#34;&gt;数据库&lt;/h2&gt;
+&lt;h3 id=&#34;mysql-为什么使用-b-树来作索引对比-b-树它的优点和缺点是什么&#34;&gt;MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？&lt;/h3&gt;
+&lt;p&gt;由于 mysql 通常将数据存放在磁盘中，读取数据就会产生磁盘 IO 消耗。而 B+ 树的非叶子节点中不保存数据，B 树中非叶子节点会保存数据，通常一个节点大小会设置为磁盘页大小，这样 B+树每个节点可放更多的 key，B 树则更少。这样就造成了，B 树的高度会比 B+ 树更高，从而会产生更多的磁盘 IO 消耗。&lt;/p&gt;
+&lt;p&gt;B+ 树叶子节点构成链表，更利用范围查找和排序。而 B 树进行范围查找和排序则要对树进行递归遍历&lt;/p&gt;
+&lt;p&gt;B+ 树层级更少，查找更快
+B+ 树查询速度稳定：由于 B+ 树所有数据都存储在叶子节点，所以查询任意数据的次数都是树的高度 h
+B+ 树有利于范围查找
+B+ 树全节点遍历更快：所有叶子节点构成链表，全节点扫描，只需遍历这个链表即可
+B 树优点：如果在 B 树中查找的数据离根节点近，由于 B 树节点中保存有数据，那么这时查询速度比 B+树快。&lt;/p&gt;
+&lt;h3 id=&#34;数据库的事务隔离级别有哪些各有哪些优缺点&#34;&gt;数据库的事务隔离级别有哪些？各有哪些优缺点？&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;读未提交
+&lt;ul&gt;
+&lt;li&gt;读写都不加锁，不隔离&lt;/li&gt;
+&lt;li&gt;每次查询到的都是最新版&lt;/li&gt;
+&lt;li&gt;引发脏读问题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;读提交
+&lt;ul&gt;
+&lt;li&gt;读此时候已经提交的数据&lt;/li&gt;
+&lt;li&gt;写数据时，加 X 锁，提交时释放&lt;/li&gt;
+&lt;li&gt;Oracle 默认隔离级别&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;可重复读
+&lt;ul&gt;
+&lt;li&gt;读取事务开始的数据状态&lt;/li&gt;
+&lt;li&gt;写数据时，加 X 锁，提交时释放&lt;/li&gt;
+&lt;li&gt;MySQL 默认隔离级别&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;串行化
+&lt;ul&gt;
+&lt;li&gt;读数据加 S 锁，写数据时加 X 锁，提交时释放&lt;/li&gt;
+&lt;li&gt;对于同一条数据，同时只有一个事务进行写操作&lt;/li&gt;
+&lt;li&gt;隔离性最高，性能最差&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;简述乐观锁以及悲观锁的区别以及使用场景&#34;&gt;简述乐观锁以及悲观锁的区别以及使用场景&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;悲观锁
+&lt;ul&gt;
+&lt;li&gt;每次获取数据的时候，都会担心数据被修改，所以每次获取数据的时候都会进行加锁，确保在自己使用的过程中数据不会被别人修改，使用完成后进行数据解锁。由于数据进行加锁，期间对该数据进行读写的其他线程都会进行等待。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;乐观锁
+&lt;ul&gt;
+&lt;li&gt;每次获取数据的时候，都不会担心数据被修改，所以每次获取数据的时候都不会进行加锁，但是在更新数据的时候需要判断该数据是否被别人修改过。如果数据被其他线程修改，则不进行数据更新，如果数据没有被其他线程修改，则进行数据更新。由于数据没有进行加锁，期间该数据可以被其他线程进行读写操作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;使用场景
+&lt;ul&gt;
+&lt;li&gt;悲观锁
+&lt;ul&gt;
+&lt;li&gt;比较适合写入操作比较频繁的场景，如果出现大量的读取操作，每次读取的时候都会进行加锁，这样会增加大量的锁的开销，降低了系统的吞吐量&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;乐观锁
+&lt;ul&gt;
+&lt;li&gt;比较适合读取操作比较频繁的场景，如果出现大量的写入操作，数据发现冲突的可能性会加大，为了保证数据的一致性，应用层需要不断的重现获取数据，这样会增加大量的查询操作，降低了系统的吞吐量。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;产生死锁的必要条件有哪些如何解决死锁&#34;&gt;产生死锁的必要条件有哪些？如何解决死锁？&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;四个条件
+&lt;ul&gt;
+&lt;li&gt;互斥条件：一个资源每次只能被一个进程使用。&lt;/li&gt;
+&lt;li&gt;请求与保持条件：一个进程因请求资源而阻塞时，对已获得的资源保持不放。&lt;/li&gt;
+&lt;li&gt;不剥夺条件:进程已获得的资源，在末使用完之前，不能强行剥夺。&lt;/li&gt;
+&lt;li&gt;循环等待条件:若干进程之间形成一种头尾相接的循环等待资源关系。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;解决
+&lt;ul&gt;
+&lt;li&gt;按同一顺序访问对象:如果所有并发事务按同一顺序访问对象，则发生死锁的可能性会降低。&lt;/li&gt;
+&lt;li&gt;避免事务中的用户交互:避免编写包含用户交互的事务，因为运行没有用户交互的批处理的速度要远远快于用户手动响应查询的速度&lt;/li&gt;
+&lt;li&gt;保持事务简短并在一个批处理中:在同一数据库中并发执行多个需要长时间运行的事务时通常发生死锁。事务运行时间越长，其持有排它锁或更新锁的时间也就越长，从而堵塞了其它活动并可能导致死锁。保持事务在一个批处理中，可以最小化事务的网络通信往返量，减少完成事务可能的延迟并释放锁。&lt;/li&gt;
+&lt;li&gt;使用低隔离级别:确定事务是否能在更低的隔离级别上运行。执行提交读允许事务读取另一个事务已读取（未修改）的数据，而不必等待第一个事务完成。使用较低的隔离级别（例如提交读）而不使用较高的隔离级别（例如可串行读）可以缩短持有共享锁的时间，从而降低了锁定争夺。&lt;/li&gt;
+&lt;li&gt;使用绑定连接:使用绑定连接使同一应用程序所打开的两个或多个连接可以相互合作。次级连接所获得的任何锁可以象由主连接获得的锁那样持有，反之亦然，因此不会相互阻塞。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;聚簇索引和非聚簇索引有什么区别&#34;&gt;聚簇索引和非聚簇索引有什么区别？&lt;/h3&gt;
+&lt;p&gt;聚簇索引是对磁盘上实际数据重新组织以按指定的一个或多个列的值排序的算法。特点是存储数据的顺序和索引顺序一致。一般情况下主键会默认创建聚簇索引，且一张表只允许存在一个聚簇索引。聚簇索引的叶子节点就是数据节点，而非聚簇索引的叶子节点仍然是索引节点，只不过有指向对应数据块的指针。&lt;/p&gt;
+&lt;p&gt;InnoDB 的的二级索引的叶子节点存放的是 KEY 字段加主键值。因此，通过二级索引查询首先查到是主键值，然后 InnoDB 再根据查到的主键值通过主键索引找到相应的数据块。而 MyISAM 的二级索引叶子节点存放的还是列值与行号的组合，叶子节点中保存的是数据的物理地址。所以可以看出 MYISAM 的主键索引和二级索引没有任何区别，主键索引仅仅只是一个叫做 PRIMARY 的唯一、非空的索引，且 MYISAM 引擎中可以不设主键。&lt;/p&gt;
+&lt;h3 id=&#34;什么是数据库事务mysql-为什么会使用-innodb-作为默认选项&#34;&gt;什么是数据库事务，MySQL 为什么会使用 InnoDB 作为默认选项&lt;/h3&gt;
+&lt;p&gt;数据库事务是指一个逻辑单元执行的一系列操作，一个逻辑工作单元必须有四个属性，称为 ACID（原子性、一致性、隔离性和持久性）属性&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;以主流的 MyISAM 和 InnoDB 的对比
+&lt;ul&gt;
+&lt;li&gt;功能对比
+&lt;ul&gt;
+&lt;li&gt;InnoDB 支持 ACID 的事务 4 个特性，而 MyISAM 不支持；&lt;/li&gt;
+&lt;li&gt;InnoDB 支持 4 种事务隔离级别，默认是可重复读 repeatable read，MyISAM 不支持；&lt;/li&gt;
+&lt;li&gt;InnoDB 支持 crash 安全恢复，MyISAM 不支持；InnoDB 支持外键，MyISAM 不支持；&lt;/li&gt;
+&lt;li&gt;InnoDB 支持行级别的锁粒度，MyISAM 不支持，只支持表级别的锁粒度；&lt;/li&gt;
+&lt;li&gt;InnoDB 支持 MVCC，MyISAM 不支持。&lt;/li&gt;
+&lt;li&gt;InnoDB 特性上，InnoDB 表最大可以 64TB，支持聚簇索引、支持压缩数据存储，支持数据加密，支持查询/索引/数据高速缓存，支持自适应 hash 索引、空间索引，支持热备份和恢复等。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;性能对比
+&lt;ul&gt;
+&lt;li&gt;读写混合模式下，随着 CPU 核数的增加，InnoDB 的读写能力呈线性增长，在这个测试用例里，最高可达近 9000 的 TPS，但 MyISAM 因为读写不能并发，它的处理能力跟核数没关系，呈一条水平线，TPS 低于 500。&lt;/li&gt;
+&lt;li&gt;只读模式下，随着 CPU 核数的增加，InnoDB 的读写能力呈线性增长，最高可达近 14000 的 TPS，但 MyISAM 的处理能力不到 3000。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;简述什么是最左匹配原则&#34;&gt;简述什么是最左匹配原则&lt;/h3&gt;
+&lt;p&gt;最左优先，以最左边的为起点任何连续的索引都能匹配上&lt;/p&gt;
+&lt;p&gt;skip scan 之后所谓的最左原则还成立吗？&lt;/p&gt;
+&lt;h3 id=&#34;mysql-中-innodb-和-mylsam-的区别是什么&#34;&gt;MySQL 中 InnoDB 和 MylSAM 的区别是什么？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.runoob.com/w3cnote/mysql-different-nnodb-myisam.html&#34;&gt;MySQL 存储引擎 InnoDB 与 Myisam 的六大区别 | 菜鸟教程&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;数据库如何设计索引如何优化查询&#34;&gt;数据库如何设计索引，如何优化查询？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://segmentfault.com/a/1190000038921156&#34;&gt;MySQL 如何设计索引更高效？ - SegmentFault 思否&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;简述数据库中什么情况下进行分库什么情况下进行分表&#34;&gt;简述数据库中什么情况下进行分库，什么情况下进行分表？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://segmentfault.com/a/1190000038944473&#34;&gt;这四种情况下，才是考虑分库分表的时候！ - SegmentFault 思否&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;什么是-sql-注入攻击如何防止这类攻击&#34;&gt;什么是 SQL 注入攻击？如何防止这类攻击？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://segmentfault.com/a/1190000023211211&#34;&gt;SQL 注入攻击原因及预防 - SegmentFault 思否&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;mysql-有哪些常见的存储引擎它们的区别是什么&#34;&gt;MySQL 有哪些常见的存储引擎？它们的区别是什么？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://dev.mysql.com/doc/refman/8.0/en/storage-engines.html&#34;&gt;MySQL :: MySQL 8.0 Reference Manual :: 16 Alternative Storage Engines&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;简述一致性哈希算法的实现方式及原理&#34;&gt;简述一致性哈希算法的实现方式及原理&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://morven.life/posts/consistent_hash/&#34;&gt;大话「一致性哈希」&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;mysql-中-join-与-left-join-的区别是什么&#34;&gt;MySQL 中 join 与 left join 的区别是什么？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://dev.mysql.com/doc/refman/8.0/en/join.html&#34;&gt;MySQL :: MySQL 8.0 Reference Manual :: 13.2.10.2 JOIN Clause&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;联合索引的存储结构是什么&#34;&gt;联合索引的存储结构是什么？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://juejin.cn/post/6844904073955639304&#34;&gt;联合索引在 B+树上的存储结构及数据查找方式 - 掘金&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;简述-mysql-常见索引类型介绍一下覆盖索引&#34;&gt;简述 MySQL 常见索引类型，介绍一下覆盖索引&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://dev.mysql.com/doc/refman/8.0/en/create-index.html&#34;&gt;MySQL :: MySQL 8.0 Reference Manual :: 13.1.15 CREATE INDEX Statement&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;数据库索引的实现原理是什么&#34;&gt;数据库索引的实现原理是什么？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://tech.meituan.com/2014/06/30/mysql-index.html&#34;&gt;MySQL 索引原理及慢查询优化 - 美团技术团队&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;简述-mysql-mvcc-的实现原理&#34;&gt;简述 MySQL MVCC 的实现原理&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;行记录的版本控制
+&lt;ul&gt;
+&lt;li&gt;由于 redo log 的存在，可以从最新版本推算出之前的版本&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;快照度
+&lt;ul&gt;
+&lt;li&gt;不锁定数据的情况下，读取数据的特定历史版本&lt;/li&gt;
+&lt;li&gt;版本由事物的具体需求确定
+&lt;ul&gt;
+&lt;li&gt;RC：根据每次 SELECT 时，其他事务的提交情况&lt;/li&gt;
+&lt;li&gt;RR：根据事物开始时，其他事物的提交情况&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;当前读
+&lt;ul&gt;
+&lt;li&gt;读取数据的最新版本，并加锁&lt;/li&gt;
+&lt;li&gt;若当前版本被加锁且不兼容，则阻塞等待&lt;/li&gt;
+&lt;li&gt;X 锁: UPDATE，DELETE，SELECT FOR UPDATE&lt;/li&gt;
+&lt;li&gt;S 锁: SELECT IN SHARE MODE&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;数据库的读写分离的作用是什么如何实现&#34;&gt;数据库的读写分离的作用是什么？如何实现？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://dannashen.github.io/2019/07/04/MySQL%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/&#34;&gt;MySQL 读写分离 — Danna 的博客&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;如何解决缓存与数据库不一致的问题&#34;&gt;如何解决缓存与数据库不一致的问题？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://yunpengn.github.io/blog/2019/05/04/consistent-redis-sql/&#34;&gt;Consistency between Redis Cache and SQL Database | Yunpeng&amp;rsquo;s Blog&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;mysql-的索引什么情况下会失效&#34;&gt;MySQL 的索引什么情况下会失效？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://dev.mysql.com/doc/refman/8.0/en/mysql-indexes.html&#34;&gt;MySQL :: MySQL 8.0 Reference Manual :: 8.3.1 How MySQL Uses Indexes&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;mysql-联合索引底层原理是什么&#34;&gt;MySQL 联合索引底层原理是什么？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://blog.51cto.com/u_15317888/3232479&#34;&gt;MYSQL 索引的底层原理【图文】&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;唯一索引与普通索引的区别是什么使用索引会有哪些优缺点&#34;&gt;唯一索引与普通索引的区别是什么？使用索引会有哪些优缺点？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://blog.xuanweiyao.com/archives/3b3c800b6b8648f2aae88f61dac30b53&#34;&gt;唯一索引与普通索引的区别是什么？使用索引会有哪些优缺点？ | Jamin 的个人博客&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;简述事务的四大特性&#34;&gt;简述事务的四大特性&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;原子性(Atomicity)
+&lt;ul&gt;
+&lt;li&gt;事务要么全部成功，要么全部失败&lt;/li&gt;
+&lt;li&gt;MySQL 的两段式提交保证了事务的原子性&lt;/li&gt;
+&lt;li&gt;undo log 用来回滚事物的更改&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;一致性(Consistency)
+&lt;ul&gt;
+&lt;li&gt;数据库要从一个一致性状态变换到另一个一致性状态&lt;/li&gt;
+&lt;li&gt;锁和两段式提交保证了一致性&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;隔离性(Isolation)
+&lt;ul&gt;
+&lt;li&gt;事务不能被其他事务的操作数据干扰&lt;/li&gt;
+&lt;li&gt;多个并发事务之间要相互隔离&lt;/li&gt;
+&lt;li&gt;锁和 undo log 实现了 MySQL 事务的隔离性&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;持久性(Durability)
+&lt;ul&gt;
+&lt;li&gt;一个事务一旦被提交，它对数据库的数据的改变就是永久的&lt;/li&gt;
+&lt;li&gt;redo log 实现了 MySQL 事务的持久化&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;如何解决幻读的问题&#34;&gt;如何解决幻读的问题&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;间隙锁的功能与行锁相同，只是针对间隙加锁&lt;/li&gt;
+&lt;li&gt;间隙锁不分读写，不允许在间隙内插入&lt;/li&gt;
+&lt;li&gt;可重复读加锁时候，同时锁住数据和所有间隙&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;简述间隙锁的作用&#34;&gt;简述间隙锁的作用&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;加锁时以 Next-Key(间隙加上下一行记录)为基本单位&lt;/li&gt;
+&lt;li&gt;查找过程中扫描过的范围才加锁&lt;/li&gt;
+&lt;li&gt;唯一索引等值查询，没有间隙锁，只加行锁&lt;/li&gt;
+&lt;li&gt;索引等值查询最右一个扫描到的不满足条件值不加行锁&lt;/li&gt;
+&lt;li&gt;索引才盖上且只加 S 锁时，不锁主键索引&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;简述更新流程&#34;&gt;简述更新流程&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;执行器先找引擎取要更新的记录，如果这一行所在的数据页本来就在内存中，就直接返回给执行器；否则，需要先从磁盘读入内存，给这行加上 X 锁，然后再返回。&lt;/li&gt;
+&lt;li&gt;执行器拿到引擎给的行数据，把这个值更新，比如原来是 N，现在就是 N+1，得到新的一行数据，再调用引擎接口写入这行新数据。&lt;/li&gt;
+&lt;li&gt;引擎先将这个更新操作记录到 redo log 里面，再将这行新数据更新到内存中的数据页，此时 redo log 处于 prepare 状态。然后告知执行器执行完成了，随时可以提交事务。&lt;/li&gt;
+&lt;li&gt;执行器生成这个操作的 binlog，并把 binlog 写入磁盘。&lt;/li&gt;
+&lt;li&gt;执行器调用引擎的提交事务接口，引擎把刚刚写入的 redo log 改成提交（commit）状态，解 X 锁，更新完成。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;b-树中叶子节点存储的是什么数据&#34;&gt;B+ 树中叶子节点存储的是什么数据&lt;/h3&gt;
+&lt;p&gt;聚簇索引是数据，二级索引是主键索引的引用&lt;/p&gt;
+&lt;h3 id=&#34;mysql-索引使用什么数据结构&#34;&gt;MySQL 索引使用什么数据结构？&lt;/h3&gt;
+&lt;p&gt;B+ 树&lt;/p&gt;
+&lt;h3 id=&#34;sql-优化的方案有哪些如何定位问题并解决问题&#34;&gt;SQL 优化的方案有哪些，如何定位问题并解决问题？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://tech.meituan.com/2016/12/02/performance-tunning.html&#34;&gt;常见性能优化策略的总结&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;简述主从复制以及读写分离的使用场景&#34;&gt;简述主从复制以及读写分离的使用场景&lt;/h3&gt;
+&lt;h3 id=&#34;假设建立联合索引-a-b-c-如果对字段-a-和-c-查询会用到这个联合索引吗&#34;&gt;假设建立联合索引 (a, b, c) 如果对字段 a 和 c 查询，会用到这个联合索引吗？&lt;/h3&gt;
+&lt;p&gt;会&lt;/p&gt;
+&lt;h3 id=&#34;mysql-有什么调优的方式&#34;&gt;MySQL 有什么调优的方式？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/39038788&#34;&gt;MySQL 性能调优的 10 个方法 - 知乎&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;mysql-常用的聚合函数有哪些&#34;&gt;MySQL 常用的聚合函数有哪些？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html&#34;&gt;MySQL :: MySQL 8.0 Reference Manual :: 12.20.1 Aggregate Function Descriptions&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;简述数据库事务复制原理&#34;&gt;简述数据库事务复制原理&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://blog.csdn.net/JYL15732624861/article/details/82493502&#34;&gt;MySQL 复制原理_焦玉丽-CSDN 博客&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;什么时候索引会失效&#34;&gt;什么时候索引会失效？&lt;/h3&gt;
+&lt;h3 id=&#34;如何解决主从不一致的问题&#34;&gt;如何解决主从不一致的问题？&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;问题
+&lt;ul&gt;
+&lt;li&gt;log 传送开销较小，主要是消费 relay log 耗时&lt;/li&gt;
+&lt;li&gt;备库性能不如主库&lt;/li&gt;
+&lt;li&gt;备库承担了很多分析 SQL&lt;/li&gt;
+&lt;li&gt;主库的长事务未提交&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;处理方法
+&lt;ul&gt;
+&lt;li&gt;主备使用相同配置的机器&lt;/li&gt;
+&lt;li&gt;备库关闭 log 实时沙盘&lt;/li&gt;
+&lt;li&gt;增加从库数量，应对分析 SQL&lt;/li&gt;
+&lt;li&gt;binlog 传送至大数据系统，供分析&lt;/li&gt;
+&lt;li&gt;大事务一分多&lt;/li&gt;
+&lt;li&gt;多线程分配执行 relay log
+&lt;ul&gt;
+&lt;li&gt;按表分发&lt;/li&gt;
+&lt;li&gt;按行分发&lt;/li&gt;
+&lt;li&gt;按事务组分发&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;数据库主键索引和唯一索引有什么区别&#34;&gt;数据库主键索引和唯一索引有什么区别？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-binlogundo-log-和-redo-log-的作用&#34;&gt;简述 binlog、undo log 和 redo log 的作用&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Binlog 归档日志
+&lt;ul&gt;
+&lt;li&gt;Binlog 是 server 层产生的逻辑日志&lt;/li&gt;
+&lt;li&gt;用来进行数据复制和数据传送&lt;/li&gt;
+&lt;li&gt;Binlog 完整记录了数据库每次的数据操作，可作为数据闪回手段&lt;/li&gt;
+&lt;li&gt;Binlog 记录在专门的文件中&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Undo Log 回滚日志
+&lt;ul&gt;
+&lt;li&gt;InnoDB 自身产生的逻辑日志，用于事务回滚和展示旧版本&lt;/li&gt;
+&lt;li&gt;对任何数据 (缓存) 的更新，都先写 Undo Log&lt;/li&gt;
+&lt;li&gt;Undo Log 位于表空间的 undo segment 中&lt;/li&gt;
+&lt;li&gt;SQL:&lt;code&gt;update name = &#39;b&#39;&lt;/code&gt; -&amp;gt; Undo Log:&lt;code&gt;update name = &#39;a&#39;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Redo Log 重做日志
+&lt;ul&gt;
+&lt;li&gt;InnoDB 自身产生的物理日志，记录数据页的变化&lt;/li&gt;
+&lt;li&gt;InnoDB “日志优先于数据”，记录 Redo Log 视为数据已经更新&lt;/li&gt;
+&lt;li&gt;内存中的数据更新后写 Redo Log，数据被写入硬盘后删除&lt;/li&gt;
+&lt;li&gt;Redo Log 储存在 4 个 1GB 文件中，并且循环写入&lt;/li&gt;
+&lt;li&gt;write pos 当前日志写入点&lt;/li&gt;
+&lt;li&gt;check point 是擦出点，数据被更新到硬盘时擦除&lt;/li&gt;
+&lt;li&gt;当 write pos 追上 check pos 点时，事务无法提交，需要等待 check point 推进&lt;/li&gt;
+&lt;li&gt;Redo Log 保证了数据的持久化&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;模糊查询是如何实现的&#34;&gt;模糊查询是如何实现的？&lt;/h3&gt;
+&lt;h3 id=&#34;mysql-中-varchar-和-char-的区别是什么&#34;&gt;MySQL 中 varchar 和 char 的区别是什么？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://dev.mysql.com/doc/refman/8.0/en/char.html&#34;&gt;MySQL :: MySQL 8.0 Reference Manual :: 11.3.2 The CHAR and VARCHAR Types&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;如何设计数据库压测方案&#34;&gt;如何设计数据库压测方案？&lt;/h3&gt;
+&lt;h3 id=&#34;数据库查询中左外连接和内连接的区别是什么&#34;&gt;数据库查询中左外连接和内连接的区别是什么？&lt;/h3&gt;
+&lt;p&gt;左外连接的结果集包含左表的所有记录和右表中满足连接条件的记录，结果集中那些不符合连接条件的来源于右表的列值为 null&lt;/p&gt;
+&lt;p&gt;内连接查询会将 T1 表的每一行和 T2 表的每一行进行比较,并找出满足连接谓词的组合。当连接谓词被满足，A 和 B 中匹配的行会按列组合(并排组合)成结果集中的一行。&lt;/p&gt;
+&lt;h3 id=&#34;并发事务会引发哪些问题如何解决&#34;&gt;并发事务会引发哪些问题？如何解决？&lt;/h3&gt;
+&lt;h3 id=&#34;数据库索引的叶子结点为什么是有序链表&#34;&gt;数据库索引的叶子结点为什么是有序链表？&lt;/h3&gt;
+&lt;p&gt;为了范围查找&lt;/p&gt;
+&lt;h3 id=&#34;如何定位以及优化数据库慢查询&#34;&gt;如何定位以及优化数据库慢查询&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/164897114&#34;&gt;数据库优化（一）Mysql 慢查询的定位和分析 - 知乎&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;建立了三个单列索引-a-b-c-查询-where-a---and-b---and-c--索引会起作用吗&#34;&gt;建立了三个单列索引 a, b, c 查询 where a = ? and b = ? and c = ？索引会起作用吗？&lt;/h3&gt;
+&lt;p&gt;可能会，如果走全表的代价小于走索引，那就走全表。&lt;/p&gt;
+&lt;h3 id=&#34;数据库反范式设计会出现什么问题&#34;&gt;数据库反范式设计会出现什么问题？&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.kancloud.cn/thinkphp/mysql-design-optimalize/39324&#34;&gt;数据中设计中的范式与反范式 · Mysql 设计与优化专题 · 看云&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;mysql-锁的种类&#34;&gt;MySQL 锁的种类&lt;/h3&gt;
+&lt;p&gt;按照粒度分，MySQL 锁可以分为全局锁、表级锁、行锁&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;全局锁
+&lt;ul&gt;
+&lt;li&gt;FTWRL(Flush tables with read lock)&lt;/li&gt;
+&lt;li&gt;使整个库处于只读状态&lt;/li&gt;
+&lt;li&gt;主要用途保证备份的一致性&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;表锁
+&lt;ul&gt;
+&lt;li&gt;lock tables table_name read/write&lt;/li&gt;
+&lt;li&gt;锁住整张表&lt;/li&gt;
+&lt;li&gt;元数据锁 (matadata lock)
+&lt;ul&gt;
+&lt;li&gt;表的结构、字段，数据类型、索引&lt;/li&gt;
+&lt;li&gt;事务访问元数据时，会自动给表加 DML 读锁&lt;/li&gt;
+&lt;li&gt;事物修改元数据时，会自动给表加 MDL 写锁&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;行锁
+&lt;ul&gt;
+&lt;li&gt;读锁/写锁&lt;/li&gt;
+&lt;li&gt;只有写写兼容&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;全局锁会锁住左右表，整个库无法修改&lt;/p&gt;
+&lt;p&gt;表级锁分为表锁 (数据锁) 和元数据锁&lt;/p&gt;
+&lt;p&gt;行锁会锁住数据行，分为共享锁和独占锁&lt;/p&gt;
+&lt;h3 id=&#34;什么是脏读不可重复读幻读&#34;&gt;什么是脏读、不可重复读、幻读&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;脏读: 读到了其他事务未提交的数据&lt;/li&gt;
+&lt;li&gt;不可重复读: 同样的查询读到的数据内容不一样&lt;/li&gt;
+&lt;li&gt;幻读: 同样的查询读到了更多的数据&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;MySQL 不同隔离级别的问题&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;隔离级别&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;脏读&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;不可重复读&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;幻读&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;RU&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;X&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;X&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;X&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RC&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;√&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;X&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;X&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RR&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;√&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;√&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;部分 √&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SR&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;√&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;√&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;√&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;长事务危害&#34;&gt;长事务危害&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;行级锁长时间无法释放，导致其他事务等待
+&lt;ul&gt;
+&lt;li&gt;当前读会对数据行加锁，事务提交前无法释放&lt;/li&gt;
+&lt;li&gt;调整 innodb_lock_wait_timeout 参数，默认 50 秒，超过 50 秒还未获取锁报错，适当缩短参数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;容易产生死锁
+&lt;ul&gt;
+&lt;li&gt;两个事务都等待对方的锁释放&lt;/li&gt;
+&lt;li&gt;主动死锁检测: innodb_deadlock_detect，发现死锁回滚代价比较小的事务&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;MDL 锁 hold 住大量事务，造成 MySQL 奔溃
+&lt;ul&gt;
+&lt;li&gt;事务访问数据时，会自动给表加 MDL 锁&lt;/li&gt;
+&lt;li&gt;事务修改元数据时，自动加 MDL 锁&lt;/li&gt;
+&lt;li&gt;遇到锁不兼容时，申请 MDL 锁的事务形成一个队列&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;查看影响性能的锁
+&lt;ul&gt;
+&lt;li&gt;查看长事务 infomation_schema 库 innodb_trx 表&lt;/li&gt;
+&lt;li&gt;查看锁 infomation_schema 库 innodb_locks 表&lt;/li&gt;
+&lt;li&gt;查看阻塞的事务 infomation_schema 库 innodb_locks_waits 表&lt;/li&gt;
+&lt;li&gt;查看锁 performance_schema 库 data_locks 表&lt;/li&gt;
+&lt;li&gt;查看锁等待 performance_schema 库 data_locks_waits 表&lt;/li&gt;
+&lt;li&gt;查看 MDL 锁 performance_schema 库 matadata_locko 表&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;业务上的建议
+&lt;ul&gt;
+&lt;li&gt;控制长事务，没有必要的情况不开始事务&lt;/li&gt;
+&lt;li&gt;数据修改尽量放在事务后部分，降低锁时间&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;数据库备份&#34;&gt;数据库备份&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;备份时数据库的状态
+&lt;ul&gt;
+&lt;li&gt;热备：正常运行中直接备份&lt;/li&gt;
+&lt;li&gt;冷备：完全停止后备份&lt;/li&gt;
+&lt;li&gt;温备：数据库只读&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;备份文件的格式
+&lt;ul&gt;
+&lt;li&gt;逻辑备份：导出文本或 SQL 语句&lt;/li&gt;
+&lt;li&gt;物理备份：备份数据库底层文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;备份文件的内容
+&lt;ul&gt;
+&lt;li&gt;完全备份：备份完整数据&lt;/li&gt;
+&lt;li&gt;增量备份：备份数据差异&lt;/li&gt;
+&lt;li&gt;日志备份：备份 Binlog&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;工具
+&lt;ul&gt;
+&lt;li&gt;mysqldump：逻辑，热备，全量或部分
+&lt;ul&gt;
+&lt;li&gt;特点
+&lt;ul&gt;
+&lt;li&gt;非常常用的 MySQL 逻辑备份工具&lt;/li&gt;
+&lt;li&gt;MySQL Server 自带&lt;/li&gt;
+&lt;li&gt;输出的备份内容为 SQL 语句，平衡了阅读和还原&lt;/li&gt;
+&lt;li&gt;SQL 语句占空间较小&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;原理
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;SELECT SQL_NO_CACHE * FROM table_name&lt;/code&gt;，避免干扰其他事务，不会进入 SQL 缓存&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;使用方法
+&lt;ul&gt;
+&lt;li&gt;导出 &lt;code&gt;mysqldump -uroot -p123456 --database db --single-transaction &amp;gt; db.sql&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;导入 &lt;code&gt;source db.sql&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;缺点
+&lt;ul&gt;
+&lt;li&gt;导出逻辑数据，备份慢&lt;/li&gt;
+&lt;li&gt;导入需要执行 SQL 语句，备份慢&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;增量备份
+&lt;ul&gt;
+&lt;li&gt;思路：binglog 忠实记录了 MySQL 数据的变化，mysqldump 全量备份之后，可以用 binlog 作为增量，mysqldump 全量备份时，切换到新的 binlog 文件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mysqldump -uroot -p123456 --database db --single-transaction --flush-logs --master-data=2&amp;gt; db.sql&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;xtrabackup：物理，热，全量 + 增量备份
+&lt;ul&gt;
+&lt;li&gt;特点
+&lt;ul&gt;
+&lt;li&gt;直接备份 InnoDB 底层数据文件&lt;/li&gt;
+&lt;li&gt;导出不需要转换，速度快&lt;/li&gt;
+&lt;li&gt;工作时对数据库压力小&lt;/li&gt;
+&lt;li&gt;容易实现增量备份&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;实现
+&lt;ul&gt;
+&lt;li&gt;启动 redo log 监听线程，开始收集 redo leg&lt;/li&gt;
+&lt;li&gt;拷贝 ibd 数据文件&lt;/li&gt;
+&lt;li&gt;停止收集 redo log&lt;/li&gt;
+&lt;li&gt;加 FTWRL 锁拷贝元数据 frm，一小段温备时间&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;还原
+&lt;ul&gt;
+&lt;li&gt;还原 ibd，重放 redo log&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;使用
+&lt;ul&gt;
+&lt;li&gt;备份 &lt;code&gt;innobackupex --user==root --password=123456 backdir/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;还原 &lt;code&gt;innobackupex --copy-back bakdir/xxxx-xx-xx/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;增量备份 &lt;code&gt;innobackupex --user=root --password=123456 --incremental bakdir/ --increamental-basedir=&#39;bakdir/xxxx-xx-xx/&#39;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;合并增量到全量 &lt;code&gt;innobackupex --apply-log bakdir/xxxx-xx-xx/ --incremental-dir=bakdir/yyyy-yy-yy/&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;其他
+&lt;ul&gt;
+&lt;li&gt;mylvmbackup
+&lt;ul&gt;
+&lt;li&gt;物理、温备、利用 LVM、直接备份磁盘数据&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;mydumper
+&lt;ul&gt;
+&lt;li&gt;对比 mysqldump 实现了多线程并发&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Zmanda Recovery Manage
+&lt;ul&gt;
+&lt;li&gt;集成了多种功能备份工具&lt;/li&gt;
+&lt;li&gt;集成了 binlog 分析工具&lt;/li&gt;
+&lt;li&gt;图形化界面&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>八股文::操作系统</title>
+      <link>/interview/interview_questions_operating_system/</link>
+      <pubDate>Sat, 21 Aug 2021 03:28:49 +0800</pubDate>
+      <guid>/interview/interview_questions_operating_system/</guid>
+      <description>&lt;h2 id=&#34;操作系统&#34;&gt;操作系统&lt;/h2&gt;
+&lt;h3 id=&#34;进程和线程之间有什么区别&#34;&gt;进程和线程之间有什么区别？&lt;/h3&gt;
+&lt;h3 id=&#34;进程间有哪些通信方式&#34;&gt;进程间有哪些通信方式？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-select-poll-epoll-的使用场景以及区别epoll-中水平触发以及边缘触发有什么不同&#34;&gt;简述 select, poll, epoll 的使用场景以及区别，epoll 中水平触发以及边缘触发有什么不同？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-linux-进程调度的算法&#34;&gt;简述 Linux 进程调度的算法&lt;/h3&gt;
+&lt;h3 id=&#34;简述几个常用的-linux-命令以及他们的功能&#34;&gt;简述几个常用的 Linux 命令以及他们的功能&lt;/h3&gt;
+&lt;h3 id=&#34;简述操作系统如何进行内存管理&#34;&gt;简述操作系统如何进行内存管理&lt;/h3&gt;
+&lt;h3 id=&#34;线程有多少种状态状态之间如何转换&#34;&gt;线程有多少种状态，状态之间如何转换&lt;/h3&gt;
+&lt;h3 id=&#34;简述操作系统中的缺页中断&#34;&gt;简述操作系统中的缺页中断&lt;/h3&gt;
+&lt;h3 id=&#34;线程间有哪些通信方式&#34;&gt;线程间有哪些通信方式？&lt;/h3&gt;
+&lt;h3 id=&#34;什么时候会由用户态陷入内核态&#34;&gt;什么时候会由用户态陷入内核态？&lt;/h3&gt;
+&lt;h3 id=&#34;进程有多少种状态&#34;&gt;进程有多少种状态？&lt;/h3&gt;
+&lt;h3 id=&#34;简述自旋锁与互斥锁的使用场景&#34;&gt;简述自旋锁与互斥锁的使用场景&lt;/h3&gt;
+&lt;h3 id=&#34;linux-下如何查看端口被哪个进程占用&#34;&gt;Linux 下如何查看端口被哪个进程占用？&lt;/h3&gt;
+&lt;h3 id=&#34;操作系统中虚拟地址与物理地址之间如何映射&#34;&gt;操作系统中，虚拟地址与物理地址之间如何映射？&lt;/h3&gt;
+&lt;h3 id=&#34;进程通信中的管道实现原理是什么&#34;&gt;进程通信中的管道实现原理是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;linux-下如何排查-cpu-以及-内存占用过多&#34;&gt;Linux 下如何排查 CPU 以及 内存占用过多？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-linux-系统态与用户态什么时候会进入系统态&#34;&gt;简述 Linux 系统态与用户态，什么时候会进入系统态？&lt;/h3&gt;
+&lt;h3 id=&#34;多线程和多进程的区别是什么&#34;&gt;多线程和多进程的区别是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-linux-虚拟内存的页面置换算法&#34;&gt;简述 Linux 虚拟内存的页面置换算法&lt;/h3&gt;
+&lt;h3 id=&#34;创建线程有多少种方式&#34;&gt;创建线程有多少种方式？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-linux-零拷贝的原理&#34;&gt;简述 Linux 零拷贝的原理&lt;/h3&gt;
+&lt;h3 id=&#34;简述同步与异步的区别阻塞与非阻塞的区别&#34;&gt;简述同步与异步的区别，阻塞与非阻塞的区别&lt;/h3&gt;
+&lt;h3 id=&#34;linux-中虚拟内存和物理内存有什么区别有什么优点&#34;&gt;Linux 中虚拟内存和物理内存有什么区别？有什么优点？&lt;/h3&gt;
+&lt;h3 id=&#34;bionio-有什么区别怎么判断写文件时-buffer-已经写满简述-linux-的-io-模型&#34;&gt;BIO、NIO 有什么区别？怎么判断写文件时 Buffer 已经写满？简述 Linux 的 IO 模型&lt;/h3&gt;
+&lt;h3 id=&#34;简述-mmap-的使用场景以及原理&#34;&gt;简述 mmap 的使用场景以及原理&lt;/h3&gt;
+&lt;h3 id=&#34;两个线程交替打印一个共享变量&#34;&gt;两个线程交替打印一个共享变量&lt;/h3&gt;
+&lt;h3 id=&#34;简述操作系统中-malloc-的实现原理&#34;&gt;简述操作系统中 malloc 的实现原理&lt;/h3&gt;
+&lt;h3 id=&#34;linux-下如何查看-cpu-荷载正在运行的进程某个端口对应的进程&#34;&gt;Linux 下如何查看 CPU 荷载，正在运行的进程，某个端口对应的进程？&lt;/h3&gt;
+&lt;h3 id=&#34;lvs-的-nattundr-原理及区别&#34;&gt;LVS 的 NAT、TUN、DR 原理及区别&lt;/h3&gt;
+&lt;h3 id=&#34;共享内存是如何实现的&#34;&gt;共享内存是如何实现的？&lt;/h3&gt;
+&lt;h3 id=&#34;如何调试服务器内存占用过高的问题&#34;&gt;如何调试服务器内存占用过高的问题？&lt;/h3&gt;
+&lt;h3 id=&#34;系统调用的过程是怎样的操作系统是通过什么机制触发系统调用的&#34;&gt;系统调用的过程是怎样的？操作系统是通过什么机制触发系统调用的？&lt;/h3&gt;
+&lt;h3 id=&#34;linux-如何查看实时的滚动日志&#34;&gt;Linux 如何查看实时的滚动日志？&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;tail -f log&lt;/code&gt; 或者 &lt;code&gt;tail -F log&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;malloc-创建的对象在堆还是栈中&#34;&gt;malloc 创建的对象在堆还是栈中？&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;foo&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;a_stack_pointer&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;malloc&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;sizeof&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;a_stack_pointer 在栈上，保存了它所指向的内容给的地址，用 malloc 分配的动态内存在堆上&lt;/p&gt;
+&lt;h3 id=&#34;为什么进程切换慢线程切换快&#34;&gt;为什么进程切换慢，线程切换快？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-cpu-l1-l2-l3-多级缓存的基本作用&#34;&gt;简述 CPU L1, L2, L3 多级缓存的基本作用&lt;/h3&gt;
+&lt;h3 id=&#34;简述创建进程的流程&#34;&gt;简述创建进程的流程&lt;/h3&gt;
+&lt;h3 id=&#34;进程空间从高位到低位都有些什么&#34;&gt;进程空间从高位到低位都有些什么？&lt;/h3&gt;
+&lt;h3 id=&#34;什么情况下进程会进行切换&#34;&gt;什么情况下，进程会进行切换？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-linux-的-io-模型&#34;&gt;简述 Linux 的 I/O 模型&lt;/h3&gt;
+&lt;h3 id=&#34;简述-traceroute-命令的原理&#34;&gt;简述 traceroute 命令的原理&lt;/h3&gt;
+&lt;h3 id=&#34;linux-页大小是多少&#34;&gt;Linux 页大小是多少？&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Architecture&lt;/th&gt;
+&lt;th&gt;Smallest page size&lt;/th&gt;
+&lt;th&gt;Larger page sizes&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;32-bit x86&lt;/td&gt;
+&lt;td&gt;4 KiB&lt;/td&gt;
+&lt;td&gt;4 MiB in PSE mode, 2 MiB in PAE mode&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;x86-64&lt;/td&gt;
+&lt;td&gt;4 KiB&lt;/td&gt;
+&lt;td&gt;2 MiB, 1 GiB&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;IA-64 (Itanium)&lt;/td&gt;
+&lt;td&gt;4 KiB&lt;/td&gt;
+&lt;td&gt;8 KiB, 64 KiB, 256 KiB, 1 MiB, 4 MiB, 16 MiB, 256 MiB&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Power ISA&lt;/td&gt;
+&lt;td&gt;4 KiB&lt;/td&gt;
+&lt;td&gt;64 KiB, 16 MiB, 16 GiB&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SPARC v8 with SPARC Reference MMU&lt;/td&gt;
+&lt;td&gt;4 KiB&lt;/td&gt;
+&lt;td&gt;256 KiB, 16 MiB&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;UltraSPARC Architecture 2007 8 KiB 6&lt;/td&gt;
+&lt;td&gt;4 KiB&lt;/td&gt;
+&lt;td&gt;64KiB, 512 KiB , 4 MiB, 32 MiB , 256 MiB , 2 GiB , 16 GiB&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ARMv7&lt;/td&gt;
+&lt;td&gt;4 KiB&lt;/td&gt;
+&lt;td&gt;64 KiB, 1 MiB , 16 MiB&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;信号量是如何实现的&#34;&gt;信号量是如何实现的？&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;semaphore&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;raw_spinlock_t&lt;/span&gt;        &lt;span style=&#34;color:#111&#34;&gt;lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;unsigned&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt;        &lt;span style=&#34;color:#111&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;list_head&lt;/span&gt;    &lt;span style=&#34;color:#111&#34;&gt;wait_list&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;};&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * down - acquire the semaphore
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * @sem: the semaphore to be acquired
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; *
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Acquires the semaphore.  If no more tasks are allowed to acquire the
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * semaphore, calling this function will put the task to sleep until the
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * semaphore is released.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; *
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Use of this function is deprecated, please use down_interruptible() or
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * down_killable() instead.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;down&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;semaphore&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;unsigned&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;flags&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#111&#34;&gt;raw_spin_lock_irqsave&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;flags&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;likely&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;count&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;--&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;else&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;__down&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;raw_spin_unlock_irqrestore&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;flags&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * down_interruptible - acquire the semaphore unless interrupted
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * @sem: the semaphore to be acquired
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; *
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Attempts to acquire the semaphore.  If no more tasks are allowed to
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * acquire the semaphore, calling this function will put the task to sleep.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * If the sleep is interrupted by a signal, this function will return -EINTR.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * If the semaphore is successfully acquired, this function returns 0.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;down_interruptible&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;semaphore&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;unsigned&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;flags&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;result&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#111&#34;&gt;raw_spin_lock_irqsave&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;flags&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;likely&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;count&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;--&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;else&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;result&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;__down_interruptible&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;raw_spin_unlock_irqrestore&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;flags&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;result&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * down_killable - acquire the semaphore unless killed
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * @sem: the semaphore to be acquired
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; *
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Attempts to acquire the semaphore.  If no more tasks are allowed to
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * acquire the semaphore, calling this function will put the task to sleep.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * If the sleep is interrupted by a fatal signal, this function will return
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * -EINTR.  If the semaphore is successfully acquired, this function returns
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * 0.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;down_killable&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;semaphore&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;unsigned&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;flags&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;result&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#111&#34;&gt;raw_spin_lock_irqsave&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;flags&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;likely&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;count&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;--&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;else&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;result&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;__down_killable&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;raw_spin_unlock_irqrestore&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;flags&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;result&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * down_trylock - try to acquire the semaphore, without waiting
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * @sem: the semaphore to be acquired
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; *
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Try to acquire the semaphore atomically.  Returns 0 if the semaphore has
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * been acquired successfully or 1 if it cannot be acquired.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; *
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * NOTE: This return value is inverted from both spin_trylock and
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * mutex_trylock!  Be careful about this when converting code.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; *
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Unlike mutex_trylock, this function can be used from interrupt context,
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * and the semaphore can be released by any task or interrupt.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;down_trylock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;semaphore&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;unsigned&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;flags&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#111&#34;&gt;raw_spin_lock_irqsave&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;flags&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;count&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;count&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;likely&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;count&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;count&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;raw_spin_unlock_irqrestore&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;flags&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;count&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * down_timeout - acquire the semaphore within a specified time
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * @sem: the semaphore to be acquired
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * @timeout: how long to wait before failing
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; *
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Attempts to acquire the semaphore.  If no more tasks are allowed to
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * acquire the semaphore, calling this function will put the task to sleep.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * If the semaphore is not released within the specified number of jiffies,
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * this function returns -ETIME.  It returns 0 if the semaphore was acquired.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;down_timeout&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;semaphore&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;timeout&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;unsigned&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;flags&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;result&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#111&#34;&gt;raw_spin_lock_irqsave&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;flags&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;likely&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;count&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;--&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;else&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;result&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;__down_timeout&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;timeout&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;raw_spin_unlock_irqrestore&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;flags&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;result&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;/**
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * up - release the semaphore
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * @sem: the semaphore to release
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; *
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * Release the semaphore.  Unlike mutexes, up() may be called from any
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; * context and even by tasks which have never called down().
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt; */&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;up&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;semaphore&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;unsigned&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;flags&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#111&#34;&gt;raw_spin_lock_irqsave&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;flags&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;likely&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;list_empty&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;wait_list&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)))&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;else&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;__up&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;raw_spin_unlock_irqrestore&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;sem&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;flags&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>八股文::系统设计</title>
+      <link>/interview/interview_questions_system_design/</link>
+      <pubDate>Fri, 20 Aug 2021 21:51:33 +0800</pubDate>
+      <guid>/interview/interview_questions_system_design/</guid>
+      <description>&lt;h2 id=&#34;系统设计&#34;&gt;系统设计&lt;/h2&gt;
+&lt;h3 id=&#34;电商系统中如何实现秒杀功能如何解决商品的超卖问题&#34;&gt;电商系统中，如何实现秒杀功能？如何解决商品的超卖问题？&lt;/h3&gt;
+&lt;h3 id=&#34;什么是-cap-什么是最终一致性什么是幂等操作&#34;&gt;什么是 CAP ？什么是最终一致性？什么是幂等操作？&lt;/h3&gt;
+&lt;h3 id=&#34;项目上有什么技术难点&#34;&gt;项目上有什么技术难点？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-zookeeper-基础原理以及使用场景&#34;&gt;简述 Zookeeper 基础原理以及使用场景&lt;/h3&gt;
+&lt;h3 id=&#34;简述中间件削峰和限流的使用场景&#34;&gt;简述中间件削峰和限流的使用场景&lt;/h3&gt;
+&lt;h3 id=&#34;简述一致性哈希算法的实现方式及原理&#34;&gt;简述一致性哈希算法的实现方式及原理&lt;/h3&gt;
+&lt;h3 id=&#34;简述-kafka-的基本架构如何用-kafka-保证消息的有序性&#34;&gt;简述 Kafka 的基本架构，如何用 Kafka 保证消息的有序性？&lt;/h3&gt;
+&lt;h3 id=&#34;简述常见的负载均衡算法&#34;&gt;简述常见的负载均衡算法&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;随机算法
+&lt;ul&gt;
+&lt;li&gt;随机，按权重设置随机概率。在一个截面上碰撞的概率高，但调用量越大分布越均匀，而且按概率使用权重后也比较均匀，有利于动态调整提供者权重。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;轮询及加权轮询
+&lt;ul&gt;
+&lt;li&gt;当服务器群中各服务器的处理能力相同时，且每笔业务处理量差异不大时，最适合使用这种算法。轮循，按公约后的权重设置轮循比率。存在慢的提供者累积请求问题，比如：第二台机器很慢，但没挂，当请求调到第二台时就卡在那，久而久之，所有请求都卡在调到第二台上。&lt;/li&gt;
+&lt;li&gt;为轮询中的每台服务器附加一定权重的算法。比如服务器 1 权重 1，服务器 2 权重 2，服务器 3 权重 3，则顺序为 1-2-2-3-3-3-1-2-2-3-3-3-&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;最小连接及加权最小连接
+&lt;ul&gt;
+&lt;li&gt;在多个服务器中，与处理连接数(会话数)最少的服务器进行通信的算法。即使在每台服务器处理能力各不相同，每笔业务处理量也不相同的情况下，也能够在一定程度上降低服务器的负载。&lt;/li&gt;
+&lt;li&gt;为最少连接算法中的每台服务器附加权重的算法，该算法事先为每台服务器分配处理连接的数量，并将客户端请求转至连接数最少的服务器上。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;哈希算法
+&lt;ul&gt;
+&lt;li&gt;普通哈希&lt;/li&gt;
+&lt;li&gt;一致性 Hash，相同参数的请求总是发到同一提供者。当某一台提供者挂时，原本发往该提供者的请求，基于虚拟节点，平摊到其它提供者，不会引起剧烈变动。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;IP 地址散列
+&lt;ul&gt;
+&lt;li&gt;通过管理发送方 IP 和目的地 IP 地址的散列，将来自同一发送方的分组(或发送至同一目的地的分组)统一转发到相同服务器的算法。当客户端有一系列业务需要处理而必须和一个服务器反复通信时，该算法能够以流(会话)为单位，保证来自相同客户端的通信能够一直在同一服务器中进行处理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;URL 散列
+&lt;ul&gt;
+&lt;li&gt;通过管理客户端请求 URL 信息的散列，将发送至相同 URL 的请求转发至同一服务器的算法。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;设计一个阻塞队列&#34;&gt;设计一个阻塞队列&lt;/h3&gt;
+&lt;h3 id=&#34;简述生产者消费者模型&#34;&gt;简述生产者消费者模型&lt;/h3&gt;
+&lt;h3 id=&#34;designing-a-url-shortening-service-like-tinyurl&#34;&gt;Designing a URL Shortening service like TinyURL&lt;/h3&gt;
+&lt;h3 id=&#34;了解高并发的解决方案吗例如动静分离缓存负载均衡&#34;&gt;了解高并发的解决方案吗？例如动静分离，缓存，负载均衡&lt;/h3&gt;
+&lt;h3 id=&#34;如何设计一个线程池&#34;&gt;如何设计一个线程池&lt;/h3&gt;
+&lt;h3 id=&#34;有哪些实现服务发现的方法&#34;&gt;有哪些实现服务发现的方法？&lt;/h3&gt;
+&lt;h3 id=&#34;如何实现唯一的分布式-id&#34;&gt;如何实现唯一的分布式 ID&lt;/h3&gt;
+&lt;h3 id=&#34;如何解决缓存与数据库不一致的问题&#34;&gt;如何解决缓存与数据库不一致的问题？&lt;/h3&gt;
+&lt;h3 id=&#34;简述什么是两阶段提交&#34;&gt;简述什么是两阶段提交？&lt;/h3&gt;
+&lt;h3 id=&#34;zookeeper-的-zab-算法与-paxos-的区别是什么&#34;&gt;ZooKeeper 的 ZAB 算法与 Paxos 的区别是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-kafka-的选举过程&#34;&gt;简述 Kafka 的选举过程&lt;/h3&gt;
+&lt;h3 id=&#34;什么是设计模式描述几个常用的设计模式&#34;&gt;什么是设计模式，描述几个常用的设计模式&lt;/h3&gt;
+&lt;h3 id=&#34;如何实现百度搜索功能&#34;&gt;如何实现百度搜索功能？&lt;/h3&gt;
+&lt;h3 id=&#34;微服务中如何实现服务发现&#34;&gt;微服务中如何实现服务发现&lt;/h3&gt;
+&lt;h3 id=&#34;熔断与限流是如何实现的&#34;&gt;熔断与限流是如何实现的？&lt;/h3&gt;
+&lt;h3 id=&#34;高并发情景下核心线程池该如何设置参数&#34;&gt;高并发情景下，核心线程池该如何设置参数？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-nginx-的工作模型为什么-nginx-性能如此高&#34;&gt;简述 Nginx 的工作模型，为什么 Nginx 性能如此高？&lt;/h3&gt;
+&lt;h3 id=&#34;如何测试应用的-qps&#34;&gt;如何测试应用的 QPS？&lt;/h3&gt;
+&lt;h3 id=&#34;如何设计一个消息队列&#34;&gt;如何设计一个消息队列&lt;/h3&gt;
+&lt;h3 id=&#34;常用的限流算法有哪些简述令牌桶算法原理&#34;&gt;常用的限流算法有哪些？简述令牌桶算法原理&lt;/h3&gt;
+&lt;h3 id=&#34;designing-pastebin&#34;&gt;Designing Pastebin&lt;/h3&gt;
+&lt;h3 id=&#34;简述-dubbo-服务注册与发现的过程&#34;&gt;简述 Dubbo 服务注册与发现的过程&lt;/h3&gt;
+&lt;h3 id=&#34;design-typeahead-system&#34;&gt;Design typeahead system&lt;/h3&gt;
+&lt;h3 id=&#34;简述-zookeeper-选举机制&#34;&gt;简述 ZooKeeper 选举机制&lt;/h3&gt;
+&lt;h3 id=&#34;简述-mapreduce-的原理&#34;&gt;简述 MapReduce 的原理&lt;/h3&gt;
+&lt;h3 id=&#34;假如明天是活动高峰qps-预计会翻-10-倍你要怎么做&#34;&gt;假如明天是活动高峰？QPS 预计会翻 10 倍，你要怎么做？&lt;/h3&gt;
+&lt;h3 id=&#34;如何阅读大型项目的源码&#34;&gt;如何阅读大型项目的源码？&lt;/h3&gt;
+&lt;h3 id=&#34;kafka-如何保证消息一致性&#34;&gt;kafka 如何保证消息一致性？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-git-的工作流&#34;&gt;简述 Git 的工作流&lt;/h3&gt;
+&lt;h3 id=&#34;design-parking-system&#34;&gt;Design Parking System&lt;/h3&gt;
+&lt;h3 id=&#34;design-bicycle-rental-system&#34;&gt;Design Bicycle Rental System&lt;/h3&gt;
+&lt;h3 id=&#34;restful-与-rpc-的区别是什么restful-的优点在哪里&#34;&gt;RestFul 与 RPC 的区别是什么？RestFul 的优点在哪里？&lt;/h3&gt;
+&lt;h3 id=&#34;设计-tiny-url-系统&#34;&gt;设计 Tiny URL 系统&lt;/h3&gt;
+&lt;h3 id=&#34;design-a-web-crawler&#34;&gt;Design a web crawler&lt;/h3&gt;
+&lt;h3 id=&#34;停车场有有限个车位有多个车来抢车位设计一个系统需要根据车辆进入和离开停车场的时间进行计费&#34;&gt;停车场有有限个车位，有多个车来抢车位，设计一个系统需要根据车辆进入和离开停车场的时间进行计费&lt;/h3&gt;
+&lt;h3 id=&#34;design-twitter&#34;&gt;Design twitter&lt;/h3&gt;
+&lt;h3 id=&#34;阻塞队列都有哪几种有什么区别&#34;&gt;阻塞队列都有哪几种，有什么区别？&lt;/h3&gt;
+&lt;h3 id=&#34;design-taxi-service-like-uber&#34;&gt;Design taxi service like Uber&lt;/h3&gt;
+&lt;h3 id=&#34;容器化了解吗它的基本原理是什么&#34;&gt;容器化了解吗？它的基本原理是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;rabbitmq-如何保证信息可靠性&#34;&gt;RabbitMQ 如何保证信息可靠性？&lt;/h3&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>八股文::网络</title>
+      <link>/interview/interview_questions_network/</link>
+      <pubDate>Fri, 20 Aug 2021 21:51:33 +0800</pubDate>
+      <guid>/interview/interview_questions_network/</guid>
+      <description>&lt;h2 id=&#34;网络&#34;&gt;网络&lt;/h2&gt;
+&lt;h3 id=&#34;简述-tcp-三次握手以及四次挥手的流程为什么需要三次握手以及四次挥手&#34;&gt;简述 TCP 三次握手以及四次挥手的流程。为什么需要三次握手以及四次挥手？&lt;/h3&gt;
+&lt;p&gt;三次握手流程&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;第一次握手: 建立连接，客户端 A 发送 SYN = 1、随机产生 Seq = client_isn 的数据包到服务器 B，等待服务器确认。&lt;/li&gt;
+&lt;li&gt;第二次握手: 服务器 B 收到请求后确认联机(可以接受数据)，发起第二次握手请求，ACK = (A 的 Seq + 1)、SYN = 1，随机产生 Seq = client_isn 的数据包到 A。&lt;/li&gt;
+&lt;li&gt;第三次握手: A 收到后检查 ACK 是否正确，若正确，A 会在发送确认包 ACK = 服务器 B 的 Seq + 1、ACK = 1，服务器 B 收到后确认 Seq 值与 ACK 值，若正确，则建立连接。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;四次挥手流程&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;第一次挥手：TCP 发送一个 FIN(结束)标识，用来关闭客户到服务端的连接。&lt;/li&gt;
+&lt;li&gt;第二次挥手：服务端收到这个 FIN 标识，他发回一个 ACK(确认)标识，确认收到序号为收到序号+1，和 SYN 一样，一个 FIN 将占用一个序号。TCP 服务器通知高层的应用进程，客户端向服务器的方向就释放了，这时候处于半关闭状态，即客户端已经没有数据要发送了，但是服务器若发送数据，客户端依然要接受。（服务器端继续发送未发送完的数据）&lt;/li&gt;
+&lt;li&gt;第三次挥手：服务端发送一个 FIN(结束)标识到客户端，服务端关闭客户端的连接。&lt;/li&gt;
+&lt;li&gt;第四次挥手：客户端发送 ACK(确认)标识报文确认，并将确认的序号+1，这样关闭完成。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;为什么需要三次握手&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://datatracker.ietf.org/doc/html/rfc793&#34;&gt;rfc793&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The principle reason for the three-way handshake is to prevent old duplicate connection initiations from causing confusion&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;为了防止旧重复连接初始化造成的混乱问题，导致服务器维护了无用的半连接。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/3rSeXxI.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
+&lt;p&gt;老的重传数据被当作新的数据接受。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/BJbiBqj.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
+&lt;p&gt;为什么需要四次挥手&lt;/p&gt;
+&lt;p&gt;因为 TCP 是全双工通信的&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;第一次挥手：因此当主动方发送断开连接的请求（即 FIN 报文）给被动方时，仅仅代表主动方不会再发送数据报文了，但主动方仍可以接收数据报文。&lt;/li&gt;
+&lt;li&gt;第二次挥手：被动方此时有可能还有相应的数据报文需要发送，因此需要先发送 ACK 报文，告知主动方“我知道你想断开连接的请求了”。这样主动方便不会因为没有收到应答而继续发送断开连接的请求（即 FIN 报文）。&lt;/li&gt;
+&lt;li&gt;第三次挥手：被动方在处理完数据报文后，便发送给主动方 FIN 报文；这样可以保证数据通信正常可靠地完成。发送完 FIN 报文后，被动方进入 LAST_ACK 阶段（超时等待）。&lt;/li&gt;
+&lt;li&gt;第四挥手：如果主动方及时发送 ACK 报文进行连接中断的确认，这时被动方就直接释放连接，进入可用状态。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;TCP 状态机&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/Ir7sNdS.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
+&lt;p&gt;异常状况&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://network.51cto.com/art/202002/610542.htm&#34;&gt;TCP 三次握手、四次挥手出现意外情况时，如何保证稳定可靠？&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;http-与-https-有哪些区别&#34;&gt;HTTP 与 HTTPS 有哪些区别？&lt;/h3&gt;
+&lt;h3 id=&#34;从输入-url-到展现页面的全过程&#34;&gt;从输入 URL 到展现页面的全过程&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;输入地址&lt;/li&gt;
+&lt;li&gt;浏览器查找域名的 IP 地址&lt;/li&gt;
+&lt;li&gt;浏览器向 web 服务器发送一个 HTTP 请求&lt;/li&gt;
+&lt;li&gt;服务器的永久重定向响应&lt;/li&gt;
+&lt;li&gt;服务器处理请求&lt;/li&gt;
+&lt;li&gt;服务器返回一个 HTTP 响应&lt;/li&gt;
+&lt;li&gt;浏览器显示 HTML&lt;/li&gt;
+&lt;li&gt;浏览器发送请求获取嵌入在 HTML 中的资源（如图片、音频、视频、CSS、JS 等等）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;tcp-与-udp-在网络协议中的哪一层他们之间有什么区别&#34;&gt;TCP 与 UDP 在网络协议中的哪一层，他们之间有什么区别？&lt;/h3&gt;
+&lt;h3 id=&#34;tcp-怎么保证可靠传输&#34;&gt;TCP 怎么保证可靠传输？&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;检验和；用于检测在一个传输分组中的比特错误&lt;/li&gt;
+&lt;li&gt;定时器：用于超时/重传一个分组，可能因为该分组〈或其 ACK) 在信道中丢失了。由于当一个分组延时但未丢失〈过早超时) ，或当一个分组已被接收方收到但从接收方到发送方的 ACK 丢失时，可能产生超时事件，所以接收方可能会收到一个分组的多个冗余副本&lt;/li&gt;
+&lt;li&gt;序号：用于为从发送方流向接收方的数据分组按顺序编号。所接收分组的序号间的空隙可使接收方检测出丢失的分组。具有相同序号的分组可使接收方检测出一个分组的冗余副本&lt;/li&gt;
+&lt;li&gt;确认：接收方用于告诉发送方一个分组或一组分组已被正确地接收到了。确认报文通常携带着被确认的分组或多个分组的序号。确认可以是逐个的或累积的，这取决于协议&lt;/li&gt;
+&lt;li&gt;否定确认：接收方用于告诉发送方某个分组未被正确地接收。否定确认报文通常据带着未被正确接收的分组的序号&lt;/li&gt;
+&lt;li&gt;窗口、流水线：发送方也许被限制仅发送那些序号落在一个指定范围内的分组。通过允许一次发送多个分组但未被确认，发送方的利用率可在停等操作模式的基础上得到增加。我们很快将会看到，窗口长度可根据接收方接收和缓存报文的能力、网络中的拥塞程度或两者情况来进行设置&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;简述-http-101120-的主要区别&#34;&gt;简述 HTTP 1.0，1.1，2.0 的主要区别&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;http1.0 特性
+&lt;ul&gt;
+&lt;li&gt;无状态：服务器不跟踪不记录请求过的状态
+&lt;ul&gt;
+&lt;li&gt;对于无状态的特性可以借助 cookie/session 机制来做身份认证和状态记录&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;无连接：浏览器每次请求都需要建立 tcp 连接
+&lt;ul&gt;
+&lt;li&gt;无法复用连接:每次发送请求，都需要进行一次 tcp 连接（即 3 次握手 4 次挥手），使得网络的利用率非常低&lt;/li&gt;
+&lt;li&gt;队头阻塞:http1.0 规定在前一个请求响应到达之后下一个请求才能发送，如果前一个阻塞，后面的请求也给阻塞的&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;http1.1 特性：
+&lt;ul&gt;
+&lt;li&gt;长连接：新增 Connection 字段，可以设置 keep-alive 值保持连接不断开,http1.1 默认保持长连接，数据传输完成保持 tcp 连接不断开,继续用这个通道传输数据&lt;/li&gt;
+&lt;li&gt;管道化：基于上面长连接的基础，管道化可以不等第一个请求响应继续发送后面的请求，但响应的顺序还是按照请求的顺序返回&lt;/li&gt;
+&lt;li&gt;缓存处理：新增字段 cache-control&lt;/li&gt;
+&lt;li&gt;断点传输:在 Header 里两个参数实现的，客户端发请求时对应的是 Range 服务器端响应时对应的是 Content-Range&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;http2.0 特性
+&lt;ul&gt;
+&lt;li&gt;二进制分帧:将所有传输的信息分割为更小的消息和帧,并对它们采用二进制格式的编码&lt;/li&gt;
+&lt;li&gt;多路复用： 在共享 TCP 链接的基础上同时发送请求和响应，基于二进制分帧，在同一域名下所有访问都是从同一个 tcp 连接中走，http 消息被分解为独立的帧，乱序发送，服务端根据标识符和首部将消息重新组装起来&lt;/li&gt;
+&lt;li&gt;头部压缩&lt;/li&gt;
+&lt;li&gt;服务器推送：服务器可以额外的向客户端推送资源，而无需客户端明确的请求&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;tcp-中常见的拥塞控制算法有哪些&#34;&gt;TCP 中常见的拥塞控制算法有哪些？&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Reno&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;慢启动阶段思路是不要一开始就发送大量的数据，先探测一下网络的拥塞程度，也就是说由小到大逐渐增加拥塞窗口的大小，在没有出现丢包时每收到一个 ACK 就将拥塞窗口大小加一（单位是 MSS，最大单个报文段长度），每轮次发送窗口增加一倍，呈指数增长，若出现丢包，则将拥塞窗口减半，进入拥塞避免阶段；&lt;/li&gt;
+&lt;li&gt;当窗口达到慢启动阈值或出现丢包时，进入拥塞避免阶段，窗口每轮次加一，呈线性增长；当收到对一个报文的三个重复的 ACK 时，认为这个报文的下一个报文丢失了，进入快重传阶段，要求接收方在收到一个失序的报文段后就立即发出重复确认（为的是使发送方及早知道有报文段没有到达对方，可提高网络吞吐量约 20%）而不要等到自己发送数据时捎带确认；&lt;/li&gt;
+&lt;li&gt;快重传完成后进入快恢复阶段，将慢启动阈值修改为当前拥塞窗口值的一半，同时拥塞窗口值等于慢启动阈值，然后进入拥塞避免阶段，重复上述过程。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;BBR&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;BBR 算法不将出现丢包或时延增加作为拥塞的信号，而是认为当网络上的数据包总量大于瓶颈链路带宽和时延的乘积时才出现了拥塞，所以 BBR 也称为基于拥塞的拥塞控制算法（Congestion-Based Congestion Control），其适用网络为高带宽、高时延、有一定丢包率的长肥网络，可以有效降低传输时延，并保证较高的吞吐量.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;BBR 算法周期性地探测网络的容量，交替测量一段时间内的带宽极大值和时延极小值，将其乘积作为作为拥塞窗口大小，使得拥塞窗口始的值始终与网络的容量保持一致。&lt;/p&gt;
+&lt;p&gt;所以 BBR 算法解决了两个比较主要的问题：&lt;/p&gt;
+&lt;p&gt;在有一定丢包率的网络链路上充分利用带宽。 适合高延迟、高带宽的网络链路。&lt;/p&gt;
+&lt;p&gt;降低网络链路上的 buffer 占用率，从而降低延迟。 适合慢速接入网络的用户。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;基于丢包的拥塞控制：将丢包视为出现拥塞，采取缓慢探测的方式，逐渐增大拥塞窗口，当出现丢包时，将拥塞窗口减小，如 Reno、Cubic 等。&lt;/li&gt;
+&lt;li&gt;基于时延的拥塞控制：将时延增加视为出现拥塞，延时增加时增大拥塞窗口，延时减小时减小拥塞窗口，如 Vegas、FastTCP 等。&lt;/li&gt;
+&lt;li&gt;基于链路容量的拥塞控制：实时测量网络带宽和时延，认为网络上报文总量大于带宽时延乘积时出现了拥塞，如 BBR。&lt;/li&gt;
+&lt;li&gt;基于学习的拥塞控制：没有特定的拥塞信号，而是借助评价函数，基于训练数据，使用机器学习的方法形成一个控制策略，如 Remy。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;dns-查询服务器的基本流程是什么dns-劫持是什么&#34;&gt;DNS 查询服务器的基本流程是什么？DNS 劫持是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;cookie-和-session-的关系和区别是什么&#34;&gt;Cookie 和 Session 的关系和区别是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-https-的加密与认证过程&#34;&gt;简述 HTTPS 的加密与认证过程&lt;/h3&gt;
+&lt;h3 id=&#34;restful-是什么restful-请求的-url-有什么特点&#34;&gt;RestFul 是什么？RestFul 请求的 URL 有什么特点？&lt;/h3&gt;
+&lt;h3 id=&#34;什么是-tcp-粘包和拆包&#34;&gt;什么是 TCP 粘包和拆包？&lt;/h3&gt;
+&lt;h3 id=&#34;restful-与-rpc-的区别是什么restful-的优点在哪里&#34;&gt;RestFul 与 RPC 的区别是什么？RestFul 的优点在哪里？&lt;/h3&gt;
+&lt;h3 id=&#34;tcp-挥手时出现大量-close_wait-或-time_wait-怎么解决&#34;&gt;TCP 挥手时出现大量 CLOSE_WAIT 或 TIME_WAIT 怎么解决？&lt;/h3&gt;
+&lt;h3 id=&#34;什么是跨域什么情况下会发生跨域请求&#34;&gt;什么是跨域，什么情况下会发生跨域请求？&lt;/h3&gt;
+&lt;h3 id=&#34;简述对称与非对称加密的概念&#34;&gt;简述对称与非对称加密的概念&lt;/h3&gt;
+&lt;h3 id=&#34;http-中-get-和-post-区别&#34;&gt;HTTP 中 GET 和 POST 区别&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;方法&lt;/th&gt;
+&lt;th&gt;GET&lt;/th&gt;
+&lt;th&gt;POST&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;请求是否有主体&lt;/td&gt;
+&lt;td&gt;N(可以携带，是否处理取决于服务器)&lt;/td&gt;
+&lt;td&gt;Y&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;成功的响应是否有主体&lt;/td&gt;
+&lt;td&gt;Y&lt;/td&gt;
+&lt;td&gt;Y&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;安全&lt;/td&gt;
+&lt;td&gt;Y&lt;/td&gt;
+&lt;td&gt;N&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;幂等&lt;/td&gt;
+&lt;td&gt;Y&lt;/td&gt;
+&lt;td&gt;N&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;可缓存&lt;/td&gt;
+&lt;td&gt;Y&lt;/td&gt;
+&lt;td&gt;Y(带上有关刷新的信息)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;HTML 表单是否支持&lt;/td&gt;
+&lt;td&gt;Y&lt;/td&gt;
+&lt;td&gt;Y&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;a href=&#34;https://datatracker.ietf.org/doc/html/rfc7231#section-4.3.1&#34;&gt;rfc7231&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A payload within a GET request message has no defined semantics; sending a payload body on a GET request might cause some existing implementations to reject the request.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;总而言之 RFC 只对 GET 和 POST 做了语义上的区别，他们的不同之处大多是浏览器行为&lt;/p&gt;
+&lt;h3 id=&#34;tcp-的-keepalive-了解吗说一说它和-http-的-keepalive-的区别&#34;&gt;TCP 的 keepalive 了解吗？说一说它和 HTTP 的 keepalive 的区别？&lt;/h3&gt;
+&lt;h3 id=&#34;简述常见的-http-状态码的含义301304401403&#34;&gt;简述常见的 HTTP 状态码的含义（301，304，401，403）&lt;/h3&gt;
+&lt;h3 id=&#34;简述-tcp-的-time_wait-和-close_wait&#34;&gt;简述 TCP 的 TIME_WAIT 和 CLOSE_WAIT&lt;/h3&gt;
+&lt;h3 id=&#34;简述-tcp-滑动窗口以及重传机制&#34;&gt;简述 TCP 滑动窗口以及重传机制&lt;/h3&gt;
+&lt;h3 id=&#34;简述-ddos-攻击原理如何防范它&#34;&gt;简述 DDOS 攻击原理，如何防范它？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-osi-七层模型tcpip-属于哪一层&#34;&gt;简述 OSI 七层模型，TCP，IP 属于哪一层？&lt;/h3&gt;
+&lt;h3 id=&#34;从系统层面上udp-如何保证尽量可靠&#34;&gt;从系统层面上，UDP 如何保证尽量可靠？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-jwt-的原理和校验机制&#34;&gt;简述 JWT 的原理和校验机制&lt;/h3&gt;
+&lt;h3 id=&#34;http-的方法有哪些&#34;&gt;HTTP 的方法有哪些？&lt;/h3&gt;
+&lt;h3 id=&#34;tcp-长连接和短连接有那么不同的使用场景&#34;&gt;TCP 长连接和短连接有那么不同的使用场景？&lt;/h3&gt;
+&lt;h3 id=&#34;什么是-arp-协议简述其使用场景&#34;&gt;什么是 ARP 协议？简述其使用场景&lt;/h3&gt;
+&lt;h3 id=&#34;简述-rpc-的调用过程&#34;&gt;简述 RPC 的调用过程&lt;/h3&gt;
+&lt;p&gt;Client 首先会调用本地的代理 Proxy&lt;/p&gt;
+&lt;p&gt;Client 端 Proxy 会按照协议（Protocol），将调用中传入的数据序列化成字节流。&lt;/p&gt;
+&lt;p&gt;之后 Client 会通过网络，将字节数据发送到 Server 端。&lt;/p&gt;
+&lt;p&gt;Server 端接收到字节数据之后，会按照协议进行反序列化，得到相应的请求信息。&lt;/p&gt;
+&lt;p&gt;Server 端 Proxy 会根据序列化后的请求信息，调用相应的业务逻辑。&lt;/p&gt;
+&lt;p&gt;Server 端业务逻辑的返回值，也会按照上述逻辑返回给 Client 端。&lt;/p&gt;
+&lt;h3 id=&#34;tcp-中-syn-攻击是什么如何防止&#34;&gt;TCP 中 SYN 攻击是什么？如何防止？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-tcp-的报文头部结构&#34;&gt;简述 TCP 的报文头部结构&lt;/h3&gt;
+&lt;h3 id=&#34;tcp-的拥塞控制具体是怎么实现的udp-有拥塞控制吗&#34;&gt;TCP 的拥塞控制具体是怎么实现的？UDP 有拥塞控制吗？&lt;/h3&gt;
+&lt;h3 id=&#34;什么是中间人攻击如何防止攻击&#34;&gt;什么是中间人攻击？如何防止攻击？&lt;/h3&gt;
+&lt;h3 id=&#34;简述什么是-xss-攻击以及-csrf-攻击&#34;&gt;简述什么是 XSS 攻击以及 CSRF 攻击？&lt;/h3&gt;
+&lt;h3 id=&#34;如何防止传输内容被篡改&#34;&gt;如何防止传输内容被篡改？&lt;/h3&gt;
+&lt;h3 id=&#34;如何设计-api-接口使其实现幂等性&#34;&gt;如何设计 API 接口使其实现幂等性？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-bgp-协议和-ospf-协议的区别&#34;&gt;简述 BGP 协议和 OSPF 协议的区别&lt;/h3&gt;
+&lt;h3 id=&#34;http-是无状态的吗需要保持状态的场景应该怎么做&#34;&gt;HTTP 是无状态的吗？需要保持状态的场景应该怎么做？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-tcp-协议的延迟-ack-和累计应答&#34;&gt;简述 TCP 协议的延迟 ACK 和累计应答&lt;/h3&gt;
+&lt;h3 id=&#34;ssl-握手流程为什么要使用非对称秘钥&#34;&gt;SSL 握手流程为什么要使用非对称秘钥？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-websocket-是如何进行传输的&#34;&gt;简述 WebSocket 是如何进行传输的&lt;/h3&gt;
+&lt;h3 id=&#34;traceroute-有什么作用&#34;&gt;traceroute 有什么作用？&lt;/h3&gt;
+&lt;h3 id=&#34;如何解决-tcp-传输丢包问题&#34;&gt;如何解决 TCP 传输丢包问题？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-http-的-keepalive-的原理和使用场景&#34;&gt;简述 HTTP 的 keepalive 的原理和使用场景&lt;/h3&gt;
+&lt;h3 id=&#34;简述在四层和七层网络协议中负载均衡的原理&#34;&gt;简述在四层和七层网络协议中负载均衡的原理&lt;/h3&gt;
+&lt;h3 id=&#34;简述-tcp-半连接发生场景&#34;&gt;简述 TCP 半连接发生场景&lt;/h3&gt;
+&lt;h3 id=&#34;什么是-syn-flood如何防止这类攻击&#34;&gt;什么是 SYN flood，如何防止这类攻击？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-http-报文头部的组成结构&#34;&gt;简述 HTTP 报文头部的组成结构&lt;/h3&gt;
+&lt;h3 id=&#34;为什么需要序列化有什么序列化的方式&#34;&gt;为什么需要序列化？有什么序列化的方式？&lt;/h3&gt;
+&lt;h3 id=&#34;tcp-如何实现数据有序性&#34;&gt;TCP 如何实现数据有序性？&lt;/h3&gt;
+&lt;h3 id=&#34;简述-http-短链接与长链接的区别&#34;&gt;简述 HTTP 短链接与长链接的区别&lt;/h3&gt;
+&lt;h3 id=&#34;简述-ipv4-和-ipv6-的区别&#34;&gt;简述 iPv4 和 iPv6 的区别&lt;/h3&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>八股文::Redis</title>
+      <link>/interview/interview_questions_redis/</link>
+      <pubDate>Fri, 20 Aug 2021 02:47:13 +0800</pubDate>
+      <guid>/interview/interview_questions_redis/</guid>
+      <description>&lt;h2 id=&#34;redis&#34;&gt;Redis&lt;/h2&gt;
+&lt;h3 id=&#34;redis-有哪些数据结构分别有什么使用场景&#34;&gt;Redis 有哪些数据结构，分别有什么使用场景？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-zset-相同-score-如何排序&#34;&gt;Redis ZSET 相同 score 如何排序？&lt;/h3&gt;
+&lt;h3 id=&#34;在爬虫中如何使用-redis-做-url-去重&#34;&gt;在爬虫中，如何使用 Redis 做 URL 去重？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-是否支持事务&#34;&gt;Redis 是否支持事务？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-中的-watch-命令是做什么的&#34;&gt;Redis 中的 WATCH 命令是做什么的？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-是如何保证高可用的&#34;&gt;Redis 是如何保证高可用的？&lt;/h3&gt;
+&lt;h3 id=&#34;如何使用-redis-来实现分布式锁redlock&#34;&gt;如何使用 Redis 来实现分布式锁？Redlock？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-是单线程还是多线程为什么这么设计&#34;&gt;Redis 是单线程还是多线程？为什么这么设计？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-中的字符串对象和-c-语言中的字符串有什么区别&#34;&gt;Redis 中的字符串对象和 C 语言中的字符串有什么区别？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-中是如何实现链表的&#34;&gt;Redis 中是如何实现链表的？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-中是如何实现字典的&#34;&gt;Redis 中是如何实现字典的？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-中的字典是如何进行动态扩容的&#34;&gt;Redis 中的字典是如何进行动态扩容的？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-中的跳表是如何实现的&#34;&gt;Redis 中的跳表是如何实现的？&lt;/h3&gt;
+&lt;h3 id=&#34;strlisthashsetzset-底层都是使用什么数据结构实现的&#34;&gt;STR/LIST/HASH/SET/ZSET 底层都是使用什么数据结构实现的？&lt;/h3&gt;
+&lt;h3 id=&#34;zset-什么时候使用-ziplist-实现什么时候使用-skiplist-实现&#34;&gt;ZSET 什么时候使用 Ziplist 实现，什么时候使用 Skiplist 实现？&lt;/h3&gt;
+&lt;h3 id=&#34;zset-为什么不用-bstavlb-tree红黑树而使用跳表&#34;&gt;ZSET 为什么不用 BST/AVL/B-Tree/红黑树，而使用跳表？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-的过期键删除策略是什么&#34;&gt;Redis 的过期键删除策略是什么？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-的主从服务器是如何同步过期键的&#34;&gt;Redis 的主从服务器是如何同步过期键的？&lt;/h3&gt;
+&lt;h3 id=&#34;aof-和-rdb-持久化有什么区别&#34;&gt;AOF 和 RDB 持久化有什么区别？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-的主从是如何进行同步的&#34;&gt;Redis 的主从是如何进行同步的？&lt;/h3&gt;
+&lt;h3 id=&#34;如何解决长时间使用后-aof-文件过大的问题&#34;&gt;如何解决长时间使用后 AOF 文件过大的问题？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-的哨兵机制是如何实现的&#34;&gt;Redis 的哨兵机制是如何实现的？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-的集群方案有哪些&#34;&gt;Redis 的集群方案有哪些？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-的整体架构是什么样的从客户端发出命令到客户端接收到结果这整个流程是什么样的&#34;&gt;Redis 的整体架构是什么样的，从客户端发出命令，到客户端接收到结果，这整个流程是什么样的？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-是如何实现-lru-机制的&#34;&gt;Redis 是如何实现 LRU 机制的？&lt;/h3&gt;
+&lt;h3 id=&#34;redis-是如何实现-lfu-机制的&#34;&gt;Redis 是如何实现 LFU 机制的？&lt;/h3&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>八股文::Java</title>
+      <link>/interview/interview_questions_java/</link>
+      <pubDate>Thu, 19 Aug 2021 21:51:33 +0800</pubDate>
+      <guid>/interview/interview_questions_java/</guid>
+      <description>&lt;h2 id=&#34;java&#34;&gt;Java&lt;/h2&gt;
+&lt;h3 id=&#34;多线程的出现是要解决什么问题的&#34;&gt;多线程的出现是要解决什么问题的?&lt;/h3&gt;
+&lt;h3 id=&#34;并发出现线程不安全的本质什么&#34;&gt;并发出现线程不安全的本质什么?&lt;/h3&gt;
+&lt;h3 id=&#34;java-是怎么解决并发问题的&#34;&gt;Java 是怎么解决并发问题的?&lt;/h3&gt;
+&lt;h3 id=&#34;线程安全是不是非真即假&#34;&gt;线程安全是不是非真即假?&lt;/h3&gt;
+&lt;h3 id=&#34;线程安全有哪些实现思路&#34;&gt;线程安全有哪些实现思路?&lt;/h3&gt;
+&lt;h3 id=&#34;如何理解并发和并行的区别&#34;&gt;如何理解并发和并行的区别?&lt;/h3&gt;
+&lt;h3 id=&#34;线程有哪几种状态-分别说明从一种状态到另一种状态转变有哪些方式&#34;&gt;线程有哪几种状态? 分别说明从一种状态到另一种状态转变有哪些方式?&lt;/h3&gt;
+&lt;h3 id=&#34;通常线程有哪几种使用方式&#34;&gt;通常线程有哪几种使用方式?&lt;/h3&gt;
+&lt;h3 id=&#34;基础线程机制有哪些&#34;&gt;基础线程机制有哪些?&lt;/h3&gt;
+&lt;h3 id=&#34;线程的中断方式有哪些&#34;&gt;线程的中断方式有哪些?&lt;/h3&gt;
+&lt;h3 id=&#34;线程的互斥同步方式有哪些-如何比较和选择&#34;&gt;线程的互斥同步方式有哪些? 如何比较和选择?&lt;/h3&gt;
+&lt;h3 id=&#34;线程之间有哪些协作方式&#34;&gt;线程之间有哪些协作方式?&lt;/h3&gt;
+&lt;h3 id=&#34;synchronized-可以作用在哪里&#34;&gt;Synchronized 可以作用在哪里?&lt;/h3&gt;
+&lt;h3 id=&#34;synchronized-本质上是通过什么保证线程安全的&#34;&gt;Synchronized 本质上是通过什么保证线程安全的?&lt;/h3&gt;
+&lt;h3 id=&#34;synchronized-由什么样的缺陷-java-lock-是怎么弥补这些缺陷的&#34;&gt;Synchronized 由什么样的缺陷? Java Lock 是怎么弥补这些缺陷的&lt;/h3&gt;
+&lt;h3 id=&#34;synchronized-和-lock-的对比和选择&#34;&gt;Synchronized 和 Lock 的对比，和选择?&lt;/h3&gt;
+&lt;h3 id=&#34;synchronized-在使用时有何注意事项&#34;&gt;Synchronized 在使用时有何注意事项?&lt;/h3&gt;
+&lt;h3 id=&#34;synchronized-修饰的方法在抛出异常时会释放锁吗&#34;&gt;Synchronized 修饰的方法在抛出异常时,会释放锁吗?&lt;/h3&gt;
+&lt;h3 id=&#34;多个线程等待同一个-snchronized-锁的时候jvm-如何选择下一个获取锁的线程&#34;&gt;多个线程等待同一个 snchronized 锁的时候，JVM 如何选择下一个获取锁的线程?&lt;/h3&gt;
+&lt;h3 id=&#34;synchronized-使得同时只有一个线程可以执行性能比较差有什么提升的方法&#34;&gt;Synchronized 使得同时只有一个线程可以执行，性能比较差，有什么提升的方法?&lt;/h3&gt;
+&lt;h3 id=&#34;我想更加灵活地控制锁的释放和获取现在释放锁和获取锁的时机都被规定死了怎么办&#34;&gt;我想更加灵活地控制锁的释放和获取(现在释放锁和获取锁的时机都被规定死了)，怎么办?&lt;/h3&gt;
+&lt;h3 id=&#34;什么是锁的升级和降级-什么是-jvm-里的偏斜锁轻量级锁重量级锁&#34;&gt;什么是锁的升级和降级? 什么是 JVM 里的偏斜锁、轻量级锁、重量级锁?&lt;/h3&gt;
+&lt;h3 id=&#34;不同的-jdk-中对-synchronized-有何优化&#34;&gt;不同的 JDK 中对 Synchronized 有何优化?&lt;/h3&gt;
+&lt;h3 id=&#34;volatile-关键字的作用是什么&#34;&gt;volatile 关键字的作用是什么?&lt;/h3&gt;
+&lt;h3 id=&#34;volatile-能保证原子性吗&#34;&gt;volatile 能保证原子性吗?&lt;/h3&gt;
+&lt;h3 id=&#34;之前-32-位机器上共享的-long-和-double-变量的为什么要用-volatile-现在-64-位机器上是否也要设置呢&#34;&gt;之前 32 位机器上共享的 long 和 double 变量的为什么要用 volatile? 现在 64 位机器上是否也要设置呢?&lt;/h3&gt;
+&lt;h3 id=&#34;i为什么不能保证原子性&#34;&gt;i++为什么不能保证原子性?&lt;/h3&gt;
+&lt;h3 id=&#34;volatile-是如何实现可见性的&#34;&gt;volatile 是如何实现可见性的?&lt;/h3&gt;
+&lt;h3 id=&#34;volatile-是如何实现有序性的&#34;&gt;volatile 是如何实现有序性的?&lt;/h3&gt;
+&lt;h3 id=&#34;说下-volatile-的应用场景&#34;&gt;说下 volatile 的应用场景?&lt;/h3&gt;
+&lt;h3 id=&#34;所有的-final-修饰的字段都是编译期常量吗&#34;&gt;所有的 final 修饰的字段都是编译期常量吗?&lt;/h3&gt;
+&lt;h3 id=&#34;如何理解-private-所修饰的方法是隐式的-final&#34;&gt;如何理解 private 所修饰的方法是隐式的 final?&lt;/h3&gt;
+&lt;h3 id=&#34;说说-final-类型的类如何拓展-比如-string-是-final-类型我们想写个-mystring-复用所有-string-中方法同时增加一个新的-tomystring的方法应该如何做&#34;&gt;说说 final 类型的类如何拓展? 比如 String 是 final 类型，我们想写个 MyString 复用所有 String 中方法，同时增加一个新的 toMyString()的方法，应该如何做?&lt;/h3&gt;
+&lt;h3 id=&#34;final-方法可以被重载吗-可以&#34;&gt;final 方法可以被重载吗? 可以&lt;/h3&gt;
+&lt;h3 id=&#34;父类的-final-方法能不能够被子类重写-不可以&#34;&gt;父类的 final 方法能不能够被子类重写? 不可以&lt;/h3&gt;
+&lt;h3 id=&#34;说说-final-域重排序规则&#34;&gt;说说 final 域重排序规则?&lt;/h3&gt;
+&lt;h3 id=&#34;说说-final-的原理&#34;&gt;说说 final 的原理?&lt;/h3&gt;
+&lt;h3 id=&#34;使用-final-的限制条件和局限性&#34;&gt;使用 final 的限制条件和局限性?&lt;/h3&gt;
+&lt;h3 id=&#34;juc-框架包含几个部分&#34;&gt;JUC 框架包含几个部分?&lt;/h3&gt;
+&lt;h3 id=&#34;每个部分有哪些核心的类&#34;&gt;每个部分有哪些核心的类?&lt;/h3&gt;
+&lt;h3 id=&#34;最最核心的类有哪些&#34;&gt;最最核心的类有哪些?&lt;/h3&gt;
+&lt;h3 id=&#34;线程安全的实现方法有哪些&#34;&gt;线程安全的实现方法有哪些?&lt;/h3&gt;
+&lt;h3 id=&#34;什么是-cas&#34;&gt;什么是 CAS?&lt;/h3&gt;
+&lt;h3 id=&#34;cas-使用示例结合-atomicinteger-给出示例&#34;&gt;CAS 使用示例，结合 AtomicInteger 给出示例?&lt;/h3&gt;
+&lt;h3 id=&#34;cas-会有哪些问题-针对这这些问题java-提供了哪几个解决的&#34;&gt;CAS 会有哪些问题? 针对这这些问题，Java 提供了哪几个解决的?&lt;/h3&gt;
+&lt;h3 id=&#34;atomicinteger-底层实现-casvolatile&#34;&gt;AtomicInteger 底层实现? CAS+volatile&lt;/h3&gt;
+&lt;h3 id=&#34;请阐述你对-unsafe-类的理解&#34;&gt;请阐述你对 Unsafe 类的理解?&lt;/h3&gt;
+&lt;h3 id=&#34;说说你对-java-原子类的理解-包含-13-个4-组分类说说作用和使用场景&#34;&gt;说说你对 Java 原子类的理解? 包含 13 个，4 组分类，说说作用和使用场景&lt;/h3&gt;
+&lt;h3 id=&#34;atomicstampedreference-是什么-atomicstampedreference-是怎么解决-aba-的-内部使用-pair-来存储元素值及其版本号&#34;&gt;AtomicStampedReference 是什么? AtomicStampedReference 是怎么解决 ABA 的? 内部使用 Pair 来存储元素值及其版本号&lt;/h3&gt;
+&lt;h3 id=&#34;java-中还有哪些类可以解决-aba-的问题-atomicmarkablereference&#34;&gt;java 中还有哪些类可以解决 ABA 的问题? AtomicMarkableReference&lt;/h3&gt;
+&lt;h3 id=&#34;什么是-aqs-为什么它是核心&#34;&gt;什么是 AQS? 为什么它是核心?&lt;/h3&gt;
+&lt;h3 id=&#34;aqs-的核心思想是什么-它是怎么实现的&#34;&gt;AQS 的核心思想是什么? 它是怎么实现的?&lt;/h3&gt;
+&lt;h3 id=&#34;aqs-有哪些核心的方法&#34;&gt;AQS 有哪些核心的方法?&lt;/h3&gt;
+&lt;h3 id=&#34;aqs-定义什么样的资源获取方式&#34;&gt;AQS 定义什么样的资源获取方式?&lt;/h3&gt;
+&lt;h3 id=&#34;aqs-底层使用了什么样的设计模式-模板&#34;&gt;AQS 底层使用了什么样的设计模式? 模板&lt;/h3&gt;
+&lt;h3 id=&#34;aqs-的应用示例&#34;&gt;AQS 的应用示例?&lt;/h3&gt;
+&lt;h3 id=&#34;什么是可重入什么是可重入锁&#34;&gt;什么是可重入，什么是可重入锁?&lt;/h3&gt;
+&lt;h3 id=&#34;它用来解决什么问题-reentrantlock-的核心是-aqs那么它怎么来实现的继承吗-说说其类内部结构关系&#34;&gt;它用来解决什么问题? ReentrantLock 的核心是 AQS，那么它怎么来实现的，继承吗? 说说其类内部结构关系?&lt;/h3&gt;
+&lt;h3 id=&#34;reentrantlock-是如何实现公平锁的&#34;&gt;ReentrantLock 是如何实现公平锁的?&lt;/h3&gt;
+&lt;h3 id=&#34;reentrantlock-是如何实现非公平锁的&#34;&gt;ReentrantLock 是如何实现非公平锁的?&lt;/h3&gt;
+&lt;h3 id=&#34;reentrantlock-默认实现的是公平还是非公平锁&#34;&gt;ReentrantLock 默认实现的是公平还是非公平锁?&lt;/h3&gt;
+&lt;h3 id=&#34;使用-reentrantlock-实现公平和非公平锁的示例&#34;&gt;使用 ReentrantLock 实现公平和非公平锁的示例?&lt;/h3&gt;
+&lt;h3 id=&#34;reentrantlock-和-synchronized-的对比&#34;&gt;ReentrantLock 和 Synchronized 的对比&lt;/h3&gt;
+&lt;h3 id=&#34;为了有了-reentrantlock-还需要-reentrantreadwritelock&#34;&gt;为了有了 ReentrantLock 还需要 ReentrantReadWriteLock?&lt;/h3&gt;
+&lt;h3 id=&#34;reentrantreadwritelock-底层实现原理&#34;&gt;ReentrantReadWriteLock 底层实现原理?&lt;/h3&gt;
+&lt;h3 id=&#34;reentrantreadwritelock-底层读写状态如何设计的-高-16-位为读锁低-16-位为写锁&#34;&gt;ReentrantReadWriteLock 底层读写状态如何设计的? 高 16 位为读锁，低 16 位为写锁&lt;/h3&gt;
+&lt;h3 id=&#34;读锁和写锁的最大数量是多少&#34;&gt;读锁和写锁的最大数量是多少?&lt;/h3&gt;
+&lt;h3 id=&#34;本地线程计数器-threadlocalholdcounter-是用来做什么的&#34;&gt;本地线程计数器 ThreadLocalHoldCounter 是用来做什么的?&lt;/h3&gt;
+&lt;h3 id=&#34;缓存计数器-holdcounter-是用来做什么的&#34;&gt;缓存计数器 HoldCounter 是用来做什么的?&lt;/h3&gt;
+&lt;h3 id=&#34;写锁的获取与释放是怎么实现的&#34;&gt;写锁的获取与释放是怎么实现的?&lt;/h3&gt;
+&lt;h3 id=&#34;读锁的获取与释放是怎么实现的&#34;&gt;读锁的获取与释放是怎么实现的?&lt;/h3&gt;
+&lt;h3 id=&#34;rentrantreadwritelock-为什么不支持锁升级&#34;&gt;RentrantReadWriteLock 为什么不支持锁升级?&lt;/h3&gt;
+&lt;h3 id=&#34;什么是锁的升降级&#34;&gt;什么是锁的升降级?&lt;/h3&gt;
+&lt;h3 id=&#34;为什么-hashtable-慢-它的并发度是什么-那么-concurrenthashmap-并发度是什么&#34;&gt;为什么 HashTable 慢? 它的并发度是什么? 那么 ConcurrentHashMap 并发度是什么?&lt;/h3&gt;
+&lt;h3 id=&#34;concurrenthashmap-在-jdk17-和-jdk18-中实现有什么差别-jdk18-解決了-jdk17-中什么问题&#34;&gt;ConcurrentHashMap 在 JDK1.7 和 JDK1.8 中实现有什么差别? JDK1.8 解決了 JDK1.7 中什么问题&lt;/h3&gt;
+&lt;h3 id=&#34;concurrenthashmap-jdk17-实现的原理是什么-分段锁机制&#34;&gt;ConcurrentHashMap JDK1.7 实现的原理是什么? 分段锁机制&lt;/h3&gt;
+&lt;h3 id=&#34;concurrenthashmap-jdk18-实现的原理是什么-数组链表红黑树cas-concurrenthashmap&#34;&gt;ConcurrentHashMap JDK1.8 实现的原理是什么? 数组+链表+红黑树，CAS ConcurrentHashMap&lt;/h3&gt;
+&lt;h3 id=&#34;jdk17-中-segment-数concurrencylevel默认值是多少-为何一旦初始化就不可再扩容&#34;&gt;JDK1.7 中 Segment 数(concurrencyLevel)默认值是多少? 为何一旦初始化就不可再扩容?&lt;/h3&gt;
+&lt;h3 id=&#34;concurrenthashmap-jdk17-说说其-put-的机制&#34;&gt;ConcurrentHashMap JDK1.7 说说其 put 的机制?&lt;/h3&gt;
+&lt;h3 id=&#34;concurrenthashmap-jdk17-是如何扩容的-rehash注segment-数组不能扩容扩容是-segment-数组某个位置内部的数组-hashentrykv-进行扩容&#34;&gt;ConcurrentHashMap JDK1.7 是如何扩容的? rehash(注：segment 数组不能扩容，扩容是 segment 数组某个位置内部的数组 HashEntry&amp;lt;K,V&amp;gt;[] 进行扩容)&lt;/h3&gt;
+&lt;h3 id=&#34;concurrenthashmap-jdk18-是如何扩容的-trypresize&#34;&gt;ConcurrentHashMap JDK1.8 是如何扩容的? tryPresize&lt;/h3&gt;
+&lt;h3 id=&#34;concurrenthashmap-jdk18-链表转红黑树的时机是什么-临界值为什么是-8&#34;&gt;ConcurrentHashMap JDK1.8 链表转红黑树的时机是什么? 临界值为什么是 8?&lt;/h3&gt;
+&lt;h3 id=&#34;concurrenthashmap-jdk18-是如何进行数据迁移的-transfer&#34;&gt;ConcurrentHashMap JDK1.8 是如何进行数据迁移的? transfer&lt;/h3&gt;
+&lt;h3 id=&#34;请先说说非并发集合中-fail-fast-机制&#34;&gt;请先说说非并发集合中 Fail-fast 机制?&lt;/h3&gt;
+&lt;h3 id=&#34;再为什么说-arraylist-查询快而增删慢&#34;&gt;再为什么说 ArrayList 查询快而增删慢?&lt;/h3&gt;
+&lt;h3 id=&#34;对比-arraylist-说说-copyonwritearraylist-的增删改查实现原理-cow-基于拷贝&#34;&gt;对比 ArrayList 说说 CopyOnWriteArrayList 的增删改查实现原理? COW 基于拷贝&lt;/h3&gt;
+&lt;h3 id=&#34;再说下弱一致性的迭代器原理是怎么样的-cowiteratore&#34;&gt;再说下弱一致性的迭代器原理是怎么样的? COWIterator&amp;lt;\E&amp;gt;&lt;/h3&gt;
+&lt;h3 id=&#34;copyonwritearraylist-为什么并发安全且性能比-vector-好&#34;&gt;CopyOnWriteArrayList 为什么并发安全且性能比 Vector 好?&lt;/h3&gt;
+&lt;h3 id=&#34;copyonwritearraylist-有何缺陷说说其应用场景-&#34;&gt;CopyOnWriteArrayList 有何缺陷，说说其应用场景? ¶&lt;/h3&gt;
+&lt;h3 id=&#34;要想用线程安全的队列有哪些选择-vectorcollectionssynchronizedlistlistt-list-concurrentlinkedqueue-等&#34;&gt;要想用线程安全的队列有哪些选择? Vector，Collections.synchronizedList(List&amp;lt;\T&amp;gt; list), ConcurrentLinkedQueue 等&lt;/h3&gt;
+&lt;h3 id=&#34;concurrentlinkedqueue-实现的数据结构&#34;&gt;ConcurrentLinkedQueue 实现的数据结构?&lt;/h3&gt;
+&lt;h3 id=&#34;concurrentlinkedqueue-底层原理-全程无锁cas&#34;&gt;ConcurrentLinkedQueue 底层原理? 全程无锁(CAS)&lt;/h3&gt;
+&lt;h3 id=&#34;concurrentlinkedqueue-的核心方法有哪些-offerpollpeekisempty等队列常用方法&#34;&gt;ConcurrentLinkedQueue 的核心方法有哪些? offer()，poll()，peek()，isEmpty()等队列常用方法&lt;/h3&gt;
+&lt;h3 id=&#34;说说-concurrentlinkedqueue-的-hops延迟更新的策略的设计&#34;&gt;说说 ConcurrentLinkedQueue 的 HOPS(延迟更新的策略)的设计?&lt;/h3&gt;
+&lt;h3 id=&#34;concurrentlinkedqueue-适合什么样的使用场景&#34;&gt;ConcurrentLinkedQueue 适合什么样的使用场景&lt;/h3&gt;
+&lt;h3 id=&#34;什么是-blockingdeque&#34;&gt;什么是 BlockingDeque?&lt;/h3&gt;
+&lt;h3 id=&#34;blockingqueue-大家族有哪些-arrayblockingqueue-delayqueue-linkedblockingqueue-synchronousqueue-等&#34;&gt;BlockingQueue 大家族有哪些? ArrayBlockingQueue, DelayQueue, LinkedBlockingQueue, SynchronousQueue 等&lt;/h3&gt;
+&lt;h3 id=&#34;blockingqueue-适合用在什么样的场景&#34;&gt;BlockingQueue 适合用在什么样的场景?&lt;/h3&gt;
+&lt;h3 id=&#34;blockingqueue-常用的方法&#34;&gt;BlockingQueue 常用的方法?&lt;/h3&gt;
+&lt;h3 id=&#34;blockingqueue-插入方法有哪些&#34;&gt;BlockingQueue 插入方法有哪些?&lt;/h3&gt;
+&lt;h3 id=&#34;这些方法addoofferoputooffero-timeout-timeunit的区别是什么&#34;&gt;这些方法(add(o),offer(o),put(o),offer(o, timeout, timeunit))的区别是什么?&lt;/h3&gt;
+&lt;h3 id=&#34;blockingdeque-与-blockingqueue-有何关系请对比下它们的方法&#34;&gt;BlockingDeque 与 BlockingQueue 有何关系，请对比下它们的方法?&lt;/h3&gt;
+&lt;h3 id=&#34;blockingdeque-适合用在什么样的场景&#34;&gt;BlockingDeque 适合用在什么样的场景?&lt;/h3&gt;
+&lt;h3 id=&#34;blockingdeque-大家族有哪些&#34;&gt;BlockingDeque 大家族有哪些?&lt;/h3&gt;
+&lt;h3 id=&#34;blockingdeque-与-blockingqueue-实现例子&#34;&gt;BlockingDeque 与 BlockingQueue 实现例子&lt;/h3&gt;
+&lt;h3 id=&#34;futuretask-用来解决什么问题的-为什么会出现&#34;&gt;FutureTask 用来解决什么问题的? 为什么会出现?&lt;/h3&gt;
+&lt;h3 id=&#34;futuretask-类结构关系怎么样的&#34;&gt;FutureTask 类结构关系怎么样的?&lt;/h3&gt;
+&lt;h3 id=&#34;futuretask-的线程安全是由什么保证的&#34;&gt;FutureTask 的线程安全是由什么保证的?&lt;/h3&gt;
+&lt;h3 id=&#34;futuretask-结果返回机制&#34;&gt;FutureTask 结果返回机制?&lt;/h3&gt;
+&lt;h3 id=&#34;futuretask-内部运行状态的转变&#34;&gt;FutureTask 内部运行状态的转变?&lt;/h3&gt;
+&lt;h3 id=&#34;futuretask-通常会怎么用-举例说明&#34;&gt;FutureTask 通常会怎么用? 举例说明&lt;/h3&gt;
+&lt;h3 id=&#34;为什么要有线程池&#34;&gt;为什么要有线程池?&lt;/h3&gt;
+&lt;h3 id=&#34;java-是实现和管理线程池有哪些方式-请简单举例如何使用&#34;&gt;Java 是实现和管理线程池有哪些方式? 请简单举例如何使用&lt;/h3&gt;
+&lt;h3 id=&#34;为什么很多公司不允许使用-executors-去创建线程池-那么推荐怎么使用呢&#34;&gt;为什么很多公司不允许使用 Executors 去创建线程池? 那么推荐怎么使用呢?&lt;/h3&gt;
+&lt;h3 id=&#34;threadpoolexecutor-有哪些核心的配置参数&#34;&gt;ThreadPoolExecutor 有哪些核心的配置参数?&lt;/h3&gt;
+&lt;h3 id=&#34;请简要说明-threadpoolexecutor-可以创建哪是哪三种线程池呢&#34;&gt;请简要说明 ThreadPoolExecutor 可以创建哪是哪三种线程池呢?&lt;/h3&gt;
+&lt;h3 id=&#34;当队列满了并且-worker-的数量达到-maxsize-的时候会怎么样&#34;&gt;当队列满了并且 worker 的数量达到 maxSize 的时候，会怎么样?&lt;/h3&gt;
+&lt;h3 id=&#34;说说-threadpoolexecutor-有哪些-rejectedexecutionhandler-策略-默认是什么策略&#34;&gt;说说 ThreadPoolExecutor 有哪些 RejectedExecutionHandler 策略? 默认是什么策略?&lt;/h3&gt;
+&lt;h3 id=&#34;简要说下线程池的任务执行机制-execute--addworker-runworker-gettask&#34;&gt;简要说下线程池的任务执行机制? execute –&amp;gt; addWorker –&amp;gt;runworker (getTask)&lt;/h3&gt;
+&lt;h3 id=&#34;线程池中任务是如何提交的&#34;&gt;线程池中任务是如何提交的?&lt;/h3&gt;
+&lt;h3 id=&#34;线程池中任务是如何关闭的&#34;&gt;线程池中任务是如何关闭的?&lt;/h3&gt;
+&lt;h3 id=&#34;在配置线程池的时候需要考虑哪些配置因素&#34;&gt;在配置线程池的时候需要考虑哪些配置因素?&lt;/h3&gt;
+&lt;h3 id=&#34;如何监控线程池的状态&#34;&gt;如何监控线程池的状态?&lt;/h3&gt;
+&lt;h3 id=&#34;scheduledthreadpoolexecutor-要解决什么样的问题&#34;&gt;ScheduledThreadPoolExecutor 要解决什么样的问题?&lt;/h3&gt;
+&lt;h3 id=&#34;scheduledthreadpoolexecutor-相比-threadpoolexecutor-有哪些特性&#34;&gt;ScheduledThreadPoolExecutor 相比 ThreadPoolExecutor 有哪些特性?&lt;/h3&gt;
+&lt;h3 id=&#34;scheduledthreadpoolexecutor-有什么样的数据结构核心内部类和抽象类&#34;&gt;ScheduledThreadPoolExecutor 有什么样的数据结构，核心内部类和抽象类?&lt;/h3&gt;
+&lt;h3 id=&#34;scheduledthreadpoolexecutor-有哪两个关闭策略-区别是什么&#34;&gt;ScheduledThreadPoolExecutor 有哪两个关闭策略? 区别是什么?&lt;/h3&gt;
+&lt;h3 id=&#34;scheduledthreadpoolexecutor-中-scheduleatfixedrate-和-schedulewithfixeddelay-区别是什么&#34;&gt;ScheduledThreadPoolExecutor 中 scheduleAtFixedRate 和 scheduleWithFixedDelay 区别是什么?&lt;/h3&gt;
+&lt;h3 id=&#34;为什么-threadpoolexecutor-的调整策略却不适用于-scheduledthreadpoolexecutor&#34;&gt;为什么 ThreadPoolExecutor 的调整策略却不适用于 ScheduledThreadPoolExecutor?&lt;/h3&gt;
+&lt;h3 id=&#34;executors-提供了几种方法来构造-scheduledthreadpoolexecutor&#34;&gt;Executors 提供了几种方法来构造 ScheduledThreadPoolExecutor?&lt;/h3&gt;
+&lt;h3 id=&#34;forkjoin-主要用来解决什么样的问题&#34;&gt;Fork/Join 主要用来解决什么样的问题?&lt;/h3&gt;
+&lt;h3 id=&#34;forkjoin-框架是在哪个-jdk-版本中引入的&#34;&gt;Fork/Join 框架是在哪个 JDK 版本中引入的?&lt;/h3&gt;
+&lt;h3 id=&#34;forkjoin-框架主要包含哪三个模块-模块之间的关系是怎么样的&#34;&gt;Fork/Join 框架主要包含哪三个模块? 模块之间的关系是怎么样的?&lt;/h3&gt;
+&lt;h3 id=&#34;forkjoinpool-类继承关系&#34;&gt;ForkJoinPool 类继承关系?&lt;/h3&gt;
+&lt;h3 id=&#34;forkjointask-抽象类继承关系-在实际运用中我们一般都会继承-recursivetask-recursiveaction-或-countedcompleter-来实现我们的业务需求而不会直接继承-forkjointask-类&#34;&gt;ForkJoinTask 抽象类继承关系? 在实际运用中，我们一般都会继承 RecursiveTask 、RecursiveAction 或 CountedCompleter 来实现我们的业务需求，而不会直接继承 ForkJoinTask 类&lt;/h3&gt;
+&lt;h3 id=&#34;整个-forkjoin-框架的执行流程运行机制是怎么样的&#34;&gt;整个 Fork/Join 框架的执行流程/运行机制是怎么样的?&lt;/h3&gt;
+&lt;h3 id=&#34;具体阐述-forkjoin-的分治思想和-work-stealing-实现方式&#34;&gt;具体阐述 Fork/Join 的分治思想和 work-stealing 实现方式?&lt;/h3&gt;
+&lt;h3 id=&#34;有哪些-jdk-源码中使用了-forkjoin-思想&#34;&gt;有哪些 JDK 源码中使用了 Fork/Join 思想?&lt;/h3&gt;
+&lt;h3 id=&#34;如何使用-executors-工具类创建-forkjoinpool&#34;&gt;如何使用 Executors 工具类创建 ForkJoinPool?&lt;/h3&gt;
+&lt;h3 id=&#34;写一个例子-用-forkjoin-方式实现-123100000&#34;&gt;写一个例子: 用 ForkJoin 方式实现 1+2+3+&amp;hellip;+100000?&lt;/h3&gt;
+&lt;h3 id=&#34;forkjoin-在使用时有哪些注意事项-结合-jdk-中的斐波那契数列实例具体说明&#34;&gt;Fork/Join 在使用时有哪些注意事项? 结合 JDK 中的斐波那契数列实例具体说明&lt;/h3&gt;
+&lt;h3 id=&#34;什么是-countdownlatch&#34;&gt;什么是 CountDownLatch?&lt;/h3&gt;
+&lt;h3 id=&#34;countdownlatch-底层实现原理&#34;&gt;CountDownLatch 底层实现原理?&lt;/h3&gt;
+&lt;h3 id=&#34;countdownlatch-一次可以唤醒几个任务&#34;&gt;CountDownLatch 一次可以唤醒几个任务?&lt;/h3&gt;
+&lt;h3 id=&#34;多个-countdownlatch-有哪些主要方法-awaitcountdown&#34;&gt;多个 CountDownLatch 有哪些主要方法? await(),countDown()&lt;/h3&gt;
+&lt;h3 id=&#34;countdownlatch-适用于什么场景&#34;&gt;CountDownLatch 适用于什么场景?&lt;/h3&gt;
+&lt;h3 id=&#34;写道题实现一个容器提供两个方法addsize-写两个线程线程-1-添加-10-个元素到容器中线程-2-实现监控元素的个数当个数到-5-个时线程-2-给出提示并结束-使用-countdownlatch-代替-wait-notify-好处&#34;&gt;写道题：实现一个容器，提供两个方法，add，size 写两个线程，线程 1 添加 10 个元素到容器中，线程 2 实现监控元素的个数，当个数到 5 个时，线程 2 给出提示并结束? 使用 CountDownLatch 代替 wait notify 好处&lt;/h3&gt;
+&lt;h3 id=&#34;什么是-cyclicbarrier&#34;&gt;什么是 CyclicBarrier?&lt;/h3&gt;
+&lt;h3 id=&#34;cyclicbarrier-底层实现原理&#34;&gt;CyclicBarrier 底层实现原理?&lt;/h3&gt;
+&lt;h3 id=&#34;countdownlatch-和-cyclicbarrier-对比&#34;&gt;CountDownLatch 和 CyclicBarrier 对比?&lt;/h3&gt;
+&lt;h3 id=&#34;cyclicbarrier-的核心函数有哪些&#34;&gt;CyclicBarrier 的核心函数有哪些?&lt;/h3&gt;
+&lt;h3 id=&#34;cyclicbarrier-适用于什么场景&#34;&gt;CyclicBarrier 适用于什么场景?&lt;/h3&gt;
+&lt;h3 id=&#34;什么是-semaphore&#34;&gt;什么是 Semaphore?&lt;/h3&gt;
+&lt;h3 id=&#34;semaphore-内部原理&#34;&gt;Semaphore 内部原理?&lt;/h3&gt;
+&lt;h3 id=&#34;semaphore-常用方法有哪些-如何实现线程同步和互斥的&#34;&gt;Semaphore 常用方法有哪些? 如何实现线程同步和互斥的?&lt;/h3&gt;
+&lt;h3 id=&#34;semaphore-适合用在什么场景&#34;&gt;Semaphore 适合用在什么场景?&lt;/h3&gt;
+&lt;h3 id=&#34;单独使用-semaphore-是不会使用到-aqs-的条件队列&#34;&gt;单独使用 Semaphore 是不会使用到 AQS 的条件队列?&lt;/h3&gt;
+&lt;h3 id=&#34;semaphore-中申请令牌acquire释放令牌release的实现&#34;&gt;Semaphore 中申请令牌(acquire)、释放令牌(release)的实现?&lt;/h3&gt;
+&lt;h3 id=&#34;semaphore-初始化有-10-个令牌11-个线程同时各调用-1-次-acquire-方法会发生什么&#34;&gt;Semaphore 初始化有 10 个令牌，11 个线程同时各调用 1 次 acquire 方法，会发生什么?&lt;/h3&gt;
+&lt;h3 id=&#34;semaphore-初始化有-10-个令牌一个线程重复调用-11-次-acquire-方法会发生什么&#34;&gt;Semaphore 初始化有 10 个令牌，一个线程重复调用 11 次 acquire 方法，会发生什么?&lt;/h3&gt;
+&lt;h3 id=&#34;semaphore-初始化有-1-个令牌1-个线程调用一次-acquire-方法然后调用两次-release-方法之后另外一个线程调用-acquire2方法此线程能够获取到足够的令牌并继续运行吗&#34;&gt;Semaphore 初始化有 1 个令牌，1 个线程调用一次 acquire 方法，然后调用两次 release 方法，之后另外一个线程调用 acquire(2)方法，此线程能够获取到足够的令牌并继续运行吗?&lt;/h3&gt;
+&lt;h3 id=&#34;semaphore-初始化有-2-个令牌一个线程调用-1-次-release-方法然后一次性获取-3-个令牌会获取到吗&#34;&gt;Semaphore 初始化有 2 个令牌，一个线程调用 1 次 release 方法，然后一次性获取 3 个令牌，会获取到吗?&lt;/h3&gt;
+&lt;h3 id=&#34;phaser-主要用来解决什么问题&#34;&gt;Phaser 主要用来解决什么问题?&lt;/h3&gt;
+&lt;h3 id=&#34;phaser-与-cyclicbarrier-和-countdownlatch-的区别是什么&#34;&gt;Phaser 与 CyclicBarrier 和 CountDownLatch 的区别是什么?&lt;/h3&gt;
+&lt;h3 id=&#34;如果用-countdownlatch-来实现-phaser-的功能应该怎么实现&#34;&gt;如果用 CountDownLatch 来实现 Phaser 的功能应该怎么实现?&lt;/h3&gt;
+&lt;h3 id=&#34;phaser-运行机制是什么样的&#34;&gt;Phaser 运行机制是什么样的?&lt;/h3&gt;
+&lt;h3 id=&#34;给一个-phaser-使用的示例&#34;&gt;给一个 Phaser 使用的示例?&lt;/h3&gt;
+&lt;h3 id=&#34;exchanger-主要解决什么问题&#34;&gt;Exchanger 主要解决什么问题?&lt;/h3&gt;
+&lt;h3 id=&#34;对比-synchronousqueue为什么说-exchanger-可被视为-synchronousqueue-的双向形式&#34;&gt;对比 SynchronousQueue，为什么说 Exchanger 可被视为 SynchronousQueue 的双向形式?&lt;/h3&gt;
+&lt;h3 id=&#34;exchanger-在不同的-jdk-版本中实现有什么差别&#34;&gt;Exchanger 在不同的 JDK 版本中实现有什么差别?&lt;/h3&gt;
+&lt;h3 id=&#34;exchanger-实现机制&#34;&gt;Exchanger 实现机制?&lt;/h3&gt;
+&lt;h3 id=&#34;exchanger-已经有了-slot-单节点为什么会加入-arena-node-数组-什么时候会用到数组&#34;&gt;Exchanger 已经有了 slot 单节点，为什么会加入 arena node 数组? 什么时候会用到数组?&lt;/h3&gt;
+&lt;h3 id=&#34;arena-可以确保不同的-slot-在-arena-中是不会相冲突的那么是怎么保证的呢&#34;&gt;arena 可以确保不同的 slot 在 arena 中是不会相冲突的，那么是怎么保证的呢?&lt;/h3&gt;
+&lt;h3 id=&#34;什么是伪共享exchanger-中如何体现的&#34;&gt;什么是伪共享，Exchanger 中如何体现的?&lt;/h3&gt;
+&lt;h3 id=&#34;exchanger-实现举例&#34;&gt;Exchanger 实现举例&lt;/h3&gt;
+&lt;h3 id=&#34;什么是-threadlocal-用来解决什么问题的&#34;&gt;什么是 ThreadLocal? 用来解决什么问题的?&lt;/h3&gt;
+&lt;h3 id=&#34;说说你对-threadlocal-的理解&#34;&gt;说说你对 ThreadLocal 的理解&lt;/h3&gt;
+&lt;h3 id=&#34;threadlocal-是如何实现线程隔离的&#34;&gt;ThreadLocal 是如何实现线程隔离的?&lt;/h3&gt;
+&lt;h3 id=&#34;为什么-threadlocal-会造成内存泄露&#34;&gt;为什么 ThreadLocal 会造成内存泄露?&lt;/h3&gt;
+&lt;h3 id=&#34;如何解决还有哪些使用-threadlocal-的应用场景&#34;&gt;如何解决还有哪些使用 ThreadLocal 的应用场景?&lt;/h3&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
