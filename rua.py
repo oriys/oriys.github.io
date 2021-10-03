@@ -3,6 +3,7 @@ import requests
 import os
 books = list(set([
     "https://book.douban.com/subject/26835090",
+    "https://book.douban.com/subject/3259440",
     "https://book.douban.com/subject/34907497",
     "https://book.douban.com/subject/1899158",
     "https://book.douban.com/subject/35246417",
