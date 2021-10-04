@@ -116,7 +116,7 @@ def printHeader():
 
 if __name__ == '__main__':
     printHeader()
-    col = 9
+    col = 8
     print('|'*(col-0))
     print(*['|' for i in range(col)], sep=':-:')
     i = 0
