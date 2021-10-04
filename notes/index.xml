@@ -16863,7 +16863,7 @@ Subject: Searching for the meaning of life.
     <item>
       <title>系统设计::设计一个搜索自动补全系统</title>
       <link>/notes/system_design_interview_13/</link>
-      <pubDate>Fri, 12 Feb 2021 22:20:24 +0800</pubDate>
+      <pubDate>Sat, 13 Feb 2021 22:20:24 +0800</pubDate>
       <guid>/notes/system_design_interview_13/</guid>
       <description>&lt;h2 id=&#34;设计一个搜索自动补全系统&#34;&gt;设计一个搜索自动补全系统&lt;/h2&gt;
 &lt;p&gt;在谷歌上搜索或在亚马逊购物时，当你在搜索框中输入时，会有一个或多个与搜索词相匹配的内容呈现给你。这一功能被称为自动补全、提前输入、边输入边搜索或增量搜索。图 13-1 是谷歌搜索的一个例子，当在搜索框中输&amp;quot;dinner&amp;quot;时，显示了一个自动补全的结果列表。搜索自动补全是许多产品的一个重要功能。这就把我们引向了面试问题：设计一个搜索自动补全系统，也&amp;quot;设计 top k&amp;quot;&amp;ldquo;设计 top k 最多人搜索的查询&amp;rdquo;。&lt;/p&gt;
