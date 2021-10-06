@@ -1,3 +1,4 @@
+from typing import Collection
 from bs4 import BeautifulSoup
 import requests
 import os
@@ -118,9 +119,7 @@ def printHeader():
     print()
 
 
-if __name__ == '__main__':
-    printHeader()
-    col = 8
+def printTable(urls, col):
     print('|'*(col-0))
     print(*['|' for i in range(col)], sep=':-:')
     i = 0
@@ -136,3 +135,9 @@ if __name__ == '__main__':
         print(*tmp, sep='|', end='|')
         print()
         i += col - 1
+
+
+if __name__ == '__main__':
+    printHeader()
+    col = 8
+    printTable(books+movies, col)
