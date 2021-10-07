@@ -4,6 +4,7 @@ import requests
 import os
 books = list(set([
     'https://book.douban.com/subject/1012611',
+    'https://movie.douban.com/subject/30217014',
     'https://book.douban.com/subject/1029791',
     'https://book.douban.com/subject/1827374',
     'https://book.douban.com/subject/33456870',
