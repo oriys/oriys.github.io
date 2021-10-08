@@ -4,9 +4,9 @@ import requests
 import os
 books = list(set([
     'https://book.douban.com/subject/1012611',
-    'https://movie.douban.com/subject/30217014',
     'https://book.douban.com/subject/1029791',
     'https://book.douban.com/subject/1827374',
+    'https://book.douban.com/subject/25900156',
     'https://book.douban.com/subject/33456870',
     'https://book.douban.com/subject/1899158',
     'https://book.douban.com/subject/24708143',
@@ -42,6 +42,7 @@ movies = list(set(
         'https://movie.douban.com/subject/25798131',
         'https://movie.douban.com/subject/1968790',
         'https://movie.douban.com/subject/30395914',
+        'https://movie.douban.com/subject/30217014',
         'https://movie.douban.com/subject/26333560',
         'https://movie.douban.com/subject/26362351',
         'https://movie.douban.com/subject/1308892',
