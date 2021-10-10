@@ -111,7 +111,7 @@ def download(img, url):
 
 def printHeader():
     print('---')
-    print('title: "书影音"')
+    print('title: "关于"')
     print('date: 2021-08-31T17:12:59+08:00')
     print('draft: false')
     print('---')
