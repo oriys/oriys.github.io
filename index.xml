@@ -20157,13 +20157,13 @@ Subject: Searching for the meaning of life.
 &lt;/li&gt;
 &lt;li&gt;参与者发生故障
 &lt;ul&gt;
-&lt;li&gt;在第一阶段，任何一个准备请求发生了失败或者超时，那么协调者就会决定中止交易&lt;/li&gt;
+&lt;li&gt;在第一阶段，任何一个准备请求发生了失败或者超时，那么协调者就会决定中止事务&lt;/li&gt;
 &lt;li&gt;在第二阶段发生提交或中止请求失败，则协调者将无限期重试&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;协调者发生故障
 &lt;ul&gt;
-&lt;li&gt;如果协调者在发送准备请求之前就已失败，则参与者可以安全地中止交易&lt;/li&gt;
+&lt;li&gt;如果协调者在发送准备请求之前就已失败，则参与者可以安全地中止事务&lt;/li&gt;
 &lt;li&gt;如果参与者接受了请求并做了投票是，它只能无限期等待协调者的决定。&lt;/li&gt;
 &lt;li&gt;部分节点没有接收到提交确认请求，在超时过后决定丢弃，导致数据不一致。&lt;/li&gt;
 &lt;li&gt;2PC 能够顺利完成的唯一方法就是等待协调者恢复。&lt;/li&gt;
@@ -20192,7 +20192,7 @@ Subject: Searching for the meaning of life.
 &lt;li&gt;只有在所有受影响的系统都使用相同的原子提交协议的前提下，这种分布式事务才是可行&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;XA 交易
+&lt;li&gt;XA 事务
 &lt;ul&gt;
 &lt;li&gt;异构环境下实施两阶段提交的一个工业标准&lt;/li&gt;
 &lt;li&gt;协调所有实现 API 的参与者进行同一的提交或者回滚&lt;/li&gt;
