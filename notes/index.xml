@@ -5078,7 +5078,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;li&gt;DBMS 版本。&lt;/li&gt;
 &lt;li&gt;事务的可见性。&lt;/li&gt;
 &lt;li&gt;压缩信息&lt;/li&gt;
-&lt;li&gt;一些系统要求页面是字包含的（如 oracle）。&lt;/li&gt;
+&lt;li&gt;一些系统要求页面是自包含的（如 oracle）。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
