@@ -13336,7 +13336,7 @@ Subject: Searching for the meaning of life.
 &lt;li&gt;程序计数器
 &lt;ul&gt;
 &lt;li&gt;程序计数器(Program Counter Register)是一块较小的内存空间，它可以看作是当前线程所执行的字节码的行号指示器&lt;/li&gt;
-&lt;li&gt;每条线程都需要有一个独立的程序计数器，各条线程 之间计数器互不影响，独立存储，我们称这类内存区域为“线程私有”的内存&lt;/li&gt;
+&lt;li&gt;每条线程都需要有一个独立的程序计数器，各条线程之间计数器互不影响，独立存储，我们称这类内存区域为“线程私有”的内存&lt;/li&gt;
 &lt;li&gt;如果线程正在执行的是一个 Java 方法，这个计数器记录的是正在执行的虚拟机字节码指令的地址&lt;/li&gt;
 &lt;li&gt;如果正在执行的是本地(Native)方法，这个计数器值则应为空(Undefined)&lt;/li&gt;
 &lt;/ul&gt;
@@ -13413,7 +13413,7 @@ Subject: Searching for the meaning of life.
 &lt;li&gt;Java 堆是否规整又由所采用的垃圾收集器是否带有空间压缩整理(Compact)的能力决定&lt;/li&gt;
 &lt;li&gt;指针碰撞
 &lt;ul&gt;
-&lt;li&gt;Serial、ParNew 等带压缩 整理过程的收集器&lt;/li&gt;
+&lt;li&gt;Serial、ParNew 等带压缩整理过程的收集器&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;空闲列表
