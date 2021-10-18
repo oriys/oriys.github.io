@@ -149,7 +149,7 @@ if (!doNotTrack) {
 <h3 id="数据库例子">数据库例子</h3>
 <p><img src="https://i.imgur.com/ADQaxYv.png" alt="img"></p>
 <h3 id="聚合">聚合</h3>
-<p>聚合函数接收一组元组作为其输入，然后产生一个单一的标量值作为其输出。只能在 SELECT 输出列表中使用。</p>
+<p>聚合函数接收一组 Tuple 作为其输入，然后产生一个单一的标量值作为其输出。只能在 SELECT 输出列表中使用。</p>
 <p>举例：获取使用'@cs&rsquo;登录的学生某个信息。以下三个查询是等价的。</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#00a8c8">select</span> <span style="color:#00a8c8">count</span><span style="color:#111">(</span><span style="color:#f92672">*</span><span style="color:#111">)</span> <span style="color:#00a8c8">from</span> <span style="color:#111">student</span> <span style="color:#00a8c8">where</span> <span style="color:#111">login</span> <span style="color:#00a8c8">like</span> <span style="color:#d88200">&#39;%@cs&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">select</span> <span style="color:#00a8c8">count</span><span style="color:#111">(</span><span style="color:#111">login</span><span style="color:#111">)</span> <span style="color:#00a8c8">from</span> <span style="color:#111">student</span> <span style="color:#00a8c8">where</span> <span style="color:#111">login</span> <span style="color:#00a8c8">like</span> <span style="color:#d88200">&#39;%@cs&#39;</span><span style="color:#111">;</span>
@@ -298,18 +298,18 @@ if (!doNotTrack) {
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#00a8c8">INSERT</span> <span style="color:#00a8c8">INTO</span> <span style="color:#111">CourseIds</span> <span style="color:#111">(</span><span style="color:#00a8c8">SELECT</span> <span style="color:#00a8c8">DISTINCT</span> <span style="color:#111">cid</span> <span style="color:#00a8c8">FROM</span> <span style="color:#111">enrolled</span><span style="color:#111">);</span>
 </code></pre></div><h3 id="输出控制">输出控制</h3>
 <p><code>ORDER BY</code></p>
-<p>由于 SQL 的结果是无序的，你必须使用<code>ORDER BY</code>子句来对元组进行排序。</p>
+<p>由于 SQL 的结果是无序的，你必须使用<code>ORDER BY</code>子句来对 Tuple 进行排序。</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#00a8c8">SELECT</span> <span style="color:#111">sid</span> <span style="color:#00a8c8">FROM</span> <span style="color:#111">enrolled</span> <span style="color:#00a8c8">WHERE</span> <span style="color:#111">cid</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;15-721&#39;</span> <span style="color:#00a8c8">ORDER</span> <span style="color:#00a8c8">BY</span> <span style="color:#111">grade</span> <span style="color:#00a8c8">DESC</span><span style="color:#111">;</span>
 </code></pre></div><p>你可以使用多个<code>ORDER BY</code>子句来更复杂的排序。</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#00a8c8">SELECT</span> <span style="color:#111">sid</span> <span style="color:#00a8c8">FROM</span> <span style="color:#111">enrolled</span> <span style="color:#00a8c8">WHERE</span> <span style="color:#111">cid</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;15-721&#39;</span> <span style="color:#00a8c8">ORDER</span> <span style="color:#00a8c8">BY</span> <span style="color:#111">grade</span> <span style="color:#00a8c8">DESC</span><span style="color:#111">,</span> <span style="color:#111">sid</span> <span style="color:#00a8c8">ASC</span><span style="color:#111">;</span>
 </code></pre></div><p>你也可以在<code>ORDER BY</code>子句中使用任何任意的表达式。</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#00a8c8">SELECT</span> <span style="color:#111">sid</span> <span style="color:#00a8c8">FROM</span> <span style="color:#111">enrolled</span> <span style="color:#00a8c8">WHERE</span> <span style="color:#111">cid</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;15-721&#39;</span> <span style="color:#00a8c8">ORDER</span> <span style="color:#00a8c8">BY</span> <span style="color:#00a8c8">UPPER</span><span style="color:#111">(</span><span style="color:#111">grade</span><span style="color:#111">)</span> <span style="color:#00a8c8">DESC</span><span style="color:#111">,</span> <span style="color:#111">sid</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#00a8c8">ASC</span><span style="color:#111">;</span>
 </code></pre></div><p><code>LIMIT</code></p>
-<p>默认情况下，DBMS 将返回由查询产生的所有元组。你可以使用 <code>LIMIT</code> 子句来限制结果元组的数量</p>
+<p>默认情况下，DBMS 将返回由查询产生的所有 Tuple 。你可以使用 <code>LIMIT</code> 子句来限制结果 Tuple 的数量</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#00a8c8">SELECT</span> <span style="color:#111">sid</span><span style="color:#111">,</span> <span style="color:#111">name</span> <span style="color:#00a8c8">FROM</span> <span style="color:#111">student</span> <span style="color:#00a8c8">WHERE</span> <span style="color:#111">login</span> <span style="color:#00a8c8">LIKE</span> <span style="color:#d88200">&#39;%@cs&#39;</span> <span style="color:#00a8c8">LIMIT</span> <span style="color:#ae81ff">10</span><span style="color:#111">;</span>
 </code></pre></div><p>也可以提供一个偏移量来返回结果中的一个范围</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#00a8c8">SELECT</span> <span style="color:#111">sid</span><span style="color:#111">,</span> <span style="color:#111">name</span> <span style="color:#00a8c8">FROM</span> <span style="color:#111">student</span> <span style="color:#00a8c8">WHERE</span> <span style="color:#111">login</span> <span style="color:#00a8c8">LIKE</span> <span style="color:#d88200">&#39;%@cs&#39;</span> <span style="color:#00a8c8">LIMIT</span> <span style="color:#ae81ff">10</span> <span style="color:#00a8c8">OFFSET</span> <span style="color:#ae81ff">20</span><span style="color:#111">;</span>
-</code></pre></div><p>除非你使用带有<code>LIMIT</code>的<code>ORDER BY</code>子句，否则每次调用的结果中的元组可能是不同的。</p>
+</code></pre></div><p>除非你使用带有<code>LIMIT</code>的<code>ORDER BY</code>子句，否则每次调用的结果中的 Tuple 可能是不同的。</p>
 <h3 id="嵌套查询">嵌套查询</h3>
 <p>在其他查询中调用查询，以在单个查询中执行更复杂的逻辑。外部查询的范围包括在内部查询中（即内部查询可以访问外部查询的属性），但不能反过来。</p>
 <p>内部查询几乎可以出现在查询的任何地方</p>
@@ -327,7 +327,7 @@ if (!doNotTrack) {
 <li>EXISTS: 至少有一条记录被返回。</li>
 </ul>
 <h3 id="窗口函数">窗口函数</h3>
-<p>在一组元组中执行 &ldquo;移动 &ldquo;计算。像聚合操作，但它仍然返回原始元组</p>
+<p>在一组 Tuple 中执行 &ldquo;移动 &ldquo;计算。像聚合操作，但它仍然返回原始 Tuple</p>
 <p><code>Functions</code> 可以是我们上面讨论的任何一个聚合函数。也可以是一个特殊的窗口函数。</p>
 <ul>
 <li>ROW NUMBER：当前行的编号。</li>
@@ -340,7 +340,7 @@ if (!doNotTrack) {
 </code></pre></div><p>重要提示：DBMS 在窗口函数排序后计算 <code>RANK</code>，而在排序前计算 <code>ROW_NUMBER</code></p>
 <h3 id="公共表表达式">公共表表达式</h3>
 <p>公共表表达式（CTE）是窗口或嵌套查询的一种替代方法，可以用来编写更复杂的查询。我们可以把 CTE 看作是一个临时表，只用于一个查询。</p>
-<p><code>WITH</code> 子句将内部查询的输出与具有该名称的临时结果结合起来。生成一个名为 &ldquo;cteName&quot;的 CTE，它包含一个单一属性设置为 &ldquo;1&rdquo; 的元组。然后底部的查询只是返回 &ldquo;cteName &ldquo;的所有属性。</p>
+<p><code>WITH</code> 子句将内部查询的输出与具有该名称的临时结果结合起来。生成一个名为 &ldquo;cteName&quot;的 CTE，它包含一个单一属性设置为 &ldquo;1&rdquo; 的 Tuple 。然后底部的查询只是返回 &ldquo;cteName &ldquo;的所有属性。</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#00a8c8">WITH</span> <span style="color:#111">cteName</span> <span style="color:#00a8c8">AS</span> <span style="color:#111">(</span><span style="color:#00a8c8">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#111">)</span> <span style="color:#00a8c8">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#00a8c8">FROM</span> <span style="color:#111">cteName</span><span style="color:#111">;</span>
 </code></pre></div><p>你可以在 AS 之前将输出列与名称绑定。</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#00a8c8">WITH</span> <span style="color:#111">cteName</span> <span style="color:#111">(</span><span style="color:#111">col1</span><span style="color:#111">,</span> <span style="color:#111">col2</span><span style="color:#111">)</span> <span style="color:#00a8c8">AS</span> <span style="color:#111">(</span><span style="color:#00a8c8">SELECT</span> <span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">)</span> <span style="color:#00a8c8">SELECT</span> <span style="color:#111">col1</span> <span style="color:#f92672">+</span> <span style="color:#111">col2</span> <span style="color:#00a8c8">FROM</span> <span style="color:#111">cteName</span><span style="color:#111">;</span>

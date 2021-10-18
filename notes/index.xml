@@ -832,7 +832,7 @@ KerryGiven 的 No-HypeOptionsTrading:Myths,Realities,andStrategiesThatReally\_\_
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/RK21nhh.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;表索引&#34;&gt;表索引&lt;/h3&gt;
 &lt;p&gt;在数据库系统中，有许多不同的数据结构，可以用于内部元数据、核心数据存储、临时数据结构或表索引等目的。对于表索引，可能涉及到带有范围扫描的查询。&lt;/p&gt;
-&lt;p&gt;表索引是一个表的列的子集的副本，它被组织和(或)排序，以使用这些属性的子集进行有效的访问。因此，DBMS 可以查询表索引的辅助数据结构，而不是进行顺序扫描，以更快地找到元组。DBMS 确保表和索引的内容在逻辑上总是同步的。&lt;/p&gt;
+&lt;p&gt;表索引是一个表的列的子集的副本，它被组织和(或)排序，以使用这些属性的子集进行有效的访问。因此，DBMS 可以查询表索引的辅助数据结构，而不是进行顺序扫描，以更快地找到 Tuple 。DBMS 确保表和索引的内容在逻辑上总是同步的。&lt;/p&gt;
 &lt;p&gt;在每个数据库要创建的索引数量之间存在着一个权衡。尽管更多的索引使得查询速度更快，但索引也会使用存储空间并需要维护。DBMS 的工作是找出用于执行查询的最佳索引。&lt;/p&gt;
 &lt;h3 id=&#34;b树&#34;&gt;B+树&lt;/h3&gt;
 &lt;p&gt;B+Tree 是一种自平衡的树形数据结构，它可以保持数据的分类，并允许在 O(log(n))中进行搜索、顺序访问、插入和删除。它为面向磁盘的 DBMS 的读/写大型数据块而优化。&lt;/p&gt;
@@ -844,7 +844,7 @@ KerryGiven 的 No-HypeOptionsTrading:Myths,Realities,andStrategiesThatReally\_\_
 &lt;li&gt;除根以外的每个内部节点至少有一半是满的（M/2 - 1 &amp;lt;= 键的数量 &amp;lt;= M - 1）。&lt;/li&gt;
 &lt;li&gt;每个有 k 个键的内部节点都有 k+1 个非空子节点。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;B+Tree 中的每个节点都包含一个键/值对数组。这些对中的键是由索引所基于的属性派生的。这些值将根据一个节点是内部节点还是叶子节点而有所不同。对于内部节点，值数组将包含指向其他节点的指针。叶子节点值的两种方法是记录 ID 和元组数据。记录 ID 指的是一个指向元组位置的指针。有元组数据的叶子节点在每个节点中存储元组的实际内容。&lt;/p&gt;
+&lt;p&gt;B+Tree 中的每个节点都包含一个键/值对数组。这些对中的键是由索引所基于的属性派生的。这些值将根据一个节点是内部节点还是叶子节点而有所不同。对于内部节点，值数组将包含指向其他节点的指针。叶子节点值的两种方法是记录 ID 和 Tuple 数据。记录 ID 指的是一个指向 Tuple 位置的指针。有 Tuple 数据的叶子节点在每个节点中存储 Tuple 的实际内容。&lt;/p&gt;
 &lt;p&gt;每个节点的数组都（几乎）是按键排序的。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/gerdPnT.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;p&gt;实践中节点中键和值是分开存储的&lt;/p&gt;
@@ -882,14 +882,14 @@ KerryGiven 的 No-HypeOptionsTrading:Myths,Realities,andStrategiesThatReally\_\_
 &lt;p&gt;像散列表一样，B+Trees 可以通过重复键或存储值列表来处理非唯一的索引。在重复键的方法中，使用相同的叶子节点布局，但重复的键被多次存储。 在值列表的方法中，每个键只存储一次，并保持一个唯一值的链接列表。&lt;/p&gt;
 &lt;h4 id=&#34;重复键&#34;&gt;重复键&lt;/h4&gt;
 &lt;p&gt;在 B+Tree 中，有两种方法来重复键。&lt;/p&gt;
-&lt;p&gt;第一种方法是将记录 ID 作为键的一部分来附加。由于每个元组的记录 ID 是唯一的，这将确保所有的键都是可识别的。DBMS 可以根据部分键来查找元组。&lt;/p&gt;
+&lt;p&gt;第一种方法是将记录 ID 作为键的一部分来附加。由于每个 Tuple 的记录 ID 是唯一的，这将确保所有的键都是可识别的。DBMS 可以根据部分键来查找 Tuple 。&lt;/p&gt;
 &lt;p&gt;第二种方法是允许叶子节点溢出到包含重复键的溢出节点。 虽然没有多余的信息被存储，但这种方法的维护和修改更加复杂。&lt;/p&gt;
 &lt;h4 id=&#34;聚簇索引&#34;&gt;聚簇索引&lt;/h4&gt;
 &lt;p&gt;表按照主键指定的排序顺序存储，作为堆组织的或索引组织的存储。 由于一些 DBMS 总是使用聚簇索引，如果一个表没有明确的主键，它们会自动地将隐藏的行 ID 作为主键，但是其他的 DBMS 根本就不能使用它们。&lt;/p&gt;
 &lt;h4 id=&#34;堆聚簇&#34;&gt;堆聚簇&lt;/h4&gt;
-&lt;p&gt;元组在堆的页面中使用聚簇索引指定的顺序进行排序。如果聚类索引的属性被用来访问元组，DBMS 可以直接跳到这些页面。&lt;/p&gt;
+&lt;p&gt;Tuple 在堆的页面中使用聚簇索引指定的顺序进行排序。如果聚类索引的属性被用来访问 Tuple ，DBMS 可以直接跳到这些页面。&lt;/p&gt;
 &lt;h4 id=&#34;索引扫描页排序&#34;&gt;索引扫描页排序&lt;/h4&gt;
-&lt;p&gt;由于直接从非聚簇索引中检索元组的效率很低，DBMS 可以首先找出它所需要的所有元组，然后根据它们的页面 id 进行排序。&lt;/p&gt;
+&lt;p&gt;由于直接从非聚簇索引中检索 Tuple 的效率很低，DBMS 可以首先找出它所需要的所有 Tuple ，然后根据它们的页面 id 进行排序。&lt;/p&gt;
 </description>
     </item>
     
@@ -1252,9 +1252,9 @@ KerryGiven 的 No-HypeOptionsTrading:Myths,Realities,andStrategiesThatReally\_\_
 &lt;p&gt;DBMS 为系统内部的许多不同部分使用各种数据结构。一些例子包括。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;内部元数据。这是对数据库和系统状态信息进行跟踪的数据。&lt;/li&gt;
-&lt;li&gt;核心数据存储。数据结构被用来作为数据库中元组的基础存储。&lt;/li&gt;
+&lt;li&gt;核心数据存储。数据结构被用来作为数据库中 Tuple 的基础存储。&lt;/li&gt;
 &lt;li&gt;临时数据结构。DBMS 可以在处理查询的过程中即时建立数据结构，以加快执行速度（例如，用于连接的哈希表）。&lt;/li&gt;
-&lt;li&gt;表索引。可以使用辅助数据结构来使其更容易找到特定的元组。&lt;/li&gt;
+&lt;li&gt;表索引。可以使用辅助数据结构来使其更容易找到特定的 Tuple 。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;在实现 DBMS 的数据结构时，有两个主要的设计决定需要考虑。&lt;/p&gt;
 &lt;ul&gt;
@@ -1288,7 +1288,7 @@ KerryGiven 的 No-HypeOptionsTrading:Myths,Realities,andStrategiesThatReally\_\_
 &lt;li&gt;最常见的方法是使用 &amp;ldquo;墓碑&amp;rdquo;。我们不删除这个条目，而是用一个 &amp;ldquo;墓碑 &amp;ldquo;条目取代它，告诉未来的查找要继续扫描。&lt;/li&gt;
 &lt;li&gt;另一种方法是在删除一个条目后移动相邻的数据以填补现在的空槽。然而，我们必须注意只移动最初被移位的条目。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;非唯一键。在同一个键可能与多个不同的值或元组相关的情况下，有两种方法。&lt;/p&gt;
+&lt;p&gt;非唯一键。在同一个键可能与多个不同的值或 Tuple 相关的情况下，有两种方法。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;单独的链表。我们不将数值与键一起存储，而是将一个指针指向一个单独的存储区域，该区域包含所有数值的链接列表。&lt;/li&gt;
 &lt;li&gt;冗余的键。更常见的方法是简单地在表中多次存储相同的键。即使我们这样做，所有具有线性探测功能的东西仍然可以工作。&lt;/li&gt;
@@ -1364,7 +1364,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;p&gt;空间控制是指页面在磁盘上的物理写入位置，目标是使经常一起使用的页面在磁盘上尽可能地保持物理上的接近。&lt;/p&gt;
 &lt;p&gt;时间控制是指何时将页面读入内存，何时将其写入磁盘，目的是尽量减少从磁盘上读取数据的停顿次数。&lt;/p&gt;
 &lt;h3 id=&#34;locks-vs-latches&#34;&gt;Locks vs. Latches&lt;/h3&gt;
-&lt;p&gt;Locks: Locks 是一个更高层次的逻辑元语，它保护数据库的内容（如元组、表、数据库）不受其他事务的影响。事务将在整个持续时间内持有一个 Locks。数据库系统可以在运行查询时向用户披露哪些 Locks 正在被持有。Locks 需要能够回滚。概念上接近于操作系统中的 Latches。&lt;/p&gt;
+&lt;p&gt;Locks: Locks 是一个更高层次的逻辑元语，它保护数据库的内容（如 Tuple 、表、数据库）不受其他事务的影响。事务将在整个持续时间内持有一个 Locks。数据库系统可以在运行查询时向用户披露哪些 Locks 正在被持有。Locks 需要能够回滚。概念上接近于操作系统中的 Latches。&lt;/p&gt;
 &lt;p&gt;Latches: Latches 是一种底层的保护元语，DBMS 将其用于内部数据结构的关键部分（例如，哈希表，内存区域）。Latches 只在所进行的操作的时间内保持。Latches 不需要支持回滚。概念上接近与操作系统的 Mutex。&lt;/p&gt;
 &lt;h3 id=&#34;缓冲池&#34;&gt;缓冲池&lt;/h3&gt;
 &lt;p&gt;缓冲池是一个从磁盘上读取页面的内存缓存。它本质上是在数据库内部分配的一个大的内存区域，用来存储从磁盘获取的页面。&lt;/p&gt;
@@ -1414,7 +1414,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;p&gt;这两种方法说明了快速驱逐与脏写页之间的权衡，脏写页在未来不会被再次读取。&lt;/p&gt;
 &lt;p&gt;避免不必要地写页面的问题的一种方法是后台写入。通过后台写入，DBMS 可以周期性地走过页表并将脏页写入磁盘。当一个脏页被安全地写入时，DBMS 可以驱逐该页或者直接取消脏页标志。&lt;/p&gt;
 &lt;h3 id=&#34;其他内存池&#34;&gt;其他内存池&lt;/h3&gt;
-&lt;p&gt;DBMS 需要内存来处理元组和索引以外的事情。这些其他的内存池可能并不总是由磁盘支持，这取决于实现。&lt;/p&gt;
+&lt;p&gt;DBMS 需要内存来处理 Tuple 和索引以外的事情。这些其他的内存池可能并不总是由磁盘支持，这取决于实现。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Sorting + Join Buffers&lt;/li&gt;
 &lt;li&gt;Query Caches&lt;/li&gt;
@@ -5138,7 +5138,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;p&gt;操作系统对这些文件的内容一无所知。只有 DBMS 知道如何解码它们的内容，因为它是以 DBMS 特有的方式编码的。&lt;/p&gt;
 &lt;p&gt;DBMS 的存储管理器负责管理数据库的文件。它将这些文件表示为一个页的集合。它还跟踪哪些数据被读和写到了页面上，以及页面上有多少可用空间。以及页面中还有多少可用空间。&lt;/p&gt;
 &lt;h3 id=&#34;数据库页&#34;&gt;数据库页&lt;/h3&gt;
-&lt;p&gt;DBMS 将数据库组织在一个或多个文件中的固定大小的数据块，称为页。页面可以包含不同种类的数据（元组、索引、日志等）。大多数系统不会在页中混合这些类型。有些系统会要求它是自包含的，也就是说，读取每个页面所需的所有信息都在页面本身。虽然定义和数据分离可以减少体积，如果缺失了一部分定义数据，会导致数据失去意义，并且恢复难度比较大。&lt;/p&gt;
+&lt;p&gt;DBMS 将数据库组织在一个或多个文件中的固定大小的数据块，称为页。页面可以包含不同种类的数据（ Tuple 、索引、日志等）。大多数系统不会在页中混合这些类型。有些系统会要求它是自包含的，也就是说，读取每个页面所需的所有信息都在页面本身。虽然定义和数据分离可以减少体积，如果缺失了一部分定义数据，会导致数据失去意义，并且恢复难度比较大。&lt;/p&gt;
 &lt;p&gt;每个页面都有一个唯一的标识符。如果数据库是一个单一的文件，那么页面标识可以只是文件的偏移量。大多数数据库管理系统有一个中介层，将页面 ID 映射到文件路径和偏移量。系统的上层会要求一个特定的页号，然后存储管理程序必须把这个页号变成一个文件和一个偏移量来找到这个页。&lt;/p&gt;
 &lt;p&gt;大多数 DBMS 使用固定大小的页面来避免支持可变大小页面所需的工程开销。例如，在可变大小的页面中，删除一个页面可能会在文件中产生一个洞，而 DBMS 不能轻易用新的页面来填补。&lt;/p&gt;
 &lt;ul&gt;
@@ -5153,7 +5153,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;p&gt;存储设备保证对硬件页的大小进行原子写入。如果硬件页是 4KB，那么当系统试图将 4KB 写入磁盘时，要么所有的 4KB 都被写入，要么都不写入。这意味着，如果我们的数据库页大于硬件页，DBMS 将不得不采取额外的措施来确保数据被安全地写出来，因为程序可能在将数据库页的一部分写到磁盘的过程中崩溃。&lt;/p&gt;
 &lt;h3 id=&#34;数据库堆文件&#34;&gt;数据库堆文件&lt;/h3&gt;
 &lt;p&gt;有几种方法可以找到 DBMS 想要的页面在磁盘上的位置，而堆文件组织就是其中一种方法。&lt;/p&gt;
-&lt;p&gt;堆文件是一个无序的页面集合，其中的元组是以随机顺序存储的。&lt;/p&gt;
+&lt;p&gt;堆文件是一个无序的页面集合，其中的 Tuple 是以随机顺序存储的。&lt;/p&gt;
 &lt;p&gt;DBMS 可以通过使用页面的链接列表或页面目录来找到磁盘上给定的页面 ID。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/eB4bj1N.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;p&gt;两种方式可以表示数据库堆文件&lt;/p&gt;
@@ -5177,12 +5177,12 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/vt7VkcX.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;p&gt;存放数据的一个原始方法是跟踪 DBMS 在一个页面中存储了多少个元组，然后每次增加一个新的元组时，它就把元组附加到最后。然而，当它删除一个元组或元组有可变长度的属性时，问题就出现了。&lt;/p&gt;
-&lt;h4 id=&#34;元组式页面&#34;&gt;元组式页面&lt;/h4&gt;
-&lt;p&gt;先看以下按照元组方式组织的页面，当三条数据按照顺序存放在页面中&lt;/p&gt;
+&lt;p&gt;存放数据的一个原始方法是跟踪 DBMS 在一个页面中存储了多少个 Tuple ，然后每次增加一个新的 Tuple 时，它就把 Tuple 附加到最后。然而，当它删除一个 Tuple 或 Tuple 有可变长度的属性时，问题就出现了。&lt;/p&gt;
+&lt;h4 id=&#34;tuple-式页面&#34;&gt;Tuple 式页面&lt;/h4&gt;
+&lt;p&gt;先看以下按照 Tuple 方式组织的页面，当三条数据按照顺序存放在页面中&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/3ihvtT4.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;p&gt;删除一条数据会发生什么？&lt;/p&gt;
-&lt;p&gt;对应位置的记录被删除，留下一个空白，同步文件头中关于元组数量的记录&lt;/p&gt;
+&lt;p&gt;对应位置的记录被删除，留下一个空白，同步文件头中关于 Tuple 数量的记录&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/pnSzxC9.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;p&gt;继续存入一条数据会发生什么？&lt;/p&gt;
 &lt;p&gt;如果数据是定长的，那么它可以存入刚刚被删除的位置或者页面中的空白位置，如果是变长的数据，它需要向后扫描直到找到满足要求的位置。&lt;/p&gt;
@@ -5191,15 +5191,15 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;h4 id=&#34;插槽式页面&#34;&gt;插槽式页面&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;目前 DBMS 中使用的最常见的方法。&lt;/li&gt;
-&lt;li&gt;头部跟踪已使用的槽的数量和最后使用的槽的起始位置的偏移量，以及一个槽数组，它跟踪每个元组的起始位置。&lt;/li&gt;
-&lt;li&gt;要增加一个元组，槽数组将从头到尾增长，元组的数据将从尾到头增长。当槽阵列和元组数据相遇。&lt;/li&gt;
+&lt;li&gt;头部跟踪已使用的槽的数量和最后使用的槽的起始位置的偏移量，以及一个槽数组，它跟踪每个 Tuple 的起始位置。&lt;/li&gt;
+&lt;li&gt;要增加一个 Tuple ，槽数组将从头到尾增长， Tuple 的数据将从尾到头增长。当槽阵列和 Tuple 数据相遇。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/5I6XPw6.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h4 id=&#34;日志式结构&#34;&gt;日志式结构&lt;/h4&gt;
 &lt;ul&gt;
-&lt;li&gt;DBMS 不存储元组，而只存储日志记录。&lt;/li&gt;
+&lt;li&gt;DBMS 不存储 Tuple ，而只存储日志记录。&lt;/li&gt;
 &lt;li&gt;将数据库如何被修改（插入、更新、删除）的记录存入文件。&lt;/li&gt;
-&lt;li&gt;要读取一条记录，DBMS 会逆向扫描日志文件并&amp;quot;重新创建&amp;quot;元组。&lt;/li&gt;
+&lt;li&gt;要读取一条记录，DBMS 会逆向扫描日志文件并&amp;quot;重新创建&amp;rdquo; Tuple 。&lt;/li&gt;
 &lt;li&gt;写的快，读的可能慢。&lt;/li&gt;
 &lt;li&gt;在仅有追加写入的存储上工作得很好，因为 DBMS 不能往回更新数据。&lt;/li&gt;
 &lt;li&gt;为了避免长时间的读取，DBMS 可以有索引，允许它跳到日志中的特定位置。它还可以定期压缩日志，压缩的问题是 DBMS 最终会出现写入放大（它一次又一次地重写相同的数据）。&lt;/li&gt;
@@ -5207,25 +5207,19 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;h4 id=&#34;日志压缩&#34;&gt;日志压缩&lt;/h4&gt;
 &lt;p&gt;通过删除不必要的记录，压缩将较大的日志文件凝聚成较小的文件。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/1lGJXAs.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;元组布局&#34;&gt;元组布局&lt;/h3&gt;
-&lt;p&gt;元组本质上是一个字节序列。DBMS 的工作是将这些字节解释为属性类型和值。&lt;/p&gt;
+&lt;h3 id=&#34;tuple-布局&#34;&gt;Tuple 布局&lt;/h3&gt;
+&lt;p&gt;Tuple 本质上是一个字节序列。DBMS 的工作是将这些字节解释为属性类型和值。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;元组标头。包含关于元组的元数据。
-&lt;ul&gt;
+&lt;li&gt;Tuple 标头。包含关于 Tuple 的元数据。&lt;/li&gt;
 &lt;li&gt;DBMS 的并发控制协议的可见性信息&lt;/li&gt;
 &lt;li&gt;NULL 值的位图。&lt;/li&gt;
 &lt;li&gt;注意，DBMS 不需要在这里存储关于数据库模式的元数据。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;元组数据。属性的实际数据。
-&lt;ul&gt;
+&lt;li&gt;Tuple 数据。属性的实际数据。&lt;/li&gt;
 &lt;li&gt;属性通常按照你创建表时指定的顺序存储。&lt;/li&gt;
-&lt;li&gt;大多数 DBMS 不允许一个元组超过一个页面的大小。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
+&lt;li&gt;大多数 DBMS 不允许一个 Tuple 超过一个页面的大小。&lt;/li&gt;
 &lt;li&gt;唯一标识符。
 &lt;ul&gt;
-&lt;li&gt;数据库中的每个元组都被分配一个唯一的标识符。&lt;/li&gt;
+&lt;li&gt;数据库中的每个 Tuple 都被分配一个唯一的标识符。&lt;/li&gt;
 &lt;li&gt;最常见的是：页面 ID +（偏移量或槽）。&lt;/li&gt;
 &lt;li&gt;一个应用程序不能依赖这些 ID 来表示任何东西。&lt;/li&gt;
 &lt;/ul&gt;
@@ -5233,20 +5227,20 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/ul&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/yMtXbAt.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;非规格化数据&#34;&gt;非规格化数据&lt;/h3&gt;
-&lt;p&gt;如果两个表是相关的，DBMS 可以&amp;quot;预连接&amp;quot;它们，所以这些表最终会在同一个页面上。这使得读取速度加快，因为 DBMS 只需要加载一个页面，而不是两个独立的页面。然而，这使得更新更加昂贵，因为 DBMS 需要更多的空间给每个元组。&lt;/p&gt;
+&lt;p&gt;如果两个表是相关的，DBMS 可以&amp;quot;预连接&amp;quot;它们，所以这些表最终会在同一个页面上。这使得读取速度加快，因为 DBMS 只需要加载一个页面，而不是两个独立的页面。然而，这使得更新更加昂贵，因为 DBMS 需要更多的空间给每个 Tuple 。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/2WJMghW.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;总结&#34;&gt;总结&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;数据库是以页为单位组织的。&lt;/li&gt;
 &lt;li&gt;跟踪页面有不同方式。&lt;/li&gt;
 &lt;li&gt;存储页面有不同方式。&lt;/li&gt;
-&lt;li&gt;存储元组有不同方式&lt;/li&gt;
+&lt;li&gt;存储 Tuple 有不同方式&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;数据库存储第二部分&#34;&gt;数据库存储第二部分&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/anyphM7.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;数据表示&#34;&gt;数据表示&lt;/h3&gt;
-&lt;p&gt;元组中的数据本质上只是字节数组。DBMS 要知道如何解释这些字节以得出属性的值。数据表示方案是 DBMS 如何为一个值存储字节。&lt;/p&gt;
-&lt;p&gt;有五大类数据类型可以存储在元组中：整数、浮点数、定点精度数、可变长度值和日期/时间。&lt;/p&gt;
+&lt;p&gt;Tuple 中的数据本质上只是字节数组。DBMS 要知道如何解释这些字节以得出属性的值。数据表示方案是 DBMS 如何为一个值存储字节。&lt;/p&gt;
+&lt;p&gt;有五大类数据类型可以存储在 Tuple 中：整数、浮点数、定点精度数、可变长度值和日期/时间。&lt;/p&gt;
 &lt;h4 id=&#34;整数&#34;&gt;整数&lt;/h4&gt;
 &lt;p&gt;大多数 DBMS 使用 IEEE-754 标准规定的本地 C/C++ 类型来存储整数。这些值是固定长度的。&lt;/p&gt;
 &lt;p&gt;例如。INTEGER, BIGINT, SMALLINT, TINYINT.&lt;/p&gt;
@@ -5265,15 +5259,15 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/FFg3nxV.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h4 id=&#34;可变长度的数据&#34;&gt;可变长度的数据&lt;/h4&gt;
 &lt;p&gt;这些数据代表任意长度的数据类型。它们通常是用一个头来存储的，这个头可以追踪到追踪字符串的长度，以便于跳转到下一个值。它还可能包含一个数据的校验和。&lt;/p&gt;
-&lt;p&gt;大多数 DBMS 不允许一个元组超过单页的大小。那些允许的系统将数据存储在一个特殊的 Overflow Page，并让元组包含对该页的引用。这些溢出页可以这些 Overflow Page 可以包含指向其他 Overflow Page 的指针，直到所有的数据都能被存储。&lt;/p&gt;
-&lt;p&gt;有些系统会让你把这些大的数值存储在一个外部文件中，然后元组会包含一个指向该文件的指针。例如，如果数据库存储的是照片信息，DBMS 可以将照片存储在外部文件中，而不是让它们在 DBMS 中占用大量的空间。这样做的一个缺点是，DBMS 不能对这个文件的内容进行操作。因此，没有持久化或事务保护。&lt;/p&gt;
+&lt;p&gt;大多数 DBMS 不允许一个 Tuple 超过单页的大小。那些允许的系统将数据存储在一个特殊的 Overflow Page，并让 Tuple 包含对该页的引用。这些溢出页可以这些 Overflow Page 可以包含指向其他 Overflow Page 的指针，直到所有的数据都能被存储。&lt;/p&gt;
+&lt;p&gt;有些系统会让你把这些大的数值存储在一个外部文件中，然后 Tuple 会包含一个指向该文件的指针。例如，如果数据库存储的是照片信息，DBMS 可以将照片存储在外部文件中，而不是让它们在 DBMS 中占用大量的空间。这样做的一个缺点是，DBMS 不能对这个文件的内容进行操作。因此，没有持久化或事务保护。&lt;/p&gt;
 &lt;p&gt;例子: VARCHAR, VARBINARY, TEXT, BLOB.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/zDOU8Gy.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h4 id=&#34;日期和时间&#34;&gt;日期和时间&lt;/h4&gt;
 &lt;p&gt;不同的系统对日期/时间的表示方法各不相同。通常情况下，它们被表示为从 unix 纪元开始的一些单位时间微秒或毫秒。&lt;/p&gt;
 &lt;p&gt;例子。TIME、DATE、TIMESTAMP。&lt;/p&gt;
 &lt;h4 id=&#34;系统目录&#34;&gt;系统目录&lt;/h4&gt;
-&lt;p&gt;为了使 DBMS 能够解码元组的内容，它维护了一个内部目录来告诉它关于数据库的元数据。元数据将包含关于数据库有哪些表和列的信息，以及它们的类型和值的顺序。大多数 DBMS 以它们用于表的格式在自己内部存储目录。他们使用特殊的代码来访问这些目录表。DBMS 没有标准的方式来检索这些信息。&lt;/p&gt;
+&lt;p&gt;为了使 DBMS 能够解码 Tuple 的内容，它维护了一个内部目录来告诉它关于数据库的元数据。元数据将包含关于数据库有哪些表和列的信息，以及它们的类型和值的顺序。大多数 DBMS 以它们用于表的格式在自己内部存储目录。他们使用特殊的代码来访问这些目录表。DBMS 没有标准的方式来检索这些信息。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/weMyy99.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;工作负载&#34;&gt;工作负载&lt;/h3&gt;
 &lt;p&gt;数据库系统有许多不同的工作负载。我们所说的工作负载，是指一个系统要处理的请求的一般性质。本课程将重点讨论两种类型。在线事务处理和在线分析处理。&lt;/p&gt;
@@ -5285,14 +5279,14 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;p&gt;在同一个数据库中同时进行 OLTP 和 OLAP。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/zzz4jgR.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;存储模型&#34;&gt;存储模型&lt;/h3&gt;
-&lt;p&gt;DBMS 可以用不同的方式存储元组，这些方式更适合 OLTP 或 OLAP 工作负载。&lt;/p&gt;
+&lt;p&gt;DBMS 可以用不同的方式存储 Tuple ，这些方式更适合 OLTP 或 OLAP 工作负载。&lt;/p&gt;
 &lt;h4 id=&#34;n-ary-存储模型nsm&#34;&gt;N-Ary 存储模型（NSM）&lt;/h4&gt;
-&lt;p&gt;在 n-ary 存储模型中，DBMS 将一个元组的所有属性连续地存储在一个单一的页，所以 NSM 也被称为 &amp;ldquo;行存储&amp;rdquo;。这种方法是 OLTP 工作负载的理想选择，在这种工作负载中，要求这种方法是 OLTP 工作负载的理想选择，在这种工作负载中，请求是大量插入的，并且事务往往只操作一个单独的实体。它是理想的，因为它只可以一次性获取一个元组的所有属性。&lt;/p&gt;
+&lt;p&gt;在 n-ary 存储模型中，DBMS 将一个 Tuple 的所有属性连续地存储在一个单一的页，所以 NSM 也被称为 &amp;ldquo;行存储&amp;rdquo;。这种方法是 OLTP 工作负载的理想选择，在这种工作负载中，要求这种方法是 OLTP 工作负载的理想选择，在这种工作负载中，请求是大量插入的，并且事务往往只操作一个单独的实体。它是理想的，因为它只可以一次性获取一个 Tuple 的所有属性。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;优点。
 &lt;ul&gt;
 &lt;li&gt;快速插入、更新和删除。&lt;/li&gt;
-&lt;li&gt;适合于需要单个元组的查询。&lt;/li&gt;
+&lt;li&gt;适合于需要单个 Tuple 的查询。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;缺点。
@@ -5303,7 +5297,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/ul&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/z5zRhf6.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h4 id=&#34;分解存储模型&#34;&gt;分解存储模型&lt;/h4&gt;
-&lt;p&gt;在分解存储模型中，DBMS 为所有元组连续地存储一个单一的属性（列）。在一个数据块中。因此，它也被称为 &amp;ldquo;列存储&amp;rdquo;。这种模式是 OLAP 工作负载的理想选择，用来执行只读查询，在表的属性子集上进行大量扫描。&lt;/p&gt;
+&lt;p&gt;在分解存储模型中，DBMS 为所有 Tuple 连续地存储一个单一的属性（列）。在一个数据块中。因此，它也被称为 &amp;ldquo;列存储&amp;rdquo;。这种模式是 OLAP 工作负载的理想选择，用来执行只读查询，在表的属性子集上进行大量扫描。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;优点。
 &lt;ul&gt;
@@ -5313,13 +5307,13 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/li&gt;
 &lt;li&gt;缺点。
 &lt;ul&gt;
-&lt;li&gt;由于元组的分割/缝合，点查询、插入、更新和删除的速度很慢。&lt;/li&gt;
+&lt;li&gt;由于 Tuple 的分割/缝合，点查询、插入、更新和删除的速度很慢。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;在使用列存储时，要把元组重新组合起来，有两种常见的方法。&lt;/p&gt;
-&lt;p&gt;最常用的方法是固定长度的偏移量。假设属性都是固定长度的，DBMS 可以计算每个元组的属性的偏移量。然后，当系统想要某个特定元组的属性时，它知道如何从偏移量跳到文件中的那个位置。为了适应可变长度的字段，系统可以填充字段，使它们都是相同的长度，或者使用一个字典，接受一个固定大小的整数，将整数映射到值。&lt;/p&gt;
-&lt;p&gt;一个不太常见的方法是使用嵌入式元组 ID。在这里，对于列中的每个属性，DBMS 都会用它来存储一个元组 ID（例如：主键）。然后，系统还将存储一个映射，告诉它如何跳转到具有该 ID 的每个属性。请注意，这种方法有很大的存储开销，因为它需要为每个属性条目存储一个元组 ID。为每个属性条目存储一个元组 ID&lt;/p&gt;
+&lt;p&gt;在使用列存储时，要把 Tuple 重新组合起来，有两种常见的方法。&lt;/p&gt;
+&lt;p&gt;最常用的方法是固定长度的偏移量。假设属性都是固定长度的，DBMS 可以计算每个 Tuple 的属性的偏移量。然后，当系统想要某个特定 Tuple 的属性时，它知道如何从偏移量跳到文件中的那个位置。为了适应可变长度的字段，系统可以填充字段，使它们都是相同的长度，或者使用一个字典，接受一个固定大小的整数，将整数映射到值。&lt;/p&gt;
+&lt;p&gt;一个不太常见的方法是使用嵌入式 Tuple  ID。在这里，对于列中的每个属性，DBMS 都会用它来存储一个 Tuple  ID（例如：主键）。然后，系统还将存储一个映射，告诉它如何跳转到具有该 ID 的每个属性。请注意，这种方法有很大的存储开销，因为它需要为每个属性条目存储一个 Tuple  ID。为每个属性条目存储一个 Tuple  ID&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/4l9etYt.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 </description>
     </item>
@@ -5357,7 +5351,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;h3 id=&#34;数据库例子&#34;&gt;数据库例子&lt;/h3&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/ADQaxYv.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;聚合&#34;&gt;聚合&lt;/h3&gt;
-&lt;p&gt;聚合函数接收一组元组作为其输入，然后产生一个单一的标量值作为其输出。只能在 SELECT 输出列表中使用。&lt;/p&gt;
+&lt;p&gt;聚合函数接收一组 Tuple 作为其输入，然后产生一个单一的标量值作为其输出。只能在 SELECT 输出列表中使用。&lt;/p&gt;
 &lt;p&gt;举例：获取使用&#39;@cs&amp;rsquo;登录的学生某个信息。以下三个查询是等价的。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;select&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;where&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;login&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;like&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;%@cs&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#00a8c8&#34;&gt;select&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;login&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;where&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;login&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;like&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;%@cs&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
@@ -5506,18 +5500,18 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;INSERT&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;INTO&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;CourseIds&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;DISTINCT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cid&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;enrolled&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;输出控制&#34;&gt;输出控制&lt;/h3&gt;
 &lt;p&gt;&lt;code&gt;ORDER BY&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;由于 SQL 的结果是无序的，你必须使用&lt;code&gt;ORDER BY&lt;/code&gt;子句来对元组进行排序。&lt;/p&gt;
+&lt;p&gt;由于 SQL 的结果是无序的，你必须使用&lt;code&gt;ORDER BY&lt;/code&gt;子句来对 Tuple 进行排序。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;enrolled&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cid&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;15-721&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;ORDER&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;BY&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;grade&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;DESC&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你可以使用多个&lt;code&gt;ORDER BY&lt;/code&gt;子句来更复杂的排序。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;enrolled&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cid&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;15-721&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;ORDER&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;BY&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;grade&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;DESC&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;ASC&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你也可以在&lt;code&gt;ORDER BY&lt;/code&gt;子句中使用任何任意的表达式。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;enrolled&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cid&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;15-721&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;ORDER&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;BY&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;UPPER&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;grade&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;DESC&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;ASC&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;LIMIT&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;默认情况下，DBMS 将返回由查询产生的所有元组。你可以使用 &lt;code&gt;LIMIT&lt;/code&gt; 子句来限制结果元组的数量&lt;/p&gt;
+&lt;p&gt;默认情况下，DBMS 将返回由查询产生的所有 Tuple 。你可以使用 &lt;code&gt;LIMIT&lt;/code&gt; 子句来限制结果 Tuple 的数量&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;login&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;LIKE&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;%@cs&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;LIMIT&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;也可以提供一个偏移量来返回结果中的一个范围&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;sid&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;student&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;login&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;LIKE&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;%@cs&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;LIMIT&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;OFFSET&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;除非你使用带有&lt;code&gt;LIMIT&lt;/code&gt;的&lt;code&gt;ORDER BY&lt;/code&gt;子句，否则每次调用的结果中的元组可能是不同的。&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;除非你使用带有&lt;code&gt;LIMIT&lt;/code&gt;的&lt;code&gt;ORDER BY&lt;/code&gt;子句，否则每次调用的结果中的 Tuple 可能是不同的。&lt;/p&gt;
 &lt;h3 id=&#34;嵌套查询&#34;&gt;嵌套查询&lt;/h3&gt;
 &lt;p&gt;在其他查询中调用查询，以在单个查询中执行更复杂的逻辑。外部查询的范围包括在内部查询中（即内部查询可以访问外部查询的属性），但不能反过来。&lt;/p&gt;
 &lt;p&gt;内部查询几乎可以出现在查询的任何地方&lt;/p&gt;
@@ -5535,7 +5529,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;li&gt;EXISTS: 至少有一条记录被返回。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;窗口函数&#34;&gt;窗口函数&lt;/h3&gt;
-&lt;p&gt;在一组元组中执行 &amp;ldquo;移动 &amp;ldquo;计算。像聚合操作，但它仍然返回原始元组&lt;/p&gt;
+&lt;p&gt;在一组 Tuple 中执行 &amp;ldquo;移动 &amp;ldquo;计算。像聚合操作，但它仍然返回原始 Tuple&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Functions&lt;/code&gt; 可以是我们上面讨论的任何一个聚合函数。也可以是一个特殊的窗口函数。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;ROW NUMBER：当前行的编号。&lt;/li&gt;
@@ -5548,7 +5542,7 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;重要提示：DBMS 在窗口函数排序后计算 &lt;code&gt;RANK&lt;/code&gt;，而在排序前计算 &lt;code&gt;ROW_NUMBER&lt;/code&gt;&lt;/p&gt;
 &lt;h3 id=&#34;公共表表达式&#34;&gt;公共表表达式&lt;/h3&gt;
 &lt;p&gt;公共表表达式（CTE）是窗口或嵌套查询的一种替代方法，可以用来编写更复杂的查询。我们可以把 CTE 看作是一个临时表，只用于一个查询。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;WITH&lt;/code&gt; 子句将内部查询的输出与具有该名称的临时结果结合起来。生成一个名为 &amp;ldquo;cteName&amp;quot;的 CTE，它包含一个单一属性设置为 &amp;ldquo;1&amp;rdquo; 的元组。然后底部的查询只是返回 &amp;ldquo;cteName &amp;ldquo;的所有属性。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;WITH&lt;/code&gt; 子句将内部查询的输出与具有该名称的临时结果结合起来。生成一个名为 &amp;ldquo;cteName&amp;quot;的 CTE，它包含一个单一属性设置为 &amp;ldquo;1&amp;rdquo; 的 Tuple 。然后底部的查询只是返回 &amp;ldquo;cteName &amp;ldquo;的所有属性。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;WITH&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cteName&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;AS&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cteName&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你可以在 AS 之前将输出列与名称绑定。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;WITH&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cteName&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;col1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;col2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;AS&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;col1&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;col2&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cteName&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
@@ -5700,12 +5694,12 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;li&gt;操作性。如何访问和修改数据库的内容&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;关系是一个无序的集合，包含代表实体的属性关系。由于关系是无序的，DBMS 可以以任何方式存储它们，允许进行优化&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;元组&lt;/code&gt;是关系中的一组属性值（也被称为它的域）。最初，值必须是原子或标量，现在值也可以是列表或嵌套数据结构。每个属性都可以是一个特殊的值 &lt;code&gt;NULL&lt;/code&gt;，即属性是未定义的&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Tuple&lt;/code&gt;是关系中的一组属性值（也被称为它的域）。最初，值必须是原子或标量，现在值也可以是列表或嵌套数据结构。每个属性都可以是一个特殊的值 &lt;code&gt;NULL&lt;/code&gt;，即属性是未定义的&lt;/p&gt;
 &lt;p&gt;一个有 n 个属性的关系被称为 &lt;code&gt;n-ary&lt;/code&gt; 关系&lt;/p&gt;
 &lt;h4 id=&#34;键值&#34;&gt;键值&lt;/h4&gt;
-&lt;p&gt;一个关系的&lt;code&gt;主键&lt;/code&gt;唯一地标识了一个单一的元组。如果你没有定义一个主键，一些 DBMS 会自动创建一个内部主键。很多 DBMS 都支持自动生成的键，所以应用程序不必手动增加键&lt;/p&gt;
+&lt;p&gt;一个关系的&lt;code&gt;主键&lt;/code&gt;唯一地标识了一个单一的 Tuple 。如果你没有定义一个主键，一些 DBMS 会自动创建一个内部主键。很多 DBMS 都支持自动生成的键，所以应用程序不必手动增加键&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/4QOAVXN.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;外键&lt;/code&gt;指定了一个关系中的属性必须映射到另一个关系中的元组&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;外键&lt;/code&gt;指定了一个关系中的属性必须映射到另一个关系中的 Tuple&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/L1ywqjO.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;数据操作语言-dml&#34;&gt;数据操作语言 DML&lt;/h3&gt;
 &lt;p&gt;一种从数据库中存储和检索信息的语言。在这方面有两类语言可选择&lt;/p&gt;
@@ -5714,40 +5708,40 @@ Cuckoo 散列保证了 O（1）的查找和删除，但插入可能更昂贵。&
 &lt;li&gt;声明式。查询只指定想要什么数据，而不是如何找到它&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;关系代数&#34;&gt;关系代数&lt;/h3&gt;
-&lt;p&gt;关系代数是一组基本操作，用于检索和操作关系中的元组。每个运算符接受一个或多个关系作为输入，并输出一个新的关系。为了编写查询，我们可以将这些运算符连接起来，以创建更复杂的运算&lt;/p&gt;
+&lt;p&gt;关系代数是一组基本操作，用于检索和操作关系中的 Tuple 。每个运算符接受一个或多个关系作为输入，并输出一个新的关系。为了编写查询，我们可以将这些运算符连接起来，以创建更复杂的运算&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/fUnCphL.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h4 id=&#34;选择-sigma&#34;&gt;选择 \(\sigma\)&lt;/h4&gt;
-&lt;p&gt;接收一个关系，并从该关系中输出一个满足选择谓词的元组的子集。谓词的作用就像一个过滤器，我们可以使用连接词和非连接词来组合多个谓词&lt;/p&gt;
+&lt;p&gt;接收一个关系，并从该关系中输出一个满足选择谓词的 Tuple 的子集。谓词的作用就像一个过滤器，我们可以使用连接词和非连接词来组合多个谓词&lt;/p&gt;
 &lt;p&gt;语法: \(\sigma_{predicate}(R)\)&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/Bb398KD.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h4 id=&#34;投影-pi&#34;&gt;投影 \(\pi\)&lt;/h4&gt;
-&lt;p&gt;接收一个关系并输出一个只包含指定属性的元组的关系。你可以在输入的关系中重新安排属性的顺序，也可以操作这些值&lt;/p&gt;
+&lt;p&gt;接收一个关系并输出一个只包含指定属性的 Tuple 的关系。你可以在输入的关系中重新安排属性的顺序，也可以操作这些值&lt;/p&gt;
 &lt;p&gt;语法: \(\pi_{A1,A2,. . . ,An}(R)\)&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/N0hT53f.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h4 id=&#34;并集-cup&#34;&gt;并集 \(\cup\)&lt;/h4&gt;
-&lt;p&gt;接收两个关系并输出一个关系，该关系包含至少出现在一个关系中的所有元组。这两个输入关系必须具有完全相同的属性&lt;/p&gt;
+&lt;p&gt;接收两个关系并输出一个关系，该关系包含至少出现在一个关系中的所有 Tuple 。这两个输入关系必须具有完全相同的属性&lt;/p&gt;
 &lt;p&gt;语法: (R \(\cup\) S)&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/7ZpqLxR.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h4 id=&#34;交集-cap&#34;&gt;交集 \(\cap\)&lt;/h4&gt;
-&lt;p&gt;接收两个关系，并输出一个包含所有在输入关系中出现的元组的关系。这两个输入关系必须具有完全相同的属性&lt;/p&gt;
+&lt;p&gt;接收两个关系，并输出一个包含所有在输入关系中出现的 Tuple 的关系。这两个输入关系必须具有完全相同的属性&lt;/p&gt;
 &lt;p&gt;语法: (R \(\cap\) S)&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/Gos9rey.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h4 id=&#34;差集--&#34;&gt;差集 -&lt;/h4&gt;
-&lt;p&gt;接收两个关系并输出一个关系，该关系包含出现在第一个关系中的所有元组但不在第二个关系中。注意：两个输入关系必须有完全相同的属性&lt;/p&gt;
+&lt;p&gt;接收两个关系并输出一个关系，该关系包含出现在第一个关系中的所有 Tuple 但不在第二个关系中。注意：两个输入关系必须有完全相同的属性&lt;/p&gt;
 &lt;p&gt;语法: (R - S)&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/GBXU512.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h4 id=&#34;叉积-times&#34;&gt;叉积 \(\times\)&lt;/h4&gt;
-&lt;p&gt;接收两个关系，并输出一个关系，该关系包含了所有可能的元组组合，这些元组来自输入关系的所有可能组合&lt;/p&gt;
+&lt;p&gt;接收两个关系，并输出一个关系，该关系包含了所有可能的 Tuple 组合，这些 Tuple 来自输入关系的所有可能组合&lt;/p&gt;
 &lt;p&gt;语法: (R \(\times\) S)&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/qCz8Yxw.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h4 id=&#34;连接-bowtie&#34;&gt;连接 \(\bowtie\)&lt;/h4&gt;
-&lt;p&gt;接收两个关系，并输出一个关系，该关系包含两个元组的所有组合。其中对于两个关系共享的每个属性，两个元组的属性的值都是相同&lt;/p&gt;
+&lt;p&gt;接收两个关系，并输出一个关系，该关系包含两个 Tuple 的所有组合。其中对于两个关系共享的每个属性，两个 Tuple 的属性的值都是相同&lt;/p&gt;
 &lt;p&gt;语法: (R \(\bowtie\) S)&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/BpiLSYm.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h4 id=&#34;其他关系代数&#34;&gt;其他关系代数&lt;/h4&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.imgur.com/MNmTNR5.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;观察&#34;&gt;观察&lt;/h3&gt;
-&lt;p&gt;关系代数是一种过程式语言，因为它定义了如何计算一个查询的高级步骤。例如，\(\sigma_{b\_id=102}(R \bowtie S)\)是说先做 R 和 S 的连接，然后再做选择，而\((R \bowtie (\sigma_{b\_id=102}(S))\)会先对 S 做选择，然后再做连接。这两个语句实际上会产生相同的答案，但是如果在 10 亿个元组中，S 中只有 1 个 b_id=102 的元组那么的连接，然后再做选择，而\((R \bowtie (\sigma_{b\_id=102}(S))\) 将明显快于 \(\sigma_{b\_id=102}(R \bowtie S)\)。&lt;/p&gt;
+&lt;p&gt;关系代数是一种过程式语言，因为它定义了如何计算一个查询的高级步骤。例如，\(\sigma_{b\_id=102}(R \bowtie S)\)是说先做 R 和 S 的连接，然后再做选择，而\((R \bowtie (\sigma_{b\_id=102}(S))\)会先对 S 做选择，然后再做连接。这两个语句实际上会产生相同的答案，但是如果在 10 亿个 Tuple 中，S 中只有 1 个 b_id=102 的 Tuple 那么的连接，然后再做选择，而\((R \bowtie (\sigma_{b\_id=102}(S))\) 将明显快于 \(\sigma_{b\_id=102}(R \bowtie S)\)。&lt;/p&gt;
 &lt;p&gt;一个更好的方法是说出你想要的结果，并让 DBMS 决定它要采取的步骤来计算这个查询。SQL 正是这样做的，它是在关系模型数据库上编写查询的事实上的标准。&lt;/p&gt;
 </description>
     </item>
