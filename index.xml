@@ -5,7 +5,7 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>Y.CH.Y</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Sat, 16 Oct 2021 22:19:36 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Mon, 18 Oct 2021 13:24:22 +0800</lastBuildDate>
     <item>
       <title>algorithm</title>
       <link>/algorithm/</link>
@@ -259,10 +259,24 @@
     </item>
     
     <item>
+      <title>领域驱动设计::领域驱动设计的构造块</title>
+      <link>/notes/ddd_02/</link>
+      <pubDate>Mon, 18 Oct 2021 13:24:22 +0800</pubDate>
+      <guid>/notes/ddd_02/</guid>
+      <description>&lt;h2 id=&#34;领域驱动设计的构造快&#34;&gt;领域驱动设计的构造快&lt;/h2&gt;
+&lt;img src=&#34;../../../ddd/98.jpeg&#34; width=&#34;66%&#34;/&gt;
+&lt;h3 id=&#34;分离领域&#34;&gt;分离领域&lt;/h3&gt;
+&lt;h3 id=&#34;软件中所表示的模型&#34;&gt;软件中所表示的模型&lt;/h3&gt;
+&lt;h3 id=&#34;领域对象的生命周期&#34;&gt;领域对象的生命周期&lt;/h3&gt;
+&lt;h3 id=&#34;使用语言一个扩展的示例&#34;&gt;使用语言：一个扩展的示例&lt;/h3&gt;
+</description>
+    </item>
+    
+    <item>
       <title>领域驱动设计::运用领域模型</title>
-      <link>/notes/ddd/</link>
+      <link>/notes/ddd_01/</link>
       <pubDate>Sat, 16 Oct 2021 22:19:36 +0800</pubDate>
-      <guid>/notes/ddd/</guid>
+      <guid>/notes/ddd_01/</guid>
       <description>&lt;h2 id=&#34;运用领域模型&#34;&gt;运用领域模型&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;每个软件程序是为了执行用户的某项活动，或是满足用户的某种需求。这些用户应用软件的问题区域就是软件的领域。&lt;/li&gt;
@@ -6274,34 +6288,34 @@ coordinator 启动最后几个任务的第二个副本。&lt;/li&gt;
       <pubDate>Tue, 31 Aug 2021 17:12:59 +0800</pubDate>
       <guid>/books/</guid>
       <description>&lt;h2 id=&#34;2021&#34;&gt;2021&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/24708143&#34;&gt;MySQL技术内幕&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/25900156&#34;&gt;Redis设计与实现&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/35246417&#34;&gt;System Design Interview&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/25900403&#34;&gt;UNIX环境高级编程（第3版）&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/1827374&#34;&gt;东方快车谋杀案&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/1012611&#34;&gt;乌合之众&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/35492898&#34;&gt;凤凰架构&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/3211779&#34;&gt;嫌疑人X的献身&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/35390390&#34;&gt;字母表谜案&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/26348596&#34;&gt;密室收藏家&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/30264678&#34;&gt;尸体变化图鉴&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/33456870&#34;&gt;屍人莊殺人事件&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/35296788&#34;&gt;心灵侦探城塚翡翠&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/26877752&#34;&gt;恶意&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/33463930&#34;&gt;操作系统导论&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/30329536&#34;&gt;数据密集型应用系统设计&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/4913064&#34;&gt;活着&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/34907497&#34;&gt;深入理解Java虚拟机（第3版）&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/27096665&#34;&gt;现代操作系统（原书第4版）&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/3259440&#34;&gt;白夜行&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/34998167&#34;&gt;绝对不在场证明&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/1899158&#34;&gt;编程之道&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/26369699&#34;&gt;被讨厌的勇气&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/30280001&#34;&gt;计算机网络（原书第7版）&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/1029791&#34;&gt;许三观卖血记&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/35016085&#34;&gt;诡计博物馆&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/26835090&#34;&gt;软技能&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/33404959&#34;&gt;金色麦田&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://book.douban.com/subject/24708143&#34;&gt;MySQL技术内幕&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/25900156&#34;&gt;Redis设计与实现&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/35246417&#34;&gt;System Design Interview&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/25900403&#34;&gt;UNIX环境高级编程（第3版）&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/1827374&#34;&gt;东方快车谋杀案&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/1012611&#34;&gt;乌合之众&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/35492898&#34;&gt;凤凰架构&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/3211779&#34;&gt;嫌疑人X的献身&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/35390390&#34;&gt;字母表谜案&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/26348596&#34;&gt;密室收藏家&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/30264678&#34;&gt;尸体变化图鉴&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/33456870&#34;&gt;屍人莊殺人事件&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/35296788&#34;&gt;心灵侦探城塚翡翠&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/26877752&#34;&gt;恶意&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/33463930&#34;&gt;操作系统导论&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/30329536&#34;&gt;数据密集型应用系统设计&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/4913064&#34;&gt;活着&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/34907497&#34;&gt;深入理解Java虚拟机（第3版）&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/27096665&#34;&gt;现代操作系统（原书第4版）&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/3259440&#34;&gt;白夜行&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/34998167&#34;&gt;绝对不在场证明&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/1899158&#34;&gt;编程之道&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/26369699&#34;&gt;被讨厌的勇气&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/30280001&#34;&gt;计算机网络（原书第7版）&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/1029791&#34;&gt;许三观卖血记&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/35016085&#34;&gt;诡计博物馆&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/26835090&#34;&gt;软技能&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://book.douban.com/subject/33404959&#34;&gt;金色麦田&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
