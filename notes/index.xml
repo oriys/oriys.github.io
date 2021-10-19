@@ -919,7 +919,7 @@ KerryGiven 的 No-HypeOptionsTrading:Myths,Realities,andStrategiesThatReally\_\_
 &lt;h4 id=&#34;索引扫描页排序&#34;&gt;索引扫描页排序&lt;/h4&gt;
 &lt;p&gt;由于直接从非聚簇索引中检索 Tuple 的效率很低，DBMS 可以首先找出它所需要的所有 Tuple ，然后根据它们的页面 id 进行排序。&lt;/p&gt;
 &lt;h2 id=&#34;树形索引第二部分&#34;&gt;树形索引第二部分&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;https://i.imgur.com/LC0Gnkk.png&#34;&gt;LC0Gnkk&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/LC0Gnkk.png&#34; alt=&#34;LC0Gnkk&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;b树设计选择&#34;&gt;B+树设计选择&lt;/h3&gt;
 &lt;h4 id=&#34;节点尺寸&#34;&gt;节点尺寸&lt;/h4&gt;
 &lt;p&gt;根据存储介质的不同，我们可能喜欢更大或更小的节点尺寸。例如，存储在硬盘上的节点通常是以兆字节为单位，以减少寻找数据所需的次数，并将昂贵的磁盘读取分摊到一大块数据上，而内存数据库可能使用小到 512 字节的页面大小，以便将整个页面放入 CPU 缓存，并减少数据的碎片。这种选择也取决于工作负载的类型，如点查询会喜欢尽可能小的页面，以减少不必要的额外信息的加载量，而大的顺序扫描可能更喜欢大的页面，以减少它需要做的检索的数量。&lt;/p&gt;
