@@ -267,7 +267,7 @@
 &lt;img src=&#34;../../../ddd/98.jpeg&#34; width=&#34;66%&#34;/&gt;
 &lt;h3 id=&#34;分离领域&#34;&gt;分离领域&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;LAYERED ARCHITECTURE 的基本原则是层中的任何元素都仅依赖于本层的其他元素或其下层的元素。
+&lt;li&gt;LAYERED ARCHITECTURE 的基本原则是层中的任何元素都仅依赖于本层的其他元素或其下层的元素。分层的价值在于每⼀层都只代表程序中的某⼀特定⽅⾯。这种限制使每个⽅⾯的设计都更具内聚性，更容易解释。
 &lt;ul&gt;
 &lt;li&gt;用户界面层：负责向用户显示信息和解释用户指令。这里指的用户可以是另一个计算机系统，不一定是使用用户界面的人。&lt;/li&gt;
 &lt;li&gt;用户界面层：定义软件要完成的任务，并且指择表达领域概念的对象来解決问题。这一层所负责的工作对业务来说意义重大，也是与其他系统的应用层进行交互的必要渠道应用层要尽量简单，不包含业务规则或者知识，而只为下一层中的领域对象协调任务，分配工作，使它们互相协作。它没有反映业务情况的状态，但是却可以具有另外一种状态，为用户或程序显示某个任务的进度。&lt;/li&gt;
@@ -277,6 +277,8 @@
 &lt;/li&gt;
 &lt;li&gt;给复杂的应⽤程序划分层次。在每⼀层内分别进⾏设计，使其具有内聚性并且只依赖于它的下层。采⽤标准的架构模式，只与上层进⾏松散的耦合。将所有与领域模型相关的代码放在⼀个层中，并把它与⽤户界⾯层、应⽤层以及基础设施层的代码分开。领域对象应该将重点放在如何表达领域模型上，⽽不需要考虑⾃⼰的显⽰和存储问题，也⽆需管理应⽤任务等内容。这使得模型的含义⾜够丰富，结构⾜够清晰，可以捕捉到基本的业务知识，并有效地使⽤这些知识。&lt;/li&gt;
 &lt;li&gt;如果下层元素需要与上层元素进⾏通信（不只是回应直接查询），则需要采⽤另⼀种通信机制，使⽤架构模式来连接上下层，如回调模式或 OBSERVERS 模式。&lt;/li&gt;
+&lt;li&gt;应⽤层和领域层可以调⽤基础设施层所提供的 SERVICE。如果 SERVICE 的范围选择合理，接口设计完善，那么通过把详细⾏为封装到服务接⼜中，调⽤程序就可以保持与 SERVICE 的松散连接，并且⾃⾝也会很简单。&lt;/li&gt;
+&lt;li&gt;领域模型是⼀系列概念的集合。“领域层”则是领域模型以及所有与其直接相关的设计元素的表现，它由业务逻辑的设计和实现组成。在 MODEL-DRIVEN DESIGN 中，领域层的软件构造反映出了模型概念。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;软件中所表示的模型&#34;&gt;软件中所表示的模型&lt;/h3&gt;
 &lt;h3 id=&#34;领域对象的生命周期&#34;&gt;领域对象的生命周期&lt;/h3&gt;
@@ -1168,6 +1170,83 @@ KerryGiven 的 No-HypeOptionsTrading:Myths,Realities,andStrategiesThatReally\_\_
 &lt;p&gt;Tuple 在堆的页面中使用聚簇索引指定的顺序进行排序。如果聚类索引的属性被用来访问 Tuple ，DBMS 可以直接跳到这些页面。&lt;/p&gt;
 &lt;h4 id=&#34;索引扫描页排序&#34;&gt;索引扫描页排序&lt;/h4&gt;
 &lt;p&gt;由于直接从非聚簇索引中检索 Tuple 的效率很低，DBMS 可以首先找出它所需要的所有 Tuple ，然后根据它们的页面 id 进行排序。&lt;/p&gt;
+&lt;h2 id=&#34;树形索引第二部分&#34;&gt;树形索引第二部分&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://i.imgur.com/LC0Gnkk.png&#34;&gt;LC0Gnkk&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;b树设计选择&#34;&gt;B+树设计选择&lt;/h3&gt;
+&lt;h4 id=&#34;节点尺寸&#34;&gt;节点尺寸&lt;/h4&gt;
+&lt;p&gt;根据存储介质的不同，我们可能喜欢更大或更小的节点尺寸。例如，存储在硬盘上的节点通常是以兆字节为单位，以减少寻找数据所需的次数，并将昂贵的磁盘读取分摊到一大块数据上，而内存数据库可能使用小到 512 字节的页面大小，以便将整个页面放入 CPU 缓存，并减少数据的碎片。这种选择也取决于工作负载的类型，如点查询会喜欢尽可能小的页面，以减少不必要的额外信息的加载量，而大的顺序扫描可能更喜欢大的页面，以减少它需要做的检索的数量。&lt;/p&gt;
+&lt;h4 id=&#34;合并阈值&#34;&gt;合并阈值&lt;/h4&gt;
+&lt;p&gt;虽然 B+Trees 有一条规则，即在删除后合并溢出的节点，但有时暂时违反该规则以减少删除操作的次数可能是有益的。例如，急于合并可能会导致激动，大量连续的删除和插入操作会导致不断的分裂和合并。它还允许分批合并，即多个合并操作同时发生，减少在树上进行昂贵的写锁存的时间。&lt;/p&gt;
+&lt;h4 id=&#34;不同长度的-keys&#34;&gt;不同长度的 keys&lt;/h4&gt;
+&lt;p&gt;目前我们只讨论了具有固定长度键的 B+Trees。然而，我们可能也想支持可变长度的键，比如说一个大键的小子集导致大量空间浪费的情况。对此有几种方法。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;指针：我们可以不直接存储键，而只是存储一个指向键的指针。由于必须为每个键追寻一个指针的低效率，在生产中使用这种方法的唯一地方是嵌入式设备，其微小的寄存器和缓存可能会从这种空间的节省中受益。&lt;/li&gt;
+&lt;li&gt;可变长度的节点：我们也可以像平常一样存储 key 并允许可变长度的节点。这是不可行的，而且由于处理可变长度的节点有很大的内存管理开销，所以基本上没有使用。&lt;/li&gt;
+&lt;li&gt;填充：我们可以不改变 key 的大小，而是将每个 key 的大小设置为最大 key 的大小，并将所有较短的 key 填充起来。在大多数情况下，这是一个巨大的内存浪费，所以你也不会看到有人使用这个方法。&lt;/li&gt;
+&lt;li&gt;key 映射/重定向：几乎每个人都在使用的方法是用一个索引来代替键值对在一个单独的字典中的键值。这可以大大节省空间，并有可能缩短点查询（因为索引指向的键值对与叶子节点指向的键值对完全相同）。由于字典索引值的大小较小，有足够的空间将每个键的前缀放在索引旁边，可能允许一些索引搜索和叶子扫描，甚至不必追寻指针（如果前缀与搜索键有任何不同）。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;节点内搜索&#34;&gt;节点内搜索&lt;/h4&gt;
+&lt;p&gt;一旦我们到达一个节点，我们仍然需要在该节点内进行搜索（要么从内部节点找到下一个节点，要么在叶子节点中找到我们的键值）。虽然这相对简单，但仍有一些权衡需要考虑。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;线性：最简单的解决方案是直接扫描节点中的每个键，直到我们找到我们的键。一方面，我们不必担心对键的排序，使插入和删除更快。另一方面，这是相对低效的，每次搜索的复杂度为 O(n)。&lt;/li&gt;
+&lt;li&gt;二分：一个更有效的搜索方案是保持每个节点的排序，并使用二分搜索来寻找键。这就像跳到一个节点的中间并根据键的比较向左或向右转动一样简单。这种方式的搜索效率更高，因为这种方法每次搜索的复杂度只有 O(ln(n))。然而，插入变得更加昂贵，因为我们必须维护每个节点的排序。&lt;/li&gt;
+&lt;li&gt;内插法：最后，在某些情况下，我们可以利用插值法来寻找 key。这种方法利用了存储在节点上的任何元数据（如最大元素、最小元素、平均数等），并利用它来生成 key 的大致位置。例如，如果我们在一个节点中寻找 8，我们知道 10 是最大的键，10-（n+1）是最小的键（其中 n 是每个节点中的键的数量），那么我们知道从最大的键向下 2 个槽开始搜索，因为在这种情况下，离最大键一个槽的键必须是 9。尽管这是我们给出的最快的方法，但由于其对具有某些属性（如整数）和复杂性的键的适用性有限，这种方法只在学术数据库中出现。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;优化&#34;&gt;优化&lt;/h3&gt;
+&lt;h4 id=&#34;前缀压缩&#34;&gt;前缀压缩&lt;/h4&gt;
+&lt;p&gt;大多数情况下，当我们在同一节点中拥有键时，每个键的一些前缀会有部分重叠（因为在排序的 B+Tree 中，类似的键最终会紧挨着彼此）。我们可以简单地在节点的开头存储一次前缀，然后只在每个槽中包括每个键的独特部分，而不是多次将这个前缀作为每个键的一部分来存储。&lt;/p&gt;
+&lt;h4 id=&#34;重复&#34;&gt;重复&lt;/h4&gt;
+&lt;p&gt;在一个允许非唯一键的索引的情况下，我们最终可能会出现叶子节点包含相同的 的叶子节点，而这些叶子节点上又附有不同的值。这种情况的一个优化方法是只写一次键 一次，然后在它后面加上所有相关的值。&lt;/p&gt;
+&lt;h4 id=&#34;后缀截取&#34;&gt;后缀截取&lt;/h4&gt;
+&lt;p&gt;在大多数情况下，内部节点的键项只是作为路标，而不是其实际的键值（因为即使一个键存在于索引中，我们仍然要搜索到底部，以确保它没有被删除）。我们还可以利用这一点，在一个给定的内部节点只存储每个键的最小区分前缀。虽然我们可以使其最小化为只有一个不同的字符/数字，但在最后留下一些冗余的数字可能是有益的，以使由于相同的前缀而导致的无法确定的插入不太可能发生。在这种情况下，我们将不得不搜索到树的底部以找到完整的键（或者在该键被删除的情况下，取决于叶子节点的最小或最大键）。&lt;/p&gt;
+&lt;h4 id=&#34;批量插入&#34;&gt;批量插入&lt;/h4&gt;
+&lt;p&gt;当 B+Tree 最初建立时，必须以通常的方式插入每个键，这将导致不断的分割操作。由于我们已经给叶子提供了兄弟姐妹的指针，如果我们构建一个叶子节点的排序链表，然后使用每个叶子节点的第一个键轻松地从下往上建立索引，那么初始插入数据的效率会高很多。请注意，根据我们的情况，我们可能希望尽可能紧密地打包叶子以节省空间，或者在每个叶子中留出空间，以便在有必要进行分割之前进行更多的插入。&lt;/p&gt;
+&lt;h4 id=&#34;指针替换&#34;&gt;指针替换&lt;/h4&gt;
+&lt;p&gt;因为 B+Tree 的每个节点都存储在缓冲池的一个页面中，所以每次我们加载一个新的页面时，都需要从缓冲池中获取它，这需要锁存和查找。为了完全跳过这一步，我们可以用实际的原始指针来代替页面 ID（称为 &amp;ldquo;swizzling&amp;rdquo;），完全避免缓冲池的获取。与其手动获取整个树并手动放置指针，我们可以在正常遍历索引时简单地存储从页面查询中得到的指针。请注意，我们必须跟踪哪些指针被刷新，并在它们所指向的页面被取消钉住时，将它们重新刷新为页面 ID。&lt;/p&gt;
+&lt;h3 id=&#34;额外的索引使用&#34;&gt;额外的索引使用&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;隐式索引：如果你创建了一个主键或唯一约束，大多数 DBMS 会自动创建一个隐式索引来执行完整性约束，但不是参照性约束。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;局部索引：在许多情况下，用户可能不需要为表中的每一个元组建立索引，可能只对数据的一个子集感兴趣。部分索引是一个具有某些条件或 &amp;ldquo;where 子句&amp;quot;的索引，因此它包括表的一个子集。这可能会减少维护表的大小和开销，避免用不必要的数据污染缓冲池缓存。例如，部分索引的一个常见用途是按日期范围（每个月、每年等）划分索引。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;CREATE&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;INDEX&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;idx_foo&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;ON&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;foo&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;c&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;WuTang&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;b&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;foo&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;123&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;AND&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;c&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;WuTang&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;索引覆盖：如果处理查询所需的所有属性在一个索引中都是可用的，那么 DBMS 就不需要检索 Tuple。DBMS 可以仅仅根据索引中的可用数据来完成整个查询。换句话说，覆盖索引只是用来定位表中的数据记录，而不是用来返回数据。这减少了对 DBMS 的缓冲池资源的争夺。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;CREATE&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;INDEX&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;idx_foo&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;ON&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;foo&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;b&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;foo&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;123&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;索引包含列：索引包括的列允许用户在索引中嵌入额外的列，以支持仅有索引的查询。这些额外的列被存储在叶子节点中，实际上不是搜索键的一部分。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;CREATE&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;INDEX&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;idx_foo&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;ON&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;foo&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;INCLUDE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;b&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;foo&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;123&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;AND&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;c&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;WuTang&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;函数/表达式索引：索引也可以在函数或表达式上创建。索引不需要以它们在其基础表中出现的相同方式来存储键。相反，函数/表达式索引将函数或表达式的输出作为键来存储，而不是原始值。DBMS 的工作是识别哪些查询可以使用该索引。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;users&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;EXTRACT&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;day_of_week&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;login&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;CREATE&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;INDEX&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;idx_user_login&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;ON&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;users&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;EXTRACT&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;dow&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;login&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;trie-索引&#34;&gt;Trie 索引&lt;/h4&gt;
+&lt;p&gt;请注意，B+Tree 中的内部节点键不能告诉你某个键是否存在于索引中。每次查询一个键时，你必须遍历叶子节点。
+Trie 索引允许我们在树的顶端知道一个键是否存在。Trie 索引使用键的数字表示法来逐一检查前缀，而不是比较整个键。
+Trie 索引有许多有用的特性。其一，它们的形状只取决于可以空间和长度，不需要重新平衡操作。此外，所有的操作都有 O(k)的复杂性，其中 k 是 key 长度。这是因为通往叶子节点的路径代表了叶子的 key。一个三角形层面的跨度是每个部分 key/数字所代表的比特数。&lt;/p&gt;
+&lt;h4 id=&#34;radix-树&#34;&gt;Radix 树&lt;/h4&gt;
+&lt;p&gt;Radix 树是 Tree 数据结构的一个变种。它与 trie 索引不同的是，只有一个子节点的节点被省略了。相反，节点被合并以代表键不同之前的最大前缀。Radix 树可以产生假阳性，所以 DBMS 必须始终检查原始元组，看一个键是否匹配。
+径向树的高度取决于键的长度，而不是像 B+ 树那样取决于键的数量。通往叶子节点的路径代表叶子的键。并非所有的属性类型都可以被分解成二进制的可比数字用于 Radix 树。&lt;/p&gt;
+&lt;h3 id=&#34;倒置索引&#34;&gt;倒置索引&lt;/h3&gt;
+&lt;p&gt;一个倒置的索引存储了一个词与目标属性中包含这些词的记录的映射。这些有时被称为 DBMS 中的全文搜索索引。倒置索引对关键词搜索特别有用。
+大多数主要的 DBMS 都支持倒置索引，但也有一些专门的 DBMS，在那里这是唯一可用的表索引数据结构。&lt;/p&gt;
+&lt;h4 id=&#34;查询类型&#34;&gt;查询类型&lt;/h4&gt;
+&lt;p&gt;倒置索引允许用户进行三种无法在 B+Tree 上进行的查询。首先，倒置索引允许短语搜索，它可以找到包含按给定顺序排列的单词列表的记录。它们还允许近似搜索，记录两个词在彼此的 n 个词内出现的地方。 第三，倒置索引允许通配符搜索，它可以找到包含与某些模式（如正则表达式）相匹配的词的记录。&lt;/p&gt;
+&lt;h4 id=&#34;设计决策&#34;&gt;设计决策&lt;/h4&gt;
+&lt;p&gt;开发倒置树的两个主要决策是存储什么和何时更新。倒置索引至少需要能够存储每条记录中包含的单词（用标点符号分隔）。它们还可能包括额外的信息，如词频、位置和其他元数据。每次表被修改时，更新一个倒置的索引是昂贵而缓慢的。正因为如此，倒置索引通常会维护辅助数据结构来进行阶段性更新，然后分批更新索引。&lt;/p&gt;
 </description>
     </item>
     
