@@ -37,6 +37,7 @@ movies = list(set(
         'https://movie.douban.com/subject/10604246',
         'https://movie.douban.com/subject/1292220',
         'https://movie.douban.com/subject/1463371',
+        'https://movie.douban.com/subject/34927946',
         'https://movie.douban.com/subject/25785114',
         'https://movie.douban.com/subject/25790761',
         'https://movie.douban.com/subject/25798131',
