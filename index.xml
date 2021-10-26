@@ -5,7 +5,7 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>Y.CH.Y</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Mon, 18 Oct 2021 13:24:22 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Tue, 26 Oct 2021 22:32:54 +0800</lastBuildDate>
     <item>
       <title>algorithm</title>
       <link>/algorithm/</link>
@@ -255,6 +255,25 @@
 &lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 79.Word Search&lt;/li&gt;
 &lt;li&gt;&lt;/li&gt;
 &lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>基础::计算机系统中的时间</title>
+      <link>/notes/java_datetime/</link>
+      <pubDate>Tue, 26 Oct 2021 22:32:54 +0800</pubDate>
+      <guid>/notes/java_datetime/</guid>
+      <description>&lt;!-- ![ChFaWMj](https://i.imgur.com/ChFaWMj.png) --&gt;
+&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+&lt;p&gt;时间是计算机系统中一个非常重要的概念，很多系统调用与时间有关，很多定时任务依赖时间，甚至内核本身也需要定时器按照一定频率来产生时钟中断来驱动它能够正常运行下去。&lt;/p&gt;
+&lt;h3 id=&#34;硬件时间&#34;&gt;硬件时间&lt;/h3&gt;
+&lt;p&gt;操作系统需要在硬件的帮助下才能管理时间，体系结构主要提供了两种硬件设备，一个是时钟源设备，位于主板上的一小块存储空间，有单独的供电，即使断电也可以保持计时。当操作系统启动时，会从这里读取时间，把系统时间与硬件时间设置成一致，此后两个时钟独立，操作系统维护自己的时钟，因为查看硬件既慢又复杂。另一个硬件是时钟事件设备，用于单次或周期性触发系统中断，每次中断，操作系统会进行刷新系统时间，管理进程时间片等操作。&lt;/p&gt;
+&lt;h3 id=&#34;系统时间&#34;&gt;系统时间&lt;/h3&gt;
+&lt;p&gt;计算机科学与计算机编程中, 系统时间表示在计算机系统中的时间与日期。通常用系统时钟从某个时间起点的嘀嗒数。时间起点就是上文提到的在启动时读取的硬件时间，滴答数则是每次中断的累加，定时器是按照一定频率产生中断的，所以系统是可以知道两次中断之间过去了多久的。类 Unix 系统通常采用 Unix Epoch 来表示时间。&lt;/p&gt;
+&lt;h3 id=&#34;时间同步&#34;&gt;时间同步&lt;/h3&gt;
+&lt;p&gt;因为操作系统采用了自己维护时间的方式，所以在运行一段时间后必然会产生硬件时间和软件时间不一致的情况，系统时钟会开始落后。这时候可以使用&lt;code&gt;hwclock&lt;/code&gt;将两者进行同步，通过指定不同的参数将硬件时间同步到系统时间或者把系统时间同步到硬件时间。&lt;/p&gt;
+&lt;h3 id=&#34;ntp-协议&#34;&gt;NTP 协议&lt;/h3&gt;
+&lt;p&gt;在单机系统中尚且可以解决时间不一致的问题，但是无法解决时间不准确的问题。于是就有了 NTP 协议，全称网络时间协议（Network Time protocol）。通过与另一台保持准确时间的设备通信来调整自身的系统时间，这就是 NTP 协议所做的事情，协议基于 UDP 实现，通过该协议，可以将时间误差保持在 UTC 时间的毫秒级误差。操作系统会周期性通过 NTP 协议更新系统时间。&lt;/p&gt;
 </description>
     </item>
     
@@ -15168,7 +15187,7 @@ B 树优点：如果在 B 树中查找的数据离根节点近，由于 B 树节
 &lt;ul&gt;
 &lt;li&gt;每个首部必须含有一个 From: 首部行和一个 To: 首部行; 一个首部也许包含一个 Subject: 首部行以及其他可选的首部行。&lt;/li&gt;
 &lt;li&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-eml&#34; data-lang=&#34;eml&#34;&gt;From: alice@crepes.fr
+&lt;pre&gt;&lt;code class=&#34;language-eml&#34; data-lang=&#34;eml&#34;&gt;From: alice@crepes.fr
 To: bob@hamburger.edu
 Subject: Searching for the meaning of life.
 &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;

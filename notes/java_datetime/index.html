@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <script type="text/javascript" src="https://latest.cactus.chat/cactus.js"></script>
+  <link rel="stylesheet" href="https://latest.cactus.chat/style.css" type="text/css">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> 基础::计算机系统中的时间 | Y.CH.Y</title>
+  <link rel = 'canonical' href = '/notes/java_datetime/'>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="基础::计算机系统中的时间" />
+<meta property="og:description" content="背景 时间是计算机系统中一个非常重要的概念，很多系统调用与时间有关，很多定时任务依赖时间，甚至内核本身也需要定时器按照一定频率来产生时钟中断来驱动它能够正常运行下去。
+硬件时间 操作系统需要在硬件的帮助下才能管理时间，体系结构主要提供了两种硬件设备，一个是时钟源设备，位于主板上的一小块存储空间，有单独的供电，即使断电也可以保持计时。当操作系统启动时，会从这里读取时间，把系统时间与硬件时间设置成一致，此后两个时钟独立，操作系统维护自己的时钟，因为查看硬件既慢又复杂。另一个硬件是时钟事件设备，用于单次或周期性触发系统中断，每次中断，操作系统会进行刷新系统时间，管理进程时间片等操作。
+系统时间 计算机科学与计算机编程中, 系统时间表示在计算机系统中的时间与日期。通常用系统时钟从某个时间起点的嘀嗒数。时间起点就是上文提到的在启动时读取的硬件时间，滴答数则是每次中断的累加，定时器是按照一定频率产生中断的，所以系统是可以知道两次中断之间过去了多久的。类 Unix 系统通常采用 Unix Epoch 来表示时间。
+时间同步 因为操作系统采用了自己维护时间的方式，所以在运行一段时间后必然会产生硬件时间和软件时间不一致的情况，系统时钟会开始落后。这时候可以使用hwclock将两者进行同步，通过指定不同的参数将硬件时间同步到系统时间或者把系统时间同步到硬件时间。
+NTP 协议 在单机系统中尚且可以解决时间不一致的问题，但是无法解决时间不准确的问题。于是就有了 NTP 协议，全称网络时间协议（Network Time protocol）。通过与另一台保持准确时间的设备通信来调整自身的系统时间，这就是 NTP 协议所做的事情，协议基于 UDP 实现，通过该协议，可以将时间误差保持在 UTC 时间的毫秒级误差。操作系统会周期性通过 NTP 协议更新系统时间。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/notes/java_datetime/" /><meta property="article:section" content="notes" />
+<meta property="article:published_time" content="2021-10-26T22:32:54+08:00" />
+<meta property="article:modified_time" content="2021-10-26T22:32:54+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="基础::计算机系统中的时间"/>
+<meta name="twitter:description" content="背景 时间是计算机系统中一个非常重要的概念，很多系统调用与时间有关，很多定时任务依赖时间，甚至内核本身也需要定时器按照一定频率来产生时钟中断来驱动它能够正常运行下去。
+硬件时间 操作系统需要在硬件的帮助下才能管理时间，体系结构主要提供了两种硬件设备，一个是时钟源设备，位于主板上的一小块存储空间，有单独的供电，即使断电也可以保持计时。当操作系统启动时，会从这里读取时间，把系统时间与硬件时间设置成一致，此后两个时钟独立，操作系统维护自己的时钟，因为查看硬件既慢又复杂。另一个硬件是时钟事件设备，用于单次或周期性触发系统中断，每次中断，操作系统会进行刷新系统时间，管理进程时间片等操作。
+系统时间 计算机科学与计算机编程中, 系统时间表示在计算机系统中的时间与日期。通常用系统时钟从某个时间起点的嘀嗒数。时间起点就是上文提到的在启动时读取的硬件时间，滴答数则是每次中断的累加，定时器是按照一定频率产生中断的，所以系统是可以知道两次中断之间过去了多久的。类 Unix 系统通常采用 Unix Epoch 来表示时间。
+时间同步 因为操作系统采用了自己维护时间的方式，所以在运行一段时间后必然会产生硬件时间和软件时间不一致的情况，系统时钟会开始落后。这时候可以使用hwclock将两者进行同步，通过指定不同的参数将硬件时间同步到系统时间或者把系统时间同步到硬件时间。
+NTP 协议 在单机系统中尚且可以解决时间不一致的问题，但是无法解决时间不准确的问题。于是就有了 NTP 协议，全称网络时间协议（Network Time protocol）。通过与另一台保持准确时间的设备通信来调整自身的系统时间，这就是 NTP 协议所做的事情，协议基于 UDP 实现，通过该协议，可以将时间误差保持在 UTC 时间的毫秒级误差。操作系统会周期性通过 NTP 协议更新系统时间。"/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="/css/styles.94f653e9e151e28067a7c5dbbc4600cbd5a3c721e79faaf971e523c40f3b249b8e4f20bb57810dfffa8d559ca5c140fd56eb4cd9c0853113ad08e66afdb08bdd.css" integrity="sha512-lPZT6eFR4oBnp8XbvEYAy9WjxyHnn6r5ceUjxA87JJuOTyC7V4EN//qNVZylwUD9VutM2cCFMROtCOZq/bCL3Q=="> 
+
+  
+   <link rel="stylesheet" href="/css/custom.css"> 
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="/images/favicon.ico" />
+
+  
+  
+  
+  
+  
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-X1L70M4MM0', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+  
+  
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<meta name="referrer" content="no-referrer-when-downgrade">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+    <header id="header">
+  <a href="/">
+  
+    <div id="logo" style="background-image: url(/images/logo.png)"></div>
+  
+  <div id="title">
+    <h1>Y.CH.Y</h1>
+  </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
+      </li>
+      
+        <li><a href="/">首页</a></li>
+      
+        <li><a href="/books">书单</a></li>
+      
+    </ul>
+  </div>
+</header>
+
+
+
+    
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="content" itemprop="articleBody">
+  
+    <!-- ![ChFaWMj](https://i.imgur.com/ChFaWMj.png) -->
+<h3 id="背景">背景</h3>
+<p>时间是计算机系统中一个非常重要的概念，很多系统调用与时间有关，很多定时任务依赖时间，甚至内核本身也需要定时器按照一定频率来产生时钟中断来驱动它能够正常运行下去。</p>
+<h3 id="硬件时间">硬件时间</h3>
+<p>操作系统需要在硬件的帮助下才能管理时间，体系结构主要提供了两种硬件设备，一个是时钟源设备，位于主板上的一小块存储空间，有单独的供电，即使断电也可以保持计时。当操作系统启动时，会从这里读取时间，把系统时间与硬件时间设置成一致，此后两个时钟独立，操作系统维护自己的时钟，因为查看硬件既慢又复杂。另一个硬件是时钟事件设备，用于单次或周期性触发系统中断，每次中断，操作系统会进行刷新系统时间，管理进程时间片等操作。</p>
+<h3 id="系统时间">系统时间</h3>
+<p>计算机科学与计算机编程中, 系统时间表示在计算机系统中的时间与日期。通常用系统时钟从某个时间起点的嘀嗒数。时间起点就是上文提到的在启动时读取的硬件时间，滴答数则是每次中断的累加，定时器是按照一定频率产生中断的，所以系统是可以知道两次中断之间过去了多久的。类 Unix 系统通常采用 Unix Epoch 来表示时间。</p>
+<h3 id="时间同步">时间同步</h3>
+<p>因为操作系统采用了自己维护时间的方式，所以在运行一段时间后必然会产生硬件时间和软件时间不一致的情况，系统时钟会开始落后。这时候可以使用<code>hwclock</code>将两者进行同步，通过指定不同的参数将硬件时间同步到系统时间或者把系统时间同步到硬件时间。</p>
+<h3 id="ntp-协议">NTP 协议</h3>
+<p>在单机系统中尚且可以解决时间不一致的问题，但是无法解决时间不准确的问题。于是就有了 NTP 协议，全称网络时间协议（Network Time protocol）。通过与另一台保持准确时间的设备通信来调整自身的系统时间，这就是 NTP 协议所做的事情，协议基于 UDP 实现，通过该协议，可以将时间误差保持在 UTC 时间的毫秒级误差。操作系统会周期性通过 NTP 协议更新系统时间。</p>
+
+  
+  </div>
+</article>
+
+
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  Y.CH.Y 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">首页</a></li>
+         
+        <li><a href="/books">书单</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+  </div>
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+</html>
