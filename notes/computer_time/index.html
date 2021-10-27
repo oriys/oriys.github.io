@@ -397,9 +397,31 @@ if (!doNotTrack) {
 </tr>
 </tbody>
 </table>
-  </tbody>
-  </table>
-<h3 id="常见格式化">常见格式化</h3>
+<p>java 并不完整支持以上所有字符，以下是 java 支持的部分</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_ERA</span>                  <span style="color:#f92672">=</span>  <span style="color:#111">0</span><span style="color:#f92672">;</span> <span style="color:#75715e">// G
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_YEAR</span>                 <span style="color:#f92672">=</span>  <span style="color:#111">1</span><span style="color:#f92672">;</span> <span style="color:#75715e">// y
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_MONTH</span>                <span style="color:#f92672">=</span>  <span style="color:#111">2</span><span style="color:#f92672">;</span> <span style="color:#75715e">// M
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_DAY_OF_MONTH</span>         <span style="color:#f92672">=</span>  <span style="color:#111">3</span><span style="color:#f92672">;</span> <span style="color:#75715e">// d
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_HOUR_OF_DAY1</span>         <span style="color:#f92672">=</span>  <span style="color:#111">4</span><span style="color:#f92672">;</span> <span style="color:#75715e">// k
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_HOUR_OF_DAY0</span>         <span style="color:#f92672">=</span>  <span style="color:#111">5</span><span style="color:#f92672">;</span> <span style="color:#75715e">// H
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_MINUTE</span>               <span style="color:#f92672">=</span>  <span style="color:#111">6</span><span style="color:#f92672">;</span> <span style="color:#75715e">// m
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_SECOND</span>               <span style="color:#f92672">=</span>  <span style="color:#111">7</span><span style="color:#f92672">;</span> <span style="color:#75715e">// s
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_MILLISECOND</span>          <span style="color:#f92672">=</span>  <span style="color:#111">8</span><span style="color:#f92672">;</span> <span style="color:#75715e">// S
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_DAY_OF_WEEK</span>          <span style="color:#f92672">=</span>  <span style="color:#111">9</span><span style="color:#f92672">;</span> <span style="color:#75715e">// E
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_DAY_OF_YEAR</span>          <span style="color:#f92672">=</span> <span style="color:#111">10</span><span style="color:#f92672">;</span> <span style="color:#75715e">// D
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_DAY_OF_WEEK_IN_MONTH</span> <span style="color:#f92672">=</span> <span style="color:#111">11</span><span style="color:#f92672">;</span> <span style="color:#75715e">// F
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_WEEK_OF_YEAR</span>         <span style="color:#f92672">=</span> <span style="color:#111">12</span><span style="color:#f92672">;</span> <span style="color:#75715e">// w
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_WEEK_OF_MONTH</span>        <span style="color:#f92672">=</span> <span style="color:#111">13</span><span style="color:#f92672">;</span> <span style="color:#75715e">// W
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_AM_PM</span>                <span style="color:#f92672">=</span> <span style="color:#111">14</span><span style="color:#f92672">;</span> <span style="color:#75715e">// a
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_HOUR1</span>                <span style="color:#f92672">=</span> <span style="color:#111">15</span><span style="color:#f92672">;</span> <span style="color:#75715e">// h
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_HOUR0</span>                <span style="color:#f92672">=</span> <span style="color:#111">16</span><span style="color:#f92672">;</span> <span style="color:#75715e">// K
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_ZONE_NAME</span>            <span style="color:#f92672">=</span> <span style="color:#111">17</span><span style="color:#f92672">;</span> <span style="color:#75715e">// z
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_ZONE_VALUE</span>           <span style="color:#f92672">=</span> <span style="color:#111">18</span><span style="color:#f92672">;</span> <span style="color:#75715e">// Z
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_WEEK_YEAR</span>            <span style="color:#f92672">=</span> <span style="color:#111">19</span><span style="color:#f92672">;</span> <span style="color:#75715e">// Y
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_ISO_DAY_OF_WEEK</span>      <span style="color:#f92672">=</span> <span style="color:#111">20</span><span style="color:#f92672">;</span> <span style="color:#75715e">// u
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_ISO_ZONE</span>             <span style="color:#f92672">=</span> <span style="color:#111">21</span><span style="color:#f92672">;</span> <span style="color:#75715e">// X
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">int</span> <span style="color:#111">PATTERN_MONTH_STANDALONE</span>     <span style="color:#f92672">=</span> <span style="color:#111">22</span><span style="color:#f92672">;</span> <span style="color:#75715e">// L
+</span></code></pre></div><h3 id="常见格式化">常见格式化</h3>
 <table>
 <thead>
 <tr>
