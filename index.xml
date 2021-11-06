@@ -280,7 +280,50 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;企业消息系统&#34;&gt;企业消息系统&lt;/h3&gt;
+&lt;h3 id=&#34;企业消息传递系统&#34;&gt;企业消息传递系统&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;消息传递
+&lt;ul&gt;
+&lt;li&gt;用来描述生产者和消费者之间的数据路由&lt;/li&gt;
+&lt;li&gt;电子邮件、文本信息、即时消息、VoIP、视频聊天&lt;/li&gt;
+&lt;li&gt;支持人与人之间通过临时渠道的沟通&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;单向消息
+&lt;ul&gt;
+&lt;li&gt;视频流媒体&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;企业消息传递系统（EMS）
+&lt;ul&gt;
+&lt;li&gt;提供各种消息传递协议实现的软件
+&lt;ul&gt;
+&lt;li&gt;data distribution service (DDS)&lt;/li&gt;
+&lt;li&gt;advanced message queuing protocol (AMQP)&lt;/li&gt;
+&lt;li&gt;Microsoft message queuing (MSMQ)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;调用/接收应用程序之间建立一个直接的网络通信通道，通过该通道交换参数，EMS 可以用来以消息的形式保留这些参数，并且保证它们被传递到预定的接收者那里进行处理。这允许调用者异步地发送其请求，并等待他们试图调用的服务的响应。它还允许服务以异步的方式传达其响应，并将其结果发布到 EMS，以便最终交付给原始调用者。&lt;/li&gt;
+&lt;li&gt;这种解耦通过提供一个标准化的、可靠的组件内通信通道来促进异步应用开发，该通道作为处理数据的持久性缓冲区，即使一些组件处于离线状态。&lt;/li&gt;
+&lt;li&gt;这些消息模式通常以语言中立的格式定义，如 XML、JSON 或 Avro IDL，这使得组件可以用任何支持这些格式的编程语言来开发。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;RPC
+&lt;ul&gt;
+&lt;li&gt;RPC 的主要例子是基于简单对象访问协议（SOAP）和表示状态传输（REST）的网络服务，它们通过固定的端点相互作用&lt;/li&gt;
+&lt;li&gt;在这两种方式中，当一个进程想与一个远程服务进行交互时，它需要首先通过一个发现服务来确定服务的远程位置，然后使用适当的参数和类型来远程调用所需的方法&lt;/li&gt;
+&lt;li&gt;同步调用很慢、远程服务不可用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;关键能力
+&lt;ul&gt;
+&lt;li&gt;异步通信：消息传递系统允许服务和应用程序以非阻塞的方式相互通信，这意味着消息发送者和接收者不需要在同一时间与消息传递系统（或彼此）互动。消息传递系统将保留消息，直到所有预定的接收者消费它。&lt;/li&gt;
+&lt;li&gt;消息保留：与基于网络的消息传递不同，消息只存在于网络上，如 RPC，发布到消息系统的消息会保留在磁盘上，直到它们被交付。未交付的消息可以被保留数小时、数天甚至数周，大多数消息系统允许你指定保留策略。&lt;/li&gt;
+&lt;li&gt;消息确认：消息系统被要求保留消息，直到所有预定的收件人收到它；因此，需要一种机制，使消息消费者能够确认消息的成功交付和处理。这允许消息传递系统清除所有成功传递的消息，并重试将消息传递给那些还没有收到的消费者。&lt;/li&gt;
+&lt;li&gt;消息消费：很明显，如果一个消息系统不提供一种机制，让目标接收者能够消费消息，那么它就不是特别有用。首先，一个 EMS 必须保证它收到的所有消息都能被传递。很多时候，一条消息可能是为多个消费者准备的，EMS 必须维护这些信息，以及哪些消息已经被交付给谁。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&#34;pulsar-概念和架构&#34;&gt;Pulsar 概念和架构&lt;/h2&gt;
 &lt;h2 id=&#34;pulsar-交互&#34;&gt;Pulsar 交互&lt;/h2&gt;
 </description>
