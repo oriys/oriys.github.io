@@ -5,7 +5,7 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>Y.CH.Y</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Tue, 26 Oct 2021 22:32:54 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Sat, 06 Nov 2021 20:42:16 +0800</lastBuildDate>
     <item>
       <title>algorithm</title>
       <link>/algorithm/</link>
@@ -255,6 +255,34 @@
 &lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 79.Word Search&lt;/li&gt;
 &lt;li&gt;&lt;/li&gt;
 &lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Pulsar实战::起步</title>
+      <link>/notes/pulsar_in_action_getting_started/</link>
+      <pubDate>Sat, 06 Nov 2021 20:42:16 +0800</pubDate>
+      <guid>/notes/pulsar_in_action_getting_started/</guid>
+      <description>&lt;h2 id=&#34;pulsar-介绍&#34;&gt;Pulsar 介绍&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;设计目的
+&lt;ul&gt;
+&lt;li&gt;多租户&lt;/li&gt;
+&lt;li&gt;地理复制&lt;/li&gt;
+&lt;li&gt;强大的耐久性保证&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;关键特性
+&lt;ul&gt;
+&lt;li&gt;实时消息传递 &amp;ndash; 使地理上分布的应用程序和系统能够通过交换消息以异步的方式相互通信。Pulsar 的目标是通过支持多种编程语言和二进制消息传输协议，为最广泛的客户提供这种能力。&lt;/li&gt;
+&lt;li&gt;实时计算 &amp;ndash; 提供在 Pulsar 内部对这些消息进行用户定义的计算的能力，不需要外部计算系统来执行基本的转换操作，如数据压缩、过滤和聚合。&lt;/li&gt;
+&lt;li&gt;可扩展的存储 &amp;ndash; Pulsar 的独立存储层和对分层存储的支持使你的消息数据可以保留到你需要的任何时间。对于 Pulsar 所能保留和访问的数据量，没有任何物理限制。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;企业消息系统&#34;&gt;企业消息系统&lt;/h3&gt;
+&lt;h2 id=&#34;pulsar-概念和架构&#34;&gt;Pulsar 概念和架构&lt;/h2&gt;
+&lt;h2 id=&#34;pulsar-交互&#34;&gt;Pulsar 交互&lt;/h2&gt;
 </description>
     </item>
     
