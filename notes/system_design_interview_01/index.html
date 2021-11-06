@@ -209,7 +209,7 @@ if (!doNotTrack) {
 <p>缓存是一个临时的存储区域，它将昂贵的响应结果或频繁访问的数据存储在内存中，以便后续的请求能够更快地得到服务。如图 1-6 所示，每次加载新的网页时，都会执行一次或多次数据库调用来获取数据。由于反复调用数据库，应用性能受到很大影响。缓存可以缓解这个问题。</p>
 <p><strong>缓存层</strong></p>
 <p>缓存层是一个临时的数据存储层，比数据库快得多。单独设置缓存层的好处包括更好的系统性能，能够减少数据库的工作负载，以及能够独立地扩展缓存层。图 1-7 显示了一个缓存服务器的可能设置。</p>
-<p><img src="../../../system_design_interview/index-15_1.jpg" /></p>
+<img src="../../../system_design_interview/index-15_1.jpg" />
 <p>在收到请求后，Web 服务器首先检查缓存是否有可用的响应。如果有，它就把数据发回给客户端。如果没有，它就查询数据库，将响应存储在缓存中，然后再发回给客户端。这种缓存策略称为读通式缓存。根据数据类型、大小和访问模式，还有其他缓存策略可供选择。之前的一项研究解释了不同缓存策略的工作原理[6]。</p>
 <p>与缓存服务器的交互很简单，因为大多数缓存服务器都提供了通用编程语言的 API。下面的代码片段展示了典型的 Memcached API。</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#75af00">SECONDS</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#111">;</span>
