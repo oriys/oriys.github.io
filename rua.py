@@ -18,6 +18,7 @@ books = list(set([
     'https://book.douban.com/subject/27096665',
     'https://book.douban.com/subject/30264678',
     'https://book.douban.com/subject/30280001',
+    'https://book.douban.com/subject/34615687',
     'https://book.douban.com/subject/35031587',
     'https://book.douban.com/subject/30329536',
     'https://book.douban.com/subject/3211779',
