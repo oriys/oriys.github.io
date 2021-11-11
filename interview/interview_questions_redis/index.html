@@ -1,165 +1,102 @@
-<!DOCTYPE html>
-<html lang="en-us">
+<!doctype html><html lang=en-us>
 <head>
-  <link rel="preload" href="/lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="/lib/font-awesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="/lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <script type="text/javascript" src="https://latest.cactus.chat/cactus.js"></script>
-  <link rel="stylesheet" href="https://latest.cactus.chat/style.css" type="text/css">
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title> 八股文::Redis | Y.CH.Y</title>
-  <link rel = 'canonical' href = '/interview/interview_questions_redis/'>
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="all,follow">
-  <meta name="googlebot" content="index,follow,snippet,archive">
-  <meta property="og:title" content="八股文::Redis" />
-<meta property="og:description" content="Redis Redis 有哪些数据结构，分别有什么使用场景？ Redis ZSET 相同 score 如何排序？ 在爬虫中，如何使用 Redis 做 URL 去重？ Redis 是否支持事务？ Redis 中的 WATCH 命令是做什么的？ Redis 是如何保证高可用的？ 如何使用 Redis 来实现分布式锁？Redlock？ Redis 是单线程还是多线程？为什么这么设计？ Redis 中的字符串对象和 C 语言中的字符串有什么区别？ Redis 中是如何实现链表的？ Redis 中是如何实现字典的？ Redis 中的字典是如何进行动态扩容的？ Redis 中的跳表是如何实现的？ STR/LIST/HASH/SET/ZSET 底层都是使用什么数据结构实现的？ ZSET 什么时候使用 Ziplist 实现，什么时候使用 Skiplist 实现？ ZSET 为什么不用 BST/AVL/B-Tree/红黑树，而使用跳表？ Redis 的过期键删除策略是什么？ Redis 的主从服务器是如何同步过期键的？ AOF 和 RDB 持久化有什么区别？ Redis 的主从是如何进行同步的？ 如何解决长时间使用后 AOF 文件过大的问题？ Redis 的哨兵机制是如何实现的？ Redis 的集群方案有哪些？ Redis 的整体架构是什么样的，从客户端发出命令，到客户端接收到结果，这整个流程是什么样的？ Redis 是如何实现 LRU 机制的？ Redis 是如何实现 LFU 机制的？ " />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="/interview/interview_questions_redis/" /><meta property="article:section" content="interview" />
-<meta property="article:published_time" content="2021-08-20T02:47:13+08:00" />
-<meta property="article:modified_time" content="2021-08-20T02:47:13+08:00" />
-
-
-  <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="八股文::Redis"/>
-<meta name="twitter:description" content="Redis Redis 有哪些数据结构，分别有什么使用场景？ Redis ZSET 相同 score 如何排序？ 在爬虫中，如何使用 Redis 做 URL 去重？ Redis 是否支持事务？ Redis 中的 WATCH 命令是做什么的？ Redis 是如何保证高可用的？ 如何使用 Redis 来实现分布式锁？Redlock？ Redis 是单线程还是多线程？为什么这么设计？ Redis 中的字符串对象和 C 语言中的字符串有什么区别？ Redis 中是如何实现链表的？ Redis 中是如何实现字典的？ Redis 中的字典是如何进行动态扩容的？ Redis 中的跳表是如何实现的？ STR/LIST/HASH/SET/ZSET 底层都是使用什么数据结构实现的？ ZSET 什么时候使用 Ziplist 实现，什么时候使用 Skiplist 实现？ ZSET 为什么不用 BST/AVL/B-Tree/红黑树，而使用跳表？ Redis 的过期键删除策略是什么？ Redis 的主从服务器是如何同步过期键的？ AOF 和 RDB 持久化有什么区别？ Redis 的主从是如何进行同步的？ 如何解决长时间使用后 AOF 文件过大的问题？ Redis 的哨兵机制是如何实现的？ Redis 的集群方案有哪些？ Redis 的整体架构是什么样的，从客户端发出命令，到客户端接收到结果，这整个流程是什么样的？ Redis 是如何实现 LRU 机制的？ Redis 是如何实现 LFU 机制的？ "/>
-
-  
-  
-    
-  
-  
-  <link rel="stylesheet" href="/css/styles.94f653e9e151e28067a7c5dbbc4600cbd5a3c721e79faaf971e523c40f3b249b8e4f20bb57810dfffa8d559ca5c140fd56eb4cd9c0853113ad08e66afdb08bdd.css" integrity="sha512-lPZT6eFR4oBnp8XbvEYAy9WjxyHnn6r5ceUjxA87JJuOTyC7V4EN//qNVZylwUD9VutM2cCFMROtCOZq/bCL3Q=="> 
-
-  
-   <link rel="stylesheet" href="/css/custom.css"> 
-  
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  
-
-  
-<link rel="icon" type="image/png" href="/images/favicon.ico" />
-
-  
-  
-  
-  
-  
-    
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'G-X1L70M4MM0', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-  
-  
-  
-
-
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<meta name="referrer" content="no-referrer-when-downgrade">
+<link rel=preload href=/lib/font-awesome/webfonts/fa-brands-400.woff2 as=font type=font/woff2 crossorigin=anonymous>
+<link rel=preload href=/lib/font-awesome/webfonts/fa-regular-400.woff2 as=font type=font/woff2 crossorigin=anonymous>
+<link rel=preload href=/lib/font-awesome/webfonts/fa-solid-900.woff2 as=font type=font/woff2 crossorigin=anonymous>
+<link rel=preload href=/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2 as=font type=font/woff2 crossorigin=anonymous>
+<script type=text/javascript src=https://latest.cactus.chat/cactus.js></script>
+<link rel=stylesheet href=https://latest.cactus.chat/style.css type=text/css>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<title> 八股文::Redis | Y.CH.Y</title>
+<link rel=canonical href=/interview/interview_questions_redis/>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="all,follow">
+<meta name=googlebot content="index,follow,snippet,archive">
+<meta property="og:title" content="八股文::Redis">
+<meta property="og:description" content="Redis Redis 有哪些数据结构，分别有什么使用场景？ Redis ZSET 相同 score 如何排序？ 在爬虫中，如何使用 Redis 做 URL 去重？ Redis 是否支持事务？ Redis 中的 WATCH 命令是做什么的？ Redis 是如何保证高可用的？ 如何使用 Redis 来实现分布式锁？Redlock？ Redis 是单线程还是多线程？为什么这么设计？ Redis 中的字符串对象和 C 语言中的字符串有什么区别？ Redis 中是如何实现链表的？ Redis 中是如何实现字典的？ Redis 中的字典是如何进行动态扩容的？ Redis 中的跳表是如何实现的？ STR/LIST/HASH/SET/ZSET 底层都是使用什么数据结构实现的？ ZSET 什么时候使用 Ziplist 实现，什么时候使用 Skiplist 实现？ ZSET 为什么不用 BST/AVL/B-Tree/红黑树，而使用跳表？ Redis 的过期键删除策略是什么？ Redis 的主从服务器是如何同步过期键的？ AOF 和 RDB 持久化有什么区别？ Redis 的主从是如何进行同步的？ 如何解决长时间使用后 AOF 文件过大的问题？ Redis 的哨兵机制是如何实现的？ Redis 的集群方案有哪些？ Redis 的整体架构是什么样的，从客户端发出命令，到客户端接收到结果，这整个流程是什么样的？ Redis 是如何实现 LRU 机制的？ Redis 是如何实现 LFU 机制的？ ">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/interview/interview_questions_redis/"><meta property="article:section" content="interview">
+<meta property="article:published_time" content="2021-08-20T02:47:13+08:00">
+<meta property="article:modified_time" content="2021-08-20T02:47:13+08:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="八股文::Redis">
+<meta name=twitter:description content="Redis Redis 有哪些数据结构，分别有什么使用场景？ Redis ZSET 相同 score 如何排序？ 在爬虫中，如何使用 Redis 做 URL 去重？ Redis 是否支持事务？ Redis 中的 WATCH 命令是做什么的？ Redis 是如何保证高可用的？ 如何使用 Redis 来实现分布式锁？Redlock？ Redis 是单线程还是多线程？为什么这么设计？ Redis 中的字符串对象和 C 语言中的字符串有什么区别？ Redis 中是如何实现链表的？ Redis 中是如何实现字典的？ Redis 中的字典是如何进行动态扩容的？ Redis 中的跳表是如何实现的？ STR/LIST/HASH/SET/ZSET 底层都是使用什么数据结构实现的？ ZSET 什么时候使用 Ziplist 实现，什么时候使用 Skiplist 实现？ ZSET 为什么不用 BST/AVL/B-Tree/红黑树，而使用跳表？ Redis 的过期键删除策略是什么？ Redis 的主从服务器是如何同步过期键的？ AOF 和 RDB 持久化有什么区别？ Redis 的主从是如何进行同步的？ 如何解决长时间使用后 AOF 文件过大的问题？ Redis 的哨兵机制是如何实现的？ Redis 的集群方案有哪些？ Redis 的整体架构是什么样的，从客户端发出命令，到客户端接收到结果，这整个流程是什么样的？ Redis 是如何实现 LRU 机制的？ Redis 是如何实现 LFU 机制的？ ">
+<link rel=stylesheet href=/css/styles.94f653e9e151e28067a7c5dbbc4600cbd5a3c721e79faaf971e523c40f3b249b8e4f20bb57810dfffa8d559ca5c140fd56eb4cd9c0853113ad08e66afdb08bdd.css integrity="sha512-lPZT6eFR4oBnp8XbvEYAy9WjxyHnn6r5ceUjxA87JJuOTyC7V4EN//qNVZylwUD9VutM2cCFMROtCOZq/bCL3Q==">
+<link rel=stylesheet href=/css/custom.css><!--[if lt IE 9]><script src=https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js></script>
+<script src=https://oss.maxcdn.com/respond/1.4.2/respond.min.js></script><![endif]-->
+<link rel=icon type=image/png href=/images/favicon.ico>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-X1L70M4MM0','auto'),ga('send','pageview'))</script>
+<script async src=https://www.google-analytics.com/analytics.js></script>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<meta name=referrer content="no-referrer-when-downgrade">
 </head>
-
 <body class="max-width mx-auto px3 ltr">
-  <div class="content index py4">
-
-    <header id="header">
-  <a href="/">
-  
-    <div id="logo" style="background-image: url(/images/logo.png)"></div>
-  
-  <div id="title">
-    <h1>Y.CH.Y</h1>
-  </div>
-  </a>
-  <div id="nav">
-    <ul>
-      <li class="icon">
-        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
-      </li>
-      
-        <li><a href="/">首页</a></li>
-      
-        <li><a href="/books">书单</a></li>
-      
-    </ul>
-  </div>
+<div class="content index py4">
+<header id=header>
+<a href=/>
+<div id=logo style=background-image:url(/images/logo.png)></div>
+<div id=title>
+<h1>Y.CH.Y</h1>
+</div>
+</a>
+<div id=nav>
+<ul>
+<li class=icon>
+<a href=# aria-label=Menu><i class="fas fa-bars fa-2x" aria-hidden=true></i></a>
+</li>
+<li><a href=/>首页</a></li>
+<li><a href=/books>书单</a></li>
+</ul>
+</div>
 </header>
-
-
-
-    
-<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-
-  <div class="content" itemprop="articleBody">
-  
-    <h2 id="redis">Redis</h2>
-<h3 id="redis-有哪些数据结构分别有什么使用场景">Redis 有哪些数据结构，分别有什么使用场景？</h3>
-<h3 id="redis-zset-相同-score-如何排序">Redis ZSET 相同 score 如何排序？</h3>
-<h3 id="在爬虫中如何使用-redis-做-url-去重">在爬虫中，如何使用 Redis 做 URL 去重？</h3>
-<h3 id="redis-是否支持事务">Redis 是否支持事务？</h3>
-<h3 id="redis-中的-watch-命令是做什么的">Redis 中的 WATCH 命令是做什么的？</h3>
-<h3 id="redis-是如何保证高可用的">Redis 是如何保证高可用的？</h3>
-<h3 id="如何使用-redis-来实现分布式锁redlock">如何使用 Redis 来实现分布式锁？Redlock？</h3>
-<h3 id="redis-是单线程还是多线程为什么这么设计">Redis 是单线程还是多线程？为什么这么设计？</h3>
-<h3 id="redis-中的字符串对象和-c-语言中的字符串有什么区别">Redis 中的字符串对象和 C 语言中的字符串有什么区别？</h3>
-<h3 id="redis-中是如何实现链表的">Redis 中是如何实现链表的？</h3>
-<h3 id="redis-中是如何实现字典的">Redis 中是如何实现字典的？</h3>
-<h3 id="redis-中的字典是如何进行动态扩容的">Redis 中的字典是如何进行动态扩容的？</h3>
-<h3 id="redis-中的跳表是如何实现的">Redis 中的跳表是如何实现的？</h3>
-<h3 id="strlisthashsetzset-底层都是使用什么数据结构实现的">STR/LIST/HASH/SET/ZSET 底层都是使用什么数据结构实现的？</h3>
-<h3 id="zset-什么时候使用-ziplist-实现什么时候使用-skiplist-实现">ZSET 什么时候使用 Ziplist 实现，什么时候使用 Skiplist 实现？</h3>
-<h3 id="zset-为什么不用-bstavlb-tree红黑树而使用跳表">ZSET 为什么不用 BST/AVL/B-Tree/红黑树，而使用跳表？</h3>
-<h3 id="redis-的过期键删除策略是什么">Redis 的过期键删除策略是什么？</h3>
-<h3 id="redis-的主从服务器是如何同步过期键的">Redis 的主从服务器是如何同步过期键的？</h3>
-<h3 id="aof-和-rdb-持久化有什么区别">AOF 和 RDB 持久化有什么区别？</h3>
-<h3 id="redis-的主从是如何进行同步的">Redis 的主从是如何进行同步的？</h3>
-<h3 id="如何解决长时间使用后-aof-文件过大的问题">如何解决长时间使用后 AOF 文件过大的问题？</h3>
-<h3 id="redis-的哨兵机制是如何实现的">Redis 的哨兵机制是如何实现的？</h3>
-<h3 id="redis-的集群方案有哪些">Redis 的集群方案有哪些？</h3>
-<h3 id="redis-的整体架构是什么样的从客户端发出命令到客户端接收到结果这整个流程是什么样的">Redis 的整体架构是什么样的，从客户端发出命令，到客户端接收到结果，这整个流程是什么样的？</h3>
-<h3 id="redis-是如何实现-lru-机制的">Redis 是如何实现 LRU 机制的？</h3>
-<h3 id="redis-是如何实现-lfu-机制的">Redis 是如何实现 LFU 机制的？</h3>
-
-  
-  </div>
+<article class=post itemscope itemtype=http://schema.org/BlogPosting>
+<div class=content itemprop=articleBody>
+<h2 id=redis>Redis</h2>
+<h3 id=redis-有哪些数据结构分别有什么使用场景>Redis 有哪些数据结构，分别有什么使用场景？</h3>
+<h3 id=redis-zset-相同-score-如何排序>Redis ZSET 相同 score 如何排序？</h3>
+<h3 id=在爬虫中如何使用-redis-做-url-去重>在爬虫中，如何使用 Redis 做 URL 去重？</h3>
+<h3 id=redis-是否支持事务>Redis 是否支持事务？</h3>
+<h3 id=redis-中的-watch-命令是做什么的>Redis 中的 WATCH 命令是做什么的？</h3>
+<h3 id=redis-是如何保证高可用的>Redis 是如何保证高可用的？</h3>
+<h3 id=如何使用-redis-来实现分布式锁redlock>如何使用 Redis 来实现分布式锁？Redlock？</h3>
+<h3 id=redis-是单线程还是多线程为什么这么设计>Redis 是单线程还是多线程？为什么这么设计？</h3>
+<h3 id=redis-中的字符串对象和-c-语言中的字符串有什么区别>Redis 中的字符串对象和 C 语言中的字符串有什么区别？</h3>
+<h3 id=redis-中是如何实现链表的>Redis 中是如何实现链表的？</h3>
+<h3 id=redis-中是如何实现字典的>Redis 中是如何实现字典的？</h3>
+<h3 id=redis-中的字典是如何进行动态扩容的>Redis 中的字典是如何进行动态扩容的？</h3>
+<h3 id=redis-中的跳表是如何实现的>Redis 中的跳表是如何实现的？</h3>
+<h3 id=strlisthashsetzset-底层都是使用什么数据结构实现的>STR/LIST/HASH/SET/ZSET 底层都是使用什么数据结构实现的？</h3>
+<h3 id=zset-什么时候使用-ziplist-实现什么时候使用-skiplist-实现>ZSET 什么时候使用 Ziplist 实现，什么时候使用 Skiplist 实现？</h3>
+<h3 id=zset-为什么不用-bstavlb-tree红黑树而使用跳表>ZSET 为什么不用 BST/AVL/B-Tree/红黑树，而使用跳表？</h3>
+<h3 id=redis-的过期键删除策略是什么>Redis 的过期键删除策略是什么？</h3>
+<h3 id=redis-的主从服务器是如何同步过期键的>Redis 的主从服务器是如何同步过期键的？</h3>
+<h3 id=aof-和-rdb-持久化有什么区别>AOF 和 RDB 持久化有什么区别？</h3>
+<h3 id=redis-的主从是如何进行同步的>Redis 的主从是如何进行同步的？</h3>
+<h3 id=如何解决长时间使用后-aof-文件过大的问题>如何解决长时间使用后 AOF 文件过大的问题？</h3>
+<h3 id=redis-的哨兵机制是如何实现的>Redis 的哨兵机制是如何实现的？</h3>
+<h3 id=redis-的集群方案有哪些>Redis 的集群方案有哪些？</h3>
+<h3 id=redis-的整体架构是什么样的从客户端发出命令到客户端接收到结果这整个流程是什么样的>Redis 的整体架构是什么样的，从客户端发出命令，到客户端接收到结果，这整个流程是什么样的？</h3>
+<h3 id=redis-是如何实现-lru-机制的>Redis 是如何实现 LRU 机制的？</h3>
+<h3 id=redis-是如何实现-lfu-机制的>Redis 是如何实现 LFU 机制的？</h3>
+</div>
 </article>
-
-
-    <footer id="footer">
-  <div class="footer-left">
-    Copyright  &copy; 2021  Y.CH.Y 
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-         
-        <li><a href="/">首页</a></li>
-         
-        <li><a href="/books">书单</a></li>
-        
-      </ul>
-    </nav>
-  </div>
+<footer id=footer>
+<div class=footer-left>
+Copyright &copy; 2021 Y.CH.Y
+</div>
+<div class=footer-right>
+<nav>
+<ul>
+<li><a href=/>首页</a></li>
+<li><a href=/books>书单</a></li>
+</ul>
+</nav>
+</div>
 </footer>
-
-
-  </div>
+</div>
 </body>
-
-<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<link rel=stylesheet href=/lib/font-awesome/css/all.min.css>
 <script src=/lib/jquery/jquery.min.js></script>
 <script src=/js/main.js></script>
 </html>

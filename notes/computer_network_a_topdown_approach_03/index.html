@@ -1,111 +1,58 @@
-<!DOCTYPE html>
-<html lang="en-us">
+<!doctype html><html lang=en-us>
 <head>
-  <link rel="preload" href="/lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="/lib/font-awesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="/lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <script type="text/javascript" src="https://latest.cactus.chat/cactus.js"></script>
-  <link rel="stylesheet" href="https://latest.cactus.chat/style.css" type="text/css">
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title> 计算机网络自顶向下方法::运输层 | Y.CH.Y</title>
-  <link rel = 'canonical' href = '/notes/computer_network_a_topdown_approach_03/'>
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="all,follow">
-  <meta name="googlebot" content="index,follow,snippet,archive">
-  <meta property="og:title" content="计算机网络自顶向下方法::运输层" />
-<meta property="og:description" content="概述和运输层服务  运输层协议为运行在不同主机上的应用进程之间提供了逻辑通信。应用进程使用运输层提供的逻辑通信功能彼此发送报文，而无须考虑承载这些报文的物理基础设施的细节。 运输层协议是在端系统中而不是在路由器中实现的。在发送端，运输层将从发送应用程序进程接收到的报文转换成运输层分组，用因特网术语来讲该分组称为运输层报文段（segment）。在接收端，网络层从数据报中提取运输层报文段，并将该报文段向上交给运输层 。运输层则处理接收到的报文段，使该报文段中的数据为接收应用进程使用。 网络应用程序可以使用多种的运输层协议。例如，因特网有两种协议，即 TCP 和 UDP。每种协议都能为调用的应用程序提供一组不同的运输层服务。 运输层和网络层的关系  在协议栈中，运输层刚好位于网络层之上。网络层提供了主机之间的逻辑通信，而运输层为运行在不同主机上的进程之间提供了逻辑通信 计算机网络中可以安排多种运输层协议，每种协议为应用程序提供不同的服务模型。 运输协议能够提供的服务常常受制于底层网络层协议的服务模型。如果网络层协议无法为主机之间发送的运输层报文段提供时延或带宽保证的话，运输层协议也就无法为进程之间发送的应用程序报文提供时延或带宽保证。 即使底层网络协议不能在网络层提供相应的服务，运输层协议也能提供某些服务。例如可靠运输。   因特网运输层概述  UDP：它为调用它的应用程序提供了一种不可靠、无连接的服务 TCP：它为调用它的应用程序提供了一种可靠的、面向连接的服务 当设计一个网络应用程序时，该应用程序的开发人员必须指定使用这两种运输协议中的一种 因特网网络层协议有一个名字叫 IP, 即网际协议。IP 为主机之间提供了逻辑通信。IP 的服务模型是尽力而为交付服务，是不可靠的 我们总结一下 UDP 和 TCP 所提供的服务模型。UDP 和 TCP 最基本的责任是，将两个端系统间 IP 的交付服务扩展为运行在端系统上的两个进程之间的交付服务。将主机间交付扩展到进程间交付被称为运输层的多路复用 (transport-layer multiplexing) 与 多路分解 (demultiplexing) 进程到进程的数据交付和差错检查是两种最低限度的运输层服务，也就是 UDP 所提供的服务 TCP 额外供了可靠数据运输和拥塞控制    多路复用和多路分解  一个进程有一个或多个套接字，它相当于从网络向进程传递数据和从进程向网络传递数据的门户。在接收主机中的运输层实际上并没有直接将数据交付给进程，而是将数据交给了一个中间的套接字。由于在任一时刻，在接收主机上可能有不止一个套接字，所以每个套接字都有唯一的标识符。标识符的格式取决于它是 UDP 还是 TCP 套接字。 主机为了将一个到达的运输层报文段定向到适当的套接字，每个运输层报文段中具有几个字段。在接收端，运输层检查这些字段，标识出接收套接字，进而将报文段定向到该套接字。将运输层报文段中的数据交付到正确的套接字的工作称为多路分解(demulti plexing)。在源主机从不同套接字中收集数据块，并为每个数据块封装上首部信息（这将在以后用于分解）从而生成报文段，然后将报文段传递到网络层，所有这些工作称为多路复用(multiplexing) 运输层多路复用要求  套接字有唯一标识 每个报文段有特殊字段来指示该报文段所要交付到的套接字 这些特殊字段是源端口号字段和目的端口号字段   在主机上的每个套接字能够分配一个端口号，当报文段到达主机时，运输层检查报文段中的目的端口号，并将其定向到相应的套接字。然后报文段中的数据通过套接字进入其所连接的进程 无连接的多路复用与多路分解  一个 UDP 套接字是由一个二元组全面标识的，该二元组包含一个目的 IP 地址和一个目的端口号。因此，如果两个 UDP 报文段有不同的源 IP 地址和／或源端口号，但具有相同的目的 IP 地址和目的端口号，那么这两个报文段将通过相同的目的套接字被定向到相同的目的进程。   面向连接的多路复用与多路分解  TCP 套接字是由一个四元组（源 IP 地址，源端口号，目的 IP 地址，目的端口号）来标识的 两个具有不同源 IP 地址或源端口号的到达 TCP 报文段将被定向到两个不同的套接字   Web 服务器与 TCP  如果客户与服务器使用持续 HTTP,则在整条连接持续期间 ，客户与服务器之间经由同一个服务器套接字交换 HTTP 报文 。然而，如果客户与服务器使用非持续 HTTP, 则对每一对请求／响应都创建一个新的 TCP 连接并在随后关闭、因此对每一对请求／响应创建一个新的套接字并在随后关闭。这种套接字的频繁创建和关闭会严重地影响一个繁忙的 Web 服务器的性能    无连接运输：UDP  UDP 只是做了运输协议能够做的最少工作。除了复用／分解功能及少量的差错检测外，它几乎没有对 IP 增加别的东西。 使用 UDP 时，在发送报文段之前，发送方和接收方的运输层实体之间没有握手 使用 UDP 的理由  关于发送什么数据以及何时发送的应用层控制更为精细 无须连接建立 无连接状态 分组首部开销小   UDP 中缺乏拥塞控制能够导致 UDP 发送方和接收方之间的高丢包率，并挤垮了 TCP 会话，这是一个潜在的严重问题。很多研究人员已经提出了一些新的机制，使得 UDP 执行自适应的拥塞控制 使用 UDP 的应用是可能实现可靠数据传输的。这可通过在应用程序自身中建立可靠性机制来完成。例如 Google 的 QUIC。 UDP 报文段结构  源端口，发送方的端口号 目的端口，接收方的端口号 报文长度，即整个 UDP 报文的长度，包括头部和数据，单位为字节 检验和。 应用数据，也就是报文   UDP 检验和  检验和用千确定当 UDP 报文段从源到达目的地移动时，其中的比特是否发生了改变 发送方的 UDP 对报文段中的所有 16 比特字的和进行反码运算，求和时遇到的任何溢出都被回卷。 得到的结果被放在 UDP 报文段中的检验和字段，在接收方，全部的 4 个 16 比特字（包括检验和）没有引入差错 ，则显然在接收方处该和将是 1111111111111111 UDP 提供差错检测是因为不能保证源和目的之间的所有链路都提供差错检测；这就是说，也许这些链路中的一条可能使用没有差错检测的协议    可靠数据传输原理  构造可靠数据传输协议  经完全可靠信道的可靠数据传输: rdt1." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="/notes/computer_network_a_topdown_approach_03/" /><meta property="article:section" content="notes" />
-<meta property="article:published_time" content="2021-06-16T20:27:06+08:00" />
-<meta property="article:modified_time" content="2021-06-16T20:27:06+08:00" />
-
-
-  <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="计算机网络自顶向下方法::运输层"/>
-<meta name="twitter:description" content="概述和运输层服务  运输层协议为运行在不同主机上的应用进程之间提供了逻辑通信。应用进程使用运输层提供的逻辑通信功能彼此发送报文，而无须考虑承载这些报文的物理基础设施的细节。 运输层协议是在端系统中而不是在路由器中实现的。在发送端，运输层将从发送应用程序进程接收到的报文转换成运输层分组，用因特网术语来讲该分组称为运输层报文段（segment）。在接收端，网络层从数据报中提取运输层报文段，并将该报文段向上交给运输层 。运输层则处理接收到的报文段，使该报文段中的数据为接收应用进程使用。 网络应用程序可以使用多种的运输层协议。例如，因特网有两种协议，即 TCP 和 UDP。每种协议都能为调用的应用程序提供一组不同的运输层服务。 运输层和网络层的关系  在协议栈中，运输层刚好位于网络层之上。网络层提供了主机之间的逻辑通信，而运输层为运行在不同主机上的进程之间提供了逻辑通信 计算机网络中可以安排多种运输层协议，每种协议为应用程序提供不同的服务模型。 运输协议能够提供的服务常常受制于底层网络层协议的服务模型。如果网络层协议无法为主机之间发送的运输层报文段提供时延或带宽保证的话，运输层协议也就无法为进程之间发送的应用程序报文提供时延或带宽保证。 即使底层网络协议不能在网络层提供相应的服务，运输层协议也能提供某些服务。例如可靠运输。   因特网运输层概述  UDP：它为调用它的应用程序提供了一种不可靠、无连接的服务 TCP：它为调用它的应用程序提供了一种可靠的、面向连接的服务 当设计一个网络应用程序时，该应用程序的开发人员必须指定使用这两种运输协议中的一种 因特网网络层协议有一个名字叫 IP, 即网际协议。IP 为主机之间提供了逻辑通信。IP 的服务模型是尽力而为交付服务，是不可靠的 我们总结一下 UDP 和 TCP 所提供的服务模型。UDP 和 TCP 最基本的责任是，将两个端系统间 IP 的交付服务扩展为运行在端系统上的两个进程之间的交付服务。将主机间交付扩展到进程间交付被称为运输层的多路复用 (transport-layer multiplexing) 与 多路分解 (demultiplexing) 进程到进程的数据交付和差错检查是两种最低限度的运输层服务，也就是 UDP 所提供的服务 TCP 额外供了可靠数据运输和拥塞控制    多路复用和多路分解  一个进程有一个或多个套接字，它相当于从网络向进程传递数据和从进程向网络传递数据的门户。在接收主机中的运输层实际上并没有直接将数据交付给进程，而是将数据交给了一个中间的套接字。由于在任一时刻，在接收主机上可能有不止一个套接字，所以每个套接字都有唯一的标识符。标识符的格式取决于它是 UDP 还是 TCP 套接字。 主机为了将一个到达的运输层报文段定向到适当的套接字，每个运输层报文段中具有几个字段。在接收端，运输层检查这些字段，标识出接收套接字，进而将报文段定向到该套接字。将运输层报文段中的数据交付到正确的套接字的工作称为多路分解(demulti plexing)。在源主机从不同套接字中收集数据块，并为每个数据块封装上首部信息（这将在以后用于分解）从而生成报文段，然后将报文段传递到网络层，所有这些工作称为多路复用(multiplexing) 运输层多路复用要求  套接字有唯一标识 每个报文段有特殊字段来指示该报文段所要交付到的套接字 这些特殊字段是源端口号字段和目的端口号字段   在主机上的每个套接字能够分配一个端口号，当报文段到达主机时，运输层检查报文段中的目的端口号，并将其定向到相应的套接字。然后报文段中的数据通过套接字进入其所连接的进程 无连接的多路复用与多路分解  一个 UDP 套接字是由一个二元组全面标识的，该二元组包含一个目的 IP 地址和一个目的端口号。因此，如果两个 UDP 报文段有不同的源 IP 地址和／或源端口号，但具有相同的目的 IP 地址和目的端口号，那么这两个报文段将通过相同的目的套接字被定向到相同的目的进程。   面向连接的多路复用与多路分解  TCP 套接字是由一个四元组（源 IP 地址，源端口号，目的 IP 地址，目的端口号）来标识的 两个具有不同源 IP 地址或源端口号的到达 TCP 报文段将被定向到两个不同的套接字   Web 服务器与 TCP  如果客户与服务器使用持续 HTTP,则在整条连接持续期间 ，客户与服务器之间经由同一个服务器套接字交换 HTTP 报文 。然而，如果客户与服务器使用非持续 HTTP, 则对每一对请求／响应都创建一个新的 TCP 连接并在随后关闭、因此对每一对请求／响应创建一个新的套接字并在随后关闭。这种套接字的频繁创建和关闭会严重地影响一个繁忙的 Web 服务器的性能    无连接运输：UDP  UDP 只是做了运输协议能够做的最少工作。除了复用／分解功能及少量的差错检测外，它几乎没有对 IP 增加别的东西。 使用 UDP 时，在发送报文段之前，发送方和接收方的运输层实体之间没有握手 使用 UDP 的理由  关于发送什么数据以及何时发送的应用层控制更为精细 无须连接建立 无连接状态 分组首部开销小   UDP 中缺乏拥塞控制能够导致 UDP 发送方和接收方之间的高丢包率，并挤垮了 TCP 会话，这是一个潜在的严重问题。很多研究人员已经提出了一些新的机制，使得 UDP 执行自适应的拥塞控制 使用 UDP 的应用是可能实现可靠数据传输的。这可通过在应用程序自身中建立可靠性机制来完成。例如 Google 的 QUIC。 UDP 报文段结构  源端口，发送方的端口号 目的端口，接收方的端口号 报文长度，即整个 UDP 报文的长度，包括头部和数据，单位为字节 检验和。 应用数据，也就是报文   UDP 检验和  检验和用千确定当 UDP 报文段从源到达目的地移动时，其中的比特是否发生了改变 发送方的 UDP 对报文段中的所有 16 比特字的和进行反码运算，求和时遇到的任何溢出都被回卷。 得到的结果被放在 UDP 报文段中的检验和字段，在接收方，全部的 4 个 16 比特字（包括检验和）没有引入差错 ，则显然在接收方处该和将是 1111111111111111 UDP 提供差错检测是因为不能保证源和目的之间的所有链路都提供差错检测；这就是说，也许这些链路中的一条可能使用没有差错检测的协议    可靠数据传输原理  构造可靠数据传输协议  经完全可靠信道的可靠数据传输: rdt1."/>
-
-  
-  
-    
-  
-  
-  <link rel="stylesheet" href="/css/styles.94f653e9e151e28067a7c5dbbc4600cbd5a3c721e79faaf971e523c40f3b249b8e4f20bb57810dfffa8d559ca5c140fd56eb4cd9c0853113ad08e66afdb08bdd.css" integrity="sha512-lPZT6eFR4oBnp8XbvEYAy9WjxyHnn6r5ceUjxA87JJuOTyC7V4EN//qNVZylwUD9VutM2cCFMROtCOZq/bCL3Q=="> 
-
-  
-   <link rel="stylesheet" href="/css/custom.css"> 
-  
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  
-
-  
-<link rel="icon" type="image/png" href="/images/favicon.ico" />
-
-  
-  
-  
-  
-  
-    
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'G-X1L70M4MM0', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-  
-  
-  
-
-
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<meta name="referrer" content="no-referrer-when-downgrade">
+<link rel=preload href=/lib/font-awesome/webfonts/fa-brands-400.woff2 as=font type=font/woff2 crossorigin=anonymous>
+<link rel=preload href=/lib/font-awesome/webfonts/fa-regular-400.woff2 as=font type=font/woff2 crossorigin=anonymous>
+<link rel=preload href=/lib/font-awesome/webfonts/fa-solid-900.woff2 as=font type=font/woff2 crossorigin=anonymous>
+<link rel=preload href=/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2 as=font type=font/woff2 crossorigin=anonymous>
+<script type=text/javascript src=https://latest.cactus.chat/cactus.js></script>
+<link rel=stylesheet href=https://latest.cactus.chat/style.css type=text/css>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<title> 计算机网络自顶向下方法::运输层 | Y.CH.Y</title>
+<link rel=canonical href=/notes/computer_network_a_topdown_approach_03/>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="all,follow">
+<meta name=googlebot content="index,follow,snippet,archive">
+<meta property="og:title" content="计算机网络自顶向下方法::运输层">
+<meta property="og:description" content="概述和运输层服务  运输层协议为运行在不同主机上的应用进程之间提供了逻辑通信。应用进程使用运输层提供的逻辑通信功能彼此发送报文，而无须考虑承载这些报文的物理基础设施的细节。 运输层协议是在端系统中而不是在路由器中实现的。在发送端，运输层将从发送应用程序进程接收到的报文转换成运输层分组，用因特网术语来讲该分组称为运输层报文段（segment）。在接收端，网络层从数据报中提取运输层报文段，并将该报文段向上交给运输层 。运输层则处理接收到的报文段，使该报文段中的数据为接收应用进程使用。 网络应用程序可以使用多种的运输层协议。例如，因特网有两种协议，即 TCP 和 UDP。每种协议都能为调用的应用程序提供一组不同的运输层服务。 运输层和网络层的关系  在协议栈中，运输层刚好位于网络层之上。网络层提供了主机之间的逻辑通信，而运输层为运行在不同主机上的进程之间提供了逻辑通信 计算机网络中可以安排多种运输层协议，每种协议为应用程序提供不同的服务模型。 运输协议能够提供的服务常常受制于底层网络层协议的服务模型。如果网络层协议无法为主机之间发送的运输层报文段提供时延或带宽保证的话，运输层协议也就无法为进程之间发送的应用程序报文提供时延或带宽保证。 即使底层网络协议不能在网络层提供相应的服务，运输层协议也能提供某些服务。例如可靠运输。   因特网运输层概述  UDP：它为调用它的应用程序提供了一种不可靠、无连接的服务 TCP：它为调用它的应用程序提供了一种可靠的、面向连接的服务 当设计一个网络应用程序时，该应用程序的开发人员必须指定使用这两种运输协议中的一种 因特网网络层协议有一个名字叫 IP, 即网际协议。IP 为主机之间提供了逻辑通信。IP 的服务模型是尽力而为交付服务，是不可靠的 我们总结一下 UDP 和 TCP 所提供的服务模型。UDP 和 TCP 最基本的责任是，将两个端系统间 IP 的交付服务扩展为运行在端系统上的两个进程之间的交付服务。将主机间交付扩展到进程间交付被称为运输层的多路复用 (transport-layer multiplexing) 与 多路分解 (demultiplexing) 进程到进程的数据交付和差错检查是两种最低限度的运输层服务，也就是 UDP 所提供的服务 TCP 额外供了可靠数据运输和拥塞控制    多路复用和多路分解  一个进程有一个或多个套接字，它相当于从网络向进程传递数据和从进程向网络传递数据的门户。在接收主机中的运输层实际上并没有直接将数据交付给进程，而是将数据交给了一个中间的套接字。由于在任一时刻，在接收主机上可能有不止一个套接字，所以每个套接字都有唯一的标识符。标识符的格式取决于它是 UDP 还是 TCP 套接字。 主机为了将一个到达的运输层报文段定向到适当的套接字，每个运输层报文段中具有几个字段。在接收端，运输层检查这些字段，标识出接收套接字，进而将报文段定向到该套接字。将运输层报文段中的数据交付到正确的套接字的工作称为多路分解(demulti plexing)。在源主机从不同套接字中收集数据块，并为每个数据块封装上首部信息（这将在以后用于分解）从而生成报文段，然后将报文段传递到网络层，所有这些工作称为多路复用(multiplexing) 运输层多路复用要求  套接字有唯一标识 每个报文段有特殊字段来指示该报文段所要交付到的套接字 这些特殊字段是源端口号字段和目的端口号字段   在主机上的每个套接字能够分配一个端口号，当报文段到达主机时，运输层检查报文段中的目的端口号，并将其定向到相应的套接字。然后报文段中的数据通过套接字进入其所连接的进程 无连接的多路复用与多路分解  一个 UDP 套接字是由一个二元组全面标识的，该二元组包含一个目的 IP 地址和一个目的端口号。因此，如果两个 UDP 报文段有不同的源 IP 地址和／或源端口号，但具有相同的目的 IP 地址和目的端口号，那么这两个报文段将通过相同的目的套接字被定向到相同的目的进程。   面向连接的多路复用与多路分解  TCP 套接字是由一个四元组（源 IP 地址，源端口号，目的 IP 地址，目的端口号）来标识的 两个具有不同源 IP 地址或源端口号的到达 TCP 报文段将被定向到两个不同的套接字   Web 服务器与 TCP  如果客户与服务器使用持续 HTTP,则在整条连接持续期间 ，客户与服务器之间经由同一个服务器套接字交换 HTTP 报文 。然而，如果客户与服务器使用非持续 HTTP, 则对每一对请求／响应都创建一个新的 TCP 连接并在随后关闭、因此对每一对请求／响应创建一个新的套接字并在随后关闭。这种套接字的频繁创建和关闭会严重地影响一个繁忙的 Web 服务器的性能    无连接运输：UDP  UDP 只是做了运输协议能够做的最少工作。除了复用／分解功能及少量的差错检测外，它几乎没有对 IP 增加别的东西。 使用 UDP 时，在发送报文段之前，发送方和接收方的运输层实体之间没有握手 使用 UDP 的理由  关于发送什么数据以及何时发送的应用层控制更为精细 无须连接建立 无连接状态 分组首部开销小   UDP 中缺乏拥塞控制能够导致 UDP 发送方和接收方之间的高丢包率，并挤垮了 TCP 会话，这是一个潜在的严重问题。很多研究人员已经提出了一些新的机制，使得 UDP 执行自适应的拥塞控制 使用 UDP 的应用是可能实现可靠数据传输的。这可通过在应用程序自身中建立可靠性机制来完成。例如 Google 的 QUIC。 UDP 报文段结构  源端口，发送方的端口号 目的端口，接收方的端口号 报文长度，即整个 UDP 报文的长度，包括头部和数据，单位为字节 检验和。 应用数据，也就是报文   UDP 检验和  检验和用千确定当 UDP 报文段从源到达目的地移动时，其中的比特是否发生了改变 发送方的 UDP 对报文段中的所有 16 比特字的和进行反码运算，求和时遇到的任何溢出都被回卷。 得到的结果被放在 UDP 报文段中的检验和字段，在接收方，全部的 4 个 16 比特字（包括检验和）没有引入差错 ，则显然在接收方处该和将是 1111111111111111 UDP 提供差错检测是因为不能保证源和目的之间的所有链路都提供差错检测；这就是说，也许这些链路中的一条可能使用没有差错检测的协议    可靠数据传输原理  构造可靠数据传输协议  经完全可靠信道的可靠数据传输: rdt1.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/notes/computer_network_a_topdown_approach_03/"><meta property="article:section" content="notes">
+<meta property="article:published_time" content="2021-06-16T20:27:06+08:00">
+<meta property="article:modified_time" content="2021-06-16T20:27:06+08:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="计算机网络自顶向下方法::运输层">
+<meta name=twitter:description content="概述和运输层服务  运输层协议为运行在不同主机上的应用进程之间提供了逻辑通信。应用进程使用运输层提供的逻辑通信功能彼此发送报文，而无须考虑承载这些报文的物理基础设施的细节。 运输层协议是在端系统中而不是在路由器中实现的。在发送端，运输层将从发送应用程序进程接收到的报文转换成运输层分组，用因特网术语来讲该分组称为运输层报文段（segment）。在接收端，网络层从数据报中提取运输层报文段，并将该报文段向上交给运输层 。运输层则处理接收到的报文段，使该报文段中的数据为接收应用进程使用。 网络应用程序可以使用多种的运输层协议。例如，因特网有两种协议，即 TCP 和 UDP。每种协议都能为调用的应用程序提供一组不同的运输层服务。 运输层和网络层的关系  在协议栈中，运输层刚好位于网络层之上。网络层提供了主机之间的逻辑通信，而运输层为运行在不同主机上的进程之间提供了逻辑通信 计算机网络中可以安排多种运输层协议，每种协议为应用程序提供不同的服务模型。 运输协议能够提供的服务常常受制于底层网络层协议的服务模型。如果网络层协议无法为主机之间发送的运输层报文段提供时延或带宽保证的话，运输层协议也就无法为进程之间发送的应用程序报文提供时延或带宽保证。 即使底层网络协议不能在网络层提供相应的服务，运输层协议也能提供某些服务。例如可靠运输。   因特网运输层概述  UDP：它为调用它的应用程序提供了一种不可靠、无连接的服务 TCP：它为调用它的应用程序提供了一种可靠的、面向连接的服务 当设计一个网络应用程序时，该应用程序的开发人员必须指定使用这两种运输协议中的一种 因特网网络层协议有一个名字叫 IP, 即网际协议。IP 为主机之间提供了逻辑通信。IP 的服务模型是尽力而为交付服务，是不可靠的 我们总结一下 UDP 和 TCP 所提供的服务模型。UDP 和 TCP 最基本的责任是，将两个端系统间 IP 的交付服务扩展为运行在端系统上的两个进程之间的交付服务。将主机间交付扩展到进程间交付被称为运输层的多路复用 (transport-layer multiplexing) 与 多路分解 (demultiplexing) 进程到进程的数据交付和差错检查是两种最低限度的运输层服务，也就是 UDP 所提供的服务 TCP 额外供了可靠数据运输和拥塞控制    多路复用和多路分解  一个进程有一个或多个套接字，它相当于从网络向进程传递数据和从进程向网络传递数据的门户。在接收主机中的运输层实际上并没有直接将数据交付给进程，而是将数据交给了一个中间的套接字。由于在任一时刻，在接收主机上可能有不止一个套接字，所以每个套接字都有唯一的标识符。标识符的格式取决于它是 UDP 还是 TCP 套接字。 主机为了将一个到达的运输层报文段定向到适当的套接字，每个运输层报文段中具有几个字段。在接收端，运输层检查这些字段，标识出接收套接字，进而将报文段定向到该套接字。将运输层报文段中的数据交付到正确的套接字的工作称为多路分解(demulti plexing)。在源主机从不同套接字中收集数据块，并为每个数据块封装上首部信息（这将在以后用于分解）从而生成报文段，然后将报文段传递到网络层，所有这些工作称为多路复用(multiplexing) 运输层多路复用要求  套接字有唯一标识 每个报文段有特殊字段来指示该报文段所要交付到的套接字 这些特殊字段是源端口号字段和目的端口号字段   在主机上的每个套接字能够分配一个端口号，当报文段到达主机时，运输层检查报文段中的目的端口号，并将其定向到相应的套接字。然后报文段中的数据通过套接字进入其所连接的进程 无连接的多路复用与多路分解  一个 UDP 套接字是由一个二元组全面标识的，该二元组包含一个目的 IP 地址和一个目的端口号。因此，如果两个 UDP 报文段有不同的源 IP 地址和／或源端口号，但具有相同的目的 IP 地址和目的端口号，那么这两个报文段将通过相同的目的套接字被定向到相同的目的进程。   面向连接的多路复用与多路分解  TCP 套接字是由一个四元组（源 IP 地址，源端口号，目的 IP 地址，目的端口号）来标识的 两个具有不同源 IP 地址或源端口号的到达 TCP 报文段将被定向到两个不同的套接字   Web 服务器与 TCP  如果客户与服务器使用持续 HTTP,则在整条连接持续期间 ，客户与服务器之间经由同一个服务器套接字交换 HTTP 报文 。然而，如果客户与服务器使用非持续 HTTP, 则对每一对请求／响应都创建一个新的 TCP 连接并在随后关闭、因此对每一对请求／响应创建一个新的套接字并在随后关闭。这种套接字的频繁创建和关闭会严重地影响一个繁忙的 Web 服务器的性能    无连接运输：UDP  UDP 只是做了运输协议能够做的最少工作。除了复用／分解功能及少量的差错检测外，它几乎没有对 IP 增加别的东西。 使用 UDP 时，在发送报文段之前，发送方和接收方的运输层实体之间没有握手 使用 UDP 的理由  关于发送什么数据以及何时发送的应用层控制更为精细 无须连接建立 无连接状态 分组首部开销小   UDP 中缺乏拥塞控制能够导致 UDP 发送方和接收方之间的高丢包率，并挤垮了 TCP 会话，这是一个潜在的严重问题。很多研究人员已经提出了一些新的机制，使得 UDP 执行自适应的拥塞控制 使用 UDP 的应用是可能实现可靠数据传输的。这可通过在应用程序自身中建立可靠性机制来完成。例如 Google 的 QUIC。 UDP 报文段结构  源端口，发送方的端口号 目的端口，接收方的端口号 报文长度，即整个 UDP 报文的长度，包括头部和数据，单位为字节 检验和。 应用数据，也就是报文   UDP 检验和  检验和用千确定当 UDP 报文段从源到达目的地移动时，其中的比特是否发生了改变 发送方的 UDP 对报文段中的所有 16 比特字的和进行反码运算，求和时遇到的任何溢出都被回卷。 得到的结果被放在 UDP 报文段中的检验和字段，在接收方，全部的 4 个 16 比特字（包括检验和）没有引入差错 ，则显然在接收方处该和将是 1111111111111111 UDP 提供差错检测是因为不能保证源和目的之间的所有链路都提供差错检测；这就是说，也许这些链路中的一条可能使用没有差错检测的协议    可靠数据传输原理  构造可靠数据传输协议  经完全可靠信道的可靠数据传输: rdt1.">
+<link rel=stylesheet href=/css/styles.94f653e9e151e28067a7c5dbbc4600cbd5a3c721e79faaf971e523c40f3b249b8e4f20bb57810dfffa8d559ca5c140fd56eb4cd9c0853113ad08e66afdb08bdd.css integrity="sha512-lPZT6eFR4oBnp8XbvEYAy9WjxyHnn6r5ceUjxA87JJuOTyC7V4EN//qNVZylwUD9VutM2cCFMROtCOZq/bCL3Q==">
+<link rel=stylesheet href=/css/custom.css><!--[if lt IE 9]><script src=https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js></script>
+<script src=https://oss.maxcdn.com/respond/1.4.2/respond.min.js></script><![endif]-->
+<link rel=icon type=image/png href=/images/favicon.ico>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-X1L70M4MM0','auto'),ga('send','pageview'))</script>
+<script async src=https://www.google-analytics.com/analytics.js></script>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<meta name=referrer content="no-referrer-when-downgrade">
 </head>
-
 <body class="max-width mx-auto px3 ltr">
-  <div class="content index py4">
-
-    <header id="header">
-  <a href="/">
-  
-    <div id="logo" style="background-image: url(/images/logo.png)"></div>
-  
-  <div id="title">
-    <h1>Y.CH.Y</h1>
-  </div>
-  </a>
-  <div id="nav">
-    <ul>
-      <li class="icon">
-        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
-      </li>
-      
-        <li><a href="/">首页</a></li>
-      
-        <li><a href="/books">书单</a></li>
-      
-    </ul>
-  </div>
+<div class="content index py4">
+<header id=header>
+<a href=/>
+<div id=logo style=background-image:url(/images/logo.png)></div>
+<div id=title>
+<h1>Y.CH.Y</h1>
+</div>
+</a>
+<div id=nav>
+<ul>
+<li class=icon>
+<a href=# aria-label=Menu><i class="fas fa-bars fa-2x" aria-hidden=true></i></a>
+</li>
+<li><a href=/>首页</a></li>
+<li><a href=/books>书单</a></li>
+</ul>
+</div>
 </header>
-
-
-
-    
-<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-
-  <div class="content" itemprop="articleBody">
-  
-    <h2 id="概述和运输层服务">概述和运输层服务</h2>
+<article class=post itemscope itemtype=http://schema.org/BlogPosting>
+<div class=content itemprop=articleBody>
+<h2 id=概述和运输层服务>概述和运输层服务</h2>
 <ul>
 <li>运输层协议为运行在不同主机上的应用进程之间提供了逻辑通信。应用进程使用运输层提供的逻辑通信功能彼此发送报文，而无须考虑承载这些报文的物理基础设施的细节。</li>
 <li>运输层协议是在端系统中而不是在路由器中实现的。在发送端，运输层将从发送应用程序进程接收到的报文转换成运输层分组，用因特网术语来讲该分组称为运输层报文段（segment）。在接收端，网络层从数据报中提取运输层报文段，并将该报文段向上交给运输层 。运输层则处理接收到的报文段，使该报文段中的数据为接收应用进程使用。</li>
@@ -130,7 +77,7 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h2 id="多路复用和多路分解">多路复用和多路分解</h2>
+<h2 id=多路复用和多路分解>多路复用和多路分解</h2>
 <ul>
 <li>一个进程有一个或多个套接字，它相当于从网络向进程传递数据和从进程向网络传递数据的门户。在接收主机中的运输层实际上并没有直接将数据交付给进程，而是将数据交给了一个中间的套接字。由于在任一时刻，在接收主机上可能有不止一个套接字，所以每个套接字都有唯一的标识符。标识符的格式取决于它是 UDP 还是 TCP 套接字。</li>
 <li>主机为了将一个到达的运输层报文段定向到适当的套接字，每个运输层报文段中具有几个字段。在接收端，运输层检查这些字段，标识出接收套接字，进而将报文段定向到该套接字。将运输层报文段中的数据交付到正确的套接字的工作称为多路分解(demulti plexing)。在源主机从不同套接字中收集数据块，并为每个数据块封装上首部信息（这将在以后用于分解）从而生成报文段，然后将报文段传递到网络层，所有这些工作称为多路复用(multiplexing)</li>
@@ -159,7 +106,7 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h2 id="无连接运输udp">无连接运输：UDP</h2>
+<h2 id=无连接运输udp>无连接运输：UDP</h2>
 <ul>
 <li>UDP 只是做了运输协议能够做的最少工作。除了复用／分解功能及少量的差错检测外，它几乎没有对 IP 增加别的东西。</li>
 <li>使用 UDP 时，在发送报文段之前，发送方和接收方的运输层实体之间没有握手</li>
@@ -190,7 +137,7 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h2 id="可靠数据传输原理">可靠数据传输原理</h2>
+<h2 id=可靠数据传输原理>可靠数据传输原理</h2>
 <ul>
 <li>构造可靠数据传输协议
 <ul>
@@ -280,7 +227,7 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h2 id="可靠数据传输机制及其用途的总结">可靠数据传输机制及其用途的总结</h2>
+<h2 id=可靠数据传输机制及其用途的总结>可靠数据传输机制及其用途的总结</h2>
 <ul>
 <li>检验和；用于检测在一个传输分组中的比特错误</li>
 <li>定时器：用于超时/重传一个分组，可能因为该分组〈或其 ACK) 在信道中丢失了。由于当一个分组延时但未丢失〈过早超时) ，或当一个分组已被接收方收到但从接收方到发送方的 ACK 丢失时，可能产生超时事件，所以接收方可能会收到一个分组的多个冗余副本</li>
@@ -289,7 +236,7 @@ if (!doNotTrack) {
 <li>否定确认：接收方用于告诉发送方某个分组未被正确地接收。否定确认报文通常据带着未被正确接收的分组的序号</li>
 <li>窗口、流水线：发送方也许被限制仅发送那些序号落在一个指定范围内的分组。通过允许一次发送多个分组但未被确认，发送方的利用率可在停等操作模式的基础上得到增加。我们很快将会看到，窗口长度可根据接收方接收和缓存报文的能力、网络中的拥塞程度或两者情况来进行设置</li>
 </ul>
-<h2 id="面向连接的运输tcp">面向连接的运输：TCP</h2>
+<h2 id=面向连接的运输tcp>面向连接的运输：TCP</h2>
 <ul>
 <li>TCP 是因特网运输层的面向连接的可靠的运输协议</li>
 <li>TCP 连接
@@ -391,7 +338,7 @@ if (!doNotTrack) {
 </li>
 <li>收到 ACK
 <ul>
-<li>当该事件发生时，TCP 将 ACK 的值 y 与它的变量 SendBase 进行比较 TCP 状态变量 SendBase 是最早未被确认的字节的序号。如果 y &gt; SendBase, 则该 ACK 是在确认一个或多个先前未被确认的报文段。因此发送方更新它的 SendBase 变量；如果当前有未被确认的报文段，TCP 还要重新启动定时器。</li>
+<li>当该事件发生时，TCP 将 ACK 的值 y 与它的变量 SendBase 进行比较 TCP 状态变量 SendBase 是最早未被确认的字节的序号。如果 y > SendBase, 则该 ACK 是在确认一个或多个先前未被确认的报文段。因此发送方更新它的 SendBase 变量；如果当前有未被确认的报文段，TCP 还要重新启动定时器。</li>
 </ul>
 </li>
 </ul>
@@ -433,7 +380,7 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h2 id="拥塞控制原理">拥塞控制原理</h2>
+<h2 id=拥塞控制原理>拥塞控制原理</h2>
 <ul>
 <li>拥塞原因和代价
 <ul>
@@ -467,7 +414,7 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h2 id="tcp-拥塞控制">TCP 拥塞控制</h2>
+<h2 id=tcp-拥塞控制>TCP 拥塞控制</h2>
 <ul>
 <li>慢启动
 <ul>
@@ -528,34 +475,24 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-
-  
-  </div>
+</div>
 </article>
-
-
-    <footer id="footer">
-  <div class="footer-left">
-    Copyright  &copy; 2021  Y.CH.Y 
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-         
-        <li><a href="/">首页</a></li>
-         
-        <li><a href="/books">书单</a></li>
-        
-      </ul>
-    </nav>
-  </div>
+<footer id=footer>
+<div class=footer-left>
+Copyright &copy; 2021 Y.CH.Y
+</div>
+<div class=footer-right>
+<nav>
+<ul>
+<li><a href=/>首页</a></li>
+<li><a href=/books>书单</a></li>
+</ul>
+</nav>
+</div>
 </footer>
-
-
-  </div>
+</div>
 </body>
-
-<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<link rel=stylesheet href=/lib/font-awesome/css/all.min.css>
 <script src=/lib/jquery/jquery.min.js></script>
 <script src=/js/main.js></script>
 </html>

@@ -1,112 +1,59 @@
-<!DOCTYPE html>
-<html lang="en-us">
+<!doctype html><html lang=en-us>
 <head>
-  <link rel="preload" href="/lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="/lib/font-awesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="/lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <script type="text/javascript" src="https://latest.cactus.chat/cactus.js"></script>
-  <link rel="stylesheet" href="https://latest.cactus.chat/style.css" type="text/css">
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title> MySQL技术内幕::InnoDB存储引擎 | Y.CH.Y</title>
-  <link rel = 'canonical' href = '/notes/inside_mysql/'>
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="all,follow">
-  <meta name="googlebot" content="index,follow,snippet,archive">
-  <meta property="og:title" content="MySQL技术内幕::InnoDB存储引擎" />
-<meta property="og:description" content="MySQL 体系结构和存储引擎 定义数据库和实例  数据库  物理操作系统文件和其他形式文件类型的集合 frm、MYD、MYI、ibd 结尾的文件   实例  MySQL 数据库由后台线程和一个共享内存组成 数据库实例才是真正用来操作数据库的   实例与数据库一一对应 MySQL 数据库实例在系统上的表现就是一个进程 配置加载顺序  /etc/my.cnf =&gt; /etc/mysql/my.cnf =&gt; /usr/local/mysql/etc/my.cnf =&gt; $HOME/.my.cnf    MySQL 体系结构  组成  连接池组建 管理服务和工具组建 SQL 接口组件 查询分析器组件 优化器组件 缓冲组件 插件式存储引擎 物理文件   存储引擎是基于表的，而不是数据库  存储引擎  InnoDB 存储引擎  支持事务，面向 OLTP 应用 行锁，外键 支持裸设备 多版本并发控制，四种隔离级别 next-key locking 避免幻读 插入缓冲、二次写、自适应哈希索引、预读 采用索引组织表，每张表的存储都是按照转的顺序存放的   MyISAM 存储引擎  不支持事务 表锁设计 支持全文索引 面向 OLAP 只缓存索引文件 MyISAM 存储引擎表由 MYD 和 MYI 组成  MYD 存放数据文件 MYI 存放索引文件     NDB 存储引擎  集群存储引擎 share nothing 架构   Memory 存储引擎  表数据放在内存 使用哈希索引 用于存放临时结果集   Archive 存储引擎  只支持 INSERT 和 SELECT 使用 zlib 压缩数据，有较好的压缩率 适合归档数据   Federated 存储引擎  指向一台远程 MySQL 数据库服务器上的表   Maria 存储引擎  目标取代 MyISAM 特性同 InnoDB 存储引擎   其他存储引擎  Merge CSV Sphinx Infobright    存储引擎比较  MySQL :: 16 Alternative Storage Engines  连接 MySQL  TCP/IP  不同机器之间 在客户端和服务器端连接   命名管道和共享内存  在同一台机器上 通过 &ndash;enable-named-pipe 启用   UNIX 域套接字  同一台机器上使用 通过 &ndash;socket=/etc/mysql." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="/notes/inside_mysql/" /><meta property="article:section" content="notes" />
-<meta property="article:published_time" content="2021-09-11T10:03:18+08:00" />
-<meta property="article:modified_time" content="2021-09-11T10:03:18+08:00" />
-
-
-  <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="MySQL技术内幕::InnoDB存储引擎"/>
-<meta name="twitter:description" content="MySQL 体系结构和存储引擎 定义数据库和实例  数据库  物理操作系统文件和其他形式文件类型的集合 frm、MYD、MYI、ibd 结尾的文件   实例  MySQL 数据库由后台线程和一个共享内存组成 数据库实例才是真正用来操作数据库的   实例与数据库一一对应 MySQL 数据库实例在系统上的表现就是一个进程 配置加载顺序  /etc/my.cnf =&gt; /etc/mysql/my.cnf =&gt; /usr/local/mysql/etc/my.cnf =&gt; $HOME/.my.cnf    MySQL 体系结构  组成  连接池组建 管理服务和工具组建 SQL 接口组件 查询分析器组件 优化器组件 缓冲组件 插件式存储引擎 物理文件   存储引擎是基于表的，而不是数据库  存储引擎  InnoDB 存储引擎  支持事务，面向 OLTP 应用 行锁，外键 支持裸设备 多版本并发控制，四种隔离级别 next-key locking 避免幻读 插入缓冲、二次写、自适应哈希索引、预读 采用索引组织表，每张表的存储都是按照转的顺序存放的   MyISAM 存储引擎  不支持事务 表锁设计 支持全文索引 面向 OLAP 只缓存索引文件 MyISAM 存储引擎表由 MYD 和 MYI 组成  MYD 存放数据文件 MYI 存放索引文件     NDB 存储引擎  集群存储引擎 share nothing 架构   Memory 存储引擎  表数据放在内存 使用哈希索引 用于存放临时结果集   Archive 存储引擎  只支持 INSERT 和 SELECT 使用 zlib 压缩数据，有较好的压缩率 适合归档数据   Federated 存储引擎  指向一台远程 MySQL 数据库服务器上的表   Maria 存储引擎  目标取代 MyISAM 特性同 InnoDB 存储引擎   其他存储引擎  Merge CSV Sphinx Infobright    存储引擎比较  MySQL :: 16 Alternative Storage Engines  连接 MySQL  TCP/IP  不同机器之间 在客户端和服务器端连接   命名管道和共享内存  在同一台机器上 通过 &ndash;enable-named-pipe 启用   UNIX 域套接字  同一台机器上使用 通过 &ndash;socket=/etc/mysql."/>
-
-  
-  
-    
-  
-  
-  <link rel="stylesheet" href="/css/styles.94f653e9e151e28067a7c5dbbc4600cbd5a3c721e79faaf971e523c40f3b249b8e4f20bb57810dfffa8d559ca5c140fd56eb4cd9c0853113ad08e66afdb08bdd.css" integrity="sha512-lPZT6eFR4oBnp8XbvEYAy9WjxyHnn6r5ceUjxA87JJuOTyC7V4EN//qNVZylwUD9VutM2cCFMROtCOZq/bCL3Q=="> 
-
-  
-   <link rel="stylesheet" href="/css/custom.css"> 
-  
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  
-
-  
-<link rel="icon" type="image/png" href="/images/favicon.ico" />
-
-  
-  
-  
-  
-  
-    
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'G-X1L70M4MM0', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-  
-  
-  
-
-
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<meta name="referrer" content="no-referrer-when-downgrade">
+<link rel=preload href=/lib/font-awesome/webfonts/fa-brands-400.woff2 as=font type=font/woff2 crossorigin=anonymous>
+<link rel=preload href=/lib/font-awesome/webfonts/fa-regular-400.woff2 as=font type=font/woff2 crossorigin=anonymous>
+<link rel=preload href=/lib/font-awesome/webfonts/fa-solid-900.woff2 as=font type=font/woff2 crossorigin=anonymous>
+<link rel=preload href=/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2 as=font type=font/woff2 crossorigin=anonymous>
+<script type=text/javascript src=https://latest.cactus.chat/cactus.js></script>
+<link rel=stylesheet href=https://latest.cactus.chat/style.css type=text/css>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<title> MySQL技术内幕::InnoDB存储引擎 | Y.CH.Y</title>
+<link rel=canonical href=/notes/inside_mysql/>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="all,follow">
+<meta name=googlebot content="index,follow,snippet,archive">
+<meta property="og:title" content="MySQL技术内幕::InnoDB存储引擎">
+<meta property="og:description" content="MySQL 体系结构和存储引擎 定义数据库和实例  数据库  物理操作系统文件和其他形式文件类型的集合 frm、MYD、MYI、ibd 结尾的文件   实例  MySQL 数据库由后台线程和一个共享内存组成 数据库实例才是真正用来操作数据库的   实例与数据库一一对应 MySQL 数据库实例在系统上的表现就是一个进程 配置加载顺序  /etc/my.cnf => /etc/mysql/my.cnf => /usr/local/mysql/etc/my.cnf => $HOME/.my.cnf    MySQL 体系结构  组成  连接池组建 管理服务和工具组建 SQL 接口组件 查询分析器组件 优化器组件 缓冲组件 插件式存储引擎 物理文件   存储引擎是基于表的，而不是数据库  存储引擎  InnoDB 存储引擎  支持事务，面向 OLTP 应用 行锁，外键 支持裸设备 多版本并发控制，四种隔离级别 next-key locking 避免幻读 插入缓冲、二次写、自适应哈希索引、预读 采用索引组织表，每张表的存储都是按照转的顺序存放的   MyISAM 存储引擎  不支持事务 表锁设计 支持全文索引 面向 OLAP 只缓存索引文件 MyISAM 存储引擎表由 MYD 和 MYI 组成  MYD 存放数据文件 MYI 存放索引文件     NDB 存储引擎  集群存储引擎 share nothing 架构   Memory 存储引擎  表数据放在内存 使用哈希索引 用于存放临时结果集   Archive 存储引擎  只支持 INSERT 和 SELECT 使用 zlib 压缩数据，有较好的压缩率 适合归档数据   Federated 存储引擎  指向一台远程 MySQL 数据库服务器上的表   Maria 存储引擎  目标取代 MyISAM 特性同 InnoDB 存储引擎   其他存储引擎  Merge CSV Sphinx Infobright    存储引擎比较  MySQL :: 16 Alternative Storage Engines  连接 MySQL  TCP/IP  不同机器之间 在客户端和服务器端连接   命名管道和共享内存  在同一台机器上 通过 &ndash;enable-named-pipe 启用   UNIX 域套接字  同一台机器上使用 通过 &ndash;socket=/etc/mysql.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/notes/inside_mysql/"><meta property="article:section" content="notes">
+<meta property="article:published_time" content="2021-09-11T10:03:18+08:00">
+<meta property="article:modified_time" content="2021-09-11T10:03:18+08:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="MySQL技术内幕::InnoDB存储引擎">
+<meta name=twitter:description content="MySQL 体系结构和存储引擎 定义数据库和实例  数据库  物理操作系统文件和其他形式文件类型的集合 frm、MYD、MYI、ibd 结尾的文件   实例  MySQL 数据库由后台线程和一个共享内存组成 数据库实例才是真正用来操作数据库的   实例与数据库一一对应 MySQL 数据库实例在系统上的表现就是一个进程 配置加载顺序  /etc/my.cnf => /etc/mysql/my.cnf => /usr/local/mysql/etc/my.cnf => $HOME/.my.cnf    MySQL 体系结构  组成  连接池组建 管理服务和工具组建 SQL 接口组件 查询分析器组件 优化器组件 缓冲组件 插件式存储引擎 物理文件   存储引擎是基于表的，而不是数据库  存储引擎  InnoDB 存储引擎  支持事务，面向 OLTP 应用 行锁，外键 支持裸设备 多版本并发控制，四种隔离级别 next-key locking 避免幻读 插入缓冲、二次写、自适应哈希索引、预读 采用索引组织表，每张表的存储都是按照转的顺序存放的   MyISAM 存储引擎  不支持事务 表锁设计 支持全文索引 面向 OLAP 只缓存索引文件 MyISAM 存储引擎表由 MYD 和 MYI 组成  MYD 存放数据文件 MYI 存放索引文件     NDB 存储引擎  集群存储引擎 share nothing 架构   Memory 存储引擎  表数据放在内存 使用哈希索引 用于存放临时结果集   Archive 存储引擎  只支持 INSERT 和 SELECT 使用 zlib 压缩数据，有较好的压缩率 适合归档数据   Federated 存储引擎  指向一台远程 MySQL 数据库服务器上的表   Maria 存储引擎  目标取代 MyISAM 特性同 InnoDB 存储引擎   其他存储引擎  Merge CSV Sphinx Infobright    存储引擎比较  MySQL :: 16 Alternative Storage Engines  连接 MySQL  TCP/IP  不同机器之间 在客户端和服务器端连接   命名管道和共享内存  在同一台机器上 通过 &ndash;enable-named-pipe 启用   UNIX 域套接字  同一台机器上使用 通过 &ndash;socket=/etc/mysql.">
+<link rel=stylesheet href=/css/styles.94f653e9e151e28067a7c5dbbc4600cbd5a3c721e79faaf971e523c40f3b249b8e4f20bb57810dfffa8d559ca5c140fd56eb4cd9c0853113ad08e66afdb08bdd.css integrity="sha512-lPZT6eFR4oBnp8XbvEYAy9WjxyHnn6r5ceUjxA87JJuOTyC7V4EN//qNVZylwUD9VutM2cCFMROtCOZq/bCL3Q==">
+<link rel=stylesheet href=/css/custom.css><!--[if lt IE 9]><script src=https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js></script>
+<script src=https://oss.maxcdn.com/respond/1.4.2/respond.min.js></script><![endif]-->
+<link rel=icon type=image/png href=/images/favicon.ico>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-X1L70M4MM0','auto'),ga('send','pageview'))</script>
+<script async src=https://www.google-analytics.com/analytics.js></script>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
+<meta name=referrer content="no-referrer-when-downgrade">
 </head>
-
 <body class="max-width mx-auto px3 ltr">
-  <div class="content index py4">
-
-    <header id="header">
-  <a href="/">
-  
-    <div id="logo" style="background-image: url(/images/logo.png)"></div>
-  
-  <div id="title">
-    <h1>Y.CH.Y</h1>
-  </div>
-  </a>
-  <div id="nav">
-    <ul>
-      <li class="icon">
-        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
-      </li>
-      
-        <li><a href="/">首页</a></li>
-      
-        <li><a href="/books">书单</a></li>
-      
-    </ul>
-  </div>
+<div class="content index py4">
+<header id=header>
+<a href=/>
+<div id=logo style=background-image:url(/images/logo.png)></div>
+<div id=title>
+<h1>Y.CH.Y</h1>
+</div>
+</a>
+<div id=nav>
+<ul>
+<li class=icon>
+<a href=# aria-label=Menu><i class="fas fa-bars fa-2x" aria-hidden=true></i></a>
+</li>
+<li><a href=/>首页</a></li>
+<li><a href=/books>书单</a></li>
+</ul>
+</div>
 </header>
-
-
-
-    
-<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-
-  <div class="content" itemprop="articleBody">
-  
-    <h2 id="mysql-体系结构和存储引擎">MySQL 体系结构和存储引擎</h2>
-<h3 id="定义数据库和实例">定义数据库和实例</h3>
+<article class=post itemscope itemtype=http://schema.org/BlogPosting>
+<div class=content itemprop=articleBody>
+<h2 id=mysql-体系结构和存储引擎>MySQL 体系结构和存储引擎</h2>
+<h3 id=定义数据库和实例>定义数据库和实例</h3>
 <ul>
 <li>数据库
 <ul>
@@ -124,11 +71,11 @@ if (!doNotTrack) {
 <li>MySQL 数据库实例在系统上的表现就是一个进程</li>
 <li>配置加载顺序
 <ul>
-<li>/etc/my.cnf =&gt; /etc/mysql/my.cnf =&gt; /usr/local/mysql/etc/my.cnf =&gt; $HOME/.my.cnf</li>
+<li>/etc/my.cnf => /etc/mysql/my.cnf => /usr/local/mysql/etc/my.cnf => $HOME/.my.cnf</li>
 </ul>
 </li>
 </ul>
-<h3 id="mysql-体系结构">MySQL 体系结构</h3>
+<h3 id=mysql-体系结构>MySQL 体系结构</h3>
 <ul>
 <li>组成
 <ul>
@@ -144,7 +91,7 @@ if (!doNotTrack) {
 </li>
 <li>存储引擎是基于表的，而不是数据库</li>
 </ul>
-<h3 id="存储引擎">存储引擎</h3>
+<h3 id=存储引擎>存储引擎</h3>
 <ul>
 <li>InnoDB 存储引擎
 <ul>
@@ -212,11 +159,11 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h3 id="存储引擎比较">存储引擎比较</h3>
+<h3 id=存储引擎比较>存储引擎比较</h3>
 <ul>
-<li><a href="https://dev.mysql.com/doc/refman/8.0/en/storage-engines.html">MySQL :: 16 Alternative Storage Engines</a></li>
+<li><a href=https://dev.mysql.com/doc/refman/8.0/en/storage-engines.html>MySQL :: 16 Alternative Storage Engines</a></li>
 </ul>
-<h3 id="连接-mysql">连接 MySQL</h3>
+<h3 id=连接-mysql>连接 MySQL</h3>
 <ul>
 <li>TCP/IP
 <ul>
@@ -237,14 +184,14 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h2 id="innodb-存储引擎">InnoDB 存储引擎</h2>
-<h3 id="innodb-存储引擎概述">InnoDB 存储引擎概述</h3>
+<h2 id=innodb-存储引擎>InnoDB 存储引擎</h2>
+<h3 id=innodb-存储引擎概述>InnoDB 存储引擎概述</h3>
 <ul>
 <li>是第一个支持完整 ACID 事务的 MySQL 存储引擎</li>
 <li>其特点是行锁设计、支持 MVCC、支持外键、提供一致性非锁定读</li>
 <li>高效利用内存和 CPU</li>
 </ul>
-<h3 id="innodb-体系架构">InnoDB 体系架构</h3>
+<h3 id=innodb-体系架构>InnoDB 体系架构</h3>
 <ul>
 <li>后台线程
 <ul>
@@ -336,7 +283,7 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h3 id="checkpoint-技术">Checkpoint 技术</h3>
+<h3 id=checkpoint-技术>Checkpoint 技术</h3>
 <ul>
 <li>WAL 策略
 <ul>
@@ -387,7 +334,7 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h3 id="master-thread-工作">Master Thread 工作</h3>
+<h3 id=master-thread-工作>Master Thread 工作</h3>
 <ul>
 <li>最高级别线程</li>
 <li>主循环
@@ -431,7 +378,7 @@ if (!doNotTrack) {
 </li>
 <li>Master Thread 根据数据库状态在几个循环之间切换</li>
 </ul>
-<h3 id="innodb-关键特性">InnoDB 关键特性</h3>
+<h3 id=innodb-关键特性>InnoDB 关键特性</h3>
 <ul>
 <li>插入缓冲
 <ul>
@@ -461,13 +408,13 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h3 id="启动关闭与恢复">启动、关闭与恢复</h3>
+<h3 id=启动关闭与恢复>启动、关闭与恢复</h3>
 <ul>
 <li>正常关闭时，下次启动也会很正常</li>
 <li>非正常退出，下次启动时会进行数据恢复</li>
 </ul>
-<h2 id="文件">文件</h2>
-<h3 id="参数文件">参数文件</h3>
+<h2 id=文件>文件</h2>
+<h3 id=参数文件>参数文件</h3>
 <ul>
 <li>告诉 MySQL 实例启动时在哪里可以找到数据库文件，并且指定某些初始化参数，这些参数定义了某种内存结构的大小等设置，还会介绍各种参数的类型。</li>
 <li>非必需，可以通过启动参数来配置</li>
@@ -478,7 +425,7 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h3 id="日志文件">日志文件</h3>
+<h3 id=日志文件>日志文件</h3>
 <ul>
 <li>用来记录 MySQL 实例对某种条件做出响应时写人的文件，如错误日志文件、二进制日志文件、慢查询日志文件、查询日志文件等。</li>
 <li>错误日志
@@ -531,19 +478,19 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h3 id="socket-文件">socket 文件</h3>
+<h3 id=socket-文件>socket 文件</h3>
 <ul>
 <li>当用 UNIX 域套接字方式进行连接时需要的文件。</li>
 </ul>
-<h3 id="pid-文件">pid 文件</h3>
+<h3 id=pid-文件>pid 文件</h3>
 <ul>
 <li>MySQL 实例的进程 ID 文件。</li>
 </ul>
-<h3 id="mysql-表结构文件">MySQL 表结构文件</h3>
+<h3 id=mysql-表结构文件>MySQL 表结构文件</h3>
 <ul>
 <li>用来存放 MySQL 表结构定义文件。</li>
 </ul>
-<h3 id="innodb-存储引擎文件">InnoDB 存储引擎文件</h3>
+<h3 id=innodb-存储引擎文件>InnoDB 存储引擎文件</h3>
 <ul>
 <li>因为 MySQL 表存储引擎的关系，每个存储引擎都会有自己的文件来保存各种数据。这些存储引擎真正存储了记录和索引等数据。</li>
 <li>表空间文件
@@ -571,13 +518,13 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h2 id="表">表</h2>
-<h3 id="索引组织表">索引组织表</h3>
+<h2 id=表>表</h2>
+<h3 id=索引组织表>索引组织表</h3>
 <ul>
 <li>在 InnoDB 存储引擎中，表都是根据主键顺序组织存放的，这种存储方式的表称为索引组织表</li>
 <li>在 InnoDB 存储引擎表中，每张表都有个主键，如果在创建表时没有显式地定义主键，InnoDB 会优先使用第一个定义的非空唯一索引，否则自动添加一个 6 字节大小的指针。</li>
 </ul>
-<h3 id="innodb-逻辑存储结构">InnoDB 逻辑存储结构</h3>
+<h3 id=innodb-逻辑存储结构>InnoDB 逻辑存储结构</h3>
 <ul>
 <li>所有数据被存放在一个空间内，称之为表空间</li>
 <li>表空间又由段、区、页、行组成</li>
@@ -626,14 +573,14 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h3 id="innodb-行记录格式">InnoDB 行记录格式</h3>
-<h3 id="innodb-数据页结构">InnoDB 数据页结构</h3>
-<h3 id="named-file-formats-机制">Named File Formats 机制</h3>
-<h3 id="约束">约束</h3>
-<h3 id="视图">视图</h3>
-<h3 id="分区表">分区表</h3>
-<h2 id="索引与算法">索引与算法</h2>
-<h3 id="innodb-存储引擎索引概述">InnoDB 存储引擎索引概述</h3>
+<h3 id=innodb-行记录格式>InnoDB 行记录格式</h3>
+<h3 id=innodb-数据页结构>InnoDB 数据页结构</h3>
+<h3 id=named-file-formats-机制>Named File Formats 机制</h3>
+<h3 id=约束>约束</h3>
+<h3 id=视图>视图</h3>
+<h3 id=分区表>分区表</h3>
+<h2 id=索引与算法>索引与算法</h2>
+<h3 id=innodb-存储引擎索引概述>InnoDB 存储引擎索引概述</h3>
 <ul>
 <li>InnoDB 存储引擎支持以下几种常见的索引
 <ul>
@@ -645,7 +592,7 @@ if (!doNotTrack) {
 <li>人为不能干预存储引擎是否生成哈希索引</li>
 <li>InnoDB 存储引擎以页为单位查找数据</li>
 </ul>
-<h3 id="数据结构与算法">数据结构与算法</h3>
+<h3 id=数据结构与算法>数据结构与算法</h3>
 <ul>
 <li>二分查找法
 <ul>
@@ -659,24 +606,24 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h3 id="b-树">B+ 树</h3>
-<h3 id="b-树索引">B+ 树索引</h3>
-<h3 id="cardinality-值">Cardinality 值</h3>
-<h3 id="哈希算法">哈希算法</h3>
-<h3 id="全文检索">全文检索</h3>
-<h2 id="锁">锁</h2>
-<h3 id="什么是锁">什么是锁</h3>
+<h3 id=b-树>B+ 树</h3>
+<h3 id=b-树索引>B+ 树索引</h3>
+<h3 id=cardinality-值>Cardinality 值</h3>
+<h3 id=哈希算法>哈希算法</h3>
+<h3 id=全文检索>全文检索</h3>
+<h2 id=锁>锁</h2>
+<h3 id=什么是锁>什么是锁</h3>
 <ul>
 <li>锁机制用于管理对共享资源的并发访问</li>
 <li>InnoDB 在数据库内部多处使用锁，从而允许对多种不同资源提供并发访问，提供数据的完整性和一致性。</li>
 <li>不同的数据库系统实现锁的机制不同</li>
 </ul>
-<h3 id="lock-与-latch">lock 与 latch</h3>
+<h3 id=lock-与-latch>lock 与 latch</h3>
 <ul>
 <li>lock 的对象时事务，用来锁定的是数据库中的对象，如表、页、行。lock 多在事务 commit 或 rollback 后释放，有死锁检测机制。</li>
 <li>latch 一般称为闩锁，持续时间非常短，在 InnoDB 引擎中，latch 又可分为 mutex 和 rwlock。其目的是用来保证并发线程操作临界资源的正确性，无死锁检测。</li>
 </ul>
-<h3 id="innodb-存储引擎中的锁">InnoDB 存储引擎中的锁</h3>
+<h3 id=innodb-存储引擎中的锁>InnoDB 存储引擎中的锁</h3>
 <ul>
 <li>锁的分类
 <ul>
@@ -706,8 +653,8 @@ if (!doNotTrack) {
 <ul>
 <li>用户需要显式地对数据库中的读取操作加锁保证数据逻辑的一致性，这需要数据库支持加锁语句
 <ul>
-<li>SELECT&hellip;FOR UPDATE，其他事务不能对该行加锁</li>
-<li>SELECT&hellip;LOCK IN SHARE MODE，可以加 S 锁，不能加 X 锁</li>
+<li>SELECT&mldr;FOR UPDATE，其他事务不能对该行加锁</li>
+<li>SELECT&mldr;LOCK IN SHARE MODE，可以加 S 锁，不能加 X 锁</li>
 </ul>
 </li>
 </ul>
@@ -725,7 +672,7 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h3 id="锁的算法">锁的算法</h3>
+<h3 id=锁的算法>锁的算法</h3>
 <ul>
 <li>行锁的三种算法
 <ul>
@@ -750,7 +697,7 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h3 id="锁问题">锁问题</h3>
+<h3 id=锁问题>锁问题</h3>
 <ul>
 <li>脏读
 <ul>
@@ -765,16 +712,16 @@ if (!doNotTrack) {
 </li>
 <li>丢失更新
 <ul>
-<li>通过 SELECT&hellip;FOR UPDATE 避免该问题</li>
+<li>通过 SELECT&mldr;FOR UPDATE 避免该问题</li>
 <li>加入版本号，通过乐观锁</li>
 </ul>
 </li>
 </ul>
-<h3 id="阻塞">阻塞</h3>
+<h3 id=阻塞>阻塞</h3>
 <ul>
 <li>因为不同锁之间的兼容性关系，在有些时刻一个事务中的锁需要等待另一个事务中的锁释放它所占用的资源，这就是阻塞。阻塞并不是一件坏事，其是为了确保事务可以并发且正常地运行。</li>
 </ul>
-<h3 id="死锁">死锁</h3>
+<h3 id=死锁>死锁</h3>
 <ul>
 <li>死锁的概念
 <ul>
@@ -791,8 +738,8 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h2 id="事务">事务</h2>
-<h3 id="认识事务">认识事务</h3>
+<h2 id=事务>事务</h2>
+<h3 id=认识事务>认识事务</h3>
 <ul>
 <li>概述
 <ul>
@@ -861,7 +808,7 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h3 id="事务的实现">事务的实现</h3>
+<h3 id=事务的实现>事务的实现</h3>
 <ul>
 <li>概述
 <ul>
@@ -958,7 +905,7 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h3 id="事务控制语句">事务控制语句</h3>
+<h3 id=事务控制语句>事务控制语句</h3>
 <ul>
 <li>STARTTRANSACTION |BEGIN: 显式地开启一个事务。</li>
 <li>COMMIT : 要想使用这个语句的最简形式，只需发出 COMMIT。也可以更详细一些，写为 COMMIT WORK，不过这二者几乎是等价的。COMMIT 会提交事务，并使得已对数据库做的所有修改成为永久性的。</li>
@@ -968,21 +915,21 @@ if (!doNotTrack) {
 <li>ROLLBACK TO [SAVEPOINT] identifier: 这个语句与 SAVEPOINT 命令一起使用。可以把事务回滚到标记点，而不回滚在此标记点之前的任何工作。例如可以发出两条 UPDATE 语句，后面跟一个 SAVEPOINT，然后又是两条 DELETE 语句。如果执行 DELETE 语句期间出现了某种异常情况，并且捕获到这个异常，同时发出了 ROLLBACK TO SAVEPOINT 命令，事务就会回滚到指定的 SAVEPOINT，撤销 DELETE 完成的所有工作，而 UPDATE 语句完成的工作不受影响。</li>
 <li>SET TRANSACTION : 这个语句用来设置事务的隔离级别。InnoDB 存储引你提供的事务隔离级别有: READ UNCOMMITTED、READ COMMITTED、REPEATABLE READ、SERIALIZABLE。</li>
 </ul>
-<h3 id="隐式提交的事务">隐式提交的事务</h3>
+<h3 id=隐式提交的事务>隐式提交的事务</h3>
 <ul>
 <li>以下这些 SQL 语句会产生一个隐式的提交操作，即执行完这些语名后，会有一个隐式的 COMMIT 操作。
 <ul>
-<li>DDL 语句 : ALTER DATABASE&hellip;UPGRADE DATA DIRECTORY NAME，ALTER EVENT，ALTER PROCEDURE，ALTER TABLE，ALTER VIEW，CREATE DATABASE，CREATE EVENT，CREATE INDEX，CREATE PROCEDURE，CREATE TABLE，CREATE TRIGGER，CREATE VIEW，DROP DATABASE，DROP EVENT，DROP INDEX，DROP PROCEDURE，DROP TABLE，DROP TRIGGER，DROP VIEW，RENAME TABLE，TRUNCATE TABLE。</li>
+<li>DDL 语句 : ALTER DATABASE&mldr;UPGRADE DATA DIRECTORY NAME，ALTER EVENT，ALTER PROCEDURE，ALTER TABLE，ALTER VIEW，CREATE DATABASE，CREATE EVENT，CREATE INDEX，CREATE PROCEDURE，CREATE TABLE，CREATE TRIGGER，CREATE VIEW，DROP DATABASE，DROP EVENT，DROP INDEX，DROP PROCEDURE，DROP TABLE，DROP TRIGGER，DROP VIEW，RENAME TABLE，TRUNCATE TABLE。</li>
 <li>用来隐式地修改 MySQL 架构的操作 : CREATE USER、DROP USER、GRANT、RENAME USER、REVOKE、SET PASSWORD。</li>
 <li>管理语句，ANALYZE TABLE、CACHE INDEX、CHECK TABLE、LOAD INDEX INTO CACHE、OPTIMIZE TABLE、REPAIR TABLE。</li>
 </ul>
 </li>
 </ul>
-<h3 id="对于事务操作的统计">对于事务操作的统计</h3>
+<h3 id=对于事务操作的统计>对于事务操作的统计</h3>
 <ul>
 <li>TPS = (com_commit + com_rollback) / time</li>
 </ul>
-<h3 id="事务的隔离级别">事务的隔离级别</h3>
+<h3 id=事务的隔离级别>事务的隔离级别</h3>
 <ul>
 <li>四个隔离级别
 <ul>
@@ -993,7 +940,7 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h3 id="分布式事务">分布式事务</h3>
+<h3 id=分布式事务>分布式事务</h3>
 <ul>
 <li>MySQL 分布式事务
 <ul>
@@ -1014,44 +961,34 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h3 id="不好的事务习惯">不好的事务习惯</h3>
+<h3 id=不好的事务习惯>不好的事务习惯</h3>
 <ul>
 <li>在循环中提交</li>
 <li>使用自动提交</li>
 <li>使用自动回滚</li>
 </ul>
-<h3 id="长事务">长事务</h3>
+<h3 id=长事务>长事务</h3>
 <ul>
 <li>对于长事务的问题，有时候可以转换为小批量的事务来进行</li>
 </ul>
-
-  
-  </div>
+</div>
 </article>
-
-
-    <footer id="footer">
-  <div class="footer-left">
-    Copyright  &copy; 2021  Y.CH.Y 
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-         
-        <li><a href="/">首页</a></li>
-         
-        <li><a href="/books">书单</a></li>
-        
-      </ul>
-    </nav>
-  </div>
+<footer id=footer>
+<div class=footer-left>
+Copyright &copy; 2021 Y.CH.Y
+</div>
+<div class=footer-right>
+<nav>
+<ul>
+<li><a href=/>首页</a></li>
+<li><a href=/books>书单</a></li>
+</ul>
+</nav>
+</div>
 </footer>
-
-
-  </div>
+</div>
 </body>
-
-<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<link rel=stylesheet href=/lib/font-awesome/css/all.min.css>
 <script src=/lib/jquery/jquery.min.js></script>
 <script src=/js/main.js></script>
 </html>
