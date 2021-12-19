@@ -1,4 +1,140 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Notes | Y.CH.Y</title><link>/notes/</link><atom:link href="/notes/index.xml" rel="self" type="application/rss+xml"/><description>Notes</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Tue, 26 Oct 2021 22:32:54 +0800</lastBuildDate><item><title>基础::计算机系统中的时间</title><link>/notes/computer_time/</link><pubDate>Tue, 26 Oct 2021 22:32:54 +0800</pubDate><guid>/notes/computer_time/</guid><description>&lt;!-- ![ChFaWMj](https://i.imgur.com/ChFaWMj.png) -->
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Notes | Y.CH.Y</title><link>/notes/</link><atom:link href="/notes/index.xml" rel="self" type="application/rss+xml"/><description>Notes</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Sun, 12 Dec 2021 17:12:59 +0800</lastBuildDate><item><title>书影音::2021</title><link>/notes/summary_2021/</link><pubDate>Sun, 12 Dec 2021 17:12:59 +0800</pubDate><guid>/notes/summary_2021/</guid><description>&lt;h2 id="2021">2021&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:center">&lt;/th>
+&lt;th style="text-align:center">&lt;/th>
+&lt;th style="text-align:center">&lt;/th>
+&lt;th style="text-align:center">&lt;/th>
+&lt;th style="text-align:center">&lt;/th>
+&lt;th style="text-align:center">&lt;/th>
+&lt;th style="text-align:center">&lt;/th>
+&lt;th>&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/26348596">&lt;img src="../../douban/26348596" alt="26348596">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/21324173">&lt;img src="../../douban/21324173" alt="21324173">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/4913064">&lt;img src="../../douban/4913064" alt="4913064">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/1827374">&lt;img src="../../douban/1827374" alt="1827374">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/1029791">&lt;img src="../../douban/1029791" alt="1029791">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/34998167">&lt;img src="../../douban/34998167" alt="34998167">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/35246417">&lt;img src="../../douban/35246417" alt="35246417">&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://book.douban.com/subject/35296788">&lt;img src="../../douban/35296788" alt="35296788">&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/35296788">&lt;img src="../../douban/35296788" alt="35296788">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/33404959">&lt;img src="../../douban/33404959" alt="33404959">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/35492898">&lt;img src="../../douban/35492898" alt="35492898">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/1012611">&lt;img src="../../douban/1012611" alt="1012611">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/26369699">&lt;img src="../../douban/26369699" alt="26369699">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/26835090">&lt;img src="../../douban/26835090" alt="26835090">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/34907497">&lt;img src="../../douban/34907497" alt="34907497">&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://book.douban.com/subject/35016085">&lt;img src="../../douban/35016085" alt="35016085">&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/35016085">&lt;img src="../../douban/35016085" alt="35016085">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/30329536">&lt;img src="../../douban/30329536" alt="30329536">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/35390390">&lt;img src="../../douban/35390390" alt="35390390">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/33456870">&lt;img src="../../douban/33456870" alt="33456870">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/30280001">&lt;img src="../../douban/30280001" alt="30280001">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/24708143">&lt;img src="../../douban/24708143" alt="24708143">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/25900403">&lt;img src="../../douban/25900403" alt="25900403">&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://book.douban.com/subject/30264678">&lt;img src="../../douban/30264678" alt="30264678">&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/30264678">&lt;img src="../../douban/30264678" alt="30264678">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/35031587">&lt;img src="../../douban/35031587" alt="35031587">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/1899158">&lt;img src="../../douban/1899158" alt="1899158">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/26877752">&lt;img src="../../douban/26877752" alt="26877752">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/27096665">&lt;img src="../../douban/27096665" alt="27096665">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/25900156">&lt;img src="../../douban/25900156" alt="25900156">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/33463930">&lt;img src="../../douban/33463930" alt="33463930">&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://book.douban.com/subject/3259440">&lt;img src="../../douban/3259440" alt="3259440">&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/3259440">&lt;img src="../../douban/3259440" alt="3259440">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/3211779">&lt;img src="../../douban/3211779" alt="3211779">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://book.douban.com/subject/34615687">&lt;img src="../../douban/34615687" alt="34615687">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/26613692">&lt;img src="../../douban/26613692" alt="26613692">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/30394797">&lt;img src="../../douban/30394797" alt="30394797">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/1455442">&lt;img src="../../douban/1455442" alt="1455442">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/26362351">&lt;img src="../../douban/26362351" alt="26362351">&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://movie.douban.com/subject/30170448">&lt;img src="../../douban/30170448" alt="30170448">&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/30170448">&lt;img src="../../douban/30170448" alt="30170448">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/26720121">&lt;img src="../../douban/26720121" alt="26720121">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/25798131">&lt;img src="../../douban/25798131" alt="25798131">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/27138615">&lt;img src="../../douban/27138615" alt="27138615">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/35576386">&lt;img src="../../douban/35576386" alt="35576386">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/35076714">&lt;img src="../../douban/35076714" alt="35076714">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/30337388">&lt;img src="../../douban/30337388" alt="30337388">&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://movie.douban.com/subject/10604246">&lt;img src="../../douban/10604246" alt="10604246">&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/10604246">&lt;img src="../../douban/10604246" alt="10604246">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/33440021">&lt;img src="../../douban/33440021" alt="33440021">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/34927946">&lt;img src="../../douban/34927946" alt="34927946">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/26774749">&lt;img src="../../douban/26774749" alt="26774749">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/35590029">&lt;img src="../../douban/35590029" alt="35590029">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/6748086">&lt;img src="../../douban/6748086" alt="6748086">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/26630736">&lt;img src="../../douban/26630736" alt="26630736">&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://movie.douban.com/subject/34953711">&lt;img src="../../douban/34953711" alt="34953711">&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/34953711">&lt;img src="../../douban/34953711" alt="34953711">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/10512661">&lt;img src="../../douban/10512661" alt="10512661">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/4851891">&lt;img src="../../douban/4851891" alt="4851891">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/25785114">&lt;img src="../../douban/25785114" alt="25785114">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/11111111">&lt;img src="../../douban/11111111" alt="11111111">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/35185752">&lt;img src="../../douban/35185752" alt="35185752">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/30395914">&lt;img src="../../douban/30395914" alt="30395914">&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://movie.douban.com/subject/3001114">&lt;img src="../../douban/3001114" alt="3001114">&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/3001114">&lt;img src="../../douban/3001114" alt="3001114">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/1292220">&lt;img src="../../douban/1292220" alt="1292220">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/1968790">&lt;img src="../../douban/1968790" alt="1968790">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/26741632">&lt;img src="../../douban/26741632" alt="26741632">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/35019865">&lt;img src="../../douban/35019865" alt="35019865">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/35235594">&lt;img src="../../douban/35235594" alt="35235594">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/35306636">&lt;img src="../../douban/35306636" alt="35306636">&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://movie.douban.com/subject/26909790">&lt;img src="../../douban/26909790" alt="26909790">&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/26909790">&lt;img src="../../douban/26909790" alt="26909790">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/30367642">&lt;img src="../../douban/30367642" alt="30367642">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/30331432">&lt;img src="../../douban/30331432" alt="30331432">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/30217014">&lt;img src="../../douban/30217014" alt="30217014">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/30458820">&lt;img src="../../douban/30458820" alt="30458820">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/35044518">&lt;img src="../../douban/35044518" alt="35044518">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/30167509">&lt;img src="../../douban/30167509" alt="30167509">&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://movie.douban.com/subject/25790761">&lt;img src="../../douban/25790761" alt="25790761">&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/25790761">&lt;img src="../../douban/25790761" alt="25790761">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/27186493">&lt;img src="../../douban/27186493" alt="27186493">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/27107756">&lt;img src="../../douban/27107756" alt="27107756">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/34812928">&lt;img src="../../douban/34812928" alt="34812928">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/1463371">&lt;img src="../../douban/1463371" alt="1463371">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/30513783">&lt;img src="../../douban/30513783" alt="30513783">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/26333560">&lt;img src="../../douban/26333560" alt="26333560">&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://movie.douban.com/subject/34845781">&lt;img src="../../douban/34845781" alt="34845781">&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/34845781">&lt;img src="../../douban/34845781" alt="34845781">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/1308892">&lt;img src="../../douban/1308892" alt="1308892">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/35161255">&lt;img src="../../douban/35161255" alt="35161255">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/34813210">&lt;img src="../../douban/34813210" alt="34813210">&lt;/a>&lt;/td>
+&lt;td style="text-align:center">&lt;a href="https://movie.douban.com/subject/30458949">&lt;img src="../../douban/30458949" alt="30458949">&lt;/a>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>基础::计算机系统中的时间</title><link>/notes/computer_time/</link><pubDate>Tue, 26 Oct 2021 22:32:54 +0800</pubDate><guid>/notes/computer_time/</guid><description>&lt;!-- ![ChFaWMj](https://i.imgur.com/ChFaWMj.png) -->
 &lt;h3 id="背景">背景&lt;/h3>
 &lt;p>时间是计算机系统中一个非常重要的概念，很多系统调用与时间有关，很多定时任务依赖时间，甚至内核本身也需要定时器按照一定频率来产生时钟中断来驱动它能够正常运行下去。&lt;/p>
 &lt;h3 id="硬件时间">硬件时间&lt;/h3>
