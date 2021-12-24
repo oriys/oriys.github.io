@@ -8,12 +8,12 @@
 <link rel=stylesheet href=https://latest.cactus.chat/style.css type=text/css>
 <meta charset=utf-8>
 <meta http-equiv=x-ua-compatible content="IE=edge">
-<title> 数据库::高性能MySQL第四版笔记 | Y.CH.Y</title>
+<title> 高性能MySQL第四版::MySQL 架构 | Y.CH.Y</title>
 <link rel=canonical href=/notes/high_performance_mysql_4th/>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=robots content="all,follow">
 <meta name=googlebot content="index,follow,snippet,archive">
-<meta property="og:title" content="数据库::高性能MySQL第四版笔记">
+<meta property="og:title" content="高性能MySQL第四版::MySQL 架构">
 <meta property="og:description" content="MySQL 架构 MySQL 的逻辑架构 MySQL 的架构分为三层
 最上面一层是客户端，它们是大多数基于网络的客户/服务器工具或服务器需要的服务：连接处理、认证、安全，等等。
 第二层包含 MySQL 的大多数功能，包括提供查询解析、分析、优化的代码，以及所有的内置函数。任何跨存储引擎提供的功能都在这一层：例如，存储过程、触发器和视图。
@@ -41,7 +41,7 @@ MySQL 中最基本的锁策略，也是开销最小的策略，是表锁。当�
 <meta property="article:published_time" content="2021-12-19T16:11:52+08:00">
 <meta property="article:modified_time" content="2021-12-19T16:11:52+08:00">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="数据库::高性能MySQL第四版笔记">
+<meta name=twitter:title content="高性能MySQL第四版::MySQL 架构">
 <meta name=twitter:description content="MySQL 架构 MySQL 的逻辑架构 MySQL 的架构分为三层
 最上面一层是客户端，它们是大多数基于网络的客户/服务器工具或服务器需要的服务：连接处理、认证、安全，等等。
 第二层包含 MySQL 的大多数功能，包括提供查询解析、分析、优化的代码，以及所有的内置函数。任何跨存储引擎提供的功能都在这一层：例如，存储过程、触发器和视图。
@@ -162,7 +162,7 @@ REPEATABLE READ 是 MySQL 的默认事务隔离级别。</li>
 </li>
 <li>
 <p>在事务中混合使用存储引擎<br>
-MySQL 不在服务器层面上管理事务。相反，底层存储引擎自己实现事务。这意味着你不能在一个事务中可靠地混合不同的引擎。如果你在一个事务中混合使用事务表和非事务表（例如，InnoDB 和 MyISAM 表），如果一切顺利，该事务将正常工作。然而，如果需要回滚，对非交易表的修改就不能被撤销。这就使数据库处于不一致的状态，可能很难恢复，并使事务的整个意义变得毫无意义。</p>
+MySQL 不在服务器层面上管理事务。相反，底层存储引擎自己实现事务。这意味着你不能在一个事务中可靠地混合不同的引擎。如果你在一个事务中混合使用事务表和非事务表（例如，InnoDB 和 MyISAM 表），如果一切顺利，该事务将正常工作。然而，如果需要回滚，对非事务表的修改就不能被撤销。这就使数据库处于不一致的状态，可能很难恢复，并使事务的整个意义变得毫无意义。</p>
 </li>
 <li>
 <p>隐式和显式锁<br>
@@ -173,12 +173,24 @@ SELECT &mldr; FOR UPDATE</p>
 </li>
 </ul>
 <h3 id=多版本并发控制>多版本并发控制</h3>
+<p>MVCC 通过使用数据的快照工作，因为它存在于某个时间点。这意味着事务可以看到一个一致的数据视图，无论他们运行多长时间。这也意味着不同的事务可以在同一时间看到同一表中的不同数据。<br>
+InnoDB 通过为每个启动的事务分配一个事务 ID 来实现 MVCC。这个 ID 是在事务第一次读取任何数据时分配的。当一个记录在该事务中被修改时，一个解释如何恢复该修改的撤销记录被写入 undo log，并且该事务的回滚指针被指向该 undo log。<br>
+当不同的会话读取集群键索引记录时，InnoDB 会比较该记录的 事务 ID 与该会话的读取视图的对比。如果当前状态下的记录不应该是可见的（改变它的事务还没有提交），undo log 就会被跟踪和应用，直到会话到达一个符合可见条件的事务 ID。这个过程可以一直循环到一个完全删除该行的 undo log，向读取视图发出信号，表明该行不存在。</p>
 <h3 id=复制>复制</h3>
+<p>MySQL 被设计为在任何给定时间在一个节点上接受写操作。这在管理一致性方面有优势，但当你需要在多个服务器或多个地点写入数据时，会导致折衷。MySQL 提供了一种原生的方式，将一个节点的写操作分配到其他节点。这被称为复制。在 MySQL 中，源节点的每个副本都有一个线程，该线程作为复制客户端登录，当发生写操作时被唤醒，发送新数据。多年来，MySQL 的复制获得了更多的复杂性。全局事务标识符、多源复制、副本上的并行复制和半同步复制是一些主要的更新。</p>
 <h3 id=数据文件结构>数据文件结构</h3>
+<p>在 8.0 版本中，MySQL 将表的元数据重新设计为数据字典，与表的.ibd 文件一起包含。这使得表结构的信息支持事务和原子数据定义的改变。在操作过程中，我们不再仅仅依靠 informa tion_schema 来检索表的定义和元数据，而是引入了字典对象缓存，这是一个基于最近最少使用（LRU）的分区定义、表定义、存储程序定义、字符集和整理信息的内存缓存。服务器访问表的元数据的这一重大变化减少了 I/O，并且很有效率，特别是当表的一个子集看到最多活动，因此在缓存中最频繁时。.ibd 和.frm 文件被替换为每个表的序列化字典信息（.sdi）。</p>
 <h3 id=innodb-引擎>InnoDB 引擎</h3>
+<p>InnoDB 是 MySQL 的默认事务存储引擎。它被设计用于处理许多短事务，性能优秀和拥有自动崩溃恢复的能力。默认情况下，InnoDB 将其数据存储在一系列的数据文件中，这些文件统称为表空间。<br>
+InnoDB 使用 MVCC 来实现高并发，它实现了所有四个 SQL 标准隔离级别。默认的是 REPEATABLE READ 隔离级别，它有一个 next-key 锁定策略，可以防止在这个隔离级别中的幻读：InnoDB 不是只锁定你在查询中接触到的行，而是锁定索引结构中的空隙，防止幻读的发生。<br>
+InnoDB 表是建立在一个聚类索引上的，它的索引结构与大多数其他 MySQL 存储引擎的结构非常不同。因此，它提供了非常快速的主键查询。<br>
+InnoDB 有各种各样的内部优化。其中包括用于从磁盘上预取数据的预测性预读，自动在内存中建立哈希索引以实现快速查找的自适应哈希索引，以及用于加速插入的插入缓冲器。我们在本书的第四章中介绍了这些内容。</p>
 <h3 id=json-文档支持>JSON 文档支持</h3>
+<p>与新的数据类型支持一起，InnoDB 还引入了 SQL 函数，以支持对 JSON 文档的丰富操作。MySQL 8 的一个进一步改进是增加了在 JSON 数组上定义多值索引的能力。通过将常见的访问模式与能够映射 JSON 文档值的函数相匹配，这一功能可以成为进一步加快对 JSON 类型的读取访问查询的强大方式。</p>
 <h3 id=数据字典变化>数据字典变化</h3>
+<p>MySQL 8.0 的另一个主要变化是取消了基于文件的表元数据存储，并转向使用 InnoDB 表存储的数据字典。这一变化将 InnoDB 的所有崩溃恢复的事务性优势带到了对表的更改等操作中。这一变化虽然大大改善了 MySQL 中数据定义的管理，但也需要对 MySQL 服务器的操作进行重大改变。最值得注意的是，过去依赖表元数据文件的备份过程现在必须查询新的数据字典以提取表的定义。</p>
 <h3 id=原子-ddl>原子 DDL</h3>
+<p>最后，MySQL 8.0 引入了原子数据定义变化。这意味着数据定义语句现在既可以完全成功完成，也可以完全回滚。这通过创建一个针对 DDL 的撤销和重做日志成为可能，InnoDB 依靠该日志来跟踪变化。</p>
 </div>
 </article>
 <footer id=footer>
