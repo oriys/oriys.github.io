@@ -8,12 +8,12 @@
 <link rel=stylesheet href=https://latest.cactus.chat/style.css type=text/css>
 <meta charset=utf-8>
 <meta http-equiv=x-ua-compatible content="IE=edge">
-<title> 高性能MySQL第四版::MySQL 架构 | Y.CH.Y</title>
+<title> 数据库::高性能MySQL第四版 | Y.CH.Y</title>
 <link rel=canonical href=/notes/high_performance_mysql_4th/>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=robots content="all,follow">
 <meta name=googlebot content="index,follow,snippet,archive">
-<meta property="og:title" content="高性能MySQL第四版::MySQL 架构">
+<meta property="og:title" content="数据库::高性能MySQL第四版">
 <meta property="og:description" content="MySQL 架构 MySQL 的逻辑架构 MySQL 的架构分为三层
 最上面一层是客户端，它们是大多数基于网络的客户/服务器工具或服务器需要的服务：连接处理、认证、安全，等等。
 第二层包含 MySQL 的大多数功能，包括提供查询解析、分析、优化的代码，以及所有的内置函数。任何跨存储引擎提供的功能都在这一层：例如，存储过程、触发器和视图。
@@ -41,7 +41,7 @@ MySQL 中最基本的锁策略，也是开销最小的策略，是表锁。当�
 <meta property="article:published_time" content="2021-12-19T16:11:52+08:00">
 <meta property="article:modified_time" content="2021-12-19T16:11:52+08:00">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="高性能MySQL第四版::MySQL 架构">
+<meta name=twitter:title content="数据库::高性能MySQL第四版">
 <meta name=twitter:description content="MySQL 架构 MySQL 的逻辑架构 MySQL 的架构分为三层
 最上面一层是客户端，它们是大多数基于网络的客户/服务器工具或服务器需要的服务：连接处理、认证、安全，等等。
 第二层包含 MySQL 的大多数功能，包括提供查询解析、分析、优化的代码，以及所有的内置函数。任何跨存储引擎提供的功能都在这一层：例如，存储过程、触发器和视图。
@@ -191,6 +191,95 @@ InnoDB 有各种各样的内部优化。其中包括用于从磁盘上预取数�
 <p>MySQL 8.0 的另一个主要变化是取消了基于文件的表元数据存储，并转向使用 InnoDB 表存储的数据字典。这一变化将 InnoDB 的所有崩溃恢复的事务性优势带到了对表的更改等操作中。这一变化虽然大大改善了 MySQL 中数据定义的管理，但也需要对 MySQL 服务器的操作进行重大改变。最值得注意的是，过去依赖表元数据文件的备份过程现在必须查询新的数据字典以提取表的定义。</p>
 <h3 id=原子-ddl>原子 DDL</h3>
 <p>最后，MySQL 8.0 引入了原子数据定义变化。这意味着数据定义语句现在既可以完全成功完成，也可以完全回滚。这通过创建一个针对 DDL 的撤销和重做日志成为可能，InnoDB 依靠该日志来跟踪变化。</p>
+<h2 id=可靠性工程世界中的监控>可靠性工程世界中的监控</h2>
+<h3 id=确定服务水平目标>确定服务水平目标</h3>
+<ul>
+<li>
+<p>几个用来确定服务水平目标的问题</p>
+<ul>
+<li>衡量成功的合适指标是什么？</li>
+<li>这些指标的什么值对客户和我们的业务需求来说是可以接受的？</li>
+<li>在什么时候我们被认为处于降级状态？</li>
+<li>什么时候我们处于完全失败的状态，需要尽快进行补救？</li>
+</ul>
+</li>
+<li>
+<p>服务水平指标（SLI）<br>
+用非常简单的话来说，SLI 回答了一个问题：&ldquo;我如何衡量我的客户是否满意？&rdquo; 该答案从用户的角度代表了一个健康的系统。SLI 可以是业务层面的指标，如 &ldquo;面向客户的 API 的响应时间&rdquo;，或更基本的 &ldquo;服务已启动&rdquo;。你可能会发现你需要不同的指标或度量，这取决于数据的背景以及它与产品的关系。</p>
+</li>
+<li>
+<p>服务水平目标（SLO）<br>
+SLO 回答了这样一个问题：&ldquo;为了确保我的客户满意，我可以允许我的 SLI 最低是多少？&rdquo; SLO 是我们希望在一个给定的 SLI 中被认为是健康的服务的目标范围。如果你认为正常运行时间是 SLI，那么你希望在给定的时间跨度内达到的 9 的数量就是 SLO。SLO 必须被定义为一个特定时间范围内的数值，以确保每个人对 SLO 的含义都是一致的。SLI 加上 SLO 构成了了解你的客户是否满意的基本方程式。</p>
+</li>
+<li>
+<p>服务水平协议（SLA）<br>
+SLA 为以下问题提供了答案：&ldquo;我愿意同意什么 SLO，有什么后果？&rdquo; 一个 SLA 是一个 SLO，它已经包含在与企业的一个或多个客户（付费客户，而不是内部利益相关者）的协议中，如果该 SLA 没有得到满足，就会有财务或其他方面的惩罚。重要的是要注意，SLA 是可选的。</p>
+</li>
+</ul>
+<h3 id=如何使你的客户满意>如何使你的客户满意</h3>
+<p>目标是定义什么是你需要做的绝对最低限度的事情，以使客户满意。达到三个九的可用性不是一个小的成就。在一整年中，三个九相当于刚刚超过八个小时，你承诺的 &ldquo;九 &ldquo;越多，难度就越大，团队为实现这样的承诺所花费的工程时间也就越昂贵。</p>
+<table>
+<thead>
+<tr>
+<th>Availability</th>
+<th>Downtime per year</th>
+<th>Downtime per month</th>
+<th>Downtime per week</th>
+<th>Downtime per day</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>99.999%</td>
+<td>5 mins, 15.36 secs</td>
+<td>26.28 secs</td>
+<td>6.06 secs</td>
+<td>0.14 secs</td>
+</tr>
+<tr>
+<td>99.995%</td>
+<td>26 mins, 16.8 secs</td>
+<td>2 mins, 11.4 secs</td>
+<td>30.3 secs</td>
+<td>4.32 secs</td>
+</tr>
+<tr>
+<td>99.990%</td>
+<td>52 mins, 33.6 secs</td>
+<td>4 mins, 22.8 secs</td>
+<td>1 mins, 0.66 secs</td>
+<td>8.64 secs</td>
+</tr>
+<tr>
+<td>99.950%</td>
+<td>4 hrs, 22 mins, 48 secs</td>
+<td>31 mins, 54 secs</td>
+<td>5 mins, 3 secs</td>
+<td>43 secs</td>
+</tr>
+<tr>
+<td>99.900%</td>
+<td>8 hrs, 45 mins, 36 secs</td>
+<td>43 mins, 53 secs</td>
+<td>10 mins, 6 secs</td>
+<td>1 min, 26 secs</td>
+</tr>
+<tr>
+<td>99.500%</td>
+<td>43 hrs, 48 mins, 36 secs</td>
+<td>3 hrs, 39 mins</td>
+<td>50 hrs, 32 mins, 17 secs</td>
+<td>7 mins, 12 secs</td>
+</tr>
+<tr>
+<td>99.250%</td>
+<td>65 hrs, 42 mins</td>
+<td>5 hrs, 34 mins, 30 secs</td>
+<td>1 hr, 15 mins, 48 secs</td>
+<td>10 mins, 48 secs</td>
+</tr>
+</tbody>
+</table>
 </div>
 </article>
 <footer id=footer>
