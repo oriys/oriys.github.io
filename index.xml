@@ -256,214 +256,124 @@
 &lt;tr>
 &lt;th>书名&lt;/th>
 &lt;th>分类&lt;/th>
-&lt;th>进度&lt;/th>
-&lt;th>开始时间&lt;/th>
-&lt;th>结束时间&lt;/th>
 &lt;/tr>
 &lt;/thead>
 &lt;tbody>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/35031587/">绝叫&lt;/a>&lt;/td>
 &lt;td>推理&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.10&lt;/td>
-&lt;td>2021.10&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/26835090">软技能&lt;/a>&lt;/td>
 &lt;td>编程&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.10&lt;/td>
-&lt;td>2021.10&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/24708143">MySQL 技术内幕&lt;/a>&lt;/td>
 &lt;td>编程&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.09&lt;/td>
-&lt;td>2021.09&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/25900156">Redis 设计与实现&lt;/a>&lt;/td>
 &lt;td>编程&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.09&lt;/td>
-&lt;td>2021.09&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/35246417">System Design Interview&lt;/a>&lt;/td>
 &lt;td>编程&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.09&lt;/td>
-&lt;td>2021.09&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/1827374">东方快车谋杀案&lt;/a>&lt;/td>
 &lt;td>推理&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.09&lt;/td>
-&lt;td>2021.09&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/35492898">凤凰架构&lt;/a>&lt;/td>
 &lt;td>编程&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.09&lt;/td>
-&lt;td>2021.09&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/33456870">屍人莊殺人事件&lt;/a>&lt;/td>
 &lt;td>推理&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.09&lt;/td>
-&lt;td>2021.09&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/3259440">白夜行&lt;/a>&lt;/td>
 &lt;td>推理&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.09&lt;/td>
-&lt;td>2021.09&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/3211779">嫌疑人 X 的献身&lt;/a>&lt;/td>
 &lt;td>推理&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.08&lt;/td>
-&lt;td>2021.08&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/35390390">字母表谜案&lt;/a>&lt;/td>
 &lt;td>推理&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.08&lt;/td>
-&lt;td>2021.08&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/26348596">密室收藏家&lt;/a>&lt;/td>
 &lt;td>推理&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.08&lt;/td>
-&lt;td>2021.08&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/30264678">尸体变化图鉴&lt;/a>&lt;/td>
 &lt;td>科普&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.08&lt;/td>
-&lt;td>2021.08&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/34907497">深入理解 Java 虚拟机（第 3 版）&lt;/a>&lt;/td>
 &lt;td>编程&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.08&lt;/td>
-&lt;td>2021.08&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/35296788">心灵侦探城塚翡翠&lt;/a>&lt;/td>
 &lt;td>推理&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.08&lt;/td>
-&lt;td>2021.08&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/26877752">恶意&lt;/a>&lt;/td>
 &lt;td>推理&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.08&lt;/td>
-&lt;td>2021.08&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/33463930">操作系统导论&lt;/a>&lt;/td>
 &lt;td>编程&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.07&lt;/td>
-&lt;td>2021.07&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/30329536">数据密集型应用系统设计&lt;/a>&lt;/td>
 &lt;td>编程&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.07&lt;/td>
-&lt;td>2021.07&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/4822685/">编码&lt;/a>&lt;/td>
 &lt;td>编程&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.07&lt;/td>
-&lt;td>2021.07&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/27096665">现代操作系统（原书第 4 版）&lt;/a>&lt;/td>
 &lt;td>编程&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.07&lt;/td>
-&lt;td>2021.07&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/34998167">绝对不在场证明&lt;/a>&lt;/td>
 &lt;td>推理&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.07&lt;/td>
-&lt;td>2021.07&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/1899158">编程之道&lt;/a>&lt;/td>
 &lt;td>编程&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.07&lt;/td>
-&lt;td>2021.07&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/26369699">被讨厌的勇气&lt;/a>&lt;/td>
 &lt;td>心理&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.07&lt;/td>
-&lt;td>2021.07&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/30280001">计算机网络（原书第 7 版）&lt;/a>&lt;/td>
 &lt;td>编程&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.07&lt;/td>
-&lt;td>2021.07&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/33404959">金色麦田&lt;/a>&lt;/td>
 &lt;td>推理&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.04&lt;/td>
-&lt;td>2021.04&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/1012611">乌合之众&lt;/a>&lt;/td>
 &lt;td>心理&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.04&lt;/td>
-&lt;td>2021.04&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/35016085">诡计博物馆&lt;/a>&lt;/td>
 &lt;td>推理&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.01&lt;/td>
-&lt;td>2021.01&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/1029791">许三观卖血记&lt;/a>&lt;/td>
 &lt;td>文学&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.01&lt;/td>
-&lt;td>2021.01&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>&lt;a href="https://book.douban.com/subject/4913064">活着&lt;/a>&lt;/td>
 &lt;td>文学&lt;/td>
-&lt;td>Done&lt;/td>
-&lt;td>2021.01&lt;/td>
-&lt;td>2021.01&lt;/td>
 &lt;/tr>
 &lt;/tbody>
 &lt;/table></description></item><item><title>数据库::高性能MySQL第四版</title><link>/notes/high_performance_mysql_4th/</link><pubDate>Sun, 19 Dec 2021 16:11:52 +0800</pubDate><guid>/notes/high_performance_mysql_4th/</guid><description>&lt;h2 id="mysql-架构">MySQL 架构&lt;/h2>
