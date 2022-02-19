@@ -1,4 +1,23 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Notes | Y.CH.Y</title><link>/notes/</link><atom:link href="/notes/index.xml" rel="self" type="application/rss+xml"/><description>Notes</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Sun, 13 Feb 2022 22:51:56 +0800</lastBuildDate><item><title>发布！设计与部署稳定的分布式系统</title><link>/notes/release_it_design_and_deploy_proudction_ready_software/</link><pubDate>Sun, 13 Feb 2022 22:51:56 +0800</pubDate><guid>/notes/release_it_design_and_deploy_proudction_ready_software/</guid><description>&lt;h2 id="生产环境的生存法则">生产环境的生存法则&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Notes | Y.CH.Y</title><link>/notes/</link><atom:link href="/notes/index.xml" rel="self" type="application/rss+xml"/><description>Notes</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Sat, 19 Feb 2022 23:43:39 +0800</lastBuildDate><item><title>程序员修炼之道摘录</title><link>/notes/the_pragmatic_programmer/</link><pubDate>Sat, 19 Feb 2022 23:43:39 +0800</pubDate><guid>/notes/the_pragmatic_programmer/</guid><description>&lt;ul>
+&lt;li>关注你的技艺&lt;/li>
+&lt;li>如果你不关心怎么把软件开发好，那么软件开发领域就再也没什么好谈的事情了&lt;/li>
+&lt;li>思考！思考你的工作&lt;/li>
+&lt;li>对每天里每一个项目所做的每一个决定进行的批判性评估&lt;/li>
+&lt;li>我们，采集的只是石头，却必须始终展望着未来的大教堂&lt;/li>
+&lt;li>每一天都要努力打磨你的技能，并往技能库里添加新的工具&lt;/li>
+&lt;li>不断地做出许多小的改进&lt;/li>
+&lt;/ul>
+&lt;h2 id="务实的哲学">务实的哲学&lt;/h2>
+&lt;ul>
+&lt;li>你的事业是你自己的，更重要的是，你的人生是你的&lt;/li>
+&lt;li>务实的程序员的特质是什么
+&lt;ul>
+&lt;li>在解决方案中透出的态度、风格及理念&lt;/li>
+&lt;li>试着将问题放在更宽泛的上下文中综合考虑，从大局着想&lt;/li>
+&lt;li>为所做的一切负责&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul></description></item><item><title>发布！设计与部署稳定的分布式系统</title><link>/notes/release_it_design_and_deploy_proudction_ready_software/</link><pubDate>Sun, 13 Feb 2022 22:51:56 +0800</pubDate><guid>/notes/release_it_design_and_deploy_proudction_ready_software/</guid><description>&lt;h2 id="生产环境的生存法则">生产环境的生存法则&lt;/h2>
 &lt;h3 id="瞄准正确的目标">瞄准正确的目标&lt;/h3>
 &lt;p>今天的软件设计在与现实相差甚远的环境中进行，其目标在于通过 QA 部门的验收，不能保证在未来三五年的适用性。另一方面，制造业的产品设计师一直在追求能够让人们以低成本和高质量的方式制造产品的“可制造性设计”。软件行业的“可制造性设计”，就是“为生产环境而设计”。我们既需要设计一个个彼此独立的软件系统，也需要设计由相互依赖的系统所组成的整个生态系统，从而以低成本和高质量的方式进行运维工作。&lt;/p>
 &lt;h3 id="应对不断扩大的挑战范围">应对不断扩大的挑战范围&lt;/h3>
