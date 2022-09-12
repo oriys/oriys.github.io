@@ -123,14 +123,14 @@
 &lt;ul>
 &lt;li>输入(已经)分成 M 个文件&lt;/li>
 &lt;li>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-txt" data-lang="txt">Input1 -&amp;gt; Map -&amp;gt; a,1 b,1
-Input2 -&amp;gt; Map -&amp;gt; b,1
-Input3 -&amp;gt; Map -&amp;gt; a,1 c,1
-| | |
-| | -&amp;gt; Reduce -&amp;gt; c,1
-| -----&amp;gt; Reduce -&amp;gt; b,2
----------&amp;gt; Reduce -&amp;gt; a,2
-&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-txt" data-lang="txt">&lt;span style="display:flex;">&lt;span>Input1 -&amp;gt; Map -&amp;gt; a,1 b,1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Input2 -&amp;gt; Map -&amp;gt; b,1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Input3 -&amp;gt; Map -&amp;gt; a,1 c,1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>| | |
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>| | -&amp;gt; Reduce -&amp;gt; c,1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>| -----&amp;gt; Reduce -&amp;gt; b,2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>---------&amp;gt; Reduce -&amp;gt; a,2
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
 &lt;li>MR 为每个输入文件调用 Map()，生成一组 k2,v2 “中间”数据，每个 Map() 调用都是一个“任务”，MR 收集给定 k2 的所有中间 v2，并将每个键 + 值传递给 Reduce 调用最终输出是一组来自 Reduce()s 的 &amp;lt;k2,v3&amp;gt; 对&lt;/li>
 &lt;li>统计单词
 &lt;ul>

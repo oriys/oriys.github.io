@@ -579,11 +579,11 @@ B 树优点：如果在 B 树中查找的数据离根节点近，由于 B 树节
 &lt;h3 id="linux-如何查看实时的滚动日志">Linux 如何查看实时的滚动日志？&lt;/h3>
 &lt;p>&lt;code>tail -f log&lt;/code> 或者 &lt;code>tail -F log&lt;/code>&lt;/p>
 &lt;h3 id="malloc-创建的对象在堆还是栈中">malloc 创建的对象在堆还是栈中？&lt;/h3>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-c" data-lang="c">&lt;span style="color:#00a8c8">void&lt;/span> &lt;span style="color:#75af00">foo&lt;/span>&lt;span style="color:#111">()&lt;/span>
-&lt;span style="color:#111">{&lt;/span>
-&lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#111">a_stack_pointer&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">int&lt;/span>&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#111">)&lt;/span>&lt;span style="color:#111">malloc&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#ae81ff">10&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#00a8c8">sizeof&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">int&lt;/span>&lt;span style="color:#111">));&lt;/span>
-&lt;span style="color:#111">}&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>a_stack_pointer 在栈上，保存了它所指向的内容给的地址，用 malloc 分配的动态内存在堆上&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c" data-lang="c">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#00a8c8">void&lt;/span> &lt;span style="color:#75af00">foo&lt;/span>&lt;span style="color:#111">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#111">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#111">a_stack_pointer&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">int&lt;/span>&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#111">)&lt;/span>&lt;span style="color:#111">malloc&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#ae81ff">10&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#00a8c8">sizeof&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">int&lt;/span>&lt;span style="color:#111">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#111">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>a_stack_pointer 在栈上，保存了它所指向的内容给的地址，用 malloc 分配的动态内存在堆上&lt;/p>
 &lt;h3 id="为什么进程切换慢线程切换快">为什么进程切换慢，线程切换快？&lt;/h3>
 &lt;h3 id="简述-cpu-l1-l2-l3-多级缓存的基本作用">简述 CPU L1, L2, L3 多级缓存的基本作用&lt;/h3>
 &lt;h3 id="简述创建进程的流程">简述创建进程的流程&lt;/h3>
@@ -639,139 +639,155 @@ B 树优点：如果在 B 树中查找的数据离根节点近，由于 B 树节
 &lt;/tbody>
 &lt;/table>
 &lt;h3 id="信号量是如何实现的">信号量是如何实现的？&lt;/h3>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-c" data-lang="c">&lt;span style="color:#00a8c8">struct&lt;/span> &lt;span style="color:#111">semaphore&lt;/span> &lt;span style="color:#111">{&lt;/span>
-&lt;span style="color:#111">raw_spinlock_t&lt;/span> &lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#00a8c8">unsigned&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">count&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#00a8c8">struct&lt;/span> &lt;span style="color:#111">list_head&lt;/span> &lt;span style="color:#111">wait_list&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#111">};&lt;/span>
-&lt;span style="color:#75715e">/**
-&lt;/span>&lt;span style="color:#75715e"> * down - acquire the semaphore
-&lt;/span>&lt;span style="color:#75715e"> * @sem: the semaphore to be acquired
-&lt;/span>&lt;span style="color:#75715e"> *
-&lt;/span>&lt;span style="color:#75715e"> * Acquires the semaphore. If no more tasks are allowed to acquire the
-&lt;/span>&lt;span style="color:#75715e"> * semaphore, calling this function will put the task to sleep until the
-&lt;/span>&lt;span style="color:#75715e"> * semaphore is released.
-&lt;/span>&lt;span style="color:#75715e"> *
-&lt;/span>&lt;span style="color:#75715e"> * Use of this function is deprecated, please use down_interruptible() or
-&lt;/span>&lt;span style="color:#75715e"> * down_killable() instead.
-&lt;/span>&lt;span style="color:#75715e"> */&lt;/span>
-&lt;span style="color:#00a8c8">void&lt;/span> &lt;span style="color:#75af00">down&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">struct&lt;/span> &lt;span style="color:#111">semaphore&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">)&lt;/span>
-&lt;span style="color:#111">{&lt;/span>
-&lt;span style="color:#00a8c8">unsigned&lt;/span> &lt;span style="color:#00a8c8">long&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#111">raw_spin_lock_irqsave&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
-&lt;span style="color:#00a8c8">if&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">likely&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span> &lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#111">))&lt;/span>
-&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span>&lt;span style="color:#f92672">--&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#00a8c8">else&lt;/span>
-&lt;span style="color:#111">__down&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">);&lt;/span>
-&lt;span style="color:#111">raw_spin_unlock_irqrestore&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
-&lt;span style="color:#111">}&lt;/span>
-&lt;span style="color:#75715e">/**
-&lt;/span>&lt;span style="color:#75715e"> * down_interruptible - acquire the semaphore unless interrupted
-&lt;/span>&lt;span style="color:#75715e"> * @sem: the semaphore to be acquired
-&lt;/span>&lt;span style="color:#75715e"> *
-&lt;/span>&lt;span style="color:#75715e"> * Attempts to acquire the semaphore. If no more tasks are allowed to
-&lt;/span>&lt;span style="color:#75715e"> * acquire the semaphore, calling this function will put the task to sleep.
-&lt;/span>&lt;span style="color:#75715e"> * If the sleep is interrupted by a signal, this function will return -EINTR.
-&lt;/span>&lt;span style="color:#75715e"> * If the semaphore is successfully acquired, this function returns 0.
-&lt;/span>&lt;span style="color:#75715e"> */&lt;/span>
-&lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#75af00">down_interruptible&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">struct&lt;/span> &lt;span style="color:#111">semaphore&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">)&lt;/span>
-&lt;span style="color:#111">{&lt;/span>
-&lt;span style="color:#00a8c8">unsigned&lt;/span> &lt;span style="color:#00a8c8">long&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">result&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#111">raw_spin_lock_irqsave&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
-&lt;span style="color:#00a8c8">if&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">likely&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span> &lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#111">))&lt;/span>
-&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span>&lt;span style="color:#f92672">--&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#00a8c8">else&lt;/span>
-&lt;span style="color:#111">result&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">__down_interruptible&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">);&lt;/span>
-&lt;span style="color:#111">raw_spin_unlock_irqrestore&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
-&lt;span style="color:#00a8c8">return&lt;/span> &lt;span style="color:#111">result&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#111">}&lt;/span>
-&lt;span style="color:#75715e">/**
-&lt;/span>&lt;span style="color:#75715e"> * down_killable - acquire the semaphore unless killed
-&lt;/span>&lt;span style="color:#75715e"> * @sem: the semaphore to be acquired
-&lt;/span>&lt;span style="color:#75715e"> *
-&lt;/span>&lt;span style="color:#75715e"> * Attempts to acquire the semaphore. If no more tasks are allowed to
-&lt;/span>&lt;span style="color:#75715e"> * acquire the semaphore, calling this function will put the task to sleep.
-&lt;/span>&lt;span style="color:#75715e"> * If the sleep is interrupted by a fatal signal, this function will return
-&lt;/span>&lt;span style="color:#75715e"> * -EINTR. If the semaphore is successfully acquired, this function returns
-&lt;/span>&lt;span style="color:#75715e"> * 0.
-&lt;/span>&lt;span style="color:#75715e"> */&lt;/span>
-&lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#75af00">down_killable&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">struct&lt;/span> &lt;span style="color:#111">semaphore&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">)&lt;/span>
-&lt;span style="color:#111">{&lt;/span>
-&lt;span style="color:#00a8c8">unsigned&lt;/span> &lt;span style="color:#00a8c8">long&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">result&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#111">raw_spin_lock_irqsave&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
-&lt;span style="color:#00a8c8">if&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">likely&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span> &lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#111">))&lt;/span>
-&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span>&lt;span style="color:#f92672">--&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#00a8c8">else&lt;/span>
-&lt;span style="color:#111">result&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">__down_killable&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">);&lt;/span>
-&lt;span style="color:#111">raw_spin_unlock_irqrestore&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
-&lt;span style="color:#00a8c8">return&lt;/span> &lt;span style="color:#111">result&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#111">}&lt;/span>
-&lt;span style="color:#75715e">/**
-&lt;/span>&lt;span style="color:#75715e"> * down_trylock - try to acquire the semaphore, without waiting
-&lt;/span>&lt;span style="color:#75715e"> * @sem: the semaphore to be acquired
-&lt;/span>&lt;span style="color:#75715e"> *
-&lt;/span>&lt;span style="color:#75715e"> * Try to acquire the semaphore atomically. Returns 0 if the semaphore has
-&lt;/span>&lt;span style="color:#75715e"> * been acquired successfully or 1 if it cannot be acquired.
-&lt;/span>&lt;span style="color:#75715e"> *
-&lt;/span>&lt;span style="color:#75715e"> * NOTE: This return value is inverted from both spin_trylock and
-&lt;/span>&lt;span style="color:#75715e"> * mutex_trylock! Be careful about this when converting code.
-&lt;/span>&lt;span style="color:#75715e"> *
-&lt;/span>&lt;span style="color:#75715e"> * Unlike mutex_trylock, this function can be used from interrupt context,
-&lt;/span>&lt;span style="color:#75715e"> * and the semaphore can be released by any task or interrupt.
-&lt;/span>&lt;span style="color:#75715e"> */&lt;/span>
-&lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#75af00">down_trylock&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">struct&lt;/span> &lt;span style="color:#111">semaphore&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">)&lt;/span>
-&lt;span style="color:#111">{&lt;/span>
-&lt;span style="color:#00a8c8">unsigned&lt;/span> &lt;span style="color:#00a8c8">long&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">count&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#111">raw_spin_lock_irqsave&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
-&lt;span style="color:#111">count&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span> &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#00a8c8">if&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">likely&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">count&lt;/span> &lt;span style="color:#f92672">&amp;gt;=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#111">))&lt;/span>
-&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">count&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#111">raw_spin_unlock_irqrestore&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
-&lt;span style="color:#00a8c8">return&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">count&lt;/span> &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#111">);&lt;/span>
-&lt;span style="color:#111">}&lt;/span>
-&lt;span style="color:#75715e">/**
-&lt;/span>&lt;span style="color:#75715e"> * down_timeout - acquire the semaphore within a specified time
-&lt;/span>&lt;span style="color:#75715e"> * @sem: the semaphore to be acquired
-&lt;/span>&lt;span style="color:#75715e"> * @timeout: how long to wait before failing
-&lt;/span>&lt;span style="color:#75715e"> *
-&lt;/span>&lt;span style="color:#75715e"> * Attempts to acquire the semaphore. If no more tasks are allowed to
-&lt;/span>&lt;span style="color:#75715e"> * acquire the semaphore, calling this function will put the task to sleep.
-&lt;/span>&lt;span style="color:#75715e"> * If the semaphore is not released within the specified number of jiffies,
-&lt;/span>&lt;span style="color:#75715e"> * this function returns -ETIME. It returns 0 if the semaphore was acquired.
-&lt;/span>&lt;span style="color:#75715e"> */&lt;/span>
-&lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#75af00">down_timeout&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">struct&lt;/span> &lt;span style="color:#111">semaphore&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#00a8c8">long&lt;/span> &lt;span style="color:#111">timeout&lt;/span>&lt;span style="color:#111">)&lt;/span>
-&lt;span style="color:#111">{&lt;/span>
-&lt;span style="color:#00a8c8">unsigned&lt;/span> &lt;span style="color:#00a8c8">long&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">result&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#111">raw_spin_lock_irqsave&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
-&lt;span style="color:#00a8c8">if&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">likely&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span> &lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#111">))&lt;/span>
-&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span>&lt;span style="color:#f92672">--&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#00a8c8">else&lt;/span>
-&lt;span style="color:#111">result&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">__down_timeout&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">timeout&lt;/span>&lt;span style="color:#111">);&lt;/span>
-&lt;span style="color:#111">raw_spin_unlock_irqrestore&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
-&lt;span style="color:#00a8c8">return&lt;/span> &lt;span style="color:#111">result&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#111">}&lt;/span>
-&lt;span style="color:#75715e">/**
-&lt;/span>&lt;span style="color:#75715e"> * up - release the semaphore
-&lt;/span>&lt;span style="color:#75715e"> * @sem: the semaphore to release
-&lt;/span>&lt;span style="color:#75715e"> *
-&lt;/span>&lt;span style="color:#75715e"> * Release the semaphore. Unlike mutexes, up() may be called from any
-&lt;/span>&lt;span style="color:#75715e"> * context and even by tasks which have never called down().
-&lt;/span>&lt;span style="color:#75715e"> */&lt;/span>
-&lt;span style="color:#00a8c8">void&lt;/span> &lt;span style="color:#75af00">up&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">struct&lt;/span> &lt;span style="color:#111">semaphore&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">)&lt;/span>
-&lt;span style="color:#111">{&lt;/span>
-&lt;span style="color:#00a8c8">unsigned&lt;/span> &lt;span style="color:#00a8c8">long&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#111">raw_spin_lock_irqsave&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
-&lt;span style="color:#00a8c8">if&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">likely&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">list_empty&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">wait_list&lt;/span>&lt;span style="color:#111">)))&lt;/span>
-&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span>&lt;span style="color:#f92672">++&lt;/span>&lt;span style="color:#111">;&lt;/span>
-&lt;span style="color:#00a8c8">else&lt;/span>
-&lt;span style="color:#111">__up&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">);&lt;/span>
-&lt;span style="color:#111">raw_spin_unlock_irqrestore&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
-&lt;span style="color:#111">}&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>八股文::系统设计</title><link>/interview/interview_questions_system_design/</link><pubDate>Fri, 20 Aug 2021 21:51:33 +0800</pubDate><guid>/interview/interview_questions_system_design/</guid><description>&lt;h2 id="系统设计">系统设计&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c" data-lang="c">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#00a8c8">struct&lt;/span> &lt;span style="color:#111">semaphore&lt;/span> &lt;span style="color:#111">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">raw_spinlock_t&lt;/span> &lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">unsigned&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">count&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">struct&lt;/span> &lt;span style="color:#111">list_head&lt;/span> &lt;span style="color:#111">wait_list&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#111">};&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">/**
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * down - acquire the semaphore
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * @sem: the semaphore to be acquired
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> *
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * Acquires the semaphore. If no more tasks are allowed to acquire the
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * semaphore, calling this function will put the task to sleep until the
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * semaphore is released.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> *
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * Use of this function is deprecated, please use down_interruptible() or
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * down_killable() instead.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#00a8c8">void&lt;/span> &lt;span style="color:#75af00">down&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">struct&lt;/span> &lt;span style="color:#111">semaphore&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#111">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">unsigned&lt;/span> &lt;span style="color:#00a8c8">long&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">raw_spin_lock_irqsave&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">if&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">likely&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span> &lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#111">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span>&lt;span style="color:#f92672">--&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">__down&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">raw_spin_unlock_irqrestore&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#111">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">/**
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * down_interruptible - acquire the semaphore unless interrupted
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * @sem: the semaphore to be acquired
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> *
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * Attempts to acquire the semaphore. If no more tasks are allowed to
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * acquire the semaphore, calling this function will put the task to sleep.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * If the sleep is interrupted by a signal, this function will return -EINTR.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * If the semaphore is successfully acquired, this function returns 0.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#75af00">down_interruptible&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">struct&lt;/span> &lt;span style="color:#111">semaphore&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#111">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">unsigned&lt;/span> &lt;span style="color:#00a8c8">long&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">result&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">raw_spin_lock_irqsave&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">if&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">likely&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span> &lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#111">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span>&lt;span style="color:#f92672">--&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">result&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">__down_interruptible&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">raw_spin_unlock_irqrestore&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">return&lt;/span> &lt;span style="color:#111">result&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#111">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">/**
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * down_killable - acquire the semaphore unless killed
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * @sem: the semaphore to be acquired
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> *
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * Attempts to acquire the semaphore. If no more tasks are allowed to
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * acquire the semaphore, calling this function will put the task to sleep.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * If the sleep is interrupted by a fatal signal, this function will return
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * -EINTR. If the semaphore is successfully acquired, this function returns
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * 0.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#75af00">down_killable&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">struct&lt;/span> &lt;span style="color:#111">semaphore&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#111">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">unsigned&lt;/span> &lt;span style="color:#00a8c8">long&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">result&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">raw_spin_lock_irqsave&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">if&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">likely&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span> &lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#111">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span>&lt;span style="color:#f92672">--&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">result&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">__down_killable&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">raw_spin_unlock_irqrestore&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">return&lt;/span> &lt;span style="color:#111">result&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#111">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">/**
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * down_trylock - try to acquire the semaphore, without waiting
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * @sem: the semaphore to be acquired
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> *
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * Try to acquire the semaphore atomically. Returns 0 if the semaphore has
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * been acquired successfully or 1 if it cannot be acquired.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> *
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * NOTE: This return value is inverted from both spin_trylock and
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * mutex_trylock! Be careful about this when converting code.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> *
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * Unlike mutex_trylock, this function can be used from interrupt context,
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * and the semaphore can be released by any task or interrupt.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#75af00">down_trylock&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">struct&lt;/span> &lt;span style="color:#111">semaphore&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#111">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">unsigned&lt;/span> &lt;span style="color:#00a8c8">long&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">count&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">raw_spin_lock_irqsave&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">count&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span> &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">if&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">likely&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">count&lt;/span> &lt;span style="color:#f92672">&amp;gt;=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#111">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">count&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">raw_spin_unlock_irqrestore&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">return&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">count&lt;/span> &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#111">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#111">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">/**
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * down_timeout - acquire the semaphore within a specified time
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * @sem: the semaphore to be acquired
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * @timeout: how long to wait before failing
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> *
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * Attempts to acquire the semaphore. If no more tasks are allowed to
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * acquire the semaphore, calling this function will put the task to sleep.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * If the semaphore is not released within the specified number of jiffies,
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * this function returns -ETIME. It returns 0 if the semaphore was acquired.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#75af00">down_timeout&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">struct&lt;/span> &lt;span style="color:#111">semaphore&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#00a8c8">long&lt;/span> &lt;span style="color:#111">timeout&lt;/span>&lt;span style="color:#111">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#111">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">unsigned&lt;/span> &lt;span style="color:#00a8c8">long&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">result&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">raw_spin_lock_irqsave&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">if&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">likely&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span> &lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#111">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span>&lt;span style="color:#f92672">--&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">result&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">__down_timeout&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">timeout&lt;/span>&lt;span style="color:#111">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">raw_spin_unlock_irqrestore&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">return&lt;/span> &lt;span style="color:#111">result&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#111">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">/**
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * up - release the semaphore
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * @sem: the semaphore to release
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> *
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * Release the semaphore. Unlike mutexes, up() may be called from any
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * context and even by tasks which have never called down().
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#00a8c8">void&lt;/span> &lt;span style="color:#75af00">up&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#00a8c8">struct&lt;/span> &lt;span style="color:#111">semaphore&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#111">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">unsigned&lt;/span> &lt;span style="color:#00a8c8">long&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">raw_spin_lock_irqsave&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">if&lt;/span> &lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">likely&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">list_empty&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">wait_list&lt;/span>&lt;span style="color:#111">)))&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">count&lt;/span>&lt;span style="color:#f92672">++&lt;/span>&lt;span style="color:#111">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">__up&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#111">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#111">raw_spin_unlock_irqrestore&lt;/span>&lt;span style="color:#111">(&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#111">sem&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>&lt;span style="color:#111">lock&lt;/span>&lt;span style="color:#111">,&lt;/span> &lt;span style="color:#111">flags&lt;/span>&lt;span style="color:#111">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#111">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>八股文::系统设计</title><link>/interview/interview_questions_system_design/</link><pubDate>Fri, 20 Aug 2021 21:51:33 +0800</pubDate><guid>/interview/interview_questions_system_design/</guid><description>&lt;h2 id="系统设计">系统设计&lt;/h2>
 &lt;h3 id="电商系统中如何实现秒杀功能如何解决商品的超卖问题">电商系统中，如何实现秒杀功能？如何解决商品的超卖问题？&lt;/h3>
 &lt;h3 id="什么是-cap-什么是最终一致性什么是幂等操作">什么是 CAP ？什么是最终一致性？什么是幂等操作？&lt;/h3>
 &lt;h3 id="项目上有什么技术难点">项目上有什么技术难点？&lt;/h3>
