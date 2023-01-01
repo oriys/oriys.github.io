@@ -1,4 +1,65 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Notes | Y.CH.Y</title><link>/notes/</link><atom:link href="/notes/index.xml" rel="self" type="application/rss+xml"/><description>Notes</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Mon, 12 Sep 2022 17:30:32 +0800</lastBuildDate><item><title>Daniels_running_formula</title><link>/notes/daniels_running_formula/</link><pubDate>Mon, 12 Sep 2022 17:30:32 +0800</pubDate><guid>/notes/daniels_running_formula/</guid><description/></item><item><title>程序员修炼之道摘录</title><link>/notes/the_pragmatic_programmer/</link><pubDate>Sat, 19 Feb 2022 23:43:39 +0800</pubDate><guid>/notes/the_pragmatic_programmer/</guid><description>&lt;ul>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Notes | Y.CH.Y</title><link>/notes/</link><atom:link href="/notes/index.xml" rel="self" type="application/rss+xml"/><description>Notes</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>Y.CH.Y</copyright><lastBuildDate>Sat, 31 Dec 2022 17:12:59 +0800</lastBuildDate><item><title>2022::书单</title><link>/notes/books_2022/</link><pubDate>Sat, 31 Dec 2022 17:12:59 +0800</pubDate><guid>/notes/books_2022/</guid><description>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>书名&lt;/th>
+&lt;th>分类&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;a href="https://book.douban.com/subject/34615687/">Pulsar in Action&lt;/a>&lt;/td>
+&lt;td>编程&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://book.douban.com/subject/21324173/">第三时效&lt;/a>&lt;/td>
+&lt;td>推理&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://book.douban.com/subject/25843319/">设计模式之禅（第 2 版）&lt;/a>&lt;/td>
+&lt;td>编程&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://book.douban.com/subject/30437872/">深入理解 Kafka：核心设计与实践原理&lt;/a>&lt;/td>
+&lt;td>编程&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://book.douban.com/subject/26819666/">领域驱动设计&lt;/a>&lt;/td>
+&lt;td>编程&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://book.douban.com/subject/25900403">UNIX 环境高级编程（第 3 版）&lt;/a>&lt;/td>
+&lt;td>编程&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://book.douban.com/subject/25809330/">Linux/UNIX 系统编程手册&lt;/a>&lt;/td>
+&lt;td>编程&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://book.douban.com/subject/34960995/">发布！设计与部署稳定的分布式系统（第 2 版）&lt;/a>&lt;/td>
+&lt;td>编程&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://book.douban.com/subject/35198304/">是我把你蠢哭了吗&lt;/a>&lt;/td>
+&lt;td>认知&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://book.douban.com/subject/34895571/">饱食穷民&lt;/a>&lt;/td>
+&lt;td>社会&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://book.douban.com/subject/34894713/">妻子们的思秋期&lt;/a>&lt;/td>
+&lt;td>社会&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://book.douban.com/subject/26774897/">流星之绊&lt;/a>&lt;/td>
+&lt;td>推理&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://book.douban.com/subject/34840201/">你的孩子不是你的孩子&lt;/a>&lt;/td>
+&lt;td>教育&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>程序员修炼之道摘录</title><link>/notes/the_pragmatic_programmer/</link><pubDate>Sat, 19 Feb 2022 23:43:39 +0800</pubDate><guid>/notes/the_pragmatic_programmer/</guid><description>&lt;ul>
 &lt;li>关注你的技艺&lt;/li>
 &lt;li>如果你不关心怎么把软件开发好，那么软件开发领域就再也没什么好谈的事情了&lt;/li>
 &lt;li>思考！思考你的工作&lt;/li>
@@ -617,29 +678,29 @@ SLA 为以下问题提供了答案：&amp;ldquo;我愿意同意什么 SLO，有�
 &lt;/tbody>
 &lt;/table>
 &lt;p>java 并不完整支持以上所有字符，以下是 java 支持的部分&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_ERA&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">0&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// G
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_YEAR&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">1&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// y
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_MONTH&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">2&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// M
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_DAY_OF_MONTH&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">3&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// d
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_HOUR_OF_DAY1&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">4&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// k
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_HOUR_OF_DAY0&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">5&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// H
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_MINUTE&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">6&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// m
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_SECOND&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">7&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// s
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_MILLISECOND&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">8&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// S
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_DAY_OF_WEEK&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">9&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// E
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_DAY_OF_YEAR&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">10&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// D
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_DAY_OF_WEEK_IN_MONTH&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">11&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// F
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_WEEK_OF_YEAR&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">12&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// w
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_WEEK_OF_MONTH&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">13&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// W
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_AM_PM&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">14&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// a
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_HOUR1&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">15&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// h
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_HOUR0&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">16&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// K
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_ZONE_NAME&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">17&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// z
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_ZONE_VALUE&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">18&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// Z
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_WEEK_YEAR&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">19&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// Y
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_ISO_DAY_OF_WEEK&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">20&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// u
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_ISO_ZONE&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">21&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// X
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_MONTH_STANDALONE&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#111">22&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// L
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_ERA&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// G
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_YEAR&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// y
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_MONTH&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// M
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_DAY_OF_MONTH&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">3&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// d
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_HOUR_OF_DAY1&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// k
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_HOUR_OF_DAY0&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">5&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// H
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_MINUTE&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">6&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// m
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_SECOND&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">7&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// s
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_MILLISECOND&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">8&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// S
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_DAY_OF_WEEK&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">9&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// E
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_DAY_OF_YEAR&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">10&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// D
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_DAY_OF_WEEK_IN_MONTH&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">11&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// F
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_WEEK_OF_YEAR&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">12&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// w
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_WEEK_OF_MONTH&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">13&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// W
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_AM_PM&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">14&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// a
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_HOUR1&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">15&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// h
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_HOUR0&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">16&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// K
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_ZONE_NAME&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">17&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// z
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_ZONE_VALUE&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">18&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// Z
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_WEEK_YEAR&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">19&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// Y
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_ISO_DAY_OF_WEEK&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">20&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// u
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_ISO_ZONE&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">21&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// X
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#00a8c8">int&lt;/span> &lt;span style="color:#111">PATTERN_MONTH_STANDALONE&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">22&lt;/span>&lt;span style="color:#f92672">;&lt;/span> &lt;span style="color:#75715e">// L
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="常见格式化">常见格式化&lt;/h3>
 &lt;table>
 &lt;thead>
