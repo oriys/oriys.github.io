@@ -1,0 +1,60 @@
+<!doctype html><html lang=en-us><head><link rel=preload href=/lib/font-awesome/webfonts/fa-brands-400.woff2 as=font type=font/woff2 crossorigin=anonymous><link rel=preload href=/lib/font-awesome/webfonts/fa-regular-400.woff2 as=font type=font/woff2 crossorigin=anonymous><link rel=preload href=/lib/font-awesome/webfonts/fa-solid-900.woff2 as=font type=font/woff2 crossorigin=anonymous><link rel=preload href=/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2 as=font type=font/woff2 crossorigin=anonymous><script type=text/javascript src=https://latest.cactus.chat/cactus.js></script>
+<link rel=stylesheet href=https://latest.cactus.chat/style.css type=text/css><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><title>gin-vue-admin 代码学习 | Y.CH.Y</title><link rel=canonical href=/misc/learn_gin_vue_admin/><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="all,follow"><meta name=googlebot content="index,follow,snippet,archive"><meta property="og:title" content="gin-vue-admin 代码学习"><meta property="og:description" content="gin-vue-admin 项目学习 项目结构 ├── deploy： 部署相关的文件 ├── docs： 项目文档 ├── server： 后端代码 └── web： 前端代码 项目分为两个部分，使用 vue 框架的前端部分和使用 gin 框架的后端部分，前端部分在web 目录下，后端部分在server目录下。我们主要关注 server 后端部分。了解一下目前 github 排名第一的 golang admin 项目是怎么设计的。
+后端结构 ├── api │ └── v1: v1 版本的 api，相当于java中的 controller ├── config: 配置类，包括数据库配置，jwt 配置，redis 配置等 ├── core │ └── internal: 服务启动方法 ├── docs: swagger 文档 ├── global: 全局对象 ├── initialize │ └── internal: 初始化方法，日志，数据库，redis，jwt，定时任务等 ├── middleware: 中间件,包括跨域，jwt，casbin，日志，全局异常处理等,使用了 gin.handleFunc 的特性 ├── model: 数据库模型，请求参数，响应参数 │ ├── common │ └── system ├── packfile ├── plugin: │ ├── email: email 插件，是个完整的小项目，里面结构和外部类似 │ ├── plugin-tool: │ └── ws ├── resource: 资源文件，包括自动生成代码的模板，页面模板，插件模板等 │ ├── autocode_template: 代码模板，从结构体生成代码 │ ├── page: 前端静态资源 │ └── plug_template: 插件代码模板 ├── router:路由代码 │ └── system: ├── service: 业务代码，相当于 java 中的 service │ └── system ├── source: 数据库的初始数据 │ └── system └── utils: 公共的工具类 ├── captcha ├── plugin ├── timer └── upload 项目启动 func main() { global."><meta property="og:type" content="article"><meta property="og:url" content="/misc/learn_gin_vue_admin/"><meta property="article:section" content="misc"><meta property="article:published_time" content="2023-02-04T20:42:10+08:00"><meta property="article:modified_time" content="2023-02-04T20:42:10+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="gin-vue-admin 代码学习"><meta name=twitter:description content="gin-vue-admin 项目学习 项目结构 ├── deploy： 部署相关的文件 ├── docs： 项目文档 ├── server： 后端代码 └── web： 前端代码 项目分为两个部分，使用 vue 框架的前端部分和使用 gin 框架的后端部分，前端部分在web 目录下，后端部分在server目录下。我们主要关注 server 后端部分。了解一下目前 github 排名第一的 golang admin 项目是怎么设计的。
+后端结构 ├── api │ └── v1: v1 版本的 api，相当于java中的 controller ├── config: 配置类，包括数据库配置，jwt 配置，redis 配置等 ├── core │ └── internal: 服务启动方法 ├── docs: swagger 文档 ├── global: 全局对象 ├── initialize │ └── internal: 初始化方法，日志，数据库，redis，jwt，定时任务等 ├── middleware: 中间件,包括跨域，jwt，casbin，日志，全局异常处理等,使用了 gin.handleFunc 的特性 ├── model: 数据库模型，请求参数，响应参数 │ ├── common │ └── system ├── packfile ├── plugin: │ ├── email: email 插件，是个完整的小项目，里面结构和外部类似 │ ├── plugin-tool: │ └── ws ├── resource: 资源文件，包括自动生成代码的模板，页面模板，插件模板等 │ ├── autocode_template: 代码模板，从结构体生成代码 │ ├── page: 前端静态资源 │ └── plug_template: 插件代码模板 ├── router:路由代码 │ └── system: ├── service: 业务代码，相当于 java 中的 service │ └── system ├── source: 数据库的初始数据 │ └── system └── utils: 公共的工具类 ├── captcha ├── plugin ├── timer └── upload 项目启动 func main() { global."><link rel=stylesheet href=/css/styles.94f653e9e151e28067a7c5dbbc4600cbd5a3c721e79faaf971e523c40f3b249b8e4f20bb57810dfffa8d559ca5c140fd56eb4cd9c0853113ad08e66afdb08bdd.css integrity="sha512-lPZT6eFR4oBnp8XbvEYAy9WjxyHnn6r5ceUjxA87JJuOTyC7V4EN//qNVZylwUD9VutM2cCFMROtCOZq/bCL3Q=="><link rel=stylesheet href=/css/custom.css><!--[if lt IE 9]><script src=https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js></script>
+<script src=https://oss.maxcdn.com/respond/1.4.2/respond.min.js></script><![endif]--><link rel=icon type=image/png href=/images/favicon.ico><script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-X1L70M4MM0","auto"),ga("send","pageview"))</script><script async src=https://www.google-analytics.com/analytics.js></script>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><meta name=referrer content="no-referrer-when-downgrade"></head><body class="max-width mx-auto px3 ltr"><div class="content index py4"><header id=header><a href=/><div id=logo style=background-image:url(/images/logo.png)></div><div id=title><h1>Y.CH.Y</h1></div></a><div id=nav><ul><li class=icon><a href=# aria-label=Menu><i class="fas fa-bars fa-2x" aria-hidden=true></i></a></li><li><a href=/>首页</a></li><li><a href=/books>笔记</a></li><li><a href=/misc>杂</a></li></ul></div></header><article class=post itemscope itemtype=http://schema.org/BlogPosting><div class=content itemprop=articleBody><h1 id=gin-vue-admin-项目学习>gin-vue-admin 项目学习</h1><h2 id=项目结构>项目结构</h2><pre tabindex=0><code>├── deploy： 部署相关的文件
+├── docs： 项目文档
+├── server： 后端代码
+└── web： 前端代码
+</code></pre><p>项目分为两个部分，使用 vue 框架的前端部分和使用 gin 框架的后端部分，前端部分在<code>web</code> 目录下，后端部分在<code>server</code>目录下。我们主要关注 server 后端部分。了解一下目前 github 排名第一的 golang admin 项目是怎么设计的。</p><h2 id=后端结构>后端结构</h2><pre tabindex=0><code>├── api
+│   └── v1: v1 版本的 api，相当于java中的 controller
+├── config: 配置类，包括数据库配置，jwt 配置，redis 配置等
+├── core
+│   └── internal: 服务启动方法
+├── docs: swagger 文档
+├── global: 全局对象
+├── initialize
+│   └── internal: 初始化方法，日志，数据库，redis，jwt，定时任务等
+├── middleware: 中间件,包括跨域，jwt，casbin，日志，全局异常处理等,使用了 gin.handleFunc 的特性
+├── model: 数据库模型，请求参数，响应参数
+│   ├── common
+│   └── system
+├── packfile
+├── plugin:
+│   ├── email: email 插件，是个完整的小项目，里面结构和外部类似
+│   ├── plugin-tool:
+│   └── ws
+├── resource: 资源文件，包括自动生成代码的模板，页面模板，插件模板等
+│   ├── autocode_template: 代码模板，从结构体生成代码
+│   ├── page: 前端静态资源
+│   └── plug_template: 插件代码模板
+├── router:路由代码
+│   └── system:
+├── service: 业务代码，相当于 java 中的 service
+│   └── system
+├── source: 数据库的初始数据
+│   └── system
+└── utils: 公共的工具类
+    ├── captcha
+    ├── plugin
+    ├── timer
+    └── upload
+</code></pre><h2 id=项目启动>项目启动</h2><div class=highlight><pre tabindex=0 style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#00a8c8>func</span> <span style=color:#75af00>main</span><span style=color:#111>()</span> <span style=color:#111>{</span>
+</span></span><span style=display:flex><span>	<span style=color:#75af00>global</span><span style=color:#111>.</span><span style=color:#75af00>GVA_VP</span> <span style=color:#111>=</span> <span style=color:#75af00>core</span><span style=color:#111>.</span><span style=color:#75af00>Viper</span><span style=color:#111>()</span> <span style=color:#75715e>// 初始化Viper
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#75af00>initialize</span><span style=color:#111>.</span><span style=color:#75af00>OtherInit</span><span style=color:#111>()</span>
+</span></span><span style=display:flex><span>	<span style=color:#75af00>global</span><span style=color:#111>.</span><span style=color:#75af00>GVA_LOG</span> <span style=color:#111>=</span> <span style=color:#75af00>core</span><span style=color:#111>.</span><span style=color:#75af00>Zap</span><span style=color:#111>()</span> <span style=color:#75715e>// 初始化zap日志库
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#75af00>zap</span><span style=color:#111>.</span><span style=color:#75af00>ReplaceGlobals</span><span style=color:#111>(</span><span style=color:#75af00>global</span><span style=color:#111>.</span><span style=color:#75af00>GVA_LOG</span><span style=color:#111>)</span>
+</span></span><span style=display:flex><span>	<span style=color:#75af00>global</span><span style=color:#111>.</span><span style=color:#75af00>GVA_DB</span> <span style=color:#111>=</span> <span style=color:#75af00>initialize</span><span style=color:#111>.</span><span style=color:#75af00>Gorm</span><span style=color:#111>()</span> <span style=color:#75715e>// gorm连接数据库
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#75af00>initialize</span><span style=color:#111>.</span><span style=color:#75af00>Timer</span><span style=color:#111>()</span>
+</span></span><span style=display:flex><span>	<span style=color:#75af00>initialize</span><span style=color:#111>.</span><span style=color:#75af00>DBList</span><span style=color:#111>()</span>
+</span></span><span style=display:flex><span>	<span style=color:#00a8c8>if</span> <span style=color:#75af00>global</span><span style=color:#111>.</span><span style=color:#75af00>GVA_DB</span> <span style=color:#f92672>!=</span> <span style=color:#00a8c8>nil</span> <span style=color:#111>{</span>
+</span></span><span style=display:flex><span>		<span style=color:#75af00>initialize</span><span style=color:#111>.</span><span style=color:#75af00>RegisterTables</span><span style=color:#111>(</span><span style=color:#75af00>global</span><span style=color:#111>.</span><span style=color:#75af00>GVA_DB</span><span style=color:#111>)</span> <span style=color:#75715e>// 初始化表
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>		<span style=color:#75715e>// 程序结束前关闭数据库链接
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>		<span style=color:#75af00>db</span><span style=color:#111>,</span> <span style=color:#75af00>_</span> <span style=color:#f92672>:=</span> <span style=color:#75af00>global</span><span style=color:#111>.</span><span style=color:#75af00>GVA_DB</span><span style=color:#111>.</span><span style=color:#75af00>DB</span><span style=color:#111>()</span>
+</span></span><span style=display:flex><span>		<span style=color:#00a8c8>defer</span> <span style=color:#75af00>db</span><span style=color:#111>.</span><span style=color:#75af00>Close</span><span style=color:#111>()</span>
+</span></span><span style=display:flex><span>	<span style=color:#111>}</span>
+</span></span><span style=display:flex><span>	<span style=color:#75af00>core</span><span style=color:#111>.</span><span style=color:#75af00>RunWindowsServer</span><span style=color:#111>()</span>
+</span></span><span style=display:flex><span><span style=color:#111>}</span>
+</span></span></code></pre></div></div></article><footer id=footer><div class=footer-left>Copyright &copy; 2023 Y.CH.Y</div><div class=footer-right><nav><ul><li><a href=/>首页</a></li><li><a href=/books>笔记</a></li><li><a href=/misc>杂</a></li></ul></nav></div></footer></div></body><link rel=stylesheet href=/lib/font-awesome/css/all.min.css><script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script></html>
