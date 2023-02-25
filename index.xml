@@ -2,7 +2,7 @@
 东亚经济体的发展有其共性，即借助教育普及来支撑工业化，通过劳动力优势扩大出口贸易，由产业政策引导产业升级。但往往也都会遭遇难以逆转的人口问题，内卷压抑的社会氛围，不断缩小的腾挪空间，积重难返的债务规模。
 历史的车轮碾压普通人，有的时候如晴空惊雷，但大多数情况下并不会出现震天的声响，而是像温水煮青蛙一样，今天一根棒子，明天一颗糖果，围拢的铁幕上总有透光的缝隙，让你总觉得事情没什么大不了，日子总能过下去。 但等多年之后暮然回首，普通人才会听到骨骼破裂的声响。
 日本政策决策者痛切感受到，至少在全球金融危机之前，其他国家根本没有从日本的经验中学到任何东西。我强烈地感受到，人类除非真正经历危机，否则很难将来自他人的教训作为前车之鉴。
-三代 想来也是蛮有意思的，我的祖父母一辈，大多数的时候是和土地打交道的，我的父母辈和人，流水线打交道，到了我一辈和电脑和数据打交道，一代人都有属于一代人的土地。</description></item><item><title>笔记::Go编程语言</title><link>/misc/tgpl/</link><pubDate>Sat, 18 Feb 2023 15:36:08 +0800</pubDate><guid>/misc/tgpl/</guid><description>程序结构 名称 Go 有 25 个关键字，包括 if 和 switch，只能在语法允许的情况下使用；不能作为名称使用。
+三代 想来也是蛮有意思的，我的祖父母一辈，大多数的时候是和土地打交道的，我的父母辈和人，流水线打交道，到了我一辈和电脑和数据打交道，一代人都有属于一代人的黄土地。</description></item><item><title>笔记::Go编程语言</title><link>/misc/tgpl/</link><pubDate>Sat, 18 Feb 2023 15:36:08 +0800</pubDate><guid>/misc/tgpl/</guid><description>程序结构 名称 Go 有 25 个关键字，包括 if 和 switch，只能在语法允许的情况下使用；不能作为名称使用。
 break default func interface select case defer go map struct chan else goto package switch const fallthrough if range type 此外，还有大约三十多个预留的名称，如 int 和 true，用于内置常量、类型和函数。
 常量：
 true false iota nil 类型：
